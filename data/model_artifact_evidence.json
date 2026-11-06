@@ -1,0 +1,31 @@
+{
+  "metadata_url": "https://huggingface.co/api/models/unsloth/SmolLM2-135M-Instruct-GGUF/revision/9e6855bc4be717fca1ef21360a1db4b29d5c559a?blobs=true",
+  "repository": "unsloth/SmolLM2-135M-Instruct-GGUF",
+  "revision": "9e6855bc4be717fca1ef21360a1db4b29d5c559a",
+  "card": {
+    "base_model": "HuggingFaceTB/SmolLM2-135M-Instruct",
+    "language": [
+      "en"
+    ],
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "tags": [
+      "llama",
+      "unsloth",
+      "transformers"
+    ]
+  },
+  "artifact": {
+    "rfilename": "SmolLM2-135M-Instruct-Q4_K_M.gguf",
+    "blobId": "0ad25404e736010b7582faffcc76f9dead2fe388",
+    "size": 105454144,
+    "lfs": {
+      "sha256": "ed5fa30c487b282ec156c29062f1222e5c20875a944ac98289dbd242e947f747",
+      "size": 105454144,
+      "pointerSize": 134
+    }
+  },
+  "verified_https_redirect_hosts": [
+    "us.aws.cdn.hf.co"
+  ]
+}

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="__CSP__">
+  <title>城市小幫手</title>
+  <style>__STYLE__</style>
+</head>
+<body>
+<main>
+  <header class="app-header">
+    <div class="mode-info"><span class="ready-dot" aria-hidden="true"></span><strong id="mode">離線查詢</strong></div>
+    <div class="header-actions"><button id="clear" class="quiet" type="button" aria-label="開始新對話，清除目前紀錄">重新問</button><button id="models-button" class="quiet" type="button" aria-haspopup="dialog" aria-expanded="false"><span aria-hidden="true">⚙︎ </span>設定</button></div>
+  </header>
+  <p id="operation-status" class="notice" role="alert" hidden></p>
+  <p id="connection-warning" class="notice" role="alert" hidden>請從城市通開啟小幫手，使用手機裡的資料與模型。</p>
+  <section id="conversation" class="conversation" aria-label="對話與查詢結果">
+    <div id="welcome" class="welcome">
+      <div class="hello-mark" aria-hidden="true"><span>聊</span><i></i></div>
+      <p id="data-count" class="eyebrow">慢慢問，安心查</p>
+      <h1>今天想聊什麼？</h1>
+      <p class="welcome-copy">生活問題、找資料，都可以問。</p>
+      <div class="suggestions" aria-label="開始對話"><button type="button" data-question="你是誰">認識你 <span aria-hidden="true">↗</span></button><button type="button" data-question="台大附近美食">找美食 <span aria-hidden="true">↗</span></button></div>
+      <details class="district-picker"><summary>查詢市政資料</summary><div class="district-grid"><button type="button" data-question="文山區社區關懷據點">文山區</button><button type="button" data-question="大安區社區關懷據點">大安區</button>
+        <button type="button" data-question="松山區社區關懷據點">松山區</button><button type="button" data-question="信義區社區關懷據點">信義區</button><button type="button" data-question="中山區社區關懷據點">中山區</button><button type="button" data-question="中正區社區關懷據點">中正區</button><button type="button" data-question="大同區社區關懷據點">大同區</button><button type="button" data-question="萬華區社區關懷據點">萬華區</button><button type="button" data-question="南港區社區關懷據點">南港區</button><button type="button" data-question="內湖區社區關懷據點">內湖區</button><button type="button" data-question="士林區社區關懷據點">士林區</button><button type="button" data-question="北投區社區關懷據點">北投區</button>
+      </div></details>
+      <p class="scope-note">一般對話都在手機裡進行。<br>功能示範，非臺北市正式服務。</p>
+    </div>
+    <div id="messages" aria-live="polite" aria-relevant="additions text"></div>
+  </section>
+  <form id="chat-form" class="composer">
+    <div class="composer-heading"><label for="question">想問什麼？</label><button id="enable-button" class="ai-start" type="button" hidden>下載對話模型</button></div>
+    <textarea id="question" aria-label="想問什麼？" rows="1" maxlength="500" placeholder="例如：你是誰？或台大附近美食" required></textarea>
+    <div class="composer-actions"><span id="counter" class="sr-only">0 / 500</span><button id="stop" class="stop" type="button" hidden>停止</button><button id="send" class="send" type="submit">送出 <span aria-hidden="true">→</span></button></div>
+  </form>
+</main>
+<dialog id="management" aria-labelledby="settings-title">
+  <div class="settings-heading"><h2 id="settings-title">小幫手設定</h2><button id="settings-done" class="quiet" type="button">完成</button></div>
+  <section class="setting-section"><h3>閱讀字體</h3><div class="font-options"><button id="font-normal" type="button" aria-pressed="true">標準</button><button id="font-large" type="button" aria-pressed="false">更大</button></div></section>
+  <section class="setting-section"><h3>手機上的 AI</h3><p>已安裝的模型會自動使用，直接輸入就能聊。尚在載入時，問題會先保留。也可以選擇省電查詢。</p><p id="model-status" role="status">正在檢查模型</p><button id="settings-enable" type="button">重試本機 AI</button><button id="disable-button" type="button" hidden>改用省電查詢</button><div id="models"></div><progress id="download-progress" max="1" hidden aria-label="模型下載進度"></progress><button id="cancel-download" type="button" hidden>取消模型下載</button></section>
+  <details class="setting-section"><summary>資料來源與更新</summary><p id="data-source"></p><p id="data-source-updated"></p><p id="data-version"></p><p id="data-status" role="status"></p><p id="data-transfer"></p><progress id="data-progress" max="1" hidden aria-label="公開資料下載進度"></progress><div class="controls"><button id="update-data" type="button">更新公開資料</button><button id="cancel-data" type="button" hidden>取消資料更新</button></div></details>
+  <details class="setting-section"><summary>隱私與回答限制</summary><p>問題和對話只留在手機記憶體，不儲存、不上傳。只有按下下載或更新，才會下載公開檔案；查看來源會開啟官方網站。</p><p>沒有檢索資料也能聊天；找到相關資料時會附上引用。一般回答沒有即時連網查證，請勿視為最新店家資訊、資格或名額保證。</p><p>IBM Granite 為一般對話模型，仍可能出錯；SmolLM2 保留為煙霧測試候選。Gemma 授權尚未配置，維持鎖定。</p></details>
+</dialog>
+<script>__SCRIPT__</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "repository": "ibm-granite/granite-4.0-350m-GGUF",
+  "original_developer": "IBM",
+  "artifact_publisher": "IBM Granite",
+  "original_model_url": "https://huggingface.co/ibm-granite/granite-4.0-350m",
+  "model_card": "https://huggingface.co/ibm-granite/granite-4.0-350m-GGUF",
+  "revision": "b8208a86a58427e1739265318028eb5895b74bf2",
+  "gated": false,
+  "license": "Apache-2.0",
+  "artifact": {
+    "rfilename": "granite-4.0-350m-Q4_K_M.gguf",
+    "blobId": "70f092bd480866797f00a2a60de10a61aa4d1ae2",
+    "size": 236985760,
+    "lfs": {
+      "sha256": "771c588a49607f274a2bba3185733607ebe6f74b996ab90e2d6bee0d98bcec52",
+      "size": 236985760,
+      "pointerSize": 134
+    }
+  },
+  "purpose": "local general conversation with optional RAG; native validation recorded separately"
+}

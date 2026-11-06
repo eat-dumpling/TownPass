@@ -1,0 +1,62 @@
+[
+  {
+    "id": "granite-4-1b-q4km",
+    "display_name": "IBM Granite 4.0 1B Q4_K_M",
+    "original_developer": "IBM",
+    "original_model_url": "https://huggingface.co/ibm-granite/granite-4.0-1b",
+    "artifact_publisher": "IBM Granite",
+    "artifact_url": "https://huggingface.co/ibm-granite/granite-4.0-1b-GGUF/resolve/b27c2fe3f211b7f44e80fa620177aea371099aaa/granite-4.0-1b-Q4_K_M.gguf",
+    "license_name": "Apache-2.0",
+    "license_review_status": "approved",
+    "revision": "b27c2fe3f211b7f44e80fa620177aea371099aaa",
+    "sha256": "22ec0f9cc99a90185312de3c882c84e7bd6789bdd050389844380a01a831d7f1",
+    "size_bytes": 1023645440,
+    "enabled": true,
+    "message": "一般本機對話建議模型，約 976 MiB；需要較多記憶體。有資料時自動參考來源，無即時連網。"
+  },
+  {
+    "id": "granite-4-350m-q4km",
+    "display_name": "IBM Granite 4.0 350M Q4_K_M",
+    "original_developer": "IBM",
+    "original_model_url": "https://huggingface.co/ibm-granite/granite-4.0-350m",
+    "artifact_publisher": "IBM Granite",
+    "artifact_url": "https://huggingface.co/ibm-granite/granite-4.0-350m-GGUF/resolve/b8208a86a58427e1739265318028eb5895b74bf2/granite-4.0-350m-Q4_K_M.gguf",
+    "license_name": "Apache-2.0",
+    "license_review_status": "approved",
+    "revision": "b8208a86a58427e1739265318028eb5895b74bf2",
+    "sha256": "771c588a49607f274a2bba3185733607ebe6f74b996ab90e2d6bee0d98bcec52",
+    "size_bytes": 236985760,
+    "enabled": true,
+    "message": "較小的測試模型；中文回覆較弱，記憶體有限時可保留純檢索。"
+  },
+  {
+    "id": "smollm2-135m-q4km",
+    "display_name": "SmolLM2 135M Instruct Q4_K_M",
+    "original_developer": "Hugging Face",
+    "original_model_url": "https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct",
+    "artifact_publisher": "Unsloth AI",
+    "artifact_url": "https://huggingface.co/unsloth/SmolLM2-135M-Instruct-GGUF/resolve/9e6855bc4be717fca1ef21360a1db4b29d5c559a/SmolLM2-135M-Instruct-Q4_K_M.gguf",
+    "license_name": "Apache-2.0",
+    "license_review_status": "approved",
+    "revision": "9e6855bc4be717fca1ef21360a1db4b29d5c559a",
+    "sha256": "ed5fa30c487b282ec156c29062f1222e5c20875a944ac98289dbd242e947f747",
+    "size_bytes": 105454144,
+    "enabled": true,
+    "message": "僅供本機煙霧測試；繁體中文品質未評估。"
+  },
+  {
+    "id": "gemma-3-1b-it-qat-q40",
+    "display_name": "Gemma 3 1B IT QAT Q4_0",
+    "original_developer": "Google",
+    "original_model_url": "https://huggingface.co/google/gemma-3-1b-it-qat-q4_0-gguf",
+    "artifact_publisher": "Google",
+    "artifact_url": null,
+    "license_name": "Gemma Terms",
+    "license_review_status": "pending",
+    "revision": "needsConfiguration",
+    "sha256": null,
+    "size_bytes": 0,
+    "enabled": false,
+    "message": "需於 Google 官方模型頁合法同意條款，並完成合法散布與校驗設定。App 不接收權杖，不繞過存取限制。"
+  }
+]

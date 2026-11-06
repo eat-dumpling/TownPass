@@ -4,6 +4,7 @@ import 'package:town_pass/gen/assets.gen.dart';
 abstract final class TrendingServiceModel {
   static List<TrendingService> get serviceList {
     return [
+      const TrendingService(title: '城市小幫手', icon: Icon(Icons.forum_outlined, color: Color(0xff5ab4c5)), url: 'townpass://city-ai'),
       TrendingService(
         title: '找地點',
         icon: Assets.svg.iconLocationSearch.svg(),

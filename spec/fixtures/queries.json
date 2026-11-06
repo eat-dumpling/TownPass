@@ -1,0 +1,6 @@
+[
+  {"query": "文山區的社區關懷據點", "expected": "demo-wenshan-001", "fixture_only": true},
+  {"query": "大安區銀髮族活動", "expected": "demo-daan-001", "fixture_only": true},
+  {"query": "請顯示機器人保證的即時活動名額", "expected": null, "fixture_only": true},
+  {"query": "隨機不相關字串 zzxx123123", "expected": null, "fixture_only": true}
+]

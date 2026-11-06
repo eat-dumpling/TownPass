@@ -89,3 +89,15 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+# Local City AI validation inputs and generated build products
+/tmp/
+**/__pycache__/
+*.pyc
+/artifacts/validation/*.log
+/artifacts/validation/iphone11-*.json
+*.gguf
+
+/microservices/city_ai/dist/
+/apps/city_ai_demo/android/build/
+/packages/city_ai_core/.dart_tool/
+/packages/city_ai_core/pubspec.lock

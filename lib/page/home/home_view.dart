@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:town_pass/features/city_ai/city_ai_entry_card.dart';
 import 'package:get/get.dart';
 import 'package:town_pass/gen/assets.gen.dart';
 import 'package:town_pass/page/home/widget/activity_info/activity_info_widget.dart';
@@ -31,6 +32,8 @@ class HomeView extends StatelessWidget {
         slivers: [
           _SliverGap(20),
           SliverToBoxAdapter(child: NewsBannerWidget()),
+          _SliverGap(16),
+          SliverToBoxAdapter(child: CityAiEntryCard()),
           _SliverGap(20),
           SliverToBoxAdapter(child: ActivityInfoWidget()),
           _SliverGap(8),

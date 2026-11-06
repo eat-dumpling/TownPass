@@ -9,6 +9,9 @@
 # packages, and plugins designed to encourage good coding practices.
 analyzer:
   exclude:
+    - third_party/**
+    - apps/**
+    - packages/**
     - build/**
     - android/**
     - ios/**

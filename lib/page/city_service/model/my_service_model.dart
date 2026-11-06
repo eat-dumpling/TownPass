@@ -29,12 +29,14 @@ enum MyServiceItemId {
   library,
   locationSearch,
   zoo,
+  localAi,
   ;
 }
 
 extension MyServiceIdExt on MyServiceItemId {
   MyServiceItem get item {
     return switch (this) {
+      MyServiceItemId.localAi => const MyServiceItem(title: '城市小幫手', description: '查關懷據點、地址與電話，無網路也能用', icon: Icon(Icons.forum_outlined, color: Color(0xff5ab4c5)), category: MyServiceCategory.cityService, destinationUrl: 'townpass://city-ai'),
       MyServiceItemId.dedicatedLine => MyServiceItem(
           title: '1999',
           description: '播打網路語音通話',

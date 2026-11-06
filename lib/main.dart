@@ -41,7 +41,9 @@ Future<void> initServices() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, this.requestNotificationPermission = true});
+
+  final bool requestNotificationPermission;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: TPRoute.main,
       onInit: () {
-        NotificationService.requestPermission();
+        if (requestNotificationPermission) NotificationService.requestPermission();
       },
       getPages: TPRoute.page,
     );

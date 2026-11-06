@@ -1,0 +1,19 @@
+name: city_ai_core
+description: Shared offline municipal retrieval, model management and local AI ports.
+version: 0.1.0
+publish_to: none
+environment:
+  sdk: '>=3.13.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  crypto: 3.0.8
+  path_provider: 2.1.6
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+flutter:
+  assets:
+    - assets/knowledge/
+    - assets/models/

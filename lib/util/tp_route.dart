@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:town_pass/features/city_ai/city_ai_microservice_page.dart';
 import 'package:town_pass/page/account/account_view.dart';
 import 'package:town_pass/page/account/account_view_controller.dart';
 import 'package:town_pass/page/activity_detail/activity_detail_view.dart';
@@ -37,6 +38,7 @@ import 'package:town_pass/util/tp_web_view.dart';
 
 abstract class TPRoute {
   static const String main = '/';
+  static const String cityAi = '/city_ai';
   static const String account = '/account';
   static const String activityList = '/activity_list';
   static const String activityDetail = '/activity_detail';
@@ -61,6 +63,7 @@ abstract class TPRoute {
   static const String webView = '/web_view';
 
   static final List<GetPage> page = [
+    GetPage(name: cityAi, page: () => const CityAiMicroservicePage()),
     GetPage(
       name: main,
       page: () => const MainView(),
@@ -188,6 +191,7 @@ abstract class TPRoute {
   ];
 
   static Future openUri({required String uri, String? forceTitle}) async {
+    if (uri == 'townpass://city-ai') return Get.toNamed(cityAi);
     if (uri.isEmpty) {
       return Future.value(null);
     }

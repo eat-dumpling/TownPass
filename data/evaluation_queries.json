@@ -1,0 +1,125 @@
+{
+  "description": "20 題人工評估題庫；expected 僅檢索預期，human_label 未評分，不代表模型品質成績。",
+  "cases": [
+    {
+      "category": "direct",
+      "query": "臺北市大安區光明里辦公處",
+      "expected": "sources",
+      "human_label": null
+    },
+    {
+      "category": "direct",
+      "query": "財團法人天主教中華道明會",
+      "expected": "sources",
+      "human_label": null
+    },
+    {
+      "category": "direct",
+      "query": "臺北市文山區樟林社區發展協會",
+      "expected": "sources",
+      "human_label": null
+    },
+    {
+      "category": "direct",
+      "query": "臺北市文山區興業里辦公處",
+      "expected": "sources",
+      "human_label": null
+    },
+    {
+      "category": "direct",
+      "query": "臺北市信義區六合里辦公處",
+      "expected": "sources",
+      "human_label": null
+    },
+    {
+      "category": "synonym",
+      "query": "文山區長者關懷據點",
+      "expected": "sources",
+      "human_label": null
+    },
+    {
+      "category": "synonym",
+      "query": "大安區銀髮族關懷據點",
+      "expected": "sources",
+      "human_label": null
+    },
+    {
+      "category": "synonym",
+      "query": "士林區老人服務中心",
+      "expected": "sources",
+      "human_label": null
+    },
+    {
+      "category": "synonym",
+      "query": "萬華區長輩關懷據點",
+      "expected": "sources",
+      "human_label": null
+    },
+    {
+      "category": "synonym",
+      "query": "北投區長者關懷據點",
+      "expected": "sources",
+      "human_label": null
+    },
+    {
+      "category": "insufficient",
+      "query": "臺北市游泳池",
+      "expected": "insufficient",
+      "human_label": null
+    },
+    {
+      "category": "insufficient",
+      "query": "北投區圖書借閱",
+      "expected": "insufficient",
+      "human_label": null
+    },
+    {
+      "category": "insufficient",
+      "query": "機車停車場收費標準",
+      "expected": "insufficient",
+      "human_label": null
+    },
+    {
+      "category": "insufficient",
+      "query": "中山區寵物公園",
+      "expected": "insufficient",
+      "human_label": null
+    },
+    {
+      "category": "insufficient",
+      "query": "zzxx123123",
+      "expected": "insufficient",
+      "human_label": null
+    },
+    {
+      "category": "unsupported",
+      "query": "文山區據點今天還有活動名額嗎",
+      "expected": "insufficient",
+      "human_label": null
+    },
+    {
+      "category": "unsupported",
+      "query": "長者福利資格是否符合",
+      "expected": "insufficient",
+      "human_label": null
+    },
+    {
+      "category": "unsupported",
+      "query": "明天關懷據點幾點開門",
+      "expected": "insufficient",
+      "human_label": null
+    },
+    {
+      "category": "unsupported",
+      "query": "大安區活動報名費用",
+      "expected": "insufficient",
+      "human_label": null
+    },
+    {
+      "category": "unsupported",
+      "query": "保證即時剩餘座位",
+      "expected": "insufficient",
+      "human_label": null
+    }
+  ]
+}

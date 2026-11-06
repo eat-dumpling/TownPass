@@ -37,3 +37,12 @@ Here are some quick setup guide.
    ``` bash
    flutter run
    ```
+
+
+# 本機 AI 微服務
+
+`local-llm-test` 在原首頁與服務清單新增「城市小幫手」。網頁隨 App 離線打包，透過原生 bridge 進行一般本機 AI 對話；有相關離線資料時才加入 RAG 參考。未開啟模型仍可純離線查詢。
+
+[執行 AI 版城市通（保留原首頁）](apps/city_ai_demo/README.md) · [微服務原始碼](microservices/city_ai/README.md) · [實作與驗證狀態](IMPLEMENTATION_STATUS.md)。
+
+原入口保持 iOS 15.x 與純檢索；`apps/city_ai_demo` 是沿用同一原首頁的 AI 建置宿主，iOS 16.4 起可選用本機模型。
