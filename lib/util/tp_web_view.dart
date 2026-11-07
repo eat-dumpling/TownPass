@@ -46,6 +46,23 @@ class TPWebView extends StatelessWidget {
 
   final RxBool canGoBack = RxBool(false);
 
+  /// On iOS, same-document navigations (pushState / hash changes) report the
+  /// visited-history update before WKWebView's back list is final, so a single
+  /// read can leave a stale back arrow that does nothing. Read again shortly after.
+  Future<void> _refreshCanGoBack() async {
+    canGoBack.value = await webViewController.value?.canGoBack() ?? false;
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    canGoBack.value = await webViewController.value?.canGoBack() ?? false;
+  }
+
+  Future<void> _goBack() async {
+    final controller = webViewController.value;
+    if (controller != null && await controller.canGoBack()) {
+      await controller.goBack();
+    }
+    await _refreshCanGoBack();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +73,7 @@ class TPWebView extends StatelessWidget {
           () => switch (canGoBack.value) {
             true => IconButton(
                 icon: Assets.svg.expand.svg(),
-                onPressed: () async => await webViewController.value?.goBack(),
+                onPressed: _goBack,
                 style: const ButtonStyle(
                   iconSize: WidgetStatePropertyAll<double>(24),
                 ),
@@ -77,6 +94,8 @@ class TPWebView extends StatelessWidget {
         controller: appBarController,
       ),
       body: TPInAppWebView(
+        // Without this, Flutter's iOS platform-view gesture arbitration delays taps inside the page.
+        preventGestureDelay: true,
         onWebViewCreated: (controller) {
           webViewController.value = controller;
           try {
@@ -85,9 +104,7 @@ class TPWebView extends StatelessWidget {
             controller.loadData(data: _failedToLoadUrlData(url: url));
           }
         },
-        onUpdateVisitedHistory: (_, __, ___) async {
-          canGoBack.value = await webViewController.value?.canGoBack() ?? false;
-        },
+        onUpdateVisitedHistory: (_, __, ___) => _refreshCanGoBack(),
         onTitleChanged: (_, title) {
           appBarController.title.value = switch (forceTitle == null) {
             true => title,

@@ -1,0 +1,1422 @@
+{
+ "version": "2026-11-07",
+ "sources": [
+  {
+   "id": "recycle",
+   "core": true,
+   "name": "臺北市資源回收分類方式（臺北市政府環境保護局）",
+   "url": "https://data.taipei/dataset/detail?id=74643872-ee76-4727-bd02-d73b536eaad7"
+  },
+  {
+   "id": "truck",
+   "core": true,
+   "name": "臺北市垃圾車點位路線資訊（臺北市政府環境保護局）",
+   "url": "https://data.taipei/dataset/detail?id=6bb3304b-4f46-4bb0-8cd1-60c66dcd1cae"
+  },
+  {
+   "id": "dep",
+   "core": true,
+   "name": "臺北市政府環境保護局（專用垃圾袋、廚餘、收運 FAQ）",
+   "url": "https://www.dep.gov.taipei/"
+  }
+ ],
+ "categories": {
+  "general": {
+   "emoji": "🗑️",
+   "where": {
+    "en": "Garbage truck, in an official bag",
+    "zh": "垃圾車，須用專用垃圾袋"
+   }
+  },
+  "recycle": {
+   "emoji": "♻️",
+   "where": {
+    "en": "Recycling truck on the same route, free",
+    "zh": "同路線的資源回收車，免費"
+   }
+  },
+  "food": {
+   "emoji": "🍌",
+   "where": {
+    "en": "Food-waste bucket on the truck",
+    "zh": "垃圾車上的廚餘桶"
+   }
+  },
+  "special": {
+   "emoji": "🔋",
+   "where": {
+    "en": "Recycling truck, packed separately",
+    "zh": "資源回收車，分開包裝"
+   }
+  },
+  "bulky": {
+   "emoji": "🛋️",
+   "where": {
+    "en": "Book a pickup with the cleaning squad",
+    "zh": "預約清潔隊收運"
+   }
+  }
+ },
+ "groups": {
+  "general": {
+   "cat": "general",
+   "days": [
+    1,
+    2,
+    4,
+    5,
+    6
+   ]
+  },
+  "rigid": {
+   "cat": "recycle",
+   "days": [
+    2,
+    4,
+    6
+   ],
+   "label": {
+    "en": "Bottles, cans, plastics, styrofoam, small electronics",
+    "zh": "立體類：瓶罐、容器、塑膠、保麗龍、小家電"
+   }
+  },
+  "flat": {
+   "cat": "recycle",
+   "days": [
+    1,
+    5
+   ],
+   "label": {
+    "en": "Paper, clean clothes, clean plastic bags, books",
+    "zh": "平面類：紙類、乾淨舊衣、乾淨塑膠袋、舊書"
+   }
+  },
+  "food": {
+   "cat": "food",
+   "days": [
+    1,
+    2,
+    4,
+    5,
+    6
+   ]
+  },
+  "hazard": {
+   "cat": "special",
+   "days": [
+    1,
+    2,
+    4,
+    5,
+    6
+   ],
+   "label": {
+    "en": "Batteries, bulbs, cooking oil",
+    "zh": "電池、燈管、廢油"
+   }
+  },
+  "bulky": {
+   "cat": "bulky",
+   "days": [
+    1,
+    2,
+    4,
+    5,
+    6
+   ],
+   "booking": true,
+   "note": {
+    "en": "Free pickup for households. Book at least 1 day ahead with your district cleaning squad, or through 1999. Pickup runs Mon–Sat.",
+    "zh": "家戶免費收運。至少前一天向各區清潔隊預約，或透過 1999 預約，週一至週六收運。"
+   }
+  }
+ },
+ "items": [
+  {
+   "id": "pet",
+   "emoji": "🧴",
+   "group": "rigid",
+   "name": {
+    "en": "Plastic bottle",
+    "zh": "寶特瓶"
+   },
+   "keywords": [
+    "pet",
+    "water bottle",
+    "塑膠瓶",
+    "水瓶"
+   ],
+   "steps": [
+    {
+     "emoji": "🚿",
+     "title": {
+      "en": "Empty and rinse",
+      "zh": "倒空、沖洗"
+     },
+     "text": {
+      "en": "Pour out what is left and give it a quick rinse.",
+      "zh": "倒掉剩餘內容物，簡單沖一下。"
+     }
+    },
+    {
+     "emoji": "🔩",
+     "title": {
+      "en": "Take off caps and labels if you can",
+      "zh": "可以的話拆下瓶蓋"
+     },
+     "text": {
+      "en": "Caps can go to recycling too.",
+      "zh": "瓶蓋也可以回收。"
+     }
+    },
+    {
+     "emoji": "🫓",
+     "title": {
+      "en": "Flatten it",
+      "zh": "壓扁"
+     },
+     "text": {
+      "en": "Squash it to save space.",
+      "zh": "壓扁可以節省空間。"
+     }
+    }
+   ],
+   "handover": {
+    "en": "Hand it to the crew on the recycling truck that follows the garbage truck (Tue / Thu / Sat). Free — no special bag needed.",
+    "zh": "交給跟著垃圾車的資源回收車人員（二、四、六）。免費，不需專用垃圾袋。"
+   }
+  },
+  {
+   "id": "can",
+   "emoji": "🥫",
+   "group": "rigid",
+   "name": {
+    "en": "Can (aluminum / tin)",
+    "zh": "鐵鋁罐"
+   },
+   "keywords": [
+    "soda",
+    "beer",
+    "tin",
+    "易開罐",
+    "罐頭"
+   ],
+   "steps": [
+    {
+     "emoji": "🚿",
+     "title": {
+      "en": "Empty and rinse",
+      "zh": "倒空、沖洗"
+     },
+     "text": {
+      "en": "Pour out what is left and give it a quick rinse.",
+      "zh": "倒掉剩餘內容物，簡單沖一下。"
+     }
+    },
+    {
+     "emoji": "🫓",
+     "title": {
+      "en": "Flatten it",
+      "zh": "壓扁"
+     },
+     "text": {
+      "en": "Squash it to save space.",
+      "zh": "壓扁可以節省空間。"
+     }
+    }
+   ],
+   "handover": {
+    "en": "Hand it to the crew on the recycling truck that follows the garbage truck (Tue / Thu / Sat). Free — no special bag needed.",
+    "zh": "交給跟著垃圾車的資源回收車人員（二、四、六）。免費，不需專用垃圾袋。"
+   }
+  },
+  {
+   "id": "glass",
+   "emoji": "🍾",
+   "group": "rigid",
+   "name": {
+    "en": "Glass bottle",
+    "zh": "玻璃瓶"
+   },
+   "keywords": [
+    "wine",
+    "jar",
+    "酒瓶",
+    "玻璃罐"
+   ],
+   "steps": [
+    {
+     "emoji": "🚿",
+     "title": {
+      "en": "Empty and rinse",
+      "zh": "倒空、沖洗"
+     },
+     "text": {
+      "en": "Pour out what is left and give it a quick rinse.",
+      "zh": "倒掉剩餘內容物，簡單沖一下。"
+     }
+    },
+    {
+     "emoji": "🧤",
+     "title": {
+      "en": "Do not break it",
+      "zh": "不要打破"
+     },
+     "text": {
+      "en": "Hand it over whole so the crew stays safe.",
+      "zh": "完整交出，避免割傷清潔人員。"
+     }
+    }
+   ],
+   "handover": {
+    "en": "Hand it to the crew on the recycling truck that follows the garbage truck (Tue / Thu / Sat). Free — no special bag needed.",
+    "zh": "交給跟著垃圾車的資源回收車人員（二、四、六）。免費，不需專用垃圾袋。"
+   }
+  },
+  {
+   "id": "carton",
+   "emoji": "🧃",
+   "group": "rigid",
+   "name": {
+    "en": "Drink carton / juice box",
+    "zh": "鋁箔包、紙容器"
+   },
+   "keywords": [
+    "milk",
+    "tetra",
+    "牛奶盒",
+    "利樂包",
+    "紙盒"
+   ],
+   "steps": [
+    {
+     "emoji": "🥤",
+     "title": {
+      "en": "Take out the straw",
+      "zh": "抽出吸管"
+     },
+     "text": {
+      "en": "The straw goes in general trash.",
+      "zh": "吸管丟一般垃圾。"
+     }
+    },
+    {
+     "emoji": "🚿",
+     "title": {
+      "en": "Empty and rinse",
+      "zh": "倒空、沖洗"
+     },
+     "text": {
+      "en": "Pour out what is left and give it a quick rinse.",
+      "zh": "倒掉剩餘內容物，簡單沖一下。"
+     }
+    },
+    {
+     "emoji": "🫓",
+     "title": {
+      "en": "Flatten it",
+      "zh": "壓扁"
+     },
+     "text": {
+      "en": "Squash it to save space.",
+      "zh": "壓扁可以節省空間。"
+     }
+    }
+   ],
+   "handover": {
+    "en": "Hand it to the crew on the recycling truck that follows the garbage truck (Tue / Thu / Sat). Free — no special bag needed.",
+    "zh": "交給跟著垃圾車的資源回收車人員（二、四、六）。免費，不需專用垃圾袋。"
+   }
+  },
+  {
+   "id": "cup",
+   "emoji": "🧋",
+   "group": "rigid",
+   "name": {
+    "en": "Bubble tea / takeaway cup",
+    "zh": "手搖飲杯"
+   },
+   "keywords": [
+    "boba",
+    "drink cup",
+    "coffee cup",
+    "飲料杯",
+    "咖啡杯"
+   ],
+   "steps": [
+    {
+     "emoji": "🧋",
+     "title": {
+      "en": "Empty it",
+      "zh": "倒空"
+     },
+     "text": {
+      "en": "Pour the drink and pearls out. Pearls and ice go to food waste or the sink.",
+      "zh": "倒掉飲料。珍珠等料可當廚餘。"
+     }
+    },
+    {
+     "emoji": "✂️",
+     "title": {
+      "en": "Separate the parts",
+      "zh": "拆開"
+     },
+     "text": {
+      "en": "Remove the sealing film and straw — they are general trash. The cup and lid go to recycling.",
+      "zh": "撕下封膜、拿出吸管丟一般垃圾；杯子、杯蓋回收。"
+     }
+    },
+    {
+     "emoji": "🚿",
+     "title": {
+      "en": "Empty and rinse",
+      "zh": "倒空、沖洗"
+     },
+     "text": {
+      "en": "Pour out what is left and give it a quick rinse.",
+      "zh": "倒掉剩餘內容物，簡單沖一下。"
+     }
+    },
+    {
+     "emoji": "📚",
+     "title": {
+      "en": "Stack the cups",
+      "zh": "疊起來"
+     },
+     "text": {
+      "en": "Stack cups to save space.",
+      "zh": "杯子疊好節省空間。"
+     }
+    }
+   ],
+   "handover": {
+    "en": "Hand it to the crew on the recycling truck that follows the garbage truck (Tue / Thu / Sat). Free — no special bag needed.",
+    "zh": "交給跟著垃圾車的資源回收車人員（二、四、六）。免費，不需專用垃圾袋。"
+   }
+  },
+  {
+   "id": "lunchbox",
+   "emoji": "🍱",
+   "group": "rigid",
+   "name": {
+    "en": "Plastic / paper lunch box",
+    "zh": "餐盒"
+   },
+   "keywords": [
+    "bento",
+    "takeout box",
+    "food container",
+    "便當盒",
+    "外帶盒"
+   ],
+   "steps": [
+    {
+     "emoji": "🍚",
+     "title": {
+      "en": "Scrape out the food",
+      "zh": "倒出剩菜"
+     },
+     "text": {
+      "en": "Leftover food goes to food waste.",
+      "zh": "剩菜當廚餘。"
+     }
+    },
+    {
+     "emoji": "🚿",
+     "title": {
+      "en": "Empty and rinse",
+      "zh": "倒空、沖洗"
+     },
+     "text": {
+      "en": "Pour out what is left and give it a quick rinse.",
+      "zh": "倒掉剩餘內容物，簡單沖一下。"
+     }
+    },
+    {
+     "emoji": "💨",
+     "title": {
+      "en": "Let it dry",
+      "zh": "晾乾"
+     },
+     "text": {
+      "en": "Wet recyclables can make other items dirty.",
+      "zh": "濕的回收物會弄髒其他回收物。"
+     }
+    }
+   ],
+   "warn": {
+    "en": "Wooden lunch boxes are NOT recyclable — general trash.",
+    "zh": "木片餐盒不可回收，當一般垃圾。"
+   },
+   "handover": {
+    "en": "Hand it to the crew on the recycling truck that follows the garbage truck (Tue / Thu / Sat). Free — no special bag needed.",
+    "zh": "交給跟著垃圾車的資源回收車人員（二、四、六）。免費，不需專用垃圾袋。"
+   }
+  },
+  {
+   "id": "styrofoam",
+   "emoji": "📦",
+   "group": "rigid",
+   "name": {
+    "en": "Styrofoam",
+    "zh": "保麗龍"
+   },
+   "keywords": [
+    "foam",
+    "packing",
+    "polystyrene",
+    "緩衝材",
+    "保麗龍碗"
+   ],
+   "steps": [
+    {
+     "emoji": "🧽",
+     "title": {
+      "en": "Keep it clean",
+      "zh": "保持乾淨"
+     },
+     "text": {
+      "en": "Only clean styrofoam is recycled. Wipe or rinse food containers.",
+      "zh": "只收乾淨的保麗龍，餐具要先擦乾淨。"
+     }
+    }
+   ],
+   "warn": {
+    "en": "Sponge / foam filling (泡棉) is not recyclable.",
+    "zh": "泡棉、海綿不可回收。"
+   },
+   "handover": {
+    "en": "Hand it to the crew on the recycling truck that follows the garbage truck (Tue / Thu / Sat). Free — no special bag needed.",
+    "zh": "交給跟著垃圾車的資源回收車人員（二、四、六）。免費，不需專用垃圾袋。"
+   }
+  },
+  {
+   "id": "fruitnet",
+   "emoji": "🍐",
+   "group": "rigid",
+   "name": {
+    "en": "Fruit foam net",
+    "zh": "水果網套"
+   },
+   "keywords": [
+    "fruit net",
+    "mesh",
+    "網套"
+   ],
+   "steps": [],
+   "handover": {
+    "en": "Hand it to the crew on the recycling truck that follows the garbage truck (Tue / Thu / Sat). Free — no special bag needed.",
+    "zh": "交給跟著垃圾車的資源回收車人員（二、四、六）。免費，不需專用垃圾袋。"
+   }
+  },
+  {
+   "id": "phone",
+   "emoji": "📱",
+   "group": "rigid",
+   "name": {
+    "en": "Old phone / small electronics",
+    "zh": "手機、小家電"
+   },
+   "keywords": [
+    "mobile",
+    "hair dryer",
+    "mouse",
+    "keyboard",
+    "charger",
+    "吹風機",
+    "滑鼠",
+    "鍵盤",
+    "電腦"
+   ],
+   "steps": [
+    {
+     "emoji": "🔐",
+     "title": {
+      "en": "Delete your data",
+      "zh": "刪除個人資料"
+     },
+     "text": {
+      "en": "Factory-reset phones and computers first.",
+      "zh": "手機、電腦先回復原廠設定。"
+     }
+    },
+    {
+     "emoji": "🔋",
+     "title": {
+      "en": "Remove batteries if you can",
+      "zh": "可以的話拆出電池"
+     },
+     "text": {
+      "en": "Batteries are recycled separately.",
+      "zh": "電池要另外回收。"
+     }
+    }
+   ],
+   "handover": {
+    "en": "Hand it to the crew on the recycling truck that follows the garbage truck (Tue / Thu / Sat). Free — no special bag needed.",
+    "zh": "交給跟著垃圾車的資源回收車人員（二、四、六）。免費，不需專用垃圾袋。"
+   }
+  },
+  {
+   "id": "plastic",
+   "emoji": "🪣",
+   "group": "rigid",
+   "name": {
+    "en": "Other hard plastic / metal",
+    "zh": "廢塑膠、廢金屬"
+   },
+   "keywords": [
+    "bucket",
+    "pot",
+    "pan",
+    "hanger",
+    "臉盆",
+    "鍋子",
+    "衣架"
+   ],
+   "steps": [
+    {
+     "emoji": "🚿",
+     "title": {
+      "en": "Empty and rinse",
+      "zh": "倒空、沖洗"
+     },
+     "text": {
+      "en": "Pour out what is left and give it a quick rinse.",
+      "zh": "倒掉剩餘內容物，簡單沖一下。"
+     }
+    }
+   ],
+   "handover": {
+    "en": "Hand it to the crew on the recycling truck that follows the garbage truck (Tue / Thu / Sat). Free — no special bag needed.",
+    "zh": "交給跟著垃圾車的資源回收車人員（二、四、六）。免費，不需專用垃圾袋。"
+   }
+  },
+  {
+   "id": "paper",
+   "emoji": "📰",
+   "group": "flat",
+   "name": {
+    "en": "Paper, newspaper, boxes",
+    "zh": "廢紙、紙箱"
+   },
+   "keywords": [
+    "cardboard",
+    "magazine",
+    "box",
+    "carton box",
+    "報紙",
+    "雜誌",
+    "紙箱",
+    "紙袋"
+   ],
+   "steps": [
+    {
+     "emoji": "📦",
+     "title": {
+      "en": "Flatten boxes",
+      "zh": "紙箱攤平"
+     },
+     "text": {
+      "en": "Remove tape and flatten.",
+      "zh": "撕掉膠帶，攤平。"
+     }
+    },
+    {
+     "emoji": "🪢",
+     "title": {
+      "en": "Bundle and tie",
+      "zh": "綁成一疊"
+     },
+     "text": {
+      "en": "Tie paper into a bundle so it does not fly away.",
+      "zh": "綁好避免飛散。"
+     }
+    }
+   ],
+   "warn": {
+    "en": "Greasy paper, tissues, glossy laminated paper and photo paper are general trash.",
+    "zh": "沾油的紙、衛生紙、上膜光面紙、照片紙都是一般垃圾。"
+   },
+   "handover": {
+    "en": "Hand it to the crew on the recycling truck that follows the garbage truck (Mon / Fri). Free — no special bag needed.",
+    "zh": "交給跟著垃圾車的資源回收車人員（一、五）。免費，不需專用垃圾袋。"
+   }
+  },
+  {
+   "id": "clothes",
+   "emoji": "👕",
+   "group": "flat",
+   "name": {
+    "en": "Clean old clothes",
+    "zh": "乾淨舊衣"
+   },
+   "keywords": [
+    "shirt",
+    "jeans",
+    "clothing",
+    "衣服",
+    "褲子"
+   ],
+   "steps": [
+    {
+     "emoji": "🧺",
+     "title": {
+      "en": "Wash and dry",
+      "zh": "洗淨晾乾"
+     },
+     "text": {
+      "en": "Only clean, dry clothes are accepted.",
+      "zh": "只收乾淨、乾燥的衣物。"
+     }
+    },
+    {
+     "emoji": "🛍️",
+     "title": {
+      "en": "Bag them",
+      "zh": "裝袋"
+     },
+     "text": {
+      "en": "Put them in any bag.",
+      "zh": "用任何袋子裝好。"
+     }
+    }
+   ],
+   "warn": {
+    "en": "Towels, socks, underpants, bedding, curtains and torn or smelly clothes are general trash.",
+    "zh": "毛巾、襪子、內褲、棉被、窗簾，以及破舊發臭的衣物都是一般垃圾。"
+   },
+   "handover": {
+    "en": "Hand it to the crew on the recycling truck that follows the garbage truck (Mon / Fri). Free — no special bag needed.",
+    "zh": "交給跟著垃圾車的資源回收車人員（一、五）。免費，不需專用垃圾袋。"
+   }
+  },
+  {
+   "id": "bag",
+   "emoji": "🛍️",
+   "group": "flat",
+   "name": {
+    "en": "Clean plastic bag",
+    "zh": "乾淨塑膠袋"
+   },
+   "keywords": [
+    "shopping bag",
+    "購物袋"
+   ],
+   "steps": [
+    {
+     "emoji": "🧽",
+     "title": {
+      "en": "Must be clean",
+      "zh": "要乾淨"
+     },
+     "text": {
+      "en": "No oil, soup or blood.",
+      "zh": "不能有油漬、湯汁、血水。"
+     }
+    },
+    {
+     "emoji": "🗂️",
+     "title": {
+      "en": "Stuff bags into one bag",
+      "zh": "集中裝成一袋"
+     }
+    }
+   ],
+   "warn": {
+    "en": "Snack and chip bags (shiny, mixed material) are general trash.",
+    "zh": "零食、餅乾包裝袋（複合材質）是一般垃圾。"
+   },
+   "handover": {
+    "en": "Hand it to the crew on the recycling truck that follows the garbage truck (Mon / Fri). Free — no special bag needed.",
+    "zh": "交給跟著垃圾車的資源回收車人員（一、五）。免費，不需專用垃圾袋。"
+   }
+  },
+  {
+   "id": "books",
+   "emoji": "📚",
+   "group": "flat",
+   "name": {
+    "en": "Old books",
+    "zh": "舊書"
+   },
+   "keywords": [
+    "book",
+    "textbook",
+    "書"
+   ],
+   "steps": [
+    {
+     "emoji": "🪢",
+     "title": {
+      "en": "Tie them separately",
+      "zh": "和其他紙類分開綁"
+     }
+    }
+   ],
+   "handover": {
+    "en": "Hand it to the crew on the recycling truck that follows the garbage truck (Mon / Fri). Free — no special bag needed.",
+    "zh": "交給跟著垃圾車的資源回收車人員（一、五）。免費，不需專用垃圾袋。"
+   }
+  },
+  {
+   "id": "peel",
+   "emoji": "🍌",
+   "group": "food",
+   "name": {
+    "en": "Fruit & vegetable scraps",
+    "zh": "果皮、菜葉"
+   },
+   "keywords": [
+    "banana",
+    "peel",
+    "vegetable",
+    "fruit",
+    "香蕉皮",
+    "菜渣"
+   ],
+   "steps": [
+    {
+     "emoji": "💧",
+     "title": {
+      "en": "Drain the water",
+      "zh": "瀝乾水分"
+     },
+     "text": {
+      "en": "Less water means less smell.",
+      "zh": "瀝乾比較不臭。"
+     }
+    },
+    {
+     "emoji": "🧊",
+     "title": {
+      "en": "Store it cold",
+      "zh": "冷藏保存"
+     },
+     "text": {
+      "en": "Keep it in a sealed box in the fridge until truck day.",
+      "zh": "用密封盒放冰箱，等收運日再拿出。"
+     }
+    }
+   ],
+   "handover": {
+    "en": "Since 2026 all food waste is one category. Pour it into the food-waste bucket at the back of the garbage truck. The empty plastic bag goes in your general trash.",
+    "zh": "2026 年起廚餘不分生熟，一律倒進垃圾車後方的廚餘桶。倒完的塑膠袋當一般垃圾。"
+   }
+  },
+  {
+   "id": "leftovers",
+   "emoji": "🍲",
+   "group": "food",
+   "name": {
+    "en": "Leftover food, meat, bones",
+    "zh": "剩菜、肉類"
+   },
+   "keywords": [
+    "rice",
+    "noodle",
+    "meat",
+    "chicken",
+    "剩飯",
+    "骨頭"
+   ],
+   "steps": [
+    {
+     "emoji": "💧",
+     "title": {
+      "en": "Drain the soup",
+      "zh": "瀝乾湯汁"
+     }
+    },
+    {
+     "emoji": "🧊",
+     "title": {
+      "en": "Store it cold",
+      "zh": "冷藏保存"
+     }
+    }
+   ],
+   "handover": {
+    "en": "Since 2026 all food waste is one category. Pour it into the food-waste bucket at the back of the garbage truck. The empty plastic bag goes in your general trash.",
+    "zh": "2026 年起廚餘不分生熟，一律倒進垃圾車後方的廚餘桶。倒完的塑膠袋當一般垃圾。"
+   }
+  },
+  {
+   "id": "tea",
+   "emoji": "☕",
+   "group": "food",
+   "name": {
+    "en": "Tea leaves / coffee grounds",
+    "zh": "茶渣、咖啡渣"
+   },
+   "keywords": [
+    "coffee",
+    "tea",
+    "茶葉"
+   ],
+   "steps": [
+    {
+     "emoji": "🫖",
+     "title": {
+      "en": "Remove the tea bag / filter",
+      "zh": "拿掉茶包袋、濾紙"
+     },
+     "text": {
+      "en": "The bag or filter paper is general trash.",
+      "zh": "茶包袋、濾紙是一般垃圾。"
+     }
+    }
+   ],
+   "handover": {
+    "en": "Since 2026 all food waste is one category. Pour it into the food-waste bucket at the back of the garbage truck. The empty plastic bag goes in your general trash.",
+    "zh": "2026 年起廚餘不分生熟，一律倒進垃圾車後方的廚餘桶。倒完的塑膠袋當一般垃圾。"
+   }
+  },
+  {
+   "id": "coconut",
+   "emoji": "🥥",
+   "group": "rigid",
+   "name": {
+    "en": "Coconut / durian shell",
+    "zh": "椰子殼、榴槤殼"
+   },
+   "keywords": [
+    "coconut",
+    "durian"
+   ],
+   "steps": [
+    {
+     "emoji": "🚫",
+     "title": {
+      "en": "Not food waste",
+      "zh": "不是廚餘"
+     },
+     "text": {
+      "en": "These shells are too hard for food waste. Collect them separately.",
+      "zh": "殼太硬，不能混在廚餘裡，請另外收集。"
+     }
+    }
+   ],
+   "handover": {
+    "en": "Hand them to the recycling truck crew, separate from food waste.",
+    "zh": "另外收集後交給資源回收車。"
+   }
+  },
+  {
+   "id": "battery",
+   "emoji": "🔋",
+   "group": "hazard",
+   "name": {
+    "en": "Batteries / power bank",
+    "zh": "電池、行動電源"
+   },
+   "keywords": [
+    "aa",
+    "aaa",
+    "power bank",
+    "乾電池"
+   ],
+   "steps": [
+    {
+     "emoji": "🩹",
+     "title": {
+      "en": "Tape the ends",
+      "zh": "電極貼膠帶"
+     },
+     "text": {
+      "en": "Cover the metal ends with tape to prevent fire.",
+      "zh": "用膠帶貼住兩端，避免短路起火。"
+     }
+    },
+    {
+     "emoji": "🛍️",
+     "title": {
+      "en": "Bag them separately",
+      "zh": "另外裝袋"
+     }
+    }
+   ],
+   "warn": {
+    "en": "Never put batteries in the garbage bag — they can start fires in the truck.",
+    "zh": "電池絕對不能丟垃圾袋，可能讓垃圾車起火。"
+   },
+   "handover": {
+    "en": "Pack it separately and hand it to the recycling crew. Never put it in the garbage bag.",
+    "zh": "分開包好交給回收車人員，絕對不要放進垃圾袋。"
+   }
+  },
+  {
+   "id": "bulb",
+   "emoji": "💡",
+   "group": "hazard",
+   "name": {
+    "en": "Light bulb / fluorescent tube",
+    "zh": "燈泡、燈管"
+   },
+   "keywords": [
+    "lamp",
+    "led",
+    "tube",
+    "日光燈"
+   ],
+   "steps": [
+    {
+     "emoji": "🧤",
+     "title": {
+      "en": "Keep it whole",
+      "zh": "保持完整"
+     },
+     "text": {
+      "en": "Do not break it — tubes contain mercury.",
+      "zh": "不要打破，燈管含汞。"
+     }
+    },
+    {
+     "emoji": "📦",
+     "title": {
+      "en": "Wrap it",
+      "zh": "包好"
+     },
+     "text": {
+      "en": "Put it back in its box or wrap with paper.",
+      "zh": "放回原包裝或用紙包好。"
+     }
+    }
+   ],
+   "handover": {
+    "en": "Pack it separately and hand it to the recycling crew. Never put it in the garbage bag.",
+    "zh": "分開包好交給回收車人員，絕對不要放進垃圾袋。"
+   }
+  },
+  {
+   "id": "oil",
+   "emoji": "🫗",
+   "group": "hazard",
+   "name": {
+    "en": "Used cooking oil",
+    "zh": "廢食用油"
+   },
+   "keywords": [
+    "frying oil",
+    "油"
+   ],
+   "steps": [
+    {
+     "emoji": "🍶",
+     "title": {
+      "en": "Pour into a bottle and cap it",
+      "zh": "倒進瓶子並蓋緊"
+     },
+     "text": {
+      "en": "Let it cool first.",
+      "zh": "先放涼。"
+     }
+    }
+   ],
+   "warn": {
+    "en": "Do not pour oil down the sink.",
+    "zh": "不要倒進水槽。"
+   },
+   "handover": {
+    "en": "Pack it separately and hand it to the recycling crew. Never put it in the garbage bag.",
+    "zh": "分開包好交給回收車人員，絕對不要放進垃圾袋。"
+   }
+  },
+  {
+   "id": "medicine",
+   "emoji": "🧪",
+   "group": "hazard",
+   "name": {
+    "en": "Thermometer / bug spray can",
+    "zh": "水銀體溫計、殺蟲劑罐"
+   },
+   "keywords": [
+    "mercury",
+    "insecticide",
+    "殺蟲劑"
+   ],
+   "steps": [
+    {
+     "emoji": "🛍️",
+     "title": {
+      "en": "Bag it separately",
+      "zh": "另外裝袋"
+     }
+    }
+   ],
+   "handover": {
+    "en": "Pack it separately and hand it to the recycling crew. Never put it in the garbage bag.",
+    "zh": "分開包好交給回收車人員，絕對不要放進垃圾袋。"
+   }
+  },
+  {
+   "id": "tissue",
+   "emoji": "🧻",
+   "group": "general",
+   "name": {
+    "en": "Tissues, diapers",
+    "zh": "衛生紙、尿布"
+   },
+   "keywords": [
+    "toilet paper",
+    "napkin",
+    "diaper",
+    "wet wipe",
+    "紙尿布",
+    "濕紙巾"
+   ],
+   "steps": [],
+   "handover": {
+    "en": "Put it in a Taipei official garbage bag, tie it, and throw it into the garbage truck yourself.",
+    "zh": "裝進臺北市專用垃圾袋、綁好，自己丟進垃圾車。"
+   }
+  },
+  {
+   "id": "snackbag",
+   "emoji": "🍟",
+   "group": "general",
+   "name": {
+    "en": "Snack / chip bag",
+    "zh": "零食包裝袋"
+   },
+   "keywords": [
+    "chips",
+    "cookie wrapper",
+    "餅乾袋"
+   ],
+   "steps": [],
+   "handover": {
+    "en": "Put it in a Taipei official garbage bag, tie it, and throw it into the garbage truck yourself.",
+    "zh": "裝進臺北市專用垃圾袋、綁好，自己丟進垃圾車。"
+   }
+  },
+  {
+   "id": "dirtybag",
+   "emoji": "🛍️",
+   "group": "general",
+   "name": {
+    "en": "Dirty / oily plastic bag",
+    "zh": "髒污塑膠袋"
+   },
+   "keywords": [
+    "greasy bag",
+    "油膩"
+   ],
+   "steps": [],
+   "handover": {
+    "en": "Put it in a Taipei official garbage bag, tie it, and throw it into the garbage truck yourself.",
+    "zh": "裝進臺北市專用垃圾袋、綁好，自己丟進垃圾車。"
+   }
+  },
+  {
+   "id": "straw",
+   "emoji": "🥤",
+   "group": "general",
+   "name": {
+    "en": "Straws, cup sealing film",
+    "zh": "吸管、封膜"
+   },
+   "keywords": [
+    "straw",
+    "film",
+    "杯膜"
+   ],
+   "steps": [],
+   "handover": {
+    "en": "Put it in a Taipei official garbage bag, tie it, and throw it into the garbage truck yourself.",
+    "zh": "裝進臺北市專用垃圾袋、綁好，自己丟進垃圾車。"
+   }
+  },
+  {
+   "id": "woodbox",
+   "emoji": "🥡",
+   "group": "general",
+   "name": {
+    "en": "Wooden lunch box",
+    "zh": "木片餐盒"
+   },
+   "keywords": [
+    "wood",
+    "木盒"
+   ],
+   "steps": [],
+   "handover": {
+    "en": "Put it in a Taipei official garbage bag, tie it, and throw it into the garbage truck yourself.",
+    "zh": "裝進臺北市專用垃圾袋、綁好，自己丟進垃圾車。"
+   }
+  },
+  {
+   "id": "shoes",
+   "emoji": "👟",
+   "group": "general",
+   "name": {
+    "en": "Shoes",
+    "zh": "鞋子"
+   },
+   "keywords": [
+    "sneakers",
+    "slippers",
+    "拖鞋"
+   ],
+   "steps": [],
+   "handover": {
+    "en": "Put it in a Taipei official garbage bag, tie it, and throw it into the garbage truck yourself.",
+    "zh": "裝進臺北市專用垃圾袋、綁好，自己丟進垃圾車。"
+   }
+  },
+  {
+   "id": "toy",
+   "emoji": "🧸",
+   "group": "general",
+   "name": {
+    "en": "Stuffed toy, balls",
+    "zh": "布偶、球類"
+   },
+   "keywords": [
+    "plush",
+    "teddy",
+    "ball",
+    "絨毛玩具"
+   ],
+   "steps": [],
+   "handover": {
+    "en": "Put it in a Taipei official garbage bag, tie it, and throw it into the garbage truck yourself.",
+    "zh": "裝進臺北市專用垃圾袋、綁好，自己丟進垃圾車。"
+   }
+  },
+  {
+   "id": "towel",
+   "emoji": "🧣",
+   "group": "general",
+   "name": {
+    "en": "Towels, socks, bedding",
+    "zh": "毛巾、襪子、棉被"
+   },
+   "keywords": [
+    "pillow",
+    "blanket",
+    "sheet",
+    "curtain",
+    "枕頭",
+    "床單"
+   ],
+   "steps": [],
+   "handover": {
+    "en": "Put it in a Taipei official garbage bag, tie it, and throw it into the garbage truck yourself.",
+    "zh": "裝進臺北市專用垃圾袋、綁好，自己丟進垃圾車。"
+   }
+  },
+  {
+   "id": "receipt",
+   "emoji": "🧾",
+   "group": "general",
+   "name": {
+    "en": "Receipts, stickers backing, photos",
+    "zh": "發票感熱紙、貼紙底紙、照片"
+   },
+   "keywords": [
+    "receipt",
+    "sticker",
+    "photo",
+    "收據"
+   ],
+   "steps": [],
+   "handover": {
+    "en": "Put it in a Taipei official garbage bag, tie it, and throw it into the garbage truck yourself.",
+    "zh": "裝進臺北市專用垃圾袋、綁好，自己丟進垃圾車。"
+   }
+  },
+  {
+   "id": "butt",
+   "emoji": "🚬",
+   "group": "general",
+   "name": {
+    "en": "Cigarette butts, dust",
+    "zh": "菸蒂、灰塵"
+   },
+   "keywords": [
+    "cigarette",
+    "ash",
+    "掃地"
+   ],
+   "steps": [
+    {
+     "emoji": "💧",
+     "title": {
+      "en": "Make sure it is out",
+      "zh": "確認熄滅"
+     }
+    }
+   ],
+   "handover": {
+    "en": "Put it in a Taipei official garbage bag, tie it, and throw it into the garbage truck yourself.",
+    "zh": "裝進臺北市專用垃圾袋、綁好，自己丟進垃圾車。"
+   }
+  },
+  {
+   "id": "furniture",
+   "emoji": "🛋️",
+   "group": "bulky",
+   "name": {
+    "en": "Sofa, mattress, furniture",
+    "zh": "沙發、床墊、家具"
+   },
+   "keywords": [
+    "bed",
+    "table",
+    "chair",
+    "cabinet",
+    "bike",
+    "桌椅",
+    "櫃子",
+    "腳踏車"
+   ],
+   "steps": [
+    {
+     "emoji": "☎️",
+     "title": {
+      "en": "Call 1999 to book",
+      "zh": "撥 1999 預約"
+     },
+     "text": {
+      "en": "Book at least 1 day ahead. Tell them your address and the item; they set a time and place.",
+      "zh": "至少前一天預約，說明地址與物品，清潔隊會約定時間地點。"
+     }
+    },
+    {
+     "emoji": "🏠",
+     "title": {
+      "en": "Put it out on the agreed day",
+      "zh": "在約定日放到指定地點"
+     }
+    }
+   ],
+   "warn": {
+    "en": "Do not leave furniture on the street without booking.",
+    "zh": "未預約不可擅自丟在路邊。"
+   }
+  },
+  {
+   "id": "appliance",
+   "emoji": "📺",
+   "group": "bulky",
+   "name": {
+    "en": "TV, fridge, washer, A/C",
+    "zh": "電視、冰箱、洗衣機、冷氣"
+   },
+   "keywords": [
+    "television",
+    "refrigerator",
+    "washing machine",
+    "air conditioner",
+    "fan",
+    "電風扇"
+   ],
+   "steps": [
+    {
+     "emoji": "☎️",
+     "title": {
+      "en": "Call 1999 to book",
+      "zh": "撥 1999 預約"
+     },
+     "text": {
+      "en": "Tell them your address and the item. They give you a pickup date.",
+      "zh": "說明地址與物品，清潔隊會約時間。"
+     }
+    }
+   ]
+  }
+ ],
+ "guide": [
+  {
+   "emoji": "🛍️",
+   "title": {
+    "en": "Buy official garbage bags",
+    "zh": "買專用垃圾袋"
+   },
+   "text": {
+    "en": "General trash must go in a Taipei City official garbage bag. Buy them at convenience stores and supermarkets. Sizes 3 L–120 L, e.g. 14 L: NT$100 for 20 bags, or NT$5 for one retail bag.",
+    "zh": "一般垃圾必須裝在臺北市專用垃圾袋。便利商店、超市都買得到。容量 3–120 公升，例如 14 公升一包 20 個 100 元，零售單個 5 元。"
+   },
+   "tip": {
+    "en": "Recycling, food waste and bulky-waste pickup are free — no special bag needed.",
+    "zh": "資源回收、廚餘與大型廢棄物預約收運都免費，不需專用袋。"
+   },
+   "warn": {
+    "en": "Not using an official bag can be fined from NT$1,200 (Waste Disposal Act).",
+    "zh": "未使用專用垃圾袋，依廢棄物清理法可處 1,200 元起罰鍰。"
+   }
+  },
+  {
+   "emoji": "🧺",
+   "title": {
+    "en": "Sort at home into 3",
+    "zh": "在家分成三類"
+   },
+   "text": {
+    "en": "1. General trash (official bag)  2. Recycling (any bag)  3. Food waste (a box or bag).",
+    "zh": "1. 一般垃圾（專用袋）2. 資源回收（任何袋子）3. 廚餘（盒子或袋子）。"
+   },
+   "tip": {
+    "en": "Not sure? Use \"What is this item?\" on the home page.",
+    "zh": "不確定？用首頁的「這是什麼垃圾？」查詢。"
+   }
+  },
+  {
+   "emoji": "📅",
+   "title": {
+    "en": "Check the day",
+    "zh": "確認今天收不收"
+   },
+   "text": {
+    "en": "No collection on Wednesday and Sunday. Paper & clothes: Mon / Fri. Bottles, cans & plastics: Tue / Thu / Sat.",
+    "zh": "每週三、日停收。紙類、舊衣：一、五。瓶罐、塑膠：二、四、六。"
+   },
+   "tip": {
+    "en": "Lunar New Year has a special schedule announced by the Department of Environmental Protection.",
+    "zh": "農曆春節收運時間依環保局公告調整。"
+   }
+  },
+  {
+   "emoji": "🕒",
+   "title": {
+    "en": "Find your stop and time",
+    "zh": "找到停靠點和時間"
+   },
+   "text": {
+    "en": "The truck stops at fixed places at fixed times, usually only a few minutes. Arrive 5 minutes early.",
+    "zh": "垃圾車在固定地點、固定時間停靠，通常只停幾分鐘，請提早 5 分鐘到。"
+   },
+   "tip": {
+    "en": "Missed it? The city runs limited-time drop-off points in every district.",
+    "zh": "錯過了？各區有環保局的限時收受點。"
+   }
+  },
+  {
+   "emoji": "🎵",
+   "title": {
+    "en": "Listen for the music",
+    "zh": "聽到音樂就出門"
+   },
+   "text": {
+    "en": "Trucks play music as they come (often \"Für Elise\"). A recycling truck runs on the same route.",
+    "zh": "垃圾車來時會播放音樂（常見為〈給愛麗絲〉），同路線也有資源回收車。"
+   }
+  },
+  {
+   "emoji": "🙌",
+   "title": {
+    "en": "Hand it over yourself",
+    "zh": "自己交給清潔車"
+   },
+   "text": {
+    "en": "Throw the official bag into the garbage truck. Give recyclables to the recycling crew. Pour food waste into the bucket at the back of the truck.",
+    "zh": "專用袋丟進垃圾車；回收物交給回收車人員；廚餘倒進車後方的廚餘桶。"
+   },
+   "warn": {
+    "en": "Never leave trash on the street or by a pole — Taipei has no curbside bins. You can be fined.",
+    "zh": "不可把垃圾放在路邊或電線桿旁（垃圾不落地），會被開罰。"
+   }
+  }
+ ]
+}
