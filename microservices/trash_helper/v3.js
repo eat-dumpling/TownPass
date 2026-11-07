@@ -86,6 +86,9 @@
   }
   // Kids mode = 回收小里長 (same official rule table, with zhuyin and a drag-into-the-bin game).
   // In the app it is served next to 丟丟 (127.0.0.1:8791); ?from= gives it a way back here.
+  // Kids mode replaces this page instead of stacking on it: a page kept for "back" keeps its
+  // recognition model in memory, and the iPhone WebView then cannot load the kids' copy
+  // ("[wasm] RangeError: Out of memory"). The kids page has its own arrow back here.
   function kidsUrl() {
     const c = window.TH_CONFIG || {};
     const base = c.kidsUrl ? c.kidsUrl
@@ -96,7 +99,7 @@
     return `${base}?from=${encodeURIComponent(back)}#/`;
   }
   function kidsButton() {
-    return h("button", { class: "lang-pill kids-pill", type: "button", "aria-label": t("kidsMode"), onclick: () => { location.href = kidsUrl(); } },
+    return h("button", { class: "lang-pill kids-pill", type: "button", "aria-label": t("kidsMode"), onclick: () => { location.replace(kidsUrl()); } },
       icon("star", 16), h("span", { text: t("kidsMode") }));
   }
 

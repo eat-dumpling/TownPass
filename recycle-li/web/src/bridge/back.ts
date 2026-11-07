@@ -18,6 +18,15 @@ export function rememberBack(search = typeof location === 'undefined' ? '' : loc
   } catch { /* 沒有 sessionStorage 或網址壞掉：就不顯示返回鈕 */ }
 }
 
+/** 回丟丟時「取代」這一頁，不留在上一頁快取裡：留著的話它的辨識模型會一直佔記憶體，
+ *  iPhone 的 WebView 就載不動丟丟那份（[wasm] RangeError: Out of memory）。 */
+export function goBackToDiudiu(e?: Event): void {
+  const href = backToDiudiu()
+  if (!href) return
+  e?.preventDefault()
+  location.replace(href)
+}
+
 export function backToDiudiu(): string | null {
   try { return sessionStorage.getItem(KEY) } catch { return null }
 }

@@ -6,7 +6,7 @@ import AppIcon from './AppIcon.vue'
 import Zy from './Zy.vue'
 import { missions } from '@/domain/catalog'
 import { useGame } from '@/stores/game'
-import { backToDiudiu } from '@/bridge/back'
+import { backToDiudiu, goBackToDiudiu } from '@/bridge/back'
 import { FULL_GAME } from '@/focus'
 
 defineProps<{ title?: string }>()
@@ -35,7 +35,7 @@ const fresh = computed(() => missions.filter((m) => game.missionProgress(m.id).d
       <span v-else-if="FULL_GAME" class="rt"><Zy :text="r.title" /></span>
     </div>
     <span class="stars" :aria-label="`手上有 ${game.stars} 顆星`"><AppIcon name="Star" :size="22" :stroke="2" class="st" /> {{ game.stars }}</span>
-    <a v-if="back" :href="back" class="cup home" aria-label="回到丟丟">
+    <a v-if="back" :href="back" class="cup home" aria-label="回到丟丟" @click="goBackToDiudiu">
       <AppIcon name="ArrowLeft" :size="24" :stroke="2.2" />
     </a>
     <router-link v-else-if="FULL_GAME" to="/missions" class="cup" aria-label="任務與成就">
