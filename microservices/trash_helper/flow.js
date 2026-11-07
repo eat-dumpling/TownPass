@@ -370,8 +370,8 @@
         h("span", { class: "grow last-arts" }, h("span", { text: t("hLast") }), last.slice(0, 5).map(id => TH.art(TH.itemById(id), 24))), h("strong", { text: t("hAgain") + " ›" })) : null,
       // Search or snap first: quickest way to the thing you have in hand.
       h("section", { class: "pick-group" },
-        h("div", { class: "search-row" }, h("label", { class: "search v3 grow" }, icon("search", 18), search),
-          h("button", { class: "scan-add", type: "button", onclick: () => go("scan") }, icon("camera", 18), t("hScanAdd"))),
+        // Snapping a photo is the big camera button in the tab bar; here only the search.
+        h("div", { class: "search-row" }, h("label", { class: "search v3 grow" }, icon("search", 18), search)),
         extra),
       // Each group folds to one line (title, how many picked, their little pictures); remembered per group.
       GROUPS.map(([k, ids], gi) => {
@@ -396,7 +396,7 @@
       }),
       // Other tools: one row of small tiles instead of three long rows.
       h("section", { class: "tool-tiles" },
-        [["message-circle", t("tcTitle"), () => go("talk/truck")], ["shopping-bag", t("bagsTitle"), TH.views.bagSheet], ["star", t("favTitle"), () => go("favorites")], ["music", t("musicTitle"), TH.views.musicSheet]]
+        [["message-circle", t("tcTitle"), () => go("talk/truck")], ["shopping-bag", t("bagsTitle"), TH.views.bagSheet], ["star", t("favTitle"), () => go("favorites")]]
           .map(([ic, l2, fn]) => h("button", { class: "tool-tile", type: "button", onclick: fn }, h("span", { class: "tt-icon" }, icon(ic, 22)), h("span", { text: l2 })))),
       bar,
     ];

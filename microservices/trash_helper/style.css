@@ -688,3 +688,11 @@ body.has-tabbar:has(.pick-bar) .va-fab[data-view="home"] { bottom: calc(86px + v
 .head-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
 .kids-pill { display: inline-flex; align-items: center; gap: 6px; min-height: 48px; border-color: #F5BA4B; color: #7A5200; }
 .head-actions .lang-pill { min-height: 48px; }
+
+/* Demo focus (2026-11-08): the title gets the whole line, the buttons sit above it;
+   the page scrolls far enough that the voice button and the picked-items bar never cover the last row. */
+.home-head { flex-wrap: wrap; align-items: center; }
+.home-head > div:first-child { order: 2; flex-basis: 100%; }
+.home-head > .head-actions { order: 1; margin-left: auto; }
+body.has-tabbar:has(.pick-bar) main { padding-bottom: calc(86px + var(--pick-bar-h, 64px) + 96px + env(safe-area-inset-bottom)); }
+.res-actions { justify-content: flex-end; margin: 0 0 4px; }
