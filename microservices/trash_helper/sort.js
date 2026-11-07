@@ -75,7 +75,7 @@
     fetch("data/rv_map.json").then(r => r.json()),
   ]).then(([items, cats, map]) => (data = { items: new Map(items.map(i => [i.id, i])), cats, map }));
 
-  // 「我要丟棄」: add it to the picked items (flow.js keeps them in localStorage "th.picks") and open the steps.
+  // 「我要丟棄」: add it to the picked items (flow.js keeps them in localStorage "th.picks") and go back to the picking list.
   // Things without their own Trash Helper entry go in as their category's home tile.
   const GROUP_TILE = { general: "tissue", rigid: "plastic", flat: "paper", food: "leftovers", hazard: "battery", bulky: "furniture" };
   function homeItemOf(rvId) {
@@ -91,7 +91,8 @@
       localStorage.setItem("th.picks", JSON.stringify(sel));
     } catch (_) { /* ignore */ }
     TH.onScanPick = null;
-    go("plan"); // straight to the steps for everything picked so far
+    // Back to the picking list with this item already ticked, so more can be added before the steps.
+    go("list", { replace: true });
   }
 
   // Each table row gets the key of its translated label (the zh/en columns stay as documentation).
