@@ -110,3 +110,7 @@ microservices/recycle_li/**
 !microservices/recycle_li/**/
 !microservices/recycle_li/**/.gitkeep
 build/recycle-li-dist/
+
+# Firebase CLI deploy cache
+.firebase/
+firebase-debug.log

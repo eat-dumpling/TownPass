@@ -313,4 +313,4 @@ recycle-li/
 
 ## 授權
 
-競賽作品以 AGPL-3.0 開源（`web/package.json` 標示 `AGPL-3.0-only`）；台北通本身為 GPL-3.0。主辦指定的授權聲明與 AGPL 全文：**待補**。
+競賽作品以 AGPL-3.0 開源（`web/package.json` 標示 `AGPL-3.0-only`）；台北通本身為 GPL-3.0。AGPL 全文見 `recycle-li/LICENSE`。主辦指定的授權聲明：**待補**。
