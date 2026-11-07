@@ -7,3 +7,4 @@ public/models/*
 src/components/icons.gen.ts
 public/mediapipe
 dist-eval
+.cert

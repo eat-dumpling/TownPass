@@ -80,16 +80,15 @@ const next = computed(() => {
 .green { right: 12px; color: #2F6B3A; }
 .talk { display: flex; flex-direction: column; gap: 12px; }
 .go {
-  --c: #468D9B; display: flex; align-items: center; gap: 12px; min-height: 76px; padding: 12px 18px; border-radius: 24px;
+  display: flex; align-items: center; gap: 12px; min-height: 76px; padding: 12px 18px; border-radius: 24px;
   text-decoration: none; color: #fff; font-size: var(--fs-h2); font-weight: 800; background: var(--c);
   box-shadow: 0 6px 0 color-mix(in srgb, var(--c) 70%, black), 0 10px 20px color-mix(in srgb, var(--c) 30%, transparent);
 }
 .go span { flex: 1; }
 .go:active { transform: translateY(3px); box-shadow: 0 3px 0 color-mix(in srgb, var(--c) 70%, black); }
-.go.scan { --c: #E7A43C; color: #3B2A06; }
-.go.build { --c: #4E9A57; }
-.go.quiz { --c: #3D9DC0; }
-.go.codex { --c: #8A63C8; }
+/* 照台北通 Figma：一般動作用主色藍綠；花星星（蓋房子）用黃色，像「餵食」 */
+.go { --c: #5AB4C5; }
+.go.build { --c: #F5BA4B; color: #3B2A06; }
 .today { display: flex; align-items: center; gap: 10px; text-decoration: none; background: rgba(255, 255, 255, .75); border-radius: 22px; padding: 8px 14px; box-shadow: var(--shadow); }
 .lbl { display: inline-flex; align-items: center; gap: 4px; font-weight: 800; color: #AD7B2B; margin-right: auto; white-space: nowrap; flex: none; width: max-content; }
 .ring { position: relative; width: 50px; height: 50px; display: grid; place-items: center; color: var(--primary-700); }

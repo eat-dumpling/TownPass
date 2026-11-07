@@ -117,6 +117,15 @@ class TPWebView extends StatelessWidget {
           }
           return PermissionResponse(resources: camera, action: PermissionResponseAction.GRANT);
         },
+        // 實機測試：除錯版只信任區網開發機的自簽憑證（相機要 https 才能用）；其他網站照系統的憑證檢查。
+        onReceivedServerTrustAuthRequest: (controller, challenge) async {
+          final String host = challenge.protectionSpace.host;
+          return ServerTrustAuthResponse(
+            action: TPMicroserviceConfig.trustDevCertificate(host)
+                ? ServerTrustAuthResponseAction.PROCEED
+                : ServerTrustAuthResponseAction.CANCEL,
+          );
+        },
         onGeolocationPermissionsShowPrompt: (controller, origin) async {
           // should be deal individually (ask for user agreement)
           return GeolocationPermissionShowPromptResponse(origin: origin, allow: true, retain: true);

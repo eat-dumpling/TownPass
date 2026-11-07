@@ -7,6 +7,7 @@
   "scripts": {
     "predev": "node scripts/copy-ort.mjs && node scripts/gen-icons.mjs",
     "dev": "vite --host",
+    "dev:https": "VITE_HTTPS=1 vite --host",
     "prebuild": "node scripts/copy-ort.mjs && node scripts/gen-icons.mjs",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview --host",

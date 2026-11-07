@@ -23,8 +23,9 @@
   --shadow: 0 4px 14px rgba(17, 38, 41, 0.10);
   /* TPTextStyles：h1 36・h2 24・title 18・h3 16・body 14・caption 12（px → rem） */
   --fs-h1: 2.25rem; --fs-h2: 1.5rem; --fs-title: 1.125rem; --fs-h3: 1rem; --fs-body: 0.875rem; --fs-caption: 0.75rem;
-  /* 孩子介面的國字＋注音用楷書（全字庫正楷體子集）；數字與英文、或字型還沒載入時用無襯線字 */
-  --font-kai: 'TW-Kai', 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', system-ui, sans-serif;
+  /* 孩子介面的國字＋注音：照台北通 Figma 用無襯線字（PingFang／Noto Sans TC 都有注音符號）。
+     全字庫正楷體子集（TW-Kai）留著，之後要用楷書顯示品項名稱時把 'TW-Kai' 放回最前面 */
+  --font-kai: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', system-ui, sans-serif;
   font-family: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', system-ui, sans-serif;
   color: var(--gray-900);
   background: var(--primary-50);

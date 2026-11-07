@@ -34,7 +34,15 @@ adb reverse tcp:5173 tcp:5173
 flutter run --dart-define=RECYCLE_LI_URL=http://localhost:5173/
 ```
 
-iOS 模擬器可以直接用 `http://localhost:5173/`；iOS 實機請先部署到 Firebase（https）再測。
+iOS 模擬器可以直接用 `http://localhost:5173/`。iOS／Android 實機（同一個 Wi-Fi）：相機要 https，用自簽憑證的開發伺服器：
+
+```bash
+cd web && mkdir -p .cert && openssl req -x509 -newkey rsa:2048 -nodes -days 30 -keyout .cert/dev-key.pem -out .cert/dev-cert.pem -subj "/CN=recycle-li-dev" -addext "subjectAltName=IP:$(ipconfig getifaddr en0),DNS:localhost"
+npm run dev:https          # https://<區網 IP>:5443/
+flutter run -d <裝置> --dart-define=RECYCLE_LI_URL=https://<區網 IP>:5443/
+```
+
+台北通的**除錯版**只信任區網位址的自簽憑證（`TPMicroserviceConfig.trustDevCertificate`），正式版照系統的憑證檢查。
 App 裡「服務 › 更多」把「回收小里長」加入我的服務，或從「熱門」直接進入。
 
 部署（Firebase Hosting）：`npm run build && firebase deploy --only hosting`（`web/firebase.json` 已備好）。

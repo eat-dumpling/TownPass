@@ -26,6 +26,16 @@ abstract class TPMicroserviceConfig {
     'recycle-li.firebaseapp.com',
   };
 
+  /// 除錯版連到開發機（區網、自簽 https 憑證）時信任憑證，正式版一律照系統規則。
+  static bool trustDevCertificate(String host) {
+    if (!kDebugMode) return false;
+    return host == 'localhost' ||
+        host == '127.0.0.1' ||
+        host.startsWith('192.168.') ||
+        host.startsWith('10.') ||
+        RegExp(r'^172\.(1[6-9]|2\d|3[01])\.').hasMatch(host);
+  }
+
   static bool canUseCamera(WebUri origin) {
     final String host = origin.host;
     if (_cameraHosts.contains(host)) return true;
