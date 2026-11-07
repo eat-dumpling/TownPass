@@ -23,7 +23,7 @@ const Q = {
   paper_cup: ['paper cup', 'disposable coffee cup'],
   coconut_shell: ['coconut shell', 'durian husk'],
   leftovers: ['leftover food', 'food scraps'],
-  fruit_peel: ['banana peel', 'orange peel'],
+  fruit_peel: ['banana peel', 'orange peel', 'apple peel', 'pineapple top'],
   tea_leaves: ['used tea leaves', 'coffee grounds'],
   big_bone: ['pork bone', 'chicken bones'],
   paper_lunchbox: ['paper lunch box', 'bento box paper'],
@@ -141,6 +141,11 @@ const HAND = {
   fruit_peel: { q: ['intitle:"banana peel"', 'intitle:"orange peel"', 'intitle:"peeled banana"', 'intitle:"fruit peel"', 'intitle:"peeling" orange'], must: /peel/i, not: /fiber|fibre|cosmetic|skin peel/i },
   light_tube: { q: ['intitle:"fluorescent tube"', 'intitle:"fluorescent lamp"', 'intitle:"compact fluorescent"', 'intitle:"light bulb" hand', 'intitle:"LED bulb"'], must: /fluorescent|tube|bulb|CFL|lamp/i, not: /russula|mushroom|sketch|shadow|plant|flower|tulip|nature/i },
   tissue: { q: ['intitle:"facial tissue"', 'intitle:"tissue box"', 'intitle:"paper napkin"', 'intitle:kleenex', 'intitle:"tissue paper" hand', 'intitle:"pocket tissue"'], must: /tissue|napkin|kleenex/i, not: /fish|hellbender|cell|biolog|culture|sample|histolog|wrapping|art|callus/i },
+  // 水壺、茶壺（回收一點通：其他金屬）放前面，確定驗證組裡有
+  metal_utensils: { q: ['intitle:"stainless steel kettle"', 'intitle:"whistling kettle"', 'intitle:"thermos flask"', 'intitle:"stainless steel teapot"', 'intitle:"metal spoon"', 'intitle:scissors'], must: /kettle|thermos|flask|teapot|spoon|scissors|fork|hanger/i, not: /logo|diagram|drawing|museum|electric|kettlebell|kettle drum|timpani|kettle lake|mountain|ceramic|porcelain/i }, // 電熱水壺是小家電，不放這裡
+  plastic_misc: { q: ['intitle:"sports water bottle"', 'intitle:"reusable water bottle"', 'intitle:"plastic container"', 'intitle:"plastic basket"'], must: /bottle|container|basket/i, not: /logo|diagram|PET|glass|wine|beer|disposable/i },
+  misc_trash: { q: ['intitle:"ballpoint pen"', 'intitle:comb hair', 'intitle:"shower cap"', 'intitle:crayons', 'intitle:"rubber gloves"', 'intitle:earplugs'], must: /pen|comb|cap|crayon|glove|earplug/i, not: /logo|diagram|drawing|museum|penguin|pencil sketch|honeycomb|capital|baseball cap|boxing|goalkeeper/i },
+  luggage: { q: ['intitle:suitcase', 'intitle:luggage', 'intitle:"rolling suitcase"'], must: /suitcase|luggage/i, not: /logo|diagram|drawing|carousel|conveyor|airport|claim|nuclear/i },
   // 大型家具家電與電腦周邊（偵測器的 chair、couch、refrigerator、tv、laptop… 類別）
   table_chair: { q: ['intitle:"discarded chair"', 'intitle:"old chair"', 'intitle:"wooden chair"', 'intitle:"office chair"', 'intitle:"plastic chair"', 'intitle:"dining table"'], must: /chair|table|desk/i, not: /wheelchair|chairman|chairlift|table mountain|periodic|timetable|tennis|billiard/i },
   furniture: { q: ['intitle:"old sofa"', 'intitle:"discarded sofa"', 'intitle:"abandoned couch"', 'intitle:sofa living room', 'intitle:couch'], must: /sofa|couch/i, not: /kangaroo|surfing|potato/i },
@@ -153,6 +158,48 @@ const HAND = {
   bicycle: { q: ['intitle:"old bicycle"', 'intitle:"abandoned bicycle"', 'intitle:"parked bicycle"', 'intitle:"rusty bicycle"'], must: /bicycle|bike/i, not: /race|tour|cyclist|motor|logo/i },
   mattress: { q: ['intitle:"discarded mattress"', 'intitle:"old mattress"', 'intitle:mattress', 'intitle:"spring mattress"'], must: /mattress/i, not: /factory|logo|diagram/i },
 }
+
+// 回收一點通（data/回收一點通_1031筆.tsv）裡同一個品項的各種樣子，人工從 scripts/map-taipei-list.mjs 的對應挑出來（只留看起來是同一類東西的）。
+// 訓練照片和驗證照片的搜尋都會用到，讓模型看過「木椅、辦公椅」都是桌椅、「冷凍櫃」也是電冰箱。
+const VAR = {
+  misc_trash: ['ballpoint pen', 'hair comb', 'shower cap', 'crayons', 'rubber gloves', 'earplugs'], luggage: ['suitcase', 'rolling luggage', 'old suitcase'],
+  air_conditioner: ['window air conditioner', 'split air conditioner'], aluminum_can: ['tin can', 'food can'],
+  ball: ['basketball', 'soccer ball', 'tennis ball'], battery: ['button cell', 'lithium battery', 'dry cell battery'],
+  bed_frame: ['metal bed frame', 'wooden bed frame'], bedding: ['pillow', 'duvet', 'bed sheet'], bicycle: ["children's bicycle"],
+  broken_glass: ['broken glass', 'shattered glass'], cabinet: ['wardrobe', 'bookcase', 'kitchen cabinet'],
+  cart: ['baby stroller', 'shopping cart', 'hand truck'], cassette_tape: ['audio cassette', 'VHS tape'], cd_disc: ['DVD disc', 'compact disc'],
+  chopsticks: ['disposable chopsticks', 'bamboo skewers', 'drinking straw'], computer: ['laptop', 'computer monitor', 'desktop computer'],
+  cooking_oil: ['cooking oil bottle', 'peanut oil'], copy_paper: ['shredded paper', 'printer paper'], desk_lamp: ['LED desk lamp', 'flashlight'],
+  doormat: ['floor mat', 'yoga mat', 'carpet'], electric_fan: ['electric fan'], fabric: ['curtain', 'tablecloth', 'apron'],
+  foam_tableware: ['styrofoam bowl', 'instant noodle cup'], food_shells: ['shrimp shells', 'peanut shells', 'crab shell'],
+  fridge: ['refrigerator', 'freezer'], frozen_food: ['frozen food', 'tofu'], fruit_peel: ['banana peel', 'orange peel'],
+  game_console: ['game console', 'game controller'], gas_stove: ['gas stove', 'gas cooker'], glass_bottle: ['beer bottle', 'glass jar'],
+  glossy_paper: ['sticker sheet', 'carbon paper'], hat_socks: ['socks', 'baseball cap'], light_tube: ['fluorescent tube', 'light bulb', 'compact fluorescent lamp'],
+  lubricant: ['motor oil bottle'], magazine: ['calendar', 'flyer'], mask: ['face mask', 'disposable diaper'], mattress: ['spring mattress'],
+  meat: ['raw meat', 'cooked meat'], medicine: ['blister pack', 'medicine bottle'], metal_utensils: ['fork', 'metal spoon', 'scissors', 'clothes hanger', 'whistling kettle', 'stainless steel kettle', 'stainless steel teapot', 'thermos flask'],
+  mosquito_lamp: ['electric mosquito swatter', 'bug zapper'], mouse_keyboard: ['computer mouse', 'computer keyboard'], needle: ['syringe', 'hypodermic needle'],
+  newspaper: ['cardboard box', 'newspaper'], old_book: ['old books', 'notebook', 'telephone directory'], old_clothes: ['clothes', 'coat', 'baby clothes', 'trousers'],
+  old_shoes: ['flip-flops', 'sneakers', 'shoes'], paper_bag: ['paper bag', 'paper shopping bag'], paper_lunchbox: ['french fry box', 'hamburger box', 'paper food box'],
+  pesticide_container: ['insecticide spray', 'pesticide bottle'], pet_bottle: ['plastic bottle', 'water bottle'], phone: ['mobile phone', 'smartphone'],
+  photo_paper: ['photograph print', 'film negative'], plastic_bag_clean: ['plastic bag', 'zip lock bag', 'plastic wrap'], plastic_hose: ['PVC pipe', 'garden hose'],
+  plastic_misc: ['plastic container', 'plastic toy', 'plastic basket', 'sports water bottle', 'reusable water bottle', 'coffee capsule', 'dry box'], // 「plastic water bottle」搜到的多半是寶特瓶，不放 plush_toy: ['stuffed toy', 'teddy bear'], printer: ['printer', 'scanner', 'paper shredder'],
+  pudding_cup: ['plastic cup lid', 'plastic food container'], radio: ['boombox', 'portable radio'], range_hood: ['range hood', 'kitchen hood'],
+  scooter_parts: ['scooter seat', 'motorcycle fairing'], small_appliance: ['rice cooker', 'electric kettle', 'electric water boiler', 'toaster', 'hair straightener'], // 電熱水壺、熱水瓶：小家電
+  snack_bag: ['potato chip bag', 'candy wrapper'], spray_can: ['spray paint can', 'aerosol can'], styrofoam_clean: ['packaging styrofoam', 'polystyrene foam'],
+  table_chair: ['wooden chair', 'office chair', 'table'], tea_leaves: ['used tea leaves', 'coffee grounds', 'herbal medicine dregs'], telephone: ['fax machine', 'landline telephone'],
+  thermometer: ['mercury thermometer'], tire: ['car tire', 'bicycle tire'], tissue: ['used tissue', 'facial tissue'], toilet_seat: ['toilet seat', 'bidet seat'],
+  toothbrush: ['toothbrush'], towel: ['bath towel', 'towel'], tv: ['television', 'flat screen tv'], usb_drive: ['USB flash drive', 'external hard drive'],
+  vacuum: ['vacuum cleaner', 'robot vacuum'], vegetables: ['leafy vegetables', 'vegetables', 'fruit'], video_player: ['VCR', 'DVD player', 'MP3 player'],
+  washing_machine: ['washing machine', 'clothes dryer'], water_dispenser: ['water dispenser', 'water cooler'],
+}
+// 沒有寫在 HAND 裡的品項：驗證照片也用 VAR／Q 的詞做標題搜尋，標題要含這些詞的其中一個字
+const STOP = new Set(['a', 'an', 'the', 'of', 'and', 'or', 'for', 'used', 'old', 'clean', 'dirty', 'small', 'large', 'other', 'waste', 'empty'])
+function autoSpec(it) {
+  const terms = [...new Set([...(VAR[it.id] ?? []), ...(Q[it.id] ?? [it.name.en.split(',')[0]])])]
+  const words = [...new Set(terms.flatMap((t) => t.toLowerCase().split(/[^a-z-]+/)).filter((w) => w.length > 2 && !STOP.has(w)))]
+  return { q: terms.map((t) => `intitle:"${t}"`), must: new RegExp(words.map((w) => w.replace(/[-]/g, '.')).join('|'), 'i'), not: /logo|diagram|drawing|museum|factory|patent|map|icon|advert|poster|illustration/i }
+}
+const NOT = args.includes('--not') ? new RegExp(args[args.indexOf('--not') + 1], 'i') : null
 const REJECT_FILE = resolve('../data/commons_hand_reject.txt')
 const REJECT = new Set(existsSync(REJECT_FILE) ? readFileSync(REJECT_FILE, 'utf8').split('\n').map((l) => l.split('\t')[0].trim()).filter(Boolean) : [])
 const OK_LICENSE = /^(cc0|public domain|pd|cc by(-sa)? ?\d|cc-by(-sa)?-?\d|attribution)/i
@@ -209,11 +256,12 @@ if (SET === 'hand' && existsSync(resolve('../testdata/web/manifest.json'))) for 
 mkdirSync(ROOT, { recursive: true })
 
 async function fetchItem(it) {
-  if (SET === 'hand' && !HAND[it.id]) return
-  const spec = SET === 'hand' ? HAND[it.id] : null
-  // 訓練組：先用標題比對（intitle:，比較準），再用全文搜尋補
-  const base = Q[it.id] ?? [it.name.en.split(',')[0]]
-  const queries = spec ? spec.q : [...base.map((q) => `intitle:"${q}"`), ...base]
+  const spec = SET === 'hand' ? HAND[it.id] ?? autoSpec(it) : null
+  // 訓練組：先用標題比對（intitle:，比較準），再用全文搜尋補；加上回收一點通裡同一個品項的各種樣子（VAR）
+  const base = [...new Set([...(Q[it.id] ?? [it.name.en.split(',')[0]]), ...(VAR[it.id] ?? [])])]
+  // --terms a,b,c：只用這些詞（補某一種樣子，例：水壺）；--not 正規式：標題符合就不要（例：electric）
+  const terms = args.includes('--terms') ? args[args.indexOf('--terms') + 1].split(',') : null
+  const queries = terms ? [...terms.map((q) => `intitle:"${q}"`), ...terms] : spec ? spec.q : [...base.map((q) => `intitle:"${q}"`), ...base]
   const already = manifest.filter((m) => m.item === it.id).length
   if (already >= PER) return
   const cands = []
@@ -228,20 +276,30 @@ async function fetchItem(it) {
       if (!ii || !/^image\/(jpeg|png|webp)$/.test(ii.mime)) continue
       if (BAD_TITLE.test(p.title)) continue
       if (spec && (!spec.must.test(p.title) || spec.not.test(p.title) || REJECT.has(p.title))) continue
+      if (NOT && NOT.test(p.title)) continue
       const md = ii.extmetadata ?? {}
       const lic = strip(md.LicenseShortName?.value)
       if (!OK_LICENSE.test(lic) || /nc|nd/i.test(lic.replace(/public domain/i, ''))) continue
-      cands.push({ title: p.title, thumb: ii.thumburl ?? ii.url, page: ii.descriptionurl, license: lic, author: strip(md.Artist?.value).slice(0, 120) })
+      cands.push({ q: q.replace(/^intitle:/, '').replace(/"/g, '').toLowerCase(), title: p.title, thumb: ii.thumburl ?? ii.url, page: ii.descriptionurl, license: lic, author: strip(md.Artist?.value).slice(0, 120) })
     }
     await new Promise((ok) => setTimeout(ok, 1500)) // 對 API 保持禮貌
+    // 候選夠多就不用再搜（每次搜尋要 1.5 秒以上）
+    const titleDone = !q.startsWith('intitle:') || queries.indexOf(q) >= queries.filter((x) => x.startsWith('intitle:')).length - 1 // 標題搜尋（含各種樣子）都要跑完
+    if (titleDone && new Set(cands.map((c) => c.title).filter((t) => !have.has(t))).size >= (PER - already) * 2) break
   }
-  // 多個搜尋詞輪流取，避免全部來自同一個詞
+  // 多個搜尋詞真的輪流取（每個詞各取一張再換下一個），不然第一個詞就把名額用完，各種樣子（VAR）都輪不到
   const seen = new Set()
-  const pick = []
+  const byQ = new Map()
   for (const c of cands) {
     if (seen.has(c.title) || have.has(c.title)) continue
     seen.add(c.title)
-    pick.push(c)
+    if (!byQ.has(c.q)) byQ.set(c.q, [])
+    byQ.get(c.q).push(c)
+  }
+  const pick = []
+  for (let more = true; more;) {
+    more = false
+    for (const list of byQ.values()) if (list.length) { pick.push(list.shift()); more = true }
   }
   let n = already
   const dir = join(ROOT, it.id)

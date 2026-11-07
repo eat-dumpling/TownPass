@@ -135,6 +135,13 @@ type Loaded = { embed: Embedder; embeds: Embeds; shippedProtos: Protos; device: 
 let loading: Promise<Loaded> | null = null
 export const clipDevice = () => loading?.then((l) => `${l.device}${l.threads > 1 ? `×${l.threads}` : ''}`)
 
+/** WASM 固定單執行緒。實測（speed.html，SigLIP q8，開發機）：
+ *  - Worker 1 執行緒 約 640 ms／張（目前用這個，相機畫面不卡）
+ *  - 主執行緒 4 執行緒 約 210 ms／張，但每次辨識主執行緒卡 0.2 秒，框和偵測會頓
+ *  - Worker 裡或 onnxruntime 的 proxy Worker 開多執行緒：即使 crossOriginIsolated 也會卡在建立模型
+ *  - WebGPU q8：輸出壞掉（不同圖的向量一樣）且更慢；q4f16 準確率掉約 3 個百分點 */
+export const wasmThreads = () => 1
+
 async function workerEmbedder(onProgress?: (pct: number) => void): Promise<{ embed: Embedder; threads: number }> {
   const w = new Worker(new URL('./clip.worker.ts', import.meta.url), { type: 'module' })
   const waiting = new Map<number, { ok: (v: Float32Array) => void; bad: (e: Error) => void }>()
@@ -149,7 +156,7 @@ async function workerEmbedder(onProgress?: (pct: number) => void): Promise<{ emb
       else if (m.type === 'error') { waiting.get(m.id)?.bad(new Error(m.message)); waiting.delete(m.id) }
     }
     w.onerror = (e) => bad(new Error(e.message))
-    w.postMessage({ type: 'init', base: document.baseURI, allowRemote: import.meta.env.VITE_ALLOW_REMOTE_MODEL === 'true', model: ACTIVE.id, vision: ACTIVE.vision, visionOut: ACTIVE.visionOut })
+    w.postMessage({ type: 'init', base: document.baseURI, allowRemote: import.meta.env.VITE_ALLOW_REMOTE_MODEL === 'true', model: ACTIVE.id, vision: ACTIVE.vision, visionOut: ACTIVE.visionOut, threads: wasmThreads() })
   })
   const embed: Embedder = (img) => new Promise((ok, bad) => {
     const id = nextId++
@@ -166,7 +173,7 @@ async function mainThreadEmbedder(onProgress?: (pct: number) => void): Promise<{
   T.env.allowLocalModels = true
   T.env.localModelPath = new URL('models/', base).href
   T.env.allowRemoteModels = import.meta.env.VITE_ALLOW_REMOTE_MODEL === 'true'
-  if (T.env.backends.onnx.wasm) T.env.backends.onnx.wasm.wasmPaths = new URL('ort/', base).href
+  if (T.env.backends.onnx.wasm) { T.env.backends.onnx.wasm.wasmPaths = new URL('ort/', base).href; T.env.backends.onnx.wasm.numThreads = wasmThreads() }
   const processor = (await T.AutoImageProcessor.from_pretrained(MODEL_ID)) as unknown as (i: unknown) => Promise<Record<string, unknown>>
   // 實測：q8 量化模型在 WebGPU 上輸出壞掉（任何兩張圖的 cosine ≈ 0.998），WASM 正常。固定 WASM。
   const model = (await (ACTIVE.vision === 'SiglipVisionModel' ? T.SiglipVisionModel : T.CLIPVisionModelWithProjection).from_pretrained(MODEL_ID, {
@@ -177,10 +184,16 @@ async function mainThreadEmbedder(onProgress?: (pct: number) => void): Promise<{
     const image = new T.RawImage(img.data, img.width, img.height, 4).rgb()
     return (await model(await processor(image)))[ACTIVE.visionOut].data
   }
-  return { embed, threads: 1 }
+  return { embed, threads: T.env.backends.onnx.wasm?.numThreads ?? 1 }
 }
 
+// 下載進度：預先載入（preload.ts）先開始時，之後進掃描頁的人也要看得到進度
+const progressListeners = new Set<(pct: number) => void>()
+let lastPct = 0
+const emitProgress = (pct: number) => { lastPct = pct; progressListeners.forEach((f) => f(pct)) }
+
 export function loadClip(onProgress?: (pct: number) => void): Promise<Loaded> {
+  if (onProgress) { progressListeners.add(onProgress); if (lastPct) onProgress(lastPct) }
   if (loading) return loading
   loading = (async () => {
     const base = document.baseURI
@@ -197,10 +210,10 @@ export function loadClip(onProgress?: (pct: number) => void): Promise<Loaded> {
     let e: { embed: Embedder; threads: number }
     let device = 'wasm (worker)'
     try {
-      e = await workerEmbedder(onProgress)
+      e = await workerEmbedder(emitProgress)
     } catch (err) {
       console.warn('[clip] Worker 失敗，改在主執行緒', err)
-      e = await mainThreadEmbedder(onProgress)
+      e = await mainThreadEmbedder(emitProgress)
       device = 'wasm'
     }
     return { embed: e.embed, embeds, shippedProtos, device, threads: e.threads }

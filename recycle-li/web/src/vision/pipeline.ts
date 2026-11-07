@@ -16,6 +16,22 @@ export const DISPLAY = {
 /** 大型家具家電（桌椅、沙發、床、冰箱、電視、電腦…）：也是要丟的東西，但拍小東西時常常是背景 */
 export const BIG_CLASSES = new Set(['dining table', 'chair', 'couch', 'bed', 'bench', 'tv', 'laptop', 'refrigerator', 'oven', 'microwave', 'toaster', 'toilet', 'bicycle'])
 
+/** 什麼都框不到時的最後一招：畫面中央的一大塊。東西拿得很近、佔滿畫面時（水壺、電鍋…）偵測器和顯著物體框常常都框不到。
+ *  沒認出東西（牆、地板、桌面會被「不是垃圾」類別吃掉）就不畫。 */
+export const CENTER = { W: 0.8, H: 0.8 }
+export function centerBox(vw: number, vh: number): Det {
+  const w = vw * CENTER.W, h = vh * CENTER.H
+  return { x: (vw - w) / 2, y: (vh - h) / 2, w, h, label: '', score: 0, center: true }
+}
+
+/** 這一幀要追蹤哪些框：偵測器（篩過）→ 顯著物體框 → 畫面中央框（ScanView 和 evalPipeline 共用） */
+export function chooseBoxes(raw: Det[], salient: () => Det | null, vw: number, vh: number): Det[] {
+  const dets = selectDetections(raw)
+  if (dets.length) return dets
+  const sb = salient()
+  return [sb ?? centerBox(vw, vh)]
+}
+
 export function selectDetections(dets: Det[]): Det[] {
   // 畫面上有一般大小的東西（杯子、瓶子…）時，大型家具家電當背景不框；沒有時才框最有把握的那一個
   const small = dets.filter((d) => !BIG_CLASSES.has(d.label))
@@ -32,21 +48,27 @@ export function selectDetections(dets: Det[]): Det[] {
   return out.slice(0, DISPLAY.MAX_BOXES)
 }
 
-/** 主要目標：大、靠中間的那一個（畫面上的提示與「沒把握時只畫它」用） */
-export function primaryOf(tracks: Track[], vw: number, vh: number): Track | null {
+/** 主要目標：大、靠中間的那一個（畫面上的提示與「沒把握時只畫它」用）。
+ *  prev＝上一幀的主要目標：別的框要明顯比它好（PRIMARY_SWITCH 倍）才換，兩個差不多的框不會輪流出現、消失 */
+export const PRIMARY_SWITCH = 1.25
+export function primaryOf(tracks: Track[], vw: number, vh: number, prev?: Track | null): Track | null {
+  const score = (t: Track) => {
+    const cx = (t.x + t.w / 2) / vw - 0.5, cy = (t.y + t.h / 2) / vh - 0.5
+    return Math.sqrt((t.w * t.h) / (vw * vh)) * (1 - Math.min(0.9, Math.hypot(cx, cy) * 1.4))
+  }
   let best: Track | null = null
   let bestS = -Infinity
   for (const t of tracks) {
-    const cx = (t.x + t.w / 2) / vw - 0.5, cy = (t.y + t.h / 2) / vh - 0.5
-    const s = Math.sqrt((t.w * t.h) / (vw * vh)) * (1 - Math.min(0.9, Math.hypot(cx, cy) * 1.4))
+    const s = score(t)
     if (s > bestS) { bestS = s; best = t }
   }
+  if (prev && best !== prev && tracks.includes(prev) && bestS < score(prev) * PRIMARY_SWITCH) return prev
   return best
 }
 
 export type DrawMode = 'item' | 'maybe' | 'kind' | 'silent' | 'hide'
 export function drawMode(t: Track, isPrimary: boolean): DrawMode {
   const level = answerLevel(t)
-  if (level === 'unsure') return isPrimary ? 'silent' : 'hide'
+  if (level === 'unsure') return isPrimary && !t.center ? 'silent' : 'hide' // 畫面中央框沒認出東西時不畫（不然對著牆也有大框）
   return level
 }

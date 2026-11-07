@@ -7,7 +7,7 @@ import type { Item, KindId } from '@/domain/types'
 import params from './params.json'
 import { COCO_TO_ITEMS, PRIOR_MIN_SCORE } from './prior'
 
-export interface Det { x: number; y: number; w: number; h: number; label: string; score: number }
+export interface Det { x: number; y: number; w: number; h: number; label: string; score: number; /** 什麼都框不到時的畫面中央框（pipeline.ts 的 centerBox） */ center?: boolean }
 
 export interface Track {
   id: number
@@ -35,7 +35,15 @@ export interface Track {
   guessConf: number
   /** 第一次看就說出名字（快速回答） */
   fast: boolean
+  /** 畫面上目前的回答層級（有遲滯，避免字在兩種之間跳來跳去） */
+  level: AnswerLevel
+  /** 畫面中央框（什麼都框不到時）：沒把握時不畫、閒置時少辨識 */
+  center: boolean
+  /** 上一次辨識的影像向量：框裡換了東西（向量差很多）就重新開始認 */
+  lastVec: number[] | null
 }
+
+export type AnswerLevel = 'item' | 'maybe' | 'kind' | 'unsure'
 
 export const TRACKER = {
   MATCH_IOU: 0.25, // 偵測框和追蹤框重疊這麼多才算同一個
@@ -57,6 +65,13 @@ export const TRACKER = {
   FAST_P_AGREE: (params as { FAST_P_AGREE?: number }).FAST_P_AGREE ?? 0.6,
   SWITCH_MARGIN: 0.08, // 新品項要比目前標籤高這麼多…
   SWITCH_STREAK: 2, // …而且連續兩次，才換標籤
+  // 遲滯：「可能是 X？」「塑膠類」已經顯示時，要掉到門檻的 STICKY 倍以下才拿掉；X 要被明顯超過（SWITCH_MARGIN）才換
+  STICKY: 0.8,
+  REVIVE_FRAMES: 20, // 消失後這麼多幀內（15 fps 約 1.3 秒）同一個位置又出現 → 接回原本的辨識結果
+  REVIVE_IOU: 0.3,
+  RESET_COS: (params as { RESET_COS?: number }).RESET_COS ?? 0.7, // 前後兩次影像向量的 cosine 低於這個值 → 框裡換了東西，重新認
+  CENTER_IDLE_MS: 1500, // 畫面中央框沒認出東西時，每隔這麼久才再看一次（省電）
+  FAST_P_COMMON: (params as { FAST_P_COMMON?: number }).FAST_P_COMMON ?? (params as { FAST_P?: number }).FAST_P ?? 0.95, // 常見品項（freq 3：杯子、瓶罐、袋子…）看一次就說的門檻
 }
 
 export function iou(a: { x: number; y: number; w: number; h: number }, b: { x: number; y: number; w: number; h: number }) {
@@ -69,6 +84,9 @@ export function iou(a: { x: number; y: number; w: number; h: number }, b: { x: n
 export class Tracker {
   tracks: Track[] = []
   private nextId = 1
+  private frame = 0
+  /** 剛消失的追蹤目標：偵測器漏框太久被刪掉後，同一個位置又框到時接回原本的辨識結果（不用從頭認） */
+  private recent: { t: Track; at: number }[] = []
 
   /** 每次偵測後呼叫：貪婪 IoU 配對、平滑、建立與刪除追蹤 */
   update(dets: Det[]): Track[] {
@@ -86,11 +104,21 @@ export class Tracker {
       const a = TRACKER.BOX_ALPHA
       t.x += (d.x - t.x) * a; t.y += (d.y - t.y) * a; t.w += (d.w - t.w) * a; t.h += (d.h - t.h) * a
       if (d.score >= t.cocoScore * 0.8 || d.label === t.coco) { t.coco = d.label; t.cocoScore = d.score }
+      if (!d.center) t.center = false
       t.hits++; t.misses = 0
     }
+    this.frame++
     for (const t of this.tracks) { t.age++; if (!usedT.has(t)) t.misses++ }
+    for (const t of this.tracks) if (t.misses > TRACKER.MAX_MISSES && t.obs) this.recent.push({ t, at: this.frame })
     this.tracks = this.tracks.filter((t) => t.misses <= TRACKER.MAX_MISSES)
-    for (const d of dets) if (!usedD.has(d)) this.tracks.push(newTrack(this.nextId++, d))
+    this.recent = this.recent.filter((r) => this.frame - r.at <= TRACKER.REVIVE_FRAMES)
+    for (const d of dets) {
+      if (usedD.has(d)) continue
+      const nt = newTrack(this.nextId++, d)
+      const old = this.recent.find((r) => iou(r.t, d) >= TRACKER.REVIVE_IOU)
+      if (old) { inherit(nt, old.t); this.recent = this.recent.filter((r) => r !== old) }
+      this.tracks.push(nt)
+    }
     return this.visible()
   }
 
@@ -105,6 +133,7 @@ export class Tracker {
     const now = performance.now()
     for (const t of this.visible()) {
       if (t.misses > 2) continue
+      if (t.center && t.obs >= 2 && t.level === 'unsure' && now - t.lastClassified < TRACKER.CENTER_IDLE_MS) continue
       const cx = (t.x + t.w / 2) / vw - 0.5, cy = (t.y + t.h / 2) / vh - 0.5
       const center = 1 - Math.min(1, Math.hypot(cx, cy) * 1.5)
       const area = Math.min(1, (t.w * t.h) / (vw * vh) / 0.2)
@@ -115,19 +144,32 @@ export class Tracker {
     return best
   }
 
-  clear() { this.tracks = [] }
+  clear() { this.tracks = []; this.recent = [] }
+}
+
+/** 新的追蹤目標接手剛消失那個的辨識結果（框用新的；辨識的平均、標籤、遲滯狀態用舊的） */
+function inherit(nt: Track, old: Track) {
+  nt.id = old.id // 同一個 id：畫面下方的卡片不會重畫，「不對」也找得到之前的影像向量
+  nt.probs = old.probs; nt.items = old.items; nt.obs = old.obs; nt.lastClassified = old.lastClassified
+  nt.label = old.label; nt.conf = old.conf; nt.nothing = old.nothing; nt.kind = old.kind; nt.kindConf = old.kindConf
+  nt.guess = old.guess; nt.guessConf = old.guessConf; nt.fast = old.fast; nt.level = old.level
+  nt.hits = Math.max(nt.hits, TRACKER.MIN_HITS) // 接回來的馬上畫（本來就已經確認過）
 }
 
 export function newTrack(id: number, d: Det): Track {
   return {
     id, x: d.x, y: d.y, w: d.w, h: d.h, coco: d.label, cocoScore: d.score, hits: 1, misses: 0, age: 0,
     probs: new Map(), items: new Map(), obs: 0, lastClassified: 0, label: null, conf: 0,
-    challenger: null, challengerStreak: 0, nothing: 0, kind: null, kindConf: 0, guess: null, guessConf: 0, fast: false,
+    challenger: null, challengerStreak: 0, nothing: 0, kind: null, kindConf: 0, guess: null, guessConf: 0, fast: false, level: 'unsure', center: !!d.center, lastVec: null,
   }
 }
 
 /** 把一次辨識結果（前幾名品項機率、背景機率）加進追蹤目標，更新有遲滯的標籤 */
-export function observe(t: Track, top: { item: Item; p: number }[], nothingP: number) {
+export function observe(t: Track, top: { item: Item; p: number }[], nothingP: number, vec?: number[]) {
+  if (vec) {
+    if (t.lastVec && cosine(vec, t.lastVec) < TRACKER.RESET_COS) resetRecognition(t) // 框裡換了東西
+    t.lastVec = vec
+  }
   t.obs++
   t.lastClassified = performance.now()
   const W = TRACKER.WINDOW
@@ -160,13 +202,22 @@ export function observe(t: Track, top: { item: Item; p: number }[], nothingP: nu
     mass.set(k, (mass.get(k) ?? 0) + arr.reduce((a, b) => a + b, 0) / arr.length)
   }
   const [bk, bm] = [...mass.entries()].sort((a, b) => b[1] - a[1])[0] ?? [null, 0]
-  t.kind = bk
-  t.kindConf = bm
-  t.guess = best.item
-  t.guessConf = best.p
+  // 桶與「可能是」的品項：已經顯示的那個要被明顯超過、或自己掉很多才換（不會 A、B 來回跳）
+  const prevKindMass = t.kind ? mass.get(t.kind) ?? 0 : 0
+  if (!t.kind || bk === t.kind || bm > prevKindMass + TRACKER.SWITCH_MARGIN || prevKindMass < TRACKER.KIND_P * TRACKER.STICKY) { t.kind = bk; t.kindConf = bm }
+  else t.kindConf = prevKindMass
+  const prevGuessP = t.guess ? ranked.find((r) => r.item.id === t.guess!.id)?.p ?? 0 : 0
+  if (!t.guess || best.item.id === t.guess.id || best.p > prevGuessP + TRACKER.SWITCH_MARGIN || prevGuessP < TRACKER.MAYBE_P * TRACKER.STICKY) { t.guess = best.item; t.guessConf = best.p }
+  else t.guessConf = prevGuessP
+  updateLabel(t, ranked, nothingP)
+  t.level = stickyLevel(t)
+}
+
+function updateLabel(t: Track, ranked: { item: Item; p: number }[], nothingP: number) {
+  const best = ranked[0]
   if (!t.label) {
     if (t.obs >= TRACKER.MIN_OBS && isClear(best.p, ranked[1]?.p ?? 0)) { t.label = best.item; t.conf = best.p }
-    else if (t.obs === 1 && isFast(t, best.item.id, best.p, nothingP)) { t.label = best.item; t.conf = best.p; t.fast = true }
+    else if (t.obs === 1 && isFast(t, best.item, best.p, nothingP)) { t.label = best.item; t.conf = best.p; t.fast = true }
     return
   }
   const cur = ranked.find((r) => r.item.id === t.label!.id)?.p ?? 0
@@ -187,15 +238,42 @@ export const detectorAgrees = (t: Pick<Track, 'coco' | 'cocoScore'>, itemId: str
   t.cocoScore >= PRIOR_MIN_SCORE && !!COCO_TO_ITEMS[t.coco]?.includes(itemId)
 
 /** 第一次看就能回答嗎 */
-export const isFast = (t: Pick<Track, 'coco' | 'cocoScore'>, itemId: string, p: number, nothingP: number) =>
-  nothingP < p && (p >= TRACKER.FAST_P || (detectorAgrees(t, itemId) && p >= TRACKER.FAST_P_AGREE))
+export const isFast = (t: Pick<Track, 'coco' | 'cocoScore'>, item: Item, p: number, nothingP: number) =>
+  nothingP < p && (p >= ((item.freq ?? 1) >= 3 ? TRACKER.FAST_P_COMMON : TRACKER.FAST_P) || (detectorAgrees(t, item.id) && p >= TRACKER.FAST_P_AGREE))
+
+function cosine(a: number[], b: number[]) {
+  let d = 0, na = 0, nb = 0
+  for (let i = 0; i < a.length; i++) { d += a[i] * b[i]; na += a[i] * a[i]; nb += b[i] * b[i] }
+  return d / (Math.sqrt(na * nb) || 1)
+}
+
+/** 框裡換了東西：辨識結果從頭開始（框本身不動） */
+function resetRecognition(t: Track) {
+  t.probs = new Map(); t.items = new Map(); t.obs = 0; t.label = null; t.conf = 0; t.challenger = null; t.challengerStreak = 0
+  t.nothing = 0; t.kind = null; t.kindConf = 0; t.guess = null; t.guessConf = 0; t.fast = false; t.level = 'unsure'
+}
 
 /** 品項夠不夠確定（和 scripts/tune.mjs 的 itemRule 相同） */
 export const isClear = (p1: number, p2: number) =>
   p1 >= TRACKER.SHOW_P || (p1 >= TRACKER.SHOW_P_MIN && p1 >= TRACKER.SHOW_RATIO * p2)
 
-/** 畫面要怎麼回答：品項名稱、「可能是 X？」、只說桶子、或不回答 */
-export function answerLevel(t: Track): 'item' | 'maybe' | 'kind' | 'unsure' {
+/** 畫面要怎麼回答：品項名稱、「可能是 X？」、只說桶子、或不回答（每次辨識後更新，有遲滯） */
+export function answerLevel(t: Track): AnswerLevel {
+  return t.obs ? t.level : 'unsure'
+}
+
+const RANK: Record<AnswerLevel, number> = { item: 2, kind: 1, maybe: 1, unsure: 0 }
+/** 往上（更確定）馬上換；往下要等到真的掉到門檻的 STICKY 倍以下 */
+function stickyLevel(t: Track): AnswerLevel {
+  const raw = rawLevel(t)
+  const prev = t.level
+  if (RANK[raw] >= RANK[prev]) return raw
+  if (prev === 'maybe' && t.guess && t.guessConf >= TRACKER.MAYBE_P * TRACKER.STICKY && t.nothing < t.guessConf) return 'maybe'
+  if (prev === 'kind' && t.kind && t.kindConf >= TRACKER.KIND_P * TRACKER.STICKY && t.nothing < t.kindConf) return 'kind'
+  return raw
+}
+
+function rawLevel(t: Track): AnswerLevel {
   if (t.label && t.nothing < t.conf) return 'item'
   if (t.obs < TRACKER.MIN_OBS) return 'unsure'
   if (t.kind && t.kindConf >= TRACKER.KIND_P && t.nothing < t.kindConf) return 'kind'

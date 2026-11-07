@@ -5,8 +5,8 @@
   body { font: 12px sans-serif; margin: 8px; background: #fff; color: #111; }
   h2 { font-size: 14px; margin: 10px 0 4px; }
   .row { display: flex; gap: 4px; flex-wrap: wrap; }
-  figure { margin: 0; width: 150px; }
-  img { width: 150px; height: 150px; object-fit: cover; display: block; }
+  figure { margin: 0; width: var(--px, 150px); }
+  img { width: var(--px, 150px); height: var(--px, 150px); object-fit: cover; display: block; }
   figcaption { font-size: 10px; line-height: 1.2; height: 2.4em; overflow: hidden; }
 </style></head>
 <body><div id="out"></div>
@@ -14,6 +14,8 @@
   const q = new URLSearchParams(location.search)
   const only = q.get('only')?.split(',')
   const files = q.get('files')?.split(',')
+  const px = Number(q.get('s') ?? 150) // 縮圖大小（一次看比較多張時用小一點）
+  document.documentElement.style.setProperty('--px', `${px}px`)
   const m = await (await fetch('./_eval/manifest.json')).json()
   const by = {}
   for (const x of m) if ((!only || only.includes(x.item)) && (!files || files.includes(x.file))) (by[x.item] ??= []).push(x)

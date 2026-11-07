@@ -14,7 +14,7 @@
     ],
     "headers": [
       {
-        "source": "**/*.@(wasm|onnx)",
+        "source": "**/*.@(wasm|onnx|tflite)",
         "headers": [
           {
             "key": "Cache-Control",

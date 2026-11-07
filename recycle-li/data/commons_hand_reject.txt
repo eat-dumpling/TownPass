@@ -120,3 +120,160 @@ File:Old washing machine.JPG	washing_machine：看過，物品不在畫面上、
 File:Old washing machine 4.JPG	washing_machine：看過，物品不在畫面上、太小，或不是這個品項
 File:Washing machine- spring.jpg	washing_machine：看過，物品不在畫面上、太小，或不是這個品項
 File:Yellow washing machine (2728490277).jpg	washing_machine：看過，物品不在畫面上、太小，或不是這個品項
+File:Coconut shell art.jpg	coconut_shell：看過，物品不在畫面上、太小，或不是這個品項
+File:Stingless Bees in Coconut Shell.jpg	coconut_shell：看過，物品不在畫面上、太小，或不是這個品項
+File:Coconut Shell Remover - തേങ്ങ പൊളിക്കുന്ന ഉപകരണം - 001.JPG	coconut_shell：看過，物品不在畫面上、太小，或不是這個品項
+File:Coconut shell ladles.jpg	coconut_shell：看過，物品不在畫面上、太小，或不是這個品項
+File:SZ 深圳 Shenzhen 福田 Futian 福星路 Fuxing Road shop 牛掌櫃啃豬大骨自助火鍋餐廳 Niu Zhanggui Big Pork Bone Buffet Hot Pot Restaurant food September 2025 R12S 817.jpg	big_bone：看過，物品不在畫面上、太小，或不是這個品項
+File:SZ 深圳 Shenzhen 福田 Futian 福星路 Fuxing Road shop 牛掌櫃啃豬大骨自助火鍋餐廳 Niu Zhanggui Big Pork Bone Buffet Hot Pot Restaurant food September 2025 R12S 636.jpg	big_bone：看過，物品不在畫面上、太小，或不是這個品項
+File:SZ 深圳 Shenzhen 福田 Futian 福星路 Fuxing Road shop 牛掌櫃啃豬大骨自助火鍋餐廳 Niu Zhanggui Big Pork Bone Buffet Hot Pot Restaurant food September 2025 R12S 625.jpg	big_bone：看過，物品不在畫面上、太小，或不是這個品項
+File:SZ 深圳 Shenzhen 福田 Futian 福星路 Fuxing Road shop 牛掌櫃啃豬大骨自助火鍋餐廳 Niu Zhanggui Big Pork Bone Buffet Hot Pot Restaurant food September 2025 R12S 623.jpg	big_bone：看過，物品不在畫面上、太小，或不是這個品項
+File:20140319 立法院前反服貿 現場提供愛心便當 (2).jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:Banana cue on Bamboo skewers in the Philippines.jpg	chopsticks：看過，物品不在畫面上、太小，或不是這個品項
+File:Camote cue on bamboo skewers.jpg	chopsticks：看過，物品不在畫面上、太小，或不是這個品項
+File:Photo of Bamboo Case Containing Eggshells (10112839376).jpg	eggshell：看過，物品不在畫面上、太小，或不是這個品項
+File:Bay Center, WA - oyster shells.jpg	seashell：看過，物品不在畫面上、太小，或不是這個品項
+File:Oyster shells.jpg	seashell：看過，物品不在畫面上、太小，或不是這個品項
+File:Maastricht-course 2019 - Opening up old books (2).jpg	old_book：看過，物品不在畫面上、太小，或不是這個品項
+File:Maastricht-course 2023 - Opening up old books (14).jpg	old_book：看過，物品不在畫面上、太小，或不是這個品項
+File:Scanning of old books at BORI Pune P 20190104 162429 05.jpg	old_book：看過，物品不在畫面上、太小，或不是這個品項
+File:2 Pints of Lager and a Packet of Crisps Please! (15224769579).jpg	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Building with clothes lines near Jardim Fernando Pessa, Lisboa, Portugal julesvernex2.jpg	old_clothes：看過，物品不在畫面上、太小，或不是這個品項
+File:Clothes iron - Mogán - Gran Canaria.jpg	old_clothes：看過，物品不在畫面上、太小，或不是這個品項
+File:Wooden clothes pegs on a table.jpg	old_clothes：看過，物品不在畫面上、太小，或不是這個品項
+File:Clothes lines in a building near Jardim Fernando Pessa, Lisbon, Portugal julesvernex2.jpg	old_clothes：看過，物品不在畫面上、太小，或不是這個品項
+File:Clothes dyers in Fez, Morocco.jpg	old_clothes：看過，物品不在畫面上、太小，或不是這個品項
+File:Adams Place Face Mask Donation - 05-13-2020 16.jpg	mask：看過，物品不在畫面上、太小，或不是這個品項
+File:Adams Place Face Mask Donation - 05-13-2020 50.jpg	mask：看過，物品不在畫面上、太小，或不是這個品項
+File:Adams Place Face Mask Donation - 05-13-2020 25.jpg	mask：看過，物品不在畫面上、太小，或不是這個品項
+File:Amabrush Mouthpiece Electric Toothbrush - 45388430675.jpg	toothbrush：看過，物品不在畫面上、太小，或不是這個品項
+File:Heating element in a rice cooker.jpg	small_appliance：看過，物品不在畫面上、太小，或不是這個品項
+File:Malaysian Claypot Chicken Rice via Rice Cooker.jpg	small_appliance：看過，物品不在畫面上、太小，或不是這個品項
+File:Inside of a rice cooker heating element.jpg	small_appliance：看過，物品不在畫面上、太小，或不是這個品項
+File:Wow, this peacock is made from broken glass bangles! (bracelets!) (42464189250).jpg	broken_glass：看過，物品不在畫面上、太小，或不是這個品項
+File:Broken glass on the road.JPG	broken_glass：看過，物品不在畫面上、太小，或不是這個品項
+File:OnePlus AC2003 Broken Glass.jpg	broken_glass：看過，物品不在畫面上、太小，或不是這個品項
+File:Steps at the back of the Domain, Sydney - Spray paint can at centre - 2025.jpg	spray_can：看過，物品不在畫面上、太小，或不是這個品項
+File:Lips with spray can.jpg	spray_can：看過，物品不在畫面上、太小，或不是這個品項
+File:Blob of paint and spray can.jpg	spray_can：看過，物品不在畫面上、太小，或不是這個品項
+File:Vintage Camera-Style Cigarette Lighter, Made in Occupied Japan (16835139257).jpg	lighter：看過，物品不在畫面上、太小，或不是這個品項
+File:RIGRAP Yellow 8512 Packaged 4 to a blister pack.jpg	medicine：看過，物品不在畫面上、太小，或不是這個品項
+File:Ready to Eat Fresh Betel Leaf Dessert - Blister Pack.png	medicine：看過，物品不在畫面上、太小，或不是這個品項
+File:Post-Medieval possible Syringe fragment (FindID 585520).jpg	needle：看過，物品不在畫面上、太小，或不是這個品項
+File:Equipment - Syringe (5279) -- Smart-Servier.png	needle：看過，物品不在畫面上、太小，或不是這個品項
+File:Syringe filter-0,22-um-Millex-GV-01.jpg	needle：看過，物品不在畫面上、太小，或不是這個品項
+File:Apparatus for the syringe technique.png	needle：看過，物品不在畫面上、太小，或不是這個品項
+File:Syringe (NIH BioArt 505).png	needle：看過，物品不在畫面上、太小，或不是這個品項
+File:Ri 2014 - Thermos flask - James Dewar (27).jpg	metal_utensils：看過，物品不在畫面上、太小，或不是這個品項
+File:Incomplete post-medieval base metal spoon c. 1710-1800AD. (FindID 1011111).jpg	metal_utensils：看過，物品不在畫面上、太小，或不是這個品項
+File:Cdd521 compact-disc-recorder2 hg.jpg	cd_disc：看過，物品不在畫面上、太小，或不是這個品項
+File:AIWA CSD-ES100 Compact Disc Stereo Radio Cassette Recorder (cropped).jpg	cd_disc：看過，物品不在畫面上、太小，或不是這個品項
+File:Bonnet hair dryer, circa early 1970s.jpg	hair_dryer：看過，物品不在畫面上、太小，或不是這個品項
+File:Battery powered LED desk lamp - battery and board-9281.jpg	desk_lamp：看過，物品不在畫面上、太小，或不是這個品項
+File:Concise bamboo eye protection LED desk lamp.jpg	desk_lamp：看過，物品不在畫面上、太小，或不是這個品項
+File:Battery powered LED desk lamp - board with SMD LEDs-9676.jpg	desk_lamp：看過，物品不在畫面上、太小，或不是這個品項
+File:Battery powered LED desk lamp - board with USB port and on-off-switch-9283.jpg	desk_lamp：看過，物品不在畫面上、太小，或不是這個品項
+File:VCR-Conrod Diss Wittek.jpg	video_player：看過，物品不在畫面上、太小，或不是這個品項
+File:Pictograms on first ever VCR JVC-HR-3300U b (cropped).jpg	video_player：看過，物品不在畫面上、太小，或不是這個品項
+File:Panhard VCR de la Armada Argentina en maniobras.jpg	video_player：看過，物品不在畫面上、太小，或不是這個品項
+File:Millennium gate Vcr close-up.jpg	video_player：看過，物品不在畫面上、太小，或不是這個品項
+File:USB Flash Drive Lighter.jpg	usb_drive：看過，物品不在畫面上、太小，或不是這個品項
+File:Luxurious USB flash drive.JPG	usb_drive：看過，物品不在畫面上、太小，或不是這個品項
+File:Miele vacuum cleaner bag, Hillegersberg, Rotterdam (2022) 01.jpg	vacuum：看過，物品不在畫面上、太小，或不是這個品項
+File:15a.BoomBox.HStreetFestival.WDC.17September2011 (6166511526).jpg	radio：看過，物品不在畫面上、太小，或不是這個品項
+File:24.BoomBox.HStreetFestival.WDC.17September2011 (6546821813).jpg	radio：看過，物品不在畫面上、太小，或不是這個品項
+File:45a.BoomBox.HStreetFestival.WDC.17September2011 (7877650670).jpg	radio：看過，物品不在畫面上、太小，或不是這個品項
+File:78.BoomBox.HStreetFestival.WDC.17September2011 (8156648362).jpg	radio：看過，物品不在畫面上、太小，或不是這個品項
+File:Soundic Programmable TV-Game Console SD-090 (3).jpg	game_console：看過，物品不在畫面上、太小，或不是這個品項
+File:Soundic Programmable TV-Game Console SD-090 (2).jpg	game_console：看過，物品不在畫面上、太小，或不是這個品項
+File:Soundic Programmable TV-Game Console SD-050 (3).jpg	game_console：看過，物品不在畫面上、太小，或不是這個品項
+File:Queen's Printer building, Victoria, British Columbia 15.jpg	printer：看過，物品不在畫面上、太小，或不是這個品項
+File:Queen's Printer building, Victoria, British Columbia 16.jpg	printer：看過，物品不在畫面上、太小，或不是這個品項
+File:Queen's Printer building, Victoria, British Columbia 14.jpg	printer：看過，物品不在畫面上、太小，或不是這個品項
+File:Water Printer, Wroclaw (P1180349).jpg	printer：看過，物品不在畫面上、太小，或不是這個品項
+File:Woman sitting on a yoga mat and stretching. Pink plastic water bottle next to her.jpg	plastic_misc：看過，物品不在畫面上、太小，或不是這個品項
+File:Plastic Water Bottle.jpg	plastic_misc：看過，物品不在畫面上、太小，或不是這個品項
+File:Plastic Water Bottle with Attached Cap in Europe (53926999150).jpg	plastic_misc：看過，物品不在畫面上、太小，或不是這個品項
+File:Emptying a plastic water bottle.jpg	plastic_misc：看過，物品不在畫面上、太小，或不是這個品項
+File:Race Car Tire Cupcake (4725762991).jpg	tire：看過，物品不在畫面上、太小，或不是這個品項
+File:Car Tire.jpg	tire：看過，物品不在畫面上、太小，或不是這個品項
+File:Man struggles with tangled cassette tape while holding a vintage audio cassette in a dimly lit indoor setting.jpg	cassette_tape：看過，物品不在畫面上、太小，或不是這個品項
+File:Meredith Monk - Assorted Audio Cassette Tapes 02.jpg	cassette_tape：看過，物品不在畫面上、太小，或不是這個品項
+File:Mother using her smartphone and daughter holding her stuffed toy.jpg	plush_toy：看過，物品不在畫面上、太小，或不是這個品項
+File:Crafting of Floor Mat.jpg	doormat：看過，物品不在畫面上、太小，或不是這個品項
+File:Floor mat with several pairs of shoes (DSC 0033 (6977516681)).jpg	doormat：看過，物品不在畫面上、太小，或不是這個品項
+File:Guang Hua Digital Plaza Three Mountains King Temple whiteboard 20251011.jpg	whiteboard：看過，物品不在畫面上、太小，或不是這個品項
+File:Chihiro Chang's whiteboard 20221008.jpg	whiteboard：看過，物品不在畫面上、太小，或不是這個品項
+File:Basketball court, Ara Institute of Canterbury - Madras Campus, Christchurch, New Zealand.jpg	ball：看過，物品不在畫面上、太小，或不是這個品項
+File:Final4 BK Opava-ČEZ Basketball Nymburk (51).jpg	ball：看過，物品不在畫面上、太小，或不是這個品項
+File:Basketball, 1. Damen-Basketball-Bundesliga, ChemCats Chemnitz LR10 by Stepro IMG 7810.jpg	ball：看過，物品不在畫面上、太小，或不是這個品項
+File:2022-11-24 Basketball, FIBA Women's Eurobasket Qualifiers, GER-BIH 1DX 6321 by Stepro.jpg	ball：看過，物品不在畫面上、太小，或不是這個品項
+File:Motor Scooter with 50 ccm, Rex RS 500 (OEM Quingi QM50QT-6A(A), Model 2008.jpg	scooter_parts：看過，物品不在畫面上、太小，或不是這個品項
+File:Goodyear Ego 2 - Doohan iTank electric motor scooter 3-Wheel 02.jpg	scooter_parts：看過，物品不在畫面上、太小，或不是這個品項
+File:202603 Logistics three-wheeled electric motor scooter " 馬上到 Gofer ".jpg	scooter_parts：看過，物品不在畫面上、太小，或不是這個品項
+File:Motor Scooter with 50 ccm, Rex RS 500 (OEM Qingqi QM50QT-6A(A), Model 2008, front (bright version).jpg	scooter_parts：看過，物品不在畫面上、太小，或不是這個品項
+File:202603 Momo.com Inc. Logistics three-wheeled electric motor scooter.jpg	scooter_parts：看過，物品不在畫面上、太小，或不是這個品項
+File:Baruch Zvi Ring - Memorial Tablet and Omer Calendar - Google Art Project.jpg	magazine：看過，物品不在畫面上、太小，或不是這個品項
+File:Sovnarkom-Gregorian-Calendar-Decree-izo39.jpg	magazine：看過，物品不在畫面上、太小，或不是這個品項
+File:Praha Astronomical Clock Calendar 01.jpg	magazine：看過，物品不在畫面上、太小，或不是這個品項
+File:LSST 2018 Calendar (rubin-24mb-2018-calendar).jpg	magazine：看過，物品不在畫面上、太小，或不是這個品項
+File:Google Calendar (2015-2020).png	magazine：看過，物品不在畫面上、太小，或不是這個品項
+File:Paper Bag Michelle Nikou MRD 05.jpg	paper_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Nina staehli paper bag paintings 10.JPG	paper_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Nina staehli paper bag paintings 16.JPG	paper_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Paper Bag Michelle Nikou MRD 02.jpg	paper_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Paper bag paintings mountain home nina staehli 74.jpg	paper_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:EFTA00000614 - Bathroom with a white bathtub marble countertop red-framed window and a towel rack with a folded towel.jpg	towel：看過，物品不在畫面上、太小，或不是這個品項
+File:Towel Animals.jpg	towel：看過，物品不在畫面上、太小，或不是這個品項
+File:HAPPY TOWEL DAY.jpg	towel：看過，物品不在畫面上、太小，或不是這個品項
+File:Dogs Ike, Maggie, etc. tugging at a towel (rbm-QP301M8-1887-715a~04).jpg	towel：看過，物品不在畫面上、太小，或不是這個品項
+File:Dogs Ike, Maggie, etc. tugging at a towel (rbm-QP301M8-1887-715a~03).jpg	towel：看過，物品不在畫面上、太小，或不是這個品項
+File:Aftermath of mass flashmob pillow fight in Trafalgar Square for International Pillow Fight Day 2013.jpg	bedding：看過，物品不在畫面上、太小，或不是這個品項
+File:Aftermath of mass flashmob pillow fight in Trafalgar Square for International Pillow Fight Day.jpg	bedding：看過，物品不在畫面上、太小，或不是這個品項
+File:Northern Song Porcelain Pillow 59.jpg	bedding：看過，物品不在畫面上、太小，或不是這個品項
+File:Pillow Lava at Galapagos Rift 01.jpg	bedding：看過，物品不在畫面上、太小，或不是這個品項
+File:Tower and curtain wall of Château de Chillon, Veytaux, Vaud.jpg	fabric：看過，物品不在畫面上、太小，或不是這個品項
+File:Derbent. Naryn-Kala citadel. The curtain wall.jpg	fabric：看過，物品不在畫面上、太小，或不是這個品項
+File:Bodysuits and hosiery for a wedding and its night – image variant showing the full wedding dress and a peek behind the curtain so to say.jpg	fabric：看過，物品不在畫面上、太小，或不是這個品項
+File:Curtain Call - Rena Heinz – 825. Hamburger Hafengeburtstag 2014 01.jpg	fabric：看過，物品不在畫面上、太小，或不是這個品項
+File:Lungmei Curtain Zhongxing Store 20130410.jpg	fabric：看過，物品不在畫面上、太小，或不是這個品項
+File:PDN Lvls In230 0 OutDfalt, AKVIS Shrpns40 HC-N, PDN Subjectcrop - SIPE IHS electro optics visor Color Film Negative NSSC Photo Collection (17 February 1993) 001915 image primary.png	photo_paper：看過，物品不在畫面上、太小，或不是這個品項
+File:PDN Crop, Lvls In230 0 OutDfalt, AKVIS Shrpns40 HC-N, PDN Subjectcrop - SIPE MCC.PS battery (BA 5590 .or. LiSO2) Color Film Negative NSSC Photo Collection (ca. 1993–1994) 001905 image primary.png	photo_paper：看過，物品不在畫面上、太小，或不是這個品項
+File:Area view Color Film Negative NSSC Photo Collection (ca. 1951–1984) 008158 image primary.png	photo_paper：看過，物品不在畫面上、太小，或不是這個品項
+File:PDN Lvls In230 0 OutDfalt, AKVIS Shrpns40 HC-N, PDN Absframecrop - SIPE IHS electro-optics visor with GEN III+ image intensifier, CRT and display optics Color Film Negative NSSC Photo Collection (17 February 1993) 001914 image primary.png	photo_paper：看過，物品不在畫面上、太小，或不是這個品項
+File:PDN Sharpness2.00 0.00, Midsubjectcrop - IPD sipe phase II headgear Color Film Negative NSSC Photo Collection (15 February 1992) 005420 image primary.png	photo_paper：看過，物品不在畫面上、太小，或不是這個品項
+File:Yes, it is a Santa Blue Crab Shell (6477004117).jpg	food_shells：看過，物品不在畫面上、太小，或不是這個品項
+File:Horseshoe crab shell by inner bay, Cold Spring Harbor Laboratory - 1.jpg	food_shells：看過，物品不在畫面上、太小，或不是這個品項
+File:Crab shell and island (15690182189).png	food_shells：看過，物品不在畫面上、太小，或不是這個品項
+File:The Fallen Leaves @ The Studio, Hartlepool 25.jpg	flowers_leaves：看過，物品不在畫面上、太小，或不是這個品項
+File:A local raw meat seller in Ketu, Lagos, Nigeria.jpg	meat：看過，物品不在畫面上、太小，或不是這個品項
+File:An animal keeper feeding raw meat to lions in a circus cage as spectators watch LCCN2007682633.jpg	meat：看過，物品不在畫面上、太小，或不是這個品項
+File:Agira served with sliced leafy vegetables.jpg	vegetables：看過，物品不在畫面上、太小，或不是這個品項
+File:Harvested Green Leafy Vegetables in Northern Ghana.jpg	vegetables：看過，物品不在畫面上、太小，或不是這個品項
+File:JP 日本 Japan 沖繩 OKINAWA 浦添市 Urasoe-city AEON Supermarket frozen food February 2026 N13P 09.jpg	frozen_food：看過，物品不在畫面上、太小，或不是這個品項
+File:HK SKD 日出康城 Lohas park 商場 mall shop 食品超級市場 Fresh Food Supermarket goods frozen food April 2022 Px3 04.jpg	frozen_food：看過，物品不在畫面上、太小，或不是這個品項
+File:HK SKD 日出康城 Lohas park 商場 mall shop 食品超級市場 Fresh Food Supermarket goods frozen food April 2022 Px3 Kimchi.jpg	frozen_food：看過，物品不在畫面上、太小，或不是這個品項
+File:Frozen Food.jpg	frozen_food：看過，物品不在畫面上、太小，或不是這個品項
+File:HK SKD 將軍澳 TKO 寶琳 Po Lam Estate Place Market frozen food shop July 2021 SS2.jpg	frozen_food：看過，物品不在畫面上、太小，或不是這個品項
+File:Long's Mattress - November 2025 - Sarah Stierch 03.jpg	mattress：看過，物品不在畫面上、太小，或不是這個品項
+File:Mattress firm Miller park way.jpg	mattress：看過，物品不在畫面上、太小，或不是這個品項
+File:Long's Mattress - November 2025 - Sarah Stierch 01.jpg	mattress：看過，物品不在畫面上、太小，或不是這個品項
+File:I couldn't help thinking about the baby stroller in Eisenstein's movie... (17837011344).jpg	cart：看過，物品不在畫面上、太小，或不是這個品項
+File:Baby stroller scene during Rammstein concert in Luzhniki.jpg	cart：看過，物品不在畫面上、太小，或不是這個品項
+File:Two sisters ride on their bike and baby stroller respectively on a late afternoon.jpg	cart：看過，物品不在畫面上、太小，或不是這個品項
+File:Natural gas burning on a gas stove.jpg	gas_stove：看過，物品不在畫面上、太小，或不是這個品項
+File:Gas stove, light switch, kitchen Fortepan 13653.jpg	gas_stove：看過，物品不在畫面上、太小，或不是這個品項
+File:Grand Baie, catholic church, Holy water dispenser.JPG	water_dispenser：看過，物品不在畫面上、太小，或不是這個品項
+File:Water dispenser with lemons.JPG	water_dispenser：看過，物品不在畫面上、太小，或不是這個品項
+File:Schofield Spring water dispenser, Willington CT.jpg	water_dispenser：看過，物品不在畫面上、太小，或不是這個品項
+File:Mexican water dispenser.png	water_dispenser：看過，物品不在畫面上、太小，或不是這個品項
+File:Celebrity wardrobe stylist Pilar Scratch and friend celebrity wardrobe stylist LooksByLunden attend Gansevoort red carpet.jpg	cabinet：看過，物品不在畫面上、太小，或不是這個品項
+File:Rotating squeegee street washing machine.png	washing_machine：看過，物品不在畫面上、太小，或不是這個品項
+File:Old washing machine 11.JPG	washing_machine：看過，物品不在畫面上、太小，或不是這個品項
+File:Woman Combing Her Hair MET DT1917.jpg	misc_trash：看過，物品不在畫面上、太小，或不是這個品項
+File:Panoramic image of the outside of Rubber Gloves Rehearsal Studio in Denton, Texas - DPLA - 7cb04ac5d7c4bdc78f2ba12d41e6ce84.jpg	misc_trash：看過，物品不在畫面上、太小，或不是這個品項
+File:Lennie Mace "¥ € $" 2014 dry ballpoint pen and ballpoint pen ink on paper "Invisible Ink" series.jpg	misc_trash：看過，物品不在畫面上、太小，或不是這個品項
+File:The Suitcase 2017.jpg	luggage：看過，物品不在畫面上、太小，或不是這個品項
+File:Luggage Loading.jpg	luggage：看過，物品不在畫面上、太小，或不是這個品項
+File:One Suitcase Cover.jpg	luggage：看過，物品不在畫面上、太小，或不是這個品項
+File:VTBS-luggage screening-2.jpg	luggage：看過，物品不在畫面上、太小，或不是這個品項

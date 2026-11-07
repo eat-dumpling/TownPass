@@ -95,7 +95,9 @@ NEW = [
   ('tv', '電視機', 'Television', ['an old television set', 'a flat screen TV'], 'big', 'bulky', *BULKY, [], AP, 'DeviceTv', 'adult', BULKY_NOTE + '；也可以交給販賣業者回收', {}),
   ('fridge', '電冰箱', 'Refrigerator', ['a refrigerator', 'an old fridge'], 'big', 'bulky', *BULKY, [], AP, 'Fridge', 'adult', BULKY_NOTE + '；也可以交給販賣業者回收', {}),
   ('washing_machine', '洗衣機', 'Washing machine', ['a washing machine', 'a front loading washer'], 'big', 'bulky', *BULKY, [], AP, 'WashMachine', 'adult', BULKY_NOTE + '；也可以交給販賣業者回收', {}),
-  ('air_conditioner', '冷氣機', 'Air conditioner', ['a window air conditioner', 'an air conditioning unit'], 'big', 'bulky', *BULKY, [], AP, 'AirConditioning', 'adult', BULKY_NOTE + '；也可以交給販賣業者回收', {}),
+  ('air_conditioner', '冷氣機', 'Air conditioner', ['a window air conditioner', 'an air conditioning unit'], 'big', 'bulky', *BULKY, [], AP, 'AirConditioning', 'adult', BULKY_NOTE + '；也可以交給販賣業者回收', {}),  # ── 回收一點通（data/回收一點通_1031筆.tsv）列出、但上面的分類方式 CSV 沒有對應品項的東西（web/scripts/map-taipei-list.mjs 找出來的）──
+  ('misc_trash', '原子筆、梳子等小東西', 'Pens, combs and small items', ['a ballpoint pen', 'a plastic hair comb', 'a waterproof shower cap', 'a pair of rubber gloves', 'a box of crayons', 'silicone earplugs'], 'home', 'general', *GEN, [], GT, 'Ballpen', 'none', '原子筆、筆芯、眉筆、蠟筆、梳子、耳塞、浴帽、手套都是一般垃圾；只剩外殼筆桿的原子筆是塑膠回收', {}),
+  ('luggage', '行李箱', 'Suitcase', ['an old suitcase', 'a rolling luggage case', 'a hard shell travel suitcase'], 'big', 'bulky', *BULKY, [], RT + AP, 'Luggage', 'help', '2 個以下交給資源回收車（星期一、二、四、五、六）；3 個以上打電話和清潔隊約時間', {}),
 ]
 
 MATERIAL = {'plastic': 'plastic', 'paper': 'paper', 'glass': 'glass', 'can': 'metal', 'metal': 'metal', 'tetra': 'paper', 'food': 'compost'}
@@ -123,5 +125,8 @@ for i in items:
     if i['id'] == 'old_clothes': i['notes'] = '洗乾淨、不要弄濕、打包（含乾淨且彈性完整的女性內衣）；破舊、髒污、發臭的是一般垃圾'
     if i['id'] == 'furniture': i['name'] = {'zh': '沙發', 'en': 'Sofa', 'vi': 'Ghế sofa', 'id': 'Sofa'}; i['group'] = 'big'
     if i['id'] == 'small_appliance': i['group'] = 'device'
+    # 回收一點通的品項：出處寫回收一點通的條目
+    if i['id'] == 'misc_trash': i['source'] = '臺北市環保局「回收一點通」（原子筆、原子筆筆芯、眉筆、蠟筆、按摩梳、矽膠耳塞、防水浴帽、手套：一般垃圾）'
+    if i['id'] == 'luggage': i['source'] = '臺北市環保局「回收一點通」（臺北市允收項目：廢行李箱 2 只以下交回收車、3 只以上約定時間）'
 json.dump(items, open(ITEMS, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print(f'added {added}, total {len(items)}')

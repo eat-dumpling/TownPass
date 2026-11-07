@@ -21,8 +21,8 @@ self.onmessage = async (e: MessageEvent) => {
       const wasm = env.backends.onnx.wasm
       if (wasm) {
         wasm.wasmPaths = new URL('ort/', m.base).href
-        // 實測：在 Worker 裡開多執行緒（numThreads > 1）會卡在建立模型，所以固定單執行緒（約 0.5 秒／張）
-        wasm.numThreads = m.threads ?? 1
+        // 固定單執行緒：Worker 裡開多執行緒會卡在建立模型（即使 crossOriginIsolated；見 clip.ts 的 wasmThreads）
+        wasm.numThreads = 1
       }
       const id: string = m.model ?? 'Xenova/clip-vit-base-patch32'
       const Vision = VISION[(m.vision ?? 'CLIPVisionModelWithProjection') as keyof typeof VISION]
@@ -34,6 +34,9 @@ self.onmessage = async (e: MessageEvent) => {
           if (p.status === 'progress' && p.progress != null) post({ type: 'progress', pct: p.progress })
         },
       })) as unknown as Model
+      // 暖機：先跑一次空白圖，第一次真正辨識就不用等初始化（載入時在背景做掉）
+      const blank = new RawImage(new Uint8ClampedArray(224 * 224 * 4).fill(128), 224, 224, 4).rgb()
+      await model(await processor(blank)).catch(() => {})
       return { processor, model, out: m.visionOut ?? 'image_embeds' }
     })()
     try {

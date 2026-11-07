@@ -16,7 +16,7 @@ import type { Item } from '@/domain/types'
 import { clipDevice, fileToCanvas, INPUT_SIZE, loadClip, recognize, type Decision, type Protos } from '@/vision/clip'
 import { detect, DetTimer, loadDetector, squareCrop, type DetModel } from '@/vision/detector'
 import { answerLevel, observe, rankedOf, Tracker, TRACKER, type Track } from '@/vision/tracker'
-import { drawMode, primaryOf, selectDetections } from '@/vision/pipeline'
+import { centerBox, chooseBoxes, drawMode, primaryOf } from '@/vision/pipeline'
 import { salientBox } from '@/vision/saliency'
 import { logPrior, PRIOR_MIN_SCORE } from '@/vision/prior'
 import { coverTransform, drawAnnotations, type Annotation } from '@/vision/annotate'
@@ -64,8 +64,9 @@ const line = computed(() => {
   if (n > 1) return `看到 ${n} 個東西，點一個看看`
   const k = activeTracks().find(kindOnly)
   if (k) return `應該是${kindMeta[k.kind!].label}，靠近一點讓我看清楚`
-  if (activeTracks().some((t) => t.obs >= TRACKER.MIN_OBS)) return '看不清楚，換個角度試試'
-  return activeTracks().length ? '讓我看看…' : '把要丟的東西放進框框裡'
+  const boxed = activeTracks().filter((t) => !t.center) // 畫面中央框沒認出東西時，當作還沒對準東西
+  if (boxed.some((t) => t.obs >= TRACKER.MIN_OBS)) return '看不清楚，換個角度試試'
+  return boxed.length ? '讓我看看…' : '把要丟的東西放進框框裡'
 })
 
 onMounted(async () => {
@@ -101,19 +102,18 @@ function frame(ts: number) {
       lastDetect = ts
       try {
         const t0 = performance.now()
-        // 只框偵測分數夠高的（掛繩、手、衣服的誤框分數多半很低），最多 3 個
-        let dets = selectDetections(detect(detector, v, ts, vw, vh))
+        // 只框偵測分數夠高的（掛繩、手、衣服的誤框分數多半很低），最多 3 個；
+        // 偵測器框不到 → 找畫面中央跟背景不一樣的那一塊；再框不到 → 畫面中央一大塊（東西拿很近、佔滿畫面時）
+        const raw = detect(detector, v, ts, vw, vh)
         timer.push(performance.now() - t0)
-        // 偵測器框不到 → 找畫面中央跟背景不一樣的那一塊（沒有類別，不加先驗）
-        if (!dets.length) { const sb = salientBox(v, vw, vh); if (sb) dets = [sb] }
-        tracker.update(dets)
+        tracker.update(chooseBoxes(raw, () => salientBox(v, vw, vh), vw, vh))
         if (timer.slow && detModel.value === 'efficientdet_lite2') downgrade()
       } catch (e) { console.warn('[detector]', e); detector = null }
     } else if (!detector && ts - lastDetect > 120) {
       // 偵測器還沒載好或不能用：只用顯著物體框
       lastDetect = ts
       const sb = salientBox(v, vw, vh)
-      tracker.update(sb ? [sb] : [])
+      tracker.update([sb ?? centerBox(vw, vh)])
     }
     draw(v)
   }
@@ -139,7 +139,7 @@ function draw(v: HTMLVideoElement) {
   // 只有顯著物體框（偵測器沒給類別）而且很像背景時才不畫
   // 規則在 pipeline.ts（和驗證工具共用）：沒把握時只畫主要那一個框、不寫字；其他沒把握的框不畫
   const tracks = activeTracks()
-  const primary = primaryOf(tracks, v.videoWidth, v.videoHeight)
+  const primary = (lastPrimary = primaryOf(tracks, v.videoWidth, v.videoHeight, lastPrimary))
   annos = tracks
     .map((t) => ({ t, mode: drawMode(t, t === primary) }))
     .filter(({ mode }) => mode !== 'hide')
@@ -167,6 +167,7 @@ function draw(v: HTMLVideoElement) {
 // ── 背景：輪流辨識每個框（CLIP 在 Web Worker 裡） ─────────────────
 const crop = document.createElement('canvas')
 crop.width = crop.height = INPUT_SIZE
+let lastPrimary: Track | null = null // 主要的框有遲滯（pipeline.ts 的 primaryOf）
 async function clipLoop() {
   while (running) {
     const v = video.value
@@ -178,7 +179,7 @@ async function clipLoop() {
       crop.getContext('2d')!.drawImage(v, r.sx, r.sy, r.side, r.side, 0, 0, INPUT_SIZE, INPUT_SIZE)
       try {
         const res = await recognize(crop, items, localProtos, logPrior(t.cocoScore >= PRIOR_MIN_SCORE ? t.coco : null))
-        observe(t, res.top, res.negative?.p ?? 0)
+        observe(t, res.top, res.negative?.p ?? 0, res.vec)
         vecs.set(t.id, res.vec)
         tick.value++
       } catch (e) {

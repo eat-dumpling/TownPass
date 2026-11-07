@@ -7,9 +7,9 @@ export const OTHER_PRIOR = 0.5
 export const PRIOR_MIN_SCORE = 0.3
 
 export const COCO_TO_ITEMS: Record<string, string[]> = {
-  bottle: ['pet_bottle', 'glass_bottle', 'cooking_oil', 'spray_can', 'tetra_pak', 'lubricant', 'pesticide_container'],
+  bottle: ['pet_bottle', 'glass_bottle', 'cooking_oil', 'spray_can', 'tetra_pak', 'lubricant', 'pesticide_container', 'metal_utensils', 'plastic_misc', 'small_appliance'], // 保溫瓶、水壺、電熱水壺也常被叫 bottle
   'wine glass': ['glass_bottle', 'broken_glass'],
-  cup: ['bubble_tea_cup', 'paper_cup', 'pudding_cup', 'aluminum_can', 'tetra_pak', 'foam_tableware'],
+  cup: ['bubble_tea_cup', 'paper_cup', 'pudding_cup', 'aluminum_can', 'tetra_pak', 'foam_tableware', 'metal_utensils', 'broken_ceramic'], // 保溫杯、馬克杯
   bowl: ['leftovers', 'paper_lunchbox', 'broken_ceramic', 'styrofoam_clean', 'styrofoam_dirty', 'pudding_cup', 'foam_tableware', 'wooden_lunchbox'],
   fork: ['metal_utensils', 'chopsticks', 'plastic_misc'],
   knife: ['metal_utensils'],
@@ -34,9 +34,10 @@ export const COCO_TO_ITEMS: Record<string, string[]> = {
   keyboard: ['mouse_keyboard'],
   clock: ['small_appliance', 'battery'],
   handbag: ['plastic_bag_clean', 'plastic_bag_dirty', 'snack_bag', 'paper_bag'],
-  vase: ['glass_bottle', 'broken_ceramic'],
+  vase: ['glass_bottle', 'broken_ceramic', 'metal_utensils', 'plastic_misc', 'small_appliance'], // 水壺、茶壺、電熱水壺常被叫 vase
   'teddy bear': ['plush_toy'],
   'sports ball': ['ball'],
+  suitcase: ['luggage', 'cabinet', 'small_appliance', 'printer'], // 行李箱；箱形的東西也常被叫 suitcase
   // 大型家具家電（pipeline.ts 的 BIG_CLASSES）
   chair: ['table_chair', 'furniture', 'cabinet'],
   bench: ['table_chair', 'furniture'],

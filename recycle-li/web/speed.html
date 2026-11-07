@@ -1,0 +1,89 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>vision speed test</title></head>
+<!-- 影像模型速度測試（開發用，只在 vite.eval.config.ts 的建置裡）：同一個 q8 模型在 WASM 單執行緒、WASM 多執行緒、WebGPU 各要多久，
+     並檢查 WebGPU 的輸出是否和 WASM 一樣（CLIP q8 在 WebGPU 上曾經整個壞掉）。多執行緒需要頁面 crossOriginIsolated（COOP/COEP 標頭）。 -->
+<body><pre id="out">running…</pre>
+<script type="module">
+  import * as T from '@huggingface/transformers'
+  import params from './src/vision/params.json'
+  const out = document.getElementById('out')
+  const log = (s) => { out.textContent += '\n' + s; console.log(s) }
+  const MODEL = params.MODEL === 'siglip' ? { id: 'Xenova/siglip-base-patch16-224', vision: 'SiglipVisionModel', outKey: 'pooler_output' } : { id: 'Xenova/clip-vit-base-patch32', vision: 'CLIPVisionModelWithProjection', outKey: 'image_embeds' }
+  T.env.allowLocalModels = true
+  T.env.localModelPath = new URL('models/', document.baseURI).href
+  T.env.allowRemoteModels = false
+  T.env.backends.onnx.wasm.wasmPaths = new URL('ort/', document.baseURI).href
+
+  // 兩張不一樣的合成圖（只用來比較不同後端的輸出是否一致，不是準確率）
+  function synth(seed) {
+    const c = new OffscreenCanvas(224, 224), g = c.getContext('2d')
+    const grd = g.createLinearGradient(0, 0, 224, 224)
+    grd.addColorStop(0, `hsl(${seed * 97 % 360},70%,60%)`); grd.addColorStop(1, `hsl(${seed * 211 % 360},60%,30%)`)
+    g.fillStyle = grd; g.fillRect(0, 0, 224, 224)
+    for (let i = 0; i < 12; i++) { g.fillStyle = `hsl(${(seed * 31 + i * 47) % 360},80%,${30 + i * 4}%)`; g.beginPath(); g.arc((seed * 13 + i * 37) % 224, (seed * 7 + i * 53) % 224, 10 + i * 3, 0, 7); g.fill() }
+    const d = g.getImageData(0, 0, 224, 224)
+    return new T.RawImage(new Uint8ClampedArray(d.data), 224, 224, 4).rgb()
+  }
+  const imgs = [synth(1), synth(2)]
+  const norm = (v) => { let s = 0; for (const x of v) s += x * x; const n = Math.sqrt(s) || 1; return Array.from(v, (x) => x / n) }
+  const dot = (a, b) => a.reduce((s, x, i) => s + x * b[i], 0)
+  const processor = await T.AutoProcessor.from_pretrained(MODEL.id)
+  const inputs = await Promise.all(imgs.map((im) => processor(im)))
+
+  async function bench(name, opts) {
+    try {
+      const t0 = performance.now()
+      const m = await T[MODEL.vision].from_pretrained(MODEL.id, opts)
+      const load = performance.now() - t0
+      const vecs = []
+      for (const x of inputs) vecs.push(norm((await m(x))[MODEL.outKey].data)) // 暖機
+      const N = 6
+      const t1 = performance.now()
+      for (let i = 0; i < N; i++) await m(inputs[i % 2])
+      const ms = (performance.now() - t1) / N
+      log(`${name}: ${ms.toFixed(0)} ms／張（載入 ${(load / 1000).toFixed(1)} s）；兩張不同圖的 cosine ${dot(vecs[0], vecs[1]).toFixed(3)}`)
+      await m.dispose?.()
+      return vecs
+    } catch (e) { log(`${name}: 失敗 ${e.message}`); return null }
+  }
+
+  log(`crossOriginIsolated=${self.crossOriginIsolated}、hardwareConcurrency=${navigator.hardwareConcurrency}、WebGPU=${!!navigator.gpu}`)
+  const res = window.__speed = {}
+  // ?threads=N：onnxruntime 只在第一次建立模型時決定執行緒數，所以每種設定要各開一次頁面
+  const qs = new URLSearchParams(location.search)
+  // ?worker=1：用 App 實際的路徑（clip.ts → clip.worker.ts），看 Worker 裡多執行緒會不會卡住、多快
+  if (qs.get('worker')) {
+    const clip = await import('./src/vision/clip.ts')
+    const t0 = performance.now()
+    const l = await clip.loadClip()
+    log(`Worker：${await clip.clipDevice()}，載入 ${((performance.now() - t0) / 1000).toFixed(1)} s`)
+    const c = new OffscreenCanvas(224, 224).getContext('2d'); c.fillStyle = '#3a7'; c.fillRect(0, 0, 224, 224); c.fillStyle = '#f80'; c.fillRect(40, 30, 120, 160)
+    const img = c.getImageData(0, 0, 224, 224)
+    await l.embed(img)
+    const t1 = performance.now()
+    for (let i = 0; i < 6; i++) await l.embed(c.getImageData(0, 0, 224, 224))
+    log(`Worker：${((performance.now() - t1) / 6).toFixed(0)} ms／張`)
+    window.__speedDone = true
+    throw new Error('done')
+  }
+  const threads = Number(qs.get('threads') ?? 0)
+  if (threads) {
+    T.env.backends.onnx.wasm.numThreads = threads
+    if (qs.get('proxy')) T.env.backends.onnx.wasm.proxy = true // onnxruntime 自己的 Worker（不卡畫面）
+    await bench(`WASM q8 ${threads} 執行緒${qs.get('proxy') ? '（proxy Worker）' : ''}`, { dtype: 'q8', device: 'wasm' })
+    window.__speedDone = true
+    throw new Error('done') // 只測這一種
+  }
+  T.env.backends.onnx.wasm.numThreads = 1
+  res.wasm1 = await bench('WASM q8 單執行緒', { dtype: 'q8', device: 'wasm' })
+  if (self.crossOriginIsolated) {
+    T.env.backends.onnx.wasm.numThreads = Math.min(4, navigator.hardwareConcurrency || 4)
+    res.wasm4 = await bench(`WASM q8 ${T.env.backends.onnx.wasm.numThreads} 執行緒`, { dtype: 'q8', device: 'wasm' })
+  } else log('不是 crossOriginIsolated：跳過多執行緒')
+  if (navigator.gpu) {
+    res.gpuq8 = await bench('WebGPU q8', { dtype: 'q8', device: 'webgpu' })
+  }
+  for (const k of ['wasm4', 'gpuq8']) if (res[k] && res.wasm1) log(`${k} 和 WASM 單執行緒的輸出 cosine：${dot(res[k][0], res.wasm1[0]).toFixed(4)}、${dot(res[k][1], res.wasm1[1]).toFixed(4)}`)
+  window.__speedDone = true
+  log('done')
+</script></body></html>

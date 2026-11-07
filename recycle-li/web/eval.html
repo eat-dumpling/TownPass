@@ -6,7 +6,7 @@
   const m = await import('./src/vision/evalPipeline.ts')
   window.__ev = { status: 'running' }
   try {
-    const r = await m.evalPipeline('./_eval/manifest.json', { select: opts.select !== '0', legacy: opts.legacy === '1', otherPrior: opts.other ? Number(opts.other) : undefined, only: opts.only ? opts.only.split(',') : undefined })
+    const r = await m.evalPipeline('./_eval/manifest.json', { select: opts.select !== '0', legacy: opts.legacy === '1', otherPrior: opts.other ? Number(opts.other) : undefined, only: opts.only ? opts.only.split(',') : undefined, frames: opts.frames ? Number(opts.frames) : undefined })
     window.__ev = { status: 'done', r }
     const { rows, ...sum } = r
     document.getElementById('out').textContent = JSON.stringify(sum, null, 1)

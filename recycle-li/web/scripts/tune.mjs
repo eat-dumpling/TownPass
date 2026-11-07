@@ -135,7 +135,7 @@ function evaluate(set, P, protos, mat = textMat) {
     const [bestKind, kMass] = Object.entries(kindMass).sort((a, b) => b[1] - a[1])[0]
     calib.push({
       p1: Math.exp(order[0][0] - mx) / z, p2: Math.exp(order[1][0] - mx) / z, ok: ok1 && !isNothing, okKind: okKind && !isNothing,
-      kMass, okBestKind: s.accept.some((a) => byId[a].kind === bestKind),
+      kMass, okBestKind: s.accept.some((a) => byId[a].kind === bestKind), item: s.src === 'web' ? s.label : `TACO ${s.label}`, guess: best,
     })
     top1 += ok1 && !isNothing; top3 += ok3; kind += okKind && !isNothing; nothing += isNothing; nll -= Math.log(Math.max(1e-6, pAcc))
     const r = (perSrc[s.src] ??= { n: 0, top1: 0, kind: 0 })
@@ -275,7 +275,15 @@ for (const FAST_P of [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]) {
   const x = valCal.filter((c) => c.p1 >= FAST_P)
   if (x.length >= 20 && x.filter((c) => c.ok).length / x.length >= FAST_TARGET) { bestFast = FAST_P; break }
 }
-const rule = { SHOW_P: bestRule.SHOW_P, SHOW_P_MIN: bestRule.SHOW_P_MIN, SHOW_RATIO: bestRule.SHOW_RATIO, KIND_P: bestKindP, MAYBE_P: bestMaybe, FAST_P: bestFast }
+// 常見品項（items.json 的 freq 3：杯子、瓶罐、袋子、果皮…）：孩子最常掃的東西，門檻另外選（同樣至少 FAST_TARGET 對），讓它們更快說出名字
+const isCommon = (c) => (byId[c.guess]?.freq ?? 1) >= 3
+let bestFastCommon = bestFast
+for (const FAST_P of [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]) {
+  if (FAST_P >= bestFast) break
+  const x = valCal.filter((c) => isCommon(c) && c.p1 >= FAST_P)
+  if (x.length >= 20 && x.filter((c) => c.ok).length / x.length >= FAST_TARGET) { bestFastCommon = FAST_P; break }
+}
+const rule = { SHOW_P: bestRule.SHOW_P, SHOW_P_MIN: bestRule.SHOW_P_MIN, SHOW_RATIO: bestRule.SHOW_RATIO, KIND_P: bestKindP, MAYBE_P: bestMaybe, FAST_P: bestFast, FAST_P_COMMON: bestFastCommon }
 const sel = (() => {
   const cal = final.calib
   const item = cal.filter(itemRule(rule))
@@ -288,6 +296,8 @@ const sel = (() => {
     kind: kind.length / n, kindAcc: kind.filter((c) => c.okBestKind).length / (kind.length || 1),
     maybe: maybe.length / n, maybeAcc: maybe.filter((c) => c.ok).length / (maybe.length || 1), maybeKindAcc: maybe.filter((c) => c.okKind).length / (maybe.length || 1),
     unsure: unsure / n,
+    fastCommon: cal.filter(isCommon).length ? cal.filter((c) => isCommon(c) && c.p1 >= rule.FAST_P_COMMON).length / cal.filter(isCommon).length : 0,
+    fastCommonAcc: cal.filter((c) => isCommon(c) && c.p1 >= rule.FAST_P_COMMON && c.ok).length / (cal.filter((c) => isCommon(c) && c.p1 >= rule.FAST_P_COMMON).length || 1),
     fast: cal.filter((c) => c.p1 >= rule.FAST_P).length / n, fastAcc: cal.filter((c) => c.p1 >= rule.FAST_P && c.ok).length / (cal.filter((c) => c.p1 >= rule.FAST_P).length || 1),
     wrongShown: (item.filter((c) => !c.okKind).length + kind.filter((c) => !c.okBestKind).length + maybe.filter((c) => !c.okKind).length) / n,
   }
@@ -298,6 +308,13 @@ const pct = (x) => `${(x * 100).toFixed(1)}%`
 const row = (name, r) => `| ${name} | ${r.n} | ${pct(r.top1)} | ${pct(r.top3)} | ${pct(r.kind)} | ${pct(r.nothing)} |`
 const srcRow = (name, r) => Object.entries(r.perSrc).map(([k, v]) => `| ${name}（${k}） | ${v.n} | ${pct(v.top1 / v.n)} | ${pct(v.kind / v.n)} |`).join('\n')
 const coveredItems = new Set(train.flatMap((s) => s.accept.slice(0, 1)))
+// 每個品項的測試組準確率（下一輪要補照片的品項從最差的開始）
+const perItem = (() => {
+  const m = {}
+  for (const c of final.calib) { const r = (m[c.item] ??= { n: 0, ok: 0, okKind: 0, wrong: {} }); r.n++; r.ok += c.ok; r.okKind += c.okKind; if (!c.ok) r.wrong[c.guess] = (r.wrong[c.guess] ?? 0) + 1 }
+  return Object.entries(m).map(([id, r]) => ({ id, zh: byId[id]?.name.zh ?? id, ...r, acc: r.ok / r.n, kindAcc: r.okKind / r.n, top: Object.entries(r.wrong).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([g, k]) => `${byId[g]?.name.zh ?? g}×${k}`).join('、') })).sort((a, b) => a.acc - b.acc || b.n - a.n)
+})()
+writeFileSync(join(CACHE, 'per-item.json'), JSON.stringify(perItem, null, 1))
 const report = `# ${M.name === "siglip" ? "SigLIP" : "CLIP"} 調參報告（${new Date().toISOString().slice(0, 10)}，文字模板 ${embeds.variant ?? 'home'}）
 
 資料：TACO 裁切 ${samples.filter((s) => s.src === 'taco').length} 張、Wikimedia Commons ${samples.filter((s) => s.src === 'web').length} 張（搜錯過濾掉 ${dropped} 張）。
@@ -324,7 +341,7 @@ ${srcRow('調參後', final)}
 ${[[0.5, 1.01], [0.3, 0.5], [0.2, 0.3], [0.12, 0.2], [0, 0.12]].map(([lo, hi]) => { const b = final.calib.filter((c) => c.p1 >= lo && c.p1 < hi); return `| ${lo}–${Math.min(1, hi)} | ${pct(b.length / final.n)} | ${b.length ? pct(b.filter((c) => c.ok).length / b.length) : '-'} | ${b.length ? pct(b.filter((c) => c.okKind).length / b.length) : '-'} |` }).join('\n')}
 
 不確定時要不要回答（驗證組選門檻：顯示出來的至少 ${pct(TARGET)} 對；以下是測試組）：
-SHOW_P=${rule.SHOW_P}、SHOW_P_MIN=${rule.SHOW_P_MIN}、SHOW_RATIO=${rule.SHOW_RATIO}、KIND_P=${rule.KIND_P}、MAYBE_P=${rule.MAYBE_P}、FAST_P=${rule.FAST_P}\n\n看一次就回答（p1 ≥ FAST_P）：佔 ${pct(sel.fast)}，品項對 ${pct(sel.fastAcc)}
+SHOW_P=${rule.SHOW_P}、SHOW_P_MIN=${rule.SHOW_P_MIN}、SHOW_RATIO=${rule.SHOW_RATIO}、KIND_P=${rule.KIND_P}、MAYBE_P=${rule.MAYBE_P}、FAST_P=${rule.FAST_P}\n\n看一次就回答（p1 ≥ FAST_P）：佔 ${pct(sel.fast)}，品項對 ${pct(sel.fastAcc)}\n常見品項（FAST_P_COMMON=${rule.FAST_P_COMMON}）：猜成常見品項的照片有 ${pct(sel.fastCommon)} 看一次就說，品項對 ${pct(sel.fastCommonAcc)}
 
 | 畫面上 | 佔比 | 準確率 |
 |---|---|---|
@@ -334,6 +351,12 @@ SHOW_P=${rule.SHOW_P}、SHOW_P_MIN=${rule.SHOW_P_MIN}、SHOW_RATIO=${rule.SHOW_R
 | 不回答（只畫主要的框） | ${pct(sel.unsure)} | — |
 
 顯示出來（含「可能是」）但桶子錯的：${pct(sel.wrongShown)}（不做選擇、全部都回答時：${pct(1 - final.kind)}）
+
+每個品項（測試組，最差的 25 個；全部在 testdata/cache/per-item.json）：
+
+| 品項 | 張數 | 品項對 | 桶子對 | 常被認成 |
+|---|---|---|---|---|
+${perItem.slice(0, 25).map((r) => `| ${r.zh} | ${r.n} | ${pct(r.acc)} | ${pct(r.kindAcc)} | ${r.top} |`).join('\n')}
 
 學習分類向量：驗證組最佳 第一名 ${pct(bestA.r.top1)}（只加範例向量 ${pct(grid[0].r.top1)}）→ ${useAdapt ? '採用' : '不採用'}
 
@@ -352,7 +375,7 @@ if (!NO_WRITE) {
     ...prev,
     MODEL: M.name,
     TEMPERATURE: tuned.TEMPERATURE, PROTO_ALPHA: tuned.PROTO_ALPHA, PROTO_BETA: tuned.PROTO_BETA, PROTOS_PER_ITEM: tuned.PROTOS_PER_ITEM, CLASS_WEIGHTS: !!shippedW,
-    SHOW_P: rule.SHOW_P, SHOW_P_MIN: rule.SHOW_P_MIN, SHOW_RATIO: rule.SHOW_RATIO, KIND_P: rule.KIND_P, MAYBE_P: rule.MAYBE_P, FAST_P: rule.FAST_P,
+    SHOW_P: rule.SHOW_P, SHOW_P_MIN: rule.SHOW_P_MIN, SHOW_RATIO: rule.SHOW_RATIO, KIND_P: rule.KIND_P, MAYBE_P: rule.MAYBE_P, FAST_P: rule.FAST_P, FAST_P_COMMON: rule.FAST_P_COMMON,
     tuned: {
       date: new Date().toISOString().slice(0, 10),
       test: { n: final.n, top1: +final.top1.toFixed(3), top3: +final.top3.toFixed(3), kind: +final.kind.toFixed(3) },

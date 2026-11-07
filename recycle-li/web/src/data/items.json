@@ -3705,5 +3705,75 @@
   "source": "臺北市環保局資源回收分類方式（bulky）",
   "status": "unknown",
   "icon": "AirConditioning"
+ },
+ {
+  "id": "misc_trash",
+  "name": {
+   "zh": "原子筆、梳子等小東西",
+   "en": "Pens, combs and small items",
+   "vi": "Pens, combs and small items",
+   "id": "Pens, combs and small items"
+  },
+  "prompts": [
+   "a ballpoint pen",
+   "a plastic hair comb",
+   "a waterproof shower cap",
+   "a pair of rubber gloves",
+   "a box of crayons",
+   "silicone earplugs"
+  ],
+  "group": "home",
+  "attrs": {},
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "原子筆、筆芯、眉筆、蠟筆、梳子、耳塞、浴帽、手套都是一般垃圾；只剩外殼筆桿的原子筆是塑膠回收",
+  "source": "臺北市環保局「回收一點通」（原子筆、原子筆筆芯、眉筆、蠟筆、按摩梳、矽膠耳塞、防水浴帽、手套：一般垃圾）",
+  "status": "unknown",
+  "icon": "Ballpen"
+ },
+ {
+  "id": "luggage",
+  "name": {
+   "zh": "行李箱",
+   "en": "Suitcase",
+   "vi": "Suitcase",
+   "id": "Suitcase"
+  },
+  "prompts": [
+   "an old suitcase",
+   "a rolling luggage case",
+   "a hard shell travel suitcase"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "bulky",
+  "sub": "bulky",
+  "kind": "bulky",
+  "where": [
+   "recycle_truck",
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "help",
+  "notes": "2 個以下交給資源回收車（星期一、二、四、五、六）；3 個以上打電話和清潔隊約時間",
+  "source": "臺北市環保局「回收一點通」（臺北市允收項目：廢行李箱 2 只以下交回收車、3 只以上約定時間）",
+  "status": "unknown",
+  "icon": "Luggage"
  }
 ]

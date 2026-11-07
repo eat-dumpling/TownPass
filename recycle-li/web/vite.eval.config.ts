@@ -19,6 +19,7 @@ const copyEvalPhotos = (): Plugin => ({
 
 export default mergeConfig(base, {
   plugins: [copyEvalPhotos()],
-  build: { outDir: 'dist-eval', rollupOptions: { input: { eval: 'eval.html', review: 'review.html' } } }, // 不建 App 本身：別人改到一半的畫面不影響驗證
-  preview: { port: 4174, strictPort: true },
+  build: { outDir: 'dist-eval', rollupOptions: { input: { eval: 'eval.html', review: 'review.html', speed: 'speed.html' } } }, // 不建 App 本身：別人改到一半的畫面不影響驗證
+  // COOP/COEP：讓頁面 crossOriginIsolated，WASM 才能開多執行緒（speed.html 測）
+  preview: { port: 4174, strictPort: true, headers: { 'Cross-Origin-Opener-Policy': 'same-origin', 'Cross-Origin-Embedder-Policy': 'require-corp' } },
 })

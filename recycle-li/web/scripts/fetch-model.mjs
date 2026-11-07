@@ -1,10 +1,11 @@
-// 下載 CLIP 影像模型（q8 量化）與物件偵測模型到 public/models/，讓 WebView 離線也能辨識。
+// 下載影像模型（SigLIP q8、比較用的 CLIP q8）與物件偵測模型到 public/models/，讓 WebView 離線也能辨識。
 // 來源：https://huggingface.co/Xenova/siglip-base-patch16-224（Apache-2.0，Google SigLIP）、https://huggingface.co/Xenova/clip-vit-base-patch32（MIT）
 import { mkdirSync, writeFileSync, existsSync } from 'node:fs'
 import { dirname } from 'node:path'
 
 // 兩個影像模型都下載（params.json 的 MODEL 決定用哪一個；目前是 SigLIP，CLIP 留著比較用）
 for (const MODEL of ['Xenova/siglip-base-patch16-224', 'Xenova/clip-vit-base-patch32']) {
+// 只用 q8（WASM）。比過 q4（63 MB）與 q4f16（55 MB）：驗證照片的品項準確率各掉 2.4、3.1 個百分點（scripts/compare-dtype.mjs），不採用
 const FILES = ['config.json', 'preprocessor_config.json', 'onnx/vision_model_quantized.onnx']
 const out = `public/models/${MODEL}`
 for (const f of FILES) {

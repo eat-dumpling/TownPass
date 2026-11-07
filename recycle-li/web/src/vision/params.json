@@ -1,5 +1,5 @@
 {
-  "TEMPERATURE": 100,
+  "TEMPERATURE": 50,
   "PROTO_ALPHA": 12,
   "PROTO_BETA": 12,
   "PROTOS_PER_ITEM": 8,
@@ -7,39 +7,42 @@
   "MIN_TOP1": 0.12,
   "KEEP_P": 0.03,
   "CLASS_WEIGHTS": true,
-  "SHOW_P": 0.6,
-  "SHOW_P_MIN": 0.25,
-  "SHOW_RATIO": 4,
-  "KIND_P": 0.8,
+  "SHOW_P": 0.5,
+  "SHOW_P_MIN": 0.2,
+  "SHOW_RATIO": 3,
+  "KIND_P": 0.7,
   "MAYBE_P": 0.4,
   "MODEL": "siglip",
-  "FAST_P": 0.9,
+  "FAST_P": 0.75,
   "FAST_P_AGREE": 0.6,
   "tuned": {
     "date": "2026-11-07",
     "test": {
-      "n": 727,
-      "top1": 0.75,
-      "top3": 0.909,
-      "kind": 0.812
+      "n": 1210,
+      "top1": 0.731,
+      "top3": 0.896,
+      "kind": 0.805
     },
     "baseline": {
-      "top1": 0.615,
-      "kind": 0.693
+      "top1": 0.598,
+      "kind": 0.688
     },
     "selective": {
-      "item": 0.765,
-      "itemAcc": 0.856,
-      "itemKindAcc": 0.887,
-      "kind": 0.033,
-      "kindAcc": 0.958,
-      "maybe": 0.096,
-      "maybeAcc": 0.471,
-      "maybeKindAcc": 0.586,
-      "unsure": 0.106,
-      "fast": 0.536,
-      "fastAcc": 0.944,
-      "wrongShown": 0.128
+      "item": 0.714,
+      "itemAcc": 0.881,
+      "itemKindAcc": 0.916,
+      "kind": 0.032,
+      "kindAcc": 0.923,
+      "maybe": 0.03,
+      "maybeAcc": 0.639,
+      "maybeKindAcc": 0.667,
+      "unsure": 0.224,
+      "fastCommon": 0.435,
+      "fastCommonAcc": 0.964,
+      "fast": 0.456,
+      "fastAcc": 0.966,
+      "wrongShown": 0.073
     }
-  }
+  },
+  "FAST_P_COMMON": 0.75
 }
