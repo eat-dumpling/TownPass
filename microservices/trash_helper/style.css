@@ -738,3 +738,7 @@ body.has-tabbar:has(.pick-bar:not([hidden])) main { padding-bottom: calc(86px + 
 .head-actions .va-fab.in-row::after { display: none; }
 .head-actions .va-fab.in-row svg { width: 22px; height: 22px; }
 body.fab-float:not(.full):not(.has-tabbar) main { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }
+/* On the map it joins the locate button on the right, as one stack of map controls,
+   instead of sitting over the truck stops on the left. */
+body.has-tabbar .va-fab[data-view="map"], body.has-tabbar .va-fab[data-view="nearby"] { left: auto; right: 14px; bottom: calc(250px + env(safe-area-inset-bottom)); width: 48px; height: 48px; border-radius: 24px; }
+body.has-tabbar .va-fab[data-view="map"]::after, body.has-tabbar .va-fab[data-view="nearby"]::after { display: none; }
