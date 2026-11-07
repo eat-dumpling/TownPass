@@ -724,3 +724,17 @@ body.has-tabbar:has(.pick-bar:not([hidden])) main { padding-bottom: calc(86px + 
 /* Home with the bottom bar (home, camera, nearby): a slightly shorter camera button so it fits one screen. */
 .focus-snap { min-height: 30vh; }
 .focus-link span { text-wrap: balance; }
+
+/* Voice button (2026-11-08): it no longer floats over page content.
+   With a title bar it sits in the bar's empty right corner (assistant.js adds .in-bar);
+   without one it joins the page's Kids / language row (.in-row). It still floats on the map and on pages
+   with neither, and those pages get room at the end
+   so the last row can always scroll out from under it. */
+.topbar .va-fab.in-bar { position: absolute; top: 50%; right: 6px; bottom: auto; left: auto; width: 44px; height: 44px; border-radius: 22px; background: var(--p50); box-shadow: none; transform: translateY(-50%); }
+.topbar .va-fab.in-bar::after { display: none; }
+.topbar .va-fab.in-bar:active { transform: translateY(-50%) scale(.96); }
+.topbar .va-fab.in-bar svg { width: 22px; height: 22px; }
+.head-actions .va-fab.in-row { position: static; flex: none; width: 48px; height: 48px; border-radius: 24px; background: var(--p50); box-shadow: none; }
+.head-actions .va-fab.in-row::after { display: none; }
+.head-actions .va-fab.in-row svg { width: 22px; height: 22px; }
+body.fab-float:not(.full):not(.has-tabbar) main { padding-bottom: calc(104px + env(safe-area-inset-bottom)); }

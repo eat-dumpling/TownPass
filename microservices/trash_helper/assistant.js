@@ -799,11 +799,27 @@
     fab.hidden = hide;
     fab.setAttribute("aria-label", t("vaOpen"));
     fab.dataset.view = view || "home";
+    // A floating button always ends up over something on a scrolling page. When the page has a
+    // title bar, the button sits in its empty right corner instead; without one it joins the
+    // page's own button row (Kids / language). It floats only on the map (like the other map
+    // controls) and on pages with neither.
+    const onMap = view === "map" || view === "nearby";
+    const bar = document.querySelector(".topbar");
+    const inBar = !hide && !onMap && !!bar && !bar.hidden;
+    const row = !hide && !onMap && !inBar ? document.querySelector("#app .head-actions") : null;
+    const home = inBar ? bar : row || document.body;
+    if (row) { if (row.firstChild !== fab) row.prepend(fab); }
+    else if (fab.parentNode !== home) home.append(fab);
+    fab.classList.toggle("in-bar", inBar);
+    fab.classList.toggle("in-row", !!row);
+    document.body.classList.toggle("fab-float", !hide && !inBar && !row);
   }
   function mount() {
     if (!fab.isConnected) document.body.append(fab);
     syncFab();
     new MutationObserver(syncFab).observe(document.getElementById("app"), { childList: true });
+    const bar = document.querySelector(".topbar");
+    if (bar) new MutationObserver(syncFab).observe(bar, { attributes: true, attributeFilter: ["hidden"] });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount); else mount();
 
