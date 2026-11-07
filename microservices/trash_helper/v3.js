@@ -219,9 +219,12 @@
   function tabBar(active) {
     const tab = (route, ic, label, key) => h("button", { class: "tab" + (active === key ? " on" : ""), type: "button", onclick: () => go(route, { replace: true }), "aria-current": active === key ? "page" : null }, icon(ic, 24), h("span", { text: label }));
     return h("nav", { class: "tabbar", "aria-label": t("appTitle") },
+      // Things people look up on their own, in the usual place: the bottom bar.
       tab("", "home", t("navHome"), "home"),
+      tab("map", "map", t("navNear"), "map"),
       h("button", { class: "fab", type: "button", onclick: () => go("scan"), "aria-label": t("navScan") }, h("span", { class: "fab-btn" }, icon("camera", 28)), h("span", { text: t("navScan") })),
-      tab("map", "map", t("navNear"), "map"));
+      tab("talk/truck", "message-circle", t("tcTitle"), "talk"),
+      tab("favorites", "star", t("favTitle"), "fav"));
   }
 
   Object.assign(TH.views, { viewPick, viewItem, tabBar, bagSheet, musicSheet, langSheet, langButton, kidsButton });

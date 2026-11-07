@@ -356,7 +356,10 @@
       h("header", { class: "focus-top" },
         h("div", { class: "head-actions" }, TH.views.kidsButton(), TH.views.langButton())),
       h("h1", { class: "focus-q", text: t("hQuestion"), "data-pair": TH.pairT("hQuestion") }),
-      todayCard(now),
+      // The city's truck days mean nothing to people whose building collects the trash: they get
+      // only the one-line "building collects" badge (tap to change), no truck timetable.
+      profile.get().community ? null : todayCard(now),
+      truckStatus(),
       h("button", { class: "focus-snap", type: "button", onclick: () => go("scan") },
         h("span", { class: "fs-ring", "aria-hidden": "true" }, icon("camera", 64)),
         h("strong", { text: t("taskScanTitle"), "data-pair": TH.pairT("taskScanTitle") }),
@@ -364,7 +367,8 @@
       planRow(),
       h("div", { class: "focus-alt" },
         h("button", { class: "focus-link", type: "button", onclick: () => go("sort") }, icon("search", 20), h("span", { text: t("hSearch") })),
-        h("button", { class: "focus-link", type: "button", onclick: () => TH.assistant && TH.assistant.open() }, icon("microphone", 20), h("span", { text: t("vaTitle") }))),
+        h("button", { class: "focus-link", type: "button", onclick: () => TH.assistant && TH.assistant.open() }, icon("microphone", 20), h("span", { text: t("vaTitle") })),
+        h("button", { class: "focus-link", type: "button", onclick: () => go("bags") }, icon("shopping-bag", 20), h("span", { text: t("bagsTitle") }))),
     ];
   }
   // The second main path: tick what you have and get one list of steps. With things already
@@ -456,19 +460,17 @@
     ];
   }
 
-  // ------------------------------------------------------------ plan: one-page checklist
-  // Each row: [checkbox] [what to do] [round buttons on the right]. Round buttons follow the
-  // TownPass kit: solid primary circle for the main action (call, Google Maps), light circle for
-  // secondary ones, and a grey ▾ that pulls the details out under the row. A step folds itself
-  // to one line once everything in it is ticked.
+  // ------------------------------------------------------------ plan: one page of steps
+  // Steps are read, not ticked. Each row: [what to do] [round buttons on the right]. Round
+  // buttons follow the TownPass kit: solid primary circle for the main action (call, Google
+  // Maps), light circle for secondary ones, and a grey ▾ that pulls the details out under the
+  // row. Tapping a step's title folds it to one line.
   function viewPlan() {
     TH.setHeader(t("pTitle"));
     const rules = TH.rules();
     const items = picks.get().map(TH.itemById).filter(Boolean);
     if (!items.length) { setTimeout(() => go("", { replace: true }), 0); return h("div"); }
     const p = profile.get();
-    const key = "th.checks." + items.map(i => i.id).sort().join(",");
-    const checks = LS.get(key, {});
     const cats = new Set(items.map(catOf));
     const has = c => cats.has(c);
     const isOut = i => ["bulky", "verify"].includes(catOf(i));
@@ -476,11 +478,8 @@
     const special = items.filter(i => elsewhere(i) || i.id === "spray");
     const truckItems = items.filter(i => !elsewhere(i));
     const squad = p.district && rules.contacts.squads[p.district];
-    const progress = h("div", { class: "plan-progress" });
     const REDUCED = () => window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const sections = [];
-    let total = 0, curStep = null;
-    const rowIds = [];
+    let stepCount = 0;
 
     // Round icon button. kind: "primary" (solid), "soft" (light), "fold" (grey ▾).
     const rbtn = (ic, labelText, fn, kind) => h("button", { class: "round-btn " + (kind || "soft"), type: "button", "aria-label": labelText, title: labelText,
@@ -495,98 +494,48 @@
       b.setAttribute("aria-expanded", "false");
       return { b, panel };
     };
+    // One row of a step. data-check names the row for the voice assistant's spotlight.
     const checkRow = (id, main, opts) => {
       const o = opts || {};
-      total++; rowIds.push(id);
-      if (curStep) curStep.ids.push(id);
-      const cb = h("input", { type: "checkbox", checked: !!checks[id], "aria-label": t("tipCheck") });
-      cb.addEventListener("change", () => {
-        checks[id] = cb.checked; LS.set(key, checks); row.classList.toggle("done", cb.checked);
-        // A short pop on the box (CSS .ticked); the step folds a moment later (apply below).
-        row.classList.remove("ticked"); if (cb.checked) { void row.offsetWidth; row.classList.add("ticked"); }
-        drawProgress(true);
-      });
       const f = o.details ? fold(o.details) : null;
       const acts = (o.actions || []).filter(Boolean);
       const btns = (o.buttons || []).filter(Boolean);
-      // Only the checkbox (a 44px target) ticks the row; tapping the text or buttons does not.
-      const row = h("div", { class: "check-row" + (checks[id] ? " done" : ""), "data-check": id },
-        h("label", { class: "cb-hit" }, cb, h("span", { class: "cb", "aria-hidden": "true" }, icon("check", 14))),
+      return h("div", { class: "check-row", "data-check": id },
         h("div", { class: "grow" }, main, o.sub || null, acts.length ? h("div", { class: "row-actions" }, acts) : null),
         btns.length || f ? h("div", { class: "row-btns" }, btns, f && f.b) : null,
         o.below ? h("div", { class: "row-below" }, o.below) : null,
         f && f.panel);
-      return row;
     };
     // A plain (not tickable) row with a ▾, e.g. "Missed it?".
     const foldRow = (ic, text, ...details) => {
       const f = fold(details);
       return h("div", { class: "fold-row" }, h("span", { class: "fr-icon" }, icon(ic, 18)), h("span", { class: "grow", text }), f.b, f.panel);
     };
+    // A numbered step; its title folds and unfolds it (all open to start with).
     const step = (title, build, pairKey) => {
-      const st = { ids: [], open: null };
-      curStep = st;
       const body = h("div", { class: "ps-body" }, build());
-      curStep = null;
-      const n = sections.length + 1;
-      const tag = h("span", { class: "ps-done", hidden: true }, icon("check", 14), t("stepDoneTag"));
-      const head = h("button", { class: "ps-head", type: "button", "aria-expanded": "true" }, h("span", { class: "ps-n", text: String(n) }), h("h2", { text: title, "data-pair": pairKey && TH.pairT(pairKey) }), tag, h("span", { class: "ps-chev" }, icon("down", 18)));
+      const head = h("button", { class: "ps-head", type: "button", "aria-expanded": "true" }, h("span", { class: "ps-n", text: String(++stepCount) }), h("h2", { text: title, "data-pair": pairKey && TH.pairT(pairKey) }), h("span", { class: "ps-chev" }, icon("down", 18)));
       const sec = h("section", { class: "plan-step" }, head, body);
-      head.addEventListener("click", () => { st.open = sec.classList.contains("folded"); apply(true); });
+      let fin = 0;
       // Fold / unfold, sliding the body (skipped when the phone asks for less motion).
-      const setFold = (folded, animate) => {
-        const was = sec.classList.contains("folded");
+      head.addEventListener("click", () => {
+        const folded = !sec.classList.contains("folded");
         sec.classList.toggle("folded", folded); head.setAttribute("aria-expanded", String(!folded));
-        if (was === folded) { body.hidden = folded; return; }
-        if (!animate || REDUCED() || !body.animate) { body.hidden = folded; return; }
+        if (REDUCED() || !body.animate) { body.hidden = folded; return; }
         body.hidden = false;
-        const hgt = body.scrollHeight;
-        const frames = [{ height: hgt + "px", opacity: 1 }, { height: "0px", opacity: 0 }];
+        const frames = [{ height: body.scrollHeight + "px", opacity: 1 }, { height: "0px", opacity: 0 }];
         const a = body.animate(folded ? frames : frames.slice().reverse(), { duration: 280, easing: "cubic-bezier(.2,.8,.2,1)" });
         body.style.overflow = "hidden";
         // Finish on a timer too: animations stall while the page is not being drawn (app in background).
-        const done = () => { clearTimeout(st.fin); a.cancel(); body.style.overflow = ""; body.hidden = sec.classList.contains("folded"); };
-        a.onfinish = done; clearTimeout(st.fin); st.fin = setTimeout(done, 320);
-      };
-      const apply = animate => {
-        const complete = st.ids.length > 0 && st.ids.every(id => checks[id]);
-        const folded = st.open == null ? complete : !st.open;
-        const justDone = complete && !sec.classList.contains("complete");
-        sec.classList.toggle("complete", complete); tag.hidden = !complete;
-        clearTimeout(st.timer);
-        if (animate && justDone) {
-          // Let the tick be seen, celebrate the step, then fold it away.
-          sec.classList.remove("just-done"); void sec.offsetWidth; sec.classList.add("just-done");
-          st.timer = setTimeout(() => setFold(folded, true), REDUCED() ? 0 : 650);
-          return;
-        }
-        setFold(folded, animate);
-      };
-      st.apply = apply;
-      sections.push(st);
+        const done = () => { clearTimeout(fin); a.cancel(); body.style.overflow = ""; body.hidden = sec.classList.contains("folded"); };
+        a.onfinish = done; clearTimeout(fin); fin = setTimeout(done, 320);
+      });
       return sec;
     };
-    const drawProgress = changed => {
-      const d = rowIds.filter(k => checks[k]).length; // only rows on this page (old ticks from removed rows don't count)
-      // Keep the bar element so its width slides instead of jumping.
-      if (!progress.firstChild) fill(progress, h("div", { class: "pp-bar" }, h("span")), h("span", { class: "caption dark" }));
-      progress.querySelector(".pp-bar span").style.width = `${total ? Math.round(d / total * 100) : 0}%`;
-      progress.classList.toggle("full", !!(total && d >= total));
-      progress.lastChild.textContent = t("pDone", { d, n: total });
-      sections.forEach(st => { if (changed && st.ids.every(id => checks[id])) st.open = null; st.apply(changed); });
-      const allDone = !!(total && d >= total);
-      if (changed && allDone && doneCard.hidden) {
-        doneCard.hidden = false; doneCard.classList.remove("pop"); void doneCard.offsetWidth; doneCard.classList.add("pop");
-        setTimeout(() => doneCard.scrollIntoView({ behavior: REDUCED() ? "auto" : "smooth", block: "center" }), REDUCED() ? 0 : 750);
-      } else doneCard.hidden = !allDone;
-    };
-    const doneCard = h("div", { class: "done-card", hidden: true }, h("span", { class: "done-icon" }, icon("circle-check", 44)), h("strong", { text: t("allDone"), "data-pair": TH.pairT("allDone") }),
-      btn("btn-primary", t("backHomeBtn"), () => { picks.set([]); go("", { replace: true }); }));
     const dest = (artEl, text, strong, pair) => h("span", { class: "dest" }, artEl, h(strong ? "strong" : "span", { text, "data-pair": pair }));
     const out = [
       h("div", { class: "plan-items" }, items.map(i => h("span", { class: "plan-chip" }, TH.art(i, 24), label(i))),
         h("button", { class: "link-btn small", type: "button", onclick: () => go("list", { replace: true }), text: t("pEdit") })),
-      progress,
     ];
 
     // Nearest places of a layer (from me, or from my stop): the first under the row with 導航,
@@ -707,8 +656,6 @@
         return null;
       }).filter(Boolean), "s4"));
     }
-    out.push(doneCard);
-    setTimeout(() => drawProgress(false), 0);
     return out;
   }
 
