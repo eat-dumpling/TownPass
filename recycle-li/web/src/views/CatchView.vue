@@ -17,6 +17,7 @@ import {
   binMetaFor, binsFor, collectionOf, correctBin, factFor, isBoss, isNoTouch, itemById, safetyLabel, type BinId,
 } from '@/domain/catalog'
 import { LEARN_THRESHOLD, useGame } from '@/stores/game'
+import { FULL_GAME } from '@/focus'
 
 const route = useRoute()
 const game = useGame()
@@ -112,8 +113,9 @@ function bossPass() {
         <Mascot mood="cheer" :size="56" line="你是安全小專家！" />
         <p v-if="bossReward" class="reward pop"><StarIcon :size="30" /> +{{ bossReward.stars }}</p>
         <div class="grid2">
-          <router-link to="/scan" class="btn"><AppIcon name="Camera" /> <Zy text="再掃一個" /></router-link>
-          <router-link to="/quiz" class="btn primary"><AppIcon name="Map" /> <Zy text="考考你" /></router-link>
+          <router-link to="/scan" class="btn" :class="{ primary: !FULL_GAME }"><AppIcon name="Camera" /> <Zy text="再掃一個" /></router-link>
+          <router-link v-if="FULL_GAME" to="/quiz" class="btn primary"><AppIcon name="Map" /> <Zy text="考考你" /></router-link>
+          <router-link v-else to="/codex" class="btn"><AppIcon name="Book" /> <Zy text="圖鑑" /></router-link>
         </div>
       </template>
     </template>
@@ -144,8 +146,9 @@ function bossPass() {
         <Mascot mood="cheer" :size="52" line="做得好！" />
         <router-link :to="`/codex/${item.id}`" class="btn block card-btn"><AppIcon name="Book" /> <Zy text="看分辨卡" /><span v-if="unread" class="plus"><StarIcon :size="18" />+1</span></router-link>
         <div class="grid2">
-          <router-link to="/scan" class="btn"><AppIcon name="Camera" /> <Zy text="再掃一個" /></router-link>
-          <router-link to="/quiz" class="btn primary"><AppIcon name="Map" /> <Zy text="考考你" /></router-link>
+          <router-link to="/scan" class="btn" :class="{ primary: !FULL_GAME }"><AppIcon name="Camera" /> <Zy text="再掃一個" /></router-link>
+          <router-link v-if="FULL_GAME" to="/quiz" class="btn primary"><AppIcon name="Map" /> <Zy text="考考你" /></router-link>
+          <router-link v-else to="/codex" class="btn"><AppIcon name="Book" /> <Zy text="圖鑑" /></router-link>
         </div>
       </template>
     </template>

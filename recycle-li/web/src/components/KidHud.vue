@@ -7,6 +7,7 @@ import Zy from './Zy.vue'
 import { missions } from '@/domain/catalog'
 import { useGame } from '@/stores/game'
 import { backToDiudiu } from '@/bridge/back'
+import { FULL_GAME } from '@/focus'
 
 defineProps<{ title?: string }>()
 const game = useGame()
@@ -20,7 +21,7 @@ const fresh = computed(() => missions.filter((m) => game.missionProgress(m.id).d
 
 <template>
   <header class="hud">
-    <router-link to="/missions" class="lv" :aria-label="`等級 ${r.lv}，${r.title}`">
+    <router-link v-if="FULL_GAME" to="/missions" class="lv" :aria-label="`等級 ${r.lv}，${r.title}`">
       <svg viewBox="0 0 60 60" class="ring" aria-hidden="true">
         <circle cx="30" cy="30" r="25" fill="none" stroke="#E3E7E9" stroke-width="6" />
         <circle cx="30" cy="30" r="25" fill="none" stroke="#F5BA4B" stroke-width="6" stroke-linecap="round"
@@ -31,13 +32,13 @@ const fresh = computed(() => missions.filter((m) => game.missionProgress(m.id).d
     </router-link>
     <div class="mid">
       <h1 v-if="title" class="t"><Zy :text="title" /></h1>
-      <span v-else class="rt"><Zy :text="r.title" /></span>
+      <span v-else-if="FULL_GAME" class="rt"><Zy :text="r.title" /></span>
     </div>
     <span class="stars" :aria-label="`手上有 ${game.stars} 顆星`"><AppIcon name="Star" :size="22" :stroke="2" class="st" /> {{ game.stars }}</span>
     <a v-if="back" :href="back" class="cup home" aria-label="回到丟丟">
       <AppIcon name="ArrowLeft" :size="24" :stroke="2.2" />
     </a>
-    <router-link v-else to="/missions" class="cup" aria-label="任務與成就">
+    <router-link v-else-if="FULL_GAME" to="/missions" class="cup" aria-label="任務與成就">
       <AppIcon name="Trophy" :size="24" :stroke="2" /><i v-if="fresh" class="dot"></i>
     </router-link>
   </header>

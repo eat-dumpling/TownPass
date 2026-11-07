@@ -36,6 +36,7 @@ flutter run --dart-define=RECYCLE_LI_URL=http://<區網 IP>:5173/
 
 ## 目前範圍（2026-11-07）
 
+- **決選收斂（2026-11-08）**：兒童模式預設只給「掃一掃 → 拖進桶 → 星星」與圖鑑；蓋我的里、等級、任務、考考你的入口由 `recycle-li/web/src/focus.ts` 的 `FULL_GAME`（建置時 `VITE_FULL_GAME=true`）控制，程式都保留。丟丟首頁只有「拍一件垃圾」大按鈕和「今天收什麼」，清單與其他工具收在可展開的區塊。
 - **孩童版一條循環、一種獎勵（星星）**：掃描（或用選的）→ 怎麼丟＋拖進桶 → 星星；讀分辨卡（`views/CardView.vue`）、考考你破關（`views/LevelMapView.vue`、`QuizView.vue`，題目由 `solvers/quiz.ts` 從規則表產生）也拿星星 → 蓋我的里（`views/BuildView.vue`，大地圖隨處蓋，5 個里依等級解鎖）→ 任務與成就。星星累積決定等級（`data/ranks.json`），蓋建築不會降級；同一種東西有星星上限（`speciesCap`）。
 - 孩子看的文字用 `<Zy text="…">`（國字＋直排注音，全字庫正楷體）；新增中文字後跑 `web/scripts/gen-zhuyin.mjs` 和字型子集（見 README「字型與注音」），讀音有錯就改 `src/zhuyin/words.ts`。家長頁不標注音。
 - 里的插圖在 `web/src/assets/li/`（開發時用 Codex CLI 影像生成，`scripts/gen_sprites.sh`＋`key_sprites.py`）；App 執行時不能呼叫生成式 AI。新插圖要在 README「插圖來源」記錄。

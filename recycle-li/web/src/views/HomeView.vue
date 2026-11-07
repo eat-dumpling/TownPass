@@ -2,6 +2,8 @@
 // 首頁＝我的里的風景：上面是等級和星星，中間是會動的小島（點了去蓋房子，右下角有「蓋房子」），
 // 下面小里長只說一句話、只給一個「現在做這個」的大按鈕。其他功能在底部選單。
 import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
+import { FULL_GAME } from '@/focus'
 import Zy from '@/components/Zy.vue'
 import Mascot from '@/components/Mascot.vue'
 import IsoLi from '@/components/IsoLi.vue'
@@ -23,7 +25,7 @@ const C = 2 * Math.PI * R
 // 現在最適合做的一件事
 const next = computed(() => {
   // 學習主線（掃一掃 → 怎麼丟 → 考考你）；蓋房子只在底部選單和上面的小島
-  if (!game.missionProgress('daily_scan3').done) return { to: '/scan', icon: 'Camera', text: '掃一掃', line: '找一個要丟的東西，掃掃看！', c: 'scan' }
+  if (!FULL_GAME || !game.missionProgress('daily_scan3').done) return { to: '/scan', icon: 'Camera', text: '掃一掃', line: '找一個要丟的東西，掃掃看！', c: 'scan' }
   if (nextLevel.value) return { to: `/quiz/${nextLevel.value.id}`, icon: 'Map', text: `第 ${nextLevel.value.id} 關`, line: '來考考你，答對拿星星！', c: 'quiz' }
   return { to: '/scan', icon: 'Camera', text: '掃一掃', line: '找一個要丟的東西，掃掃看！', c: 'scan' }
 })
@@ -34,12 +36,13 @@ const next = computed(() => {
     <h1 class="sr-only">回收小里長</h1>
     <KidHud />
 
-    <router-link to="/build" class="scene" aria-label="我的里，點了去蓋房子">
+    <!-- 收斂版：小島只是風景，不連到蓋房子（src/focus.ts） -->
+    <component :is="FULL_GAME ? RouterLink : 'div'" v-bind="FULL_GAME ? { to: '/build', 'aria-label': '我的里，點了去蓋房子' } : {}" class="scene">
       <span class="name"><AppIcon :name="game.li.icon" :size="18" /> <Zy :text="liName" /></span>
-      <span class="green"><AppIcon name="Leaf" :size="16" /> {{ game.green }}</span>
+      <span v-if="FULL_GAME" class="green"><AppIcon name="Leaf" :size="16" /> {{ game.green }}</span>
       <IsoLi :li="game.li" :slots="game.slots" label="我的里" />
-      <span class="build-chip"><AppIcon name="Building" :size="20" :stroke="2" /> <Zy text="蓋房子" /></span>
-    </router-link>
+      <span v-if="FULL_GAME" class="build-chip"><AppIcon name="Building" :size="20" :stroke="2" /> <Zy text="蓋房子" /></span>
+    </component>
 
     <section class="talk">
       <Mascot :size="60" :line="next.line" />
@@ -50,7 +53,7 @@ const next = computed(() => {
       </router-link>
     </section>
 
-    <router-link to="/missions" class="today" aria-label="今天的任務">
+    <router-link v-if="FULL_GAME" to="/missions" class="today" aria-label="今天的任務">
       <span class="lbl"><AppIcon name="Sun" :size="22" /> <Zy text="今天" /></span>
       <span v-for="t in today" :key="t.m.id" class="ring" :class="{ done: t.p.done }" :aria-label="`${t.m.title} ${t.p.count}/${t.p.goal}`">
         <svg viewBox="0 0 50 50" aria-hidden="true">

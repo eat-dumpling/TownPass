@@ -615,7 +615,7 @@ html[data-lang="ja"] body { font-family: -apple-system, "Hiragino Sans", "Hiragi
 .pick-count { flex: 0 1 auto; min-width: 0; }
 .pick-bar .btn { flex: 1 0 auto; justify-content: center; white-space: nowrap; }
 /* The voice button sits above the bar, also when the bar takes two rows. */
-body.has-tabbar:has(.pick-bar) .va-fab[data-view="home"] { bottom: calc(86px + var(--pick-bar-h, 64px) + 12px + env(safe-area-inset-bottom)); }
+body.has-tabbar:has(.pick-bar:not([hidden])) .va-fab[data-view="home"] { bottom: calc(86px + var(--pick-bar-h, 64px) + 12px + env(safe-area-inset-bottom)); }
 /* The bottom bar grows a little to fit the second line under each label. */
 .pair-on .tabbar { height: calc(80px + env(safe-area-inset-bottom)); }
 .pair-on .tab { padding: 6px 0 6px; }
@@ -694,5 +694,27 @@ body.has-tabbar:has(.pick-bar) .va-fab[data-view="home"] { bottom: calc(86px + v
 .home-head { flex-wrap: wrap; align-items: center; }
 .home-head > div:first-child { order: 2; flex-basis: 100%; }
 .home-head > .head-actions { order: 1; margin-left: auto; }
-body.has-tabbar:has(.pick-bar) main { padding-bottom: calc(86px + var(--pick-bar-h, 64px) + 96px + env(safe-area-inset-bottom)); }
+body.has-tabbar:has(.pick-bar:not([hidden])) main { padding-bottom: calc(86px + var(--pick-bar-h, 64px) + 96px + env(safe-area-inset-bottom)); }
 .res-actions { justify-content: flex-end; margin: 0 0 4px; }
+
+/* Home hero: one big camera button and what goes out today; everything else folds away. */
+.home-snap, .home-today { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 88px; margin: 0 0 12px; padding: 16px; border: 0; border-radius: 18px; text-align: left; cursor: pointer; font: inherit; }
+.home-snap { background: var(--p500); color: var(--white); box-shadow: 0 6px 18px rgba(90, 180, 197, .35); }
+.home-snap strong { display: block; font-size: 22px; }
+.home-snap .grow > span { font-size: 15px; opacity: .92; }
+.home-snap .hs-icon { display: grid; place-items: center; width: 60px; height: 60px; border-radius: 30px; background: rgba(255, 255, 255, .22); flex: none; }
+.home-today { min-height: 72px; background: var(--white); color: inherit; box-shadow: var(--lift); }
+.home-today strong { display: block; font-size: 18px; margin-bottom: 4px; }
+.home-today .hs-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 24px; background: var(--p100); color: var(--p600); flex: none; }
+.home-today.off .hs-icon { background: var(--g100); color: var(--g600, #5c6a70); }
+.tc-chips { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.tc-chip { padding: 2px 10px; border-radius: 999px; background: var(--p100); color: var(--p700, #2f6f86); font-size: 14px; font-weight: 600; }
+.tc-chip.tc-food { background: #EDF3E2; color: #4E6B23; }
+.tc-chip.tc-general { background: #E3E7E9; color: #354046; }
+.tc-next { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 14px; }
+.fold-block { margin: 12px 0 0; border-radius: 14px; background: var(--white); box-shadow: var(--lift); }
+.fold-head { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 56px; padding: 8px 16px; border: 0; background: none; text-align: left; font: inherit; cursor: pointer; }
+.fold-head[aria-expanded="true"] .pg-chev { transform: rotate(180deg); }
+.fold-body { padding: 0 12px 12px; }
+.fold-head strong, .fold-sub { display: block; }
+.pick-bar[hidden] { display: none; }

@@ -326,6 +326,30 @@
     TH.onNavigate(() => clearInterval(timer));
     return box;
   }
+  // What the trucks take today (city-wide days); on a day off, what tomorrow brings.
+  function todayCard(now) {
+    const g = TH.rules().groups;
+    const LABEL = { general: "chipGeneral", food: "chipFood", flat: "chipFlat", rigid: "chipRigid" };
+    const takes = day => Object.keys(LABEL).filter(id => g[id].days.includes(day));
+    const today = takes(now.day), tmr = takes((now.day + 1) % 7);
+    const chips = ids => h("span", { class: "tc-chips" }, ids.map(id => h("span", { class: "tc-chip tc-" + id, text: t(LABEL[id]) })));
+    return h("button", { class: "home-today" + (today.length ? "" : " off"), type: "button", onclick: () => go("when/general") },
+      h("span", { class: "hs-icon", "aria-hidden": "true" }, icon("truck", 26)),
+      h("span", { class: "grow" },
+        h("strong", { text: today.length ? t("todayOn") : t("todayOff"), "data-pair": TH.pairT(today.length ? "todayOn" : "todayOff") }),
+        today.length ? chips(today) : h("span", { class: "tc-next" }, h("span", { text: t("tomorrowAt", { t: "" }).trim() }), chips(tmr))),
+      icon("chev", 20));
+  }
+  // A section that folds to one line; the open/closed state is remembered on this phone.
+  function foldBlock(key, title, sub, body) {
+    let open = !!LS.get(key, false);
+    const panel = h("div", { class: "fold-body", hidden: !open }, body);
+    const head = h("button", { class: "fold-head", type: "button", "aria-expanded": String(open) },
+      h("span", { class: "grow" }, h("strong", { text: title }), sub ? h("span", { class: "fold-sub caption dark", text: sub }) : null),
+      h("span", { class: "pg-chev" }, icon("chevron-down", 20)));
+    head.addEventListener("click", () => { open = !open; panel.hidden = !open; head.setAttribute("aria-expanded", String(open)); LS.set(key, open); });
+    return h("section", { class: "fold-block" }, head, panel);
+  }
   function viewHome() {
     const p = profile.get();
     if (!p.setupDone) { setTimeout(() => go("welcome/0", { replace: true }), 0); return h("div"); }
@@ -335,7 +359,8 @@
     const sel = new Set(picks.get().filter(id => TH.itemById(id)));
     const bar = h("div", { class: "pick-bar" });
     const heads = []; // collapsible group headers refresh their "n picked" when the selection changes
-    const drawBar = () => heads.forEach(f => f()) || fill(bar,
+    // The bar only shows once something is picked.
+    const drawBar = () => heads.forEach(f => f()) || (bar.hidden = !sel.size) || fill(bar,
       h("span", { class: "pick-count", text: t("hSelected", { n: sel.size }) }),
       sel.size ? h("button", { class: "clear-picks", type: "button", onclick: () => { sel.clear(); picks.set([]); document.querySelectorAll(".pick-chip.on").forEach(b => { b.classList.remove("on"); b.setAttribute("aria-pressed", "false"); }); drawBar(); } }, icon("x", 16), t("clearPicks")) : null,
       h("button", { class: "btn btn-primary", type: "button", disabled: !sel.size, onclick: () => { picks.set([...sel]); LS.set("th.lastPicks", [...sel]); go("plan"); } }, t("hMakePlan"), icon("chev", 18)));
@@ -365,11 +390,17 @@
         h("div", {}, h("div", { class: "home-date", text: `${t("hello" + (now.minutes >= 5 * 60 && now.minutes < 11 * 60 ? 0 : now.minutes >= 11 * 60 && now.minutes < 17 * 60 ? 1 : 2))} · ${TH.lang() === "zh" ? `${now.m}月${now.d}日 週${t("days")[now.day]}` : `${t("days")[now.day]} ${now.m}/${now.d}`}` }),
           h("h1", { class: "home-day", text: t("hQuestion"), "data-pair": TH.pairT("hQuestion") })),
         h("div", { class: "head-actions" }, TH.views.kidsButton(), TH.views.langButton())),
+      // Demo focus: the two things everyone needs — snap it, and what goes out today.
+      h("button", { class: "home-snap", type: "button", onclick: () => go("scan") },
+        h("span", { class: "hs-icon", "aria-hidden": "true" }, icon("camera", 34)),
+        h("span", { class: "grow" }, h("strong", { text: t("taskScanTitle"), "data-pair": TH.pairT("taskScanTitle") }), h("span", { text: t("taskScanDesc") })),
+        icon("chev", 22)),
+      todayCard(now),
       truckStatus(),
       last.length && !sel.size ? h("button", { class: "last-row", type: "button", onclick: () => { last.forEach(id => sel.add(id)); picks.set([...sel]); go("plan"); } },
         h("span", { class: "grow last-arts" }, h("span", { text: t("hLast") }), last.slice(0, 5).map(id => TH.art(TH.itemById(id), 24))), h("strong", { text: t("hAgain") + " ›" })) : null,
-      // Search or snap first: quickest way to the thing you have in hand.
-      h("section", { class: "pick-group" },
+      // Picking from the list is the second way in; it folds away under one heading.
+      foldBlock("th.homeList", t("taskSortTitle"), t("taskSortDesc"), [h("section", { class: "pick-group" },
         // Snapping a photo is the big camera button in the tab bar; here only the search.
         h("div", { class: "search-row" }, h("label", { class: "search v3 grow" }, icon("search", 18), search)),
         extra),
@@ -393,11 +424,11 @@
         heads.push(drawInfo); drawInfo();
         grid.append(...items.map(chip));
         return h("section", { class: "pick-group fold" }, head, grid);
-      }),
+      })]),
       // Other tools: one row of small tiles instead of three long rows.
-      h("section", { class: "tool-tiles" },
+      foldBlock("th.homeMore", t("hMore"), "", [h("section", { class: "tool-tiles" },
         [["message-circle", t("tcTitle"), () => go("talk/truck")], ["shopping-bag", t("bagsTitle"), TH.views.bagSheet], ["star", t("favTitle"), () => go("favorites")]]
-          .map(([ic, l2, fn]) => h("button", { class: "tool-tile", type: "button", onclick: fn }, h("span", { class: "tt-icon" }, icon(ic, 22)), h("span", { text: l2 })))),
+          .map(([ic, l2, fn]) => h("button", { class: "tool-tile", type: "button", onclick: fn }, h("span", { class: "tt-icon" }, icon(ic, 22)), h("span", { text: l2 }))))]),
       bar,
     ];
   }
