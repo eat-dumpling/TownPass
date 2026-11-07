@@ -637,3 +637,26 @@ html[data-lang="ja"] body { font-family: -apple-system, "Hiragino Sans", "Hiragi
 .tc-reply-zh { font-size: 20px; font-weight: 600; line-height: 1.35; color: var(--g900); }
 .tc-reply-mine { font-size: 13px; line-height: 1.35; color: var(--g600); }
 @media (prefers-reduced-motion: reduce) { .tc-big { transition: none; } }
+
+/* ---------------------------------------------------------------- voice assistant spotlight: follow + step strip (assistant.js tour, calloutBody) */
+/* The frame follows its target every frame, so it only glides while moving to the next part. */
+.va-hole { transition: none; }
+.va-spot.glide .va-hole { transition: left .25s ease, top .25s ease, width .25s ease, height .25s ease, border-radius .25s ease; }
+.va-callout { transition: opacity .15s ease, transform .15s ease; }
+.va-callout.busy { opacity: 0; transform: translateY(6px); pointer-events: none; }
+/* Prep steps as icon tiles, lit in order (1, then 2, then 3). Slow and plays once, so nothing flashes. */
+.va-co-strip { list-style: none; display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); gap: 10px; margin: 0; padding: 6px 0 0 6px; }
+.va-co-strip li { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 4px 8px; border-radius: 10px; background: var(--g50); font-size: 13px; line-height: 1.3; text-align: center; color: var(--g700);
+  animation: va-cs-in .42s cubic-bezier(.3, 1.4, .5, 1) both, va-cs-lit 1.1s ease-out both; animation-delay: calc(.2s + var(--k) * .55s); }
+.va-co-strip li + li::before { content: ""; position: absolute; left: -9px; top: 50%; width: 6px; height: 6px; border-top: 2px solid var(--g300); border-right: 2px solid var(--g300); transform: translateY(-50%) rotate(45deg); }
+.va-cs-n { position: absolute; top: -6px; left: -6px; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 10px; background: var(--s500); color: var(--white); font-size: 11px; font-weight: 600; }
+.va-cs-art { display: grid; place-items: center; color: var(--p600); }
+.va-co-strip li .va-cs-art svg { animation: va-cs-icon .5s ease-out both; animation-delay: calc(.2s + var(--k) * .55s); }
+.va-cs-t { overflow-wrap: anywhere; }
+@keyframes va-cs-in { from { opacity: 0; transform: translateY(8px) scale(.92); } to { opacity: 1; transform: none; } }
+@keyframes va-cs-lit { 0% { box-shadow: inset 0 0 0 2px var(--p500); background: var(--p50); } 100% { box-shadow: inset 0 0 0 0 transparent; background: var(--g50); } }
+@keyframes va-cs-icon { 0% { transform: scale(.6); } 60% { transform: scale(1.15); } 100% { transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .va-spot.glide .va-hole, .va-callout { transition: none; }
+  .va-co-strip li, .va-co-strip li .va-cs-art svg { animation: none; }
+}

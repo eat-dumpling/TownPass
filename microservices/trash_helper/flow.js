@@ -632,8 +632,9 @@
         const below = h("div");
         const more = h("div");
         const row = checkRow("sp-" + i.id, dest(TH.art(i, 28), label(i), true, labelPair(i)), { sub: destLine(txt), below, details: more,
-          buttons: [layer === "battery" ? rbtn("message-circle", t("tcOpenStore"), () => go("talk/store")) : null, rbtn("map", t("s4AllOnMap"), () => go("map/" + layer), "primary")] });
-        fillNearest(layer, below, more);
+          buttons: [rbtn("map", t("s4AllOnMap"), () => go("map/" + layer), "primary")] });
+        // Talk card for the shop counter sits in the ▾ panel, so the row keeps room for its text.
+        fillNearest(layer, below, more, layer === "battery" ? h("div", { class: "row-actions" }, lbtn("message-circle", t("tcOpenStore"), () => go("talk/store"))) : null);
         return row;
       };
       const destLine = key => h("span", { class: "row-dest", text: t(key), "data-pair": TH.pairT(key) });
@@ -641,9 +642,9 @@
         const c = catOf(i);
         const title = () => dest(TH.art(i, 28), label(i), true, labelPair(i));
         if (c === "bulky") return checkRow("sp-" + i.id, title(), { sub: destLine("spBulky"),
-          buttons: [rbtn("message-circle", t("tcScript"), () => go("talk/phone")), rbtn("phone", squad ? t("sBulkyCall", { district: p.district }) : "1999", () => TH.dial(squad || rules.contacts.hotline), "primary")],
+          buttons: [rbtn("phone", squad ? t("sBulkyCall", { district: p.district }) : "1999", () => TH.dial(squad || rules.contacts.hotline), "primary")],
           details: [h("p", { class: "caption dark", text: t("sBulkyPut"), "data-pair": TH.pairT("sBulkyPut") }),
-            h("div", { class: "row-actions" }, lbtn("phone", "1999", () => TH.dial(rules.contacts.hotline)), lbtn(null, t("bookOnline"), () => TH.openExternal(rules.contacts.online)))] });
+            h("div", { class: "row-actions" }, lbtn("message-circle", t("tcScript"), () => go("talk/phone"), true), lbtn("phone", "1999", () => TH.dial(rules.contacts.hotline)), lbtn(null, t("bookOnline"), () => TH.openExternal(rules.contacts.online)))] });
         if (c === "verify") return checkRow("sp-" + i.id, title(), { sub: destLine("spAsk"), buttons: [rbtn("phone", t("spCall"), () => TH.dial(squad || rules.contacts.hotline), "primary")] });
         if (i.takeback) return placeRow(i, "spTake", "battery");
         if (i.id === "clothes") return placeRow(i, "spClothes", "clothes");

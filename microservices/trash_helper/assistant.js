@@ -327,10 +327,10 @@
     });
     let busy = false, listening = false, retried = false;
     // The user's words can be tapped to correct them (speech recognition gets names wrong).
-    const bubble = (who, text, extra) => {
+    const bubble = (who, text, extra, pair) => {
       const inner = who === "me"
         ? h("button", { class: "va-edit", type: "button", "aria-label": `${text}, ${t("vaEdit")}`, onclick: () => { input.value = text; input.focus(); } }, text, icon("pencil", 14))
-        : h("span", { text });
+        : h("span", { text, "data-pair": pair || undefined });
       log.append(h("div", { class: "va-msg " + who }, inner, extra || null)); log.scrollTop = log.scrollHeight;
     };
     async function ask(text) {
@@ -342,7 +342,7 @@
     }
     // Answer in one line first (shown and read aloud), then open the page and frame the details.
     async function respond(plan) {
-      const reply = await act(plan, true);
+      const { main: reply, pair } = await replyFor(plan);
       let extra = null;
       if (plan.kind === "choose") {
         extra = h("div", { class: "va-options" }, plan.options.map(id => {
@@ -350,7 +350,7 @@
           return h("button", { class: "va-option", type: "button", onclick: () => { buzz(); respond(decide({ items: [id], has: plan.has || {} })); } }, TH.art(it, 28), h("span", { text: nameOf(id) }));
         }));
       }
-      bubble("bot", reply, extra);
+      bubble("bot", reply, extra, pair);
       say(reply);
       status.textContent = canListen() ? t("vaTap") : t("vaNoMic");
       if (plan.kind !== "unknown" && plan.kind !== "choose") setTimeout(() => { closePanel(); act(plan, false); }, 1300);
@@ -395,7 +395,7 @@
     const wrap = h("div", { class: "va-wrap", role: "dialog", "aria-modal": "true", "aria-label": t("vaOpen") },
       h("div", { class: "va-backdrop", onclick: closePanel }),
       h("section", { class: "va-panel" },
-        h("div", { class: "va-head" }, h("span", { class: "va-badge" }, icon("sparkles", 18)), h("h2", { text: t("vaTitle") }), speakToggle,
+        h("div", { class: "va-head" }, h("span", { class: "va-badge" }, icon("sparkles", 18)), h("h2", { text: t("vaTitle"), "data-pair": TH.pairT("vaTitle") }), speakToggle,
           h("button", { class: "icon-round", type: "button", "aria-label": t("close"), onclick: closePanel }, icon("x", 18))),
         log,
         h("div", { class: "va-center" }, canListen() ? mic : null, status, live),
@@ -442,19 +442,44 @@
     await TH.loadStops();
     const s = TH.stopsData() && TH.stopsData().byId.get(id); if (!s) return null;
     const v = TH.visitsOf(s)[0]; if (!v) return null;
-    return { when: TH.fmtWhen(v.arriveMs), place: s.address.replace(/^臺北市/, "").replace(s.district, "").replace(/[（(].*?[)）]/g, "") };
+    return { v, place: s.address.replace(/^臺北市/, "").replace(s.district, "").replace(/[（(].*?[)）]/g, "") };
+  }
+  // A string in the side-by-side language, built by the same code (undefined when that is off).
+  const inPair = fn => { const p = TH.pairLang(); if (!p) return undefined; const s = TH.inLang(p, fn); return s && s !== fn() ? s : undefined; };
+
+  // The one-line answer, in the screen language and (when on) the side-by-side language.
+  // Data that needs loading is fetched first; the wording itself is synchronous so it can be
+  // rendered in either language.
+  async function replyFor(plan) {
+    const near = plan.kind === "map" && plan.layer ? await nearestFor(plan.layer).catch(() => null) : null;
+    const truck = plan.kind === "truck" ? await nextTruck().catch(() => null) : null;
+    const phrase = () => {
+      switch (plan.kind) {
+        case "unknown": return t("vaUnknown");
+        case "choose": return t(plan.ask || "vaWhich");
+        case "talk": return t("tcTitle");
+        case "plan":
+          if (plan.add) return t("vaAddReply", { items: joinNames(plan.items) });
+          if (plan.items.length === 1) { const it = itemById(plan.items[0]); if (it) return `${itemLine(it)}${t("vaFramed")}`; }
+          return t("vaPlanReply", { items: joinNames(plan.items) });
+        case "map":
+          if (!plan.layer) return t("vaMapNoPos", { place: t("mapTitle") });
+          if (near) return t("vaNearestAt", { place: layerLabel(plan.layer), name: near.best.name, d: TH.placeAway(near.a, near.best) });
+          return t("vaMapReply", { place: layerLabel(plan.layer) });
+        case "truck": return truck ? t("vaTruckNext", { when: TH.fmtWhen(truck.v.arriveMs), place: truck.place }) : t("vaTruckReply");
+        case "bags": return t("vaBagsReply");
+        case "dropoff": return t("vaDropReply");
+        default: return "";
+      }
+    };
+    return { main: phrase(), pair: inPair(phrase) };
   }
 
   async function act(plan, dryRun) {
-    if (plan.kind === "unknown") return t("vaUnknown");
-    if (plan.kind === "choose") return t(plan.ask || "vaWhich");
-    if (plan.kind === "talk") { if (dryRun) return t("tcTitle"); TH.talk.open(plan.scene); return ""; }
+    if (dryRun) return (await replyFor(plan)).main;
+    if (plan.kind === "unknown" || plan.kind === "choose") return "";
+    if (plan.kind === "talk") { TH.talk.open(plan.scene); return ""; }
     if (plan.kind === "plan") {
-      if (dryRun) {
-        if (plan.add) return t("vaAddReply", { items: joinNames(plan.items) });
-        if (plan.items.length === 1) { const it = itemById(plan.items[0]); if (it) return `${itemLine(it)}${t("vaFramed")}`; }
-        return t("vaPlanReply", { items: joinNames(plan.items) });
-      }
       remember(plan.items);
       // "還要丟…" keeps what is already on the list and frames only the new things.
       const picks = plan.add ? [...new Set([...currentPicks(), ...plan.items])] : plan.items;
@@ -463,8 +488,8 @@
       const stops = [];
       for (const id of plan.items) {
         const it = itemById(id); if (!it) continue;
-        stops.push({ sel: `[data-check="prep-${id}"]`, title: `${t("vaPrep")}・${L(it.name)}`, it, kind: "prep" });
-        stops.push({ sel: `[data-check="sp-${id}"]`, title: `${t("vaWhere")}・${L(it.name)}`, it, kind: "special" });
+        stops.push({ sel: `[data-check="prep-${id}"]`, title: `${t("vaPrep")}・${L(it.name)}`, pair: inPair(() => `${t("vaPrep")}・${L(it.name)}`), it, kind: "prep" });
+        stops.push({ sel: `[data-check="sp-${id}"]`, title: `${t("vaWhere")}・${L(it.name)}`, pair: inPair(() => `${t("vaWhere")}・${L(it.name)}`), it, kind: "special" });
       }
       const ready = await waitFor("[data-check]");
       if (!ready) return "";
@@ -474,19 +499,13 @@
         const it = itemById(id); if (!it || found.some(s => s.it === it)) continue;
         const cat = TH.catOf(it);
         const row = [...document.querySelectorAll('[data-check^="drop-"]')].find(r => r.querySelector(`.art-${cat}`)) || document.querySelector(`[data-check="bag-${cat === "special" ? "hazard" : cat}"]`);
-        if (row) found.push({ el: row, title: `${t("vaWhere")}・${L(it.name)}`, it, kind: "drop" });
+        if (row) found.push({ el: row, title: `${t("vaWhere")}・${L(it.name)}`, pair: inPair(() => `${t("vaWhere")}・${L(it.name)}`), it, kind: "drop" });
       }
-      tour(found.map(s => ({ el: s.el || document.querySelector(s.sel), title: s.title, body: calloutBody(s) })));
+      tour(found.map(s => ({ el: s.el || document.querySelector(s.sel), sel: s.sel, title: s.title, pair: s.pair, body: calloutBody(s) })));
       return "";
     }
     if (plan.kind === "map") {
       const layer = plan.layer;
-      if (dryRun) {
-        if (!layer) return t("vaMapNoPos", { place: t("mapTitle") });
-        const n = await nearestFor(layer).catch(() => null);
-        if (n) return t("vaNearestAt", { place: layerLabel(layer), name: n.best.name, d: TH.placeAway(n.a, n.best) });
-        return t("vaMapReply", { place: layerLabel(layer) });
-      }
       remember(plan.items);
       if (!layer) { go("map"); return ""; }
       await TH.loadPlaces();
@@ -508,29 +527,25 @@
         body.push(h("p", { class: "va-co-strong", text: best.name }));
         body.push(h("p", { class: "caption dark", text: [t("vaNearest"), a ? TH.placeAway(a, best) : null].filter(Boolean).join("・") }));
       }
-      body.push(h("p", { text: t({ clothes: "placeClothesNote", battery: "placeBatteryNote", pills: "placePillsNote" }[layer]) }));
-      if (pin) steps.push({ el: pin, title: layerLabel(layer), body: body.slice(0, 2).length ? body.slice(0, 2) : body, round: true });
-      steps.push({ el: card, title: layerLabel(layer), body, action: navBtn });
+      const noteKey = { clothes: "placeClothesNote", battery: "placeBatteryNote", pills: "placePillsNote" }[layer];
+      body.push(h("p", { text: t(noteKey), "data-pair": TH.pairT(noteKey) }));
+      const titlePair = inPair(() => layerLabel(layer));
+      if (pin) steps.push({ el: pin, title: layerLabel(layer), pair: titlePair, body: body.slice(0, 2).length ? body.slice(0, 2) : body, round: true });
+      steps.push({ el: card, title: layerLabel(layer), pair: titlePair, body, action: navBtn });
       tour(pin ? [steps[0], steps[1]] : steps);
       return "";
     }
     if (plan.kind === "truck") {
-      if (dryRun) {
-        const n = await nextTruck().catch(() => null);
-        return n ? t("vaTruckNext", n) : t("vaTruckReply");
-      }
       go("");
       const el = await waitFor(".truck-status");
-      if (el) tour([{ el, title: t("vaTruckReply"), body: [] }]);
+      if (el) tour([{ el, title: t("vaTruckReply"), pair: TH.pairT("vaTruckReply"), body: [] }]);
       return "";
     }
     if (plan.kind === "bags") {
-      if (dryRun) return t("vaBagsReply");
       TH.views.bagSheet();
       return "";
     }
     if (plan.kind === "dropoff") {
-      if (dryRun) return t("vaDropReply");
       TH.mapState.cat = "general";
       go("map/general");
       return "";
@@ -541,14 +556,18 @@
   function calloutBody(s) {
     const it = s.it, out = [];
     if (s.kind === "prep") {
-      const titles = (it.steps || []).map(x => L(x.title)).filter(Boolean).slice(0, 4);
-      if (titles.length) out.push(h("ol", { class: "va-co-steps" }, titles.map(x => h("li", { text: x }))));
+      // The same step icons as the list, lit one after another so the order reads at a glance.
+      const steps = (it.steps || []).filter(x => L(x.title)).slice(0, 4);
+      if (steps.length) out.push(h("ol", { class: "va-co-strip", style: `--n:${steps.length}` }, steps.map((x, k) => h("li", { style: `--k:${k}` },
+        h("span", { class: "va-cs-n", text: String(k + 1) }),
+        h("span", { class: "va-cs-art" }, icon(x.icon || "circle-check", 24)),
+        h("span", { class: "va-cs-t", text: L(x.title), "data-pair": TH.pairOf(x.title) })))));
     } else {
-      if (it.handover) out.push(h("p", { text: L(it.handover) }));
+      if (it.handover) out.push(h("p", { text: L(it.handover), "data-pair": TH.pairOf(it.handover) }));
       const layer = LAYER_OF[it.id];
       if (layer) out.push(h("button", { class: "btn btn-secondary small", type: "button", onclick: () => { endTour(); act({ kind: "map", layer, items: [it.id] }, false); } }, icon("map", 16), t("vaSeeMap")));
     }
-    if (it.warn && s.kind !== "special") out.push(h("p", { class: "va-co-warn" }, icon("alert-triangle", 16), h("span", { text: L(it.warn) })));
+    if (it.warn && s.kind !== "special") out.push(h("p", { class: "va-co-warn" }, icon("alert-triangle", 16), h("span", { text: L(it.warn), "data-pair": TH.pairOf(it.warn) })));
     return out;
   }
 
@@ -561,24 +580,46 @@
 
   // ------------------------------------------------------------ spotlight tour
   let spot = null;
+  // A frame, or 50 ms when frames are paused (a background tab), so waiting never hangs.
+  const nextFrame = () => new Promise(r => { const t = setTimeout(r, 50); requestAnimationFrame(() => { clearTimeout(t); r(); }); });
+  const REDUCED_MOTION = () => window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Wait until an element stops moving (a step unfolding, a smooth scroll), up to `max` ms.
+  async function settle(el, max) {
+    const end = Date.now() + max; let prev = "", same = 0;
+    while (Date.now() < end) {
+      await nextFrame();
+      if (!el.isConnected) return;
+      const r = el.getBoundingClientRect(), k = `${Math.round(r.left)},${Math.round(r.top)},${Math.round(r.width)},${Math.round(r.height)}`;
+      if (k === prev) { if (++same >= 4) return; } else { same = 0; prev = k; }
+    }
+  }
   function endTour() {
     if (!spot) return;
     const s = spot; spot = null;
-    window.removeEventListener("scroll", s.place, true); window.removeEventListener("resize", s.place);
+    s.stop();
     s.root.classList.remove("open"); setTimeout(() => s.root.remove(), 180);
   }
   function tour(steps) {
     steps = steps.filter(s => s && s.el);
     if (!steps.length) return;
     endTour();
-    let i = 0;
+    let i = 0, raf = 0, lastKey = "", turn = 0;
     const hole = h("div", { class: "va-hole", "aria-hidden": "true" });
     const card = h("div", { class: "va-callout", role: "dialog", "aria-live": "polite" });
-    const root = h("div", { class: "va-spot" }, h("div", { class: "va-spot-catch", onclick: endTour }), hole, card);
+    const root = h("div", { class: "va-spot glide" }, h("div", { class: "va-spot-catch", onclick: endTour }), hole, card);
     document.body.append(root);
+    // The page can re-render the framed row; find it again by its selector.
+    const target = st => {
+      if (!st.el.isConnected && st.sel) { const el = document.querySelector(st.sel); if (el) st.el = el; }
+      return st.el.isConnected ? st.el : null;
+    };
     const place = () => {
-      const st = steps[i]; if (!st || !st.el.isConnected) return;
-      const r = st.el.getBoundingClientRect(), pad = st.round ? 10 : 6;
+      const st = steps[i]; if (!st) return;
+      const el = target(st); if (!el) return;
+      const r = el.getBoundingClientRect(), pad = st.round ? 10 : 6;
+      const key = [r.left, r.top, r.width, r.height, window.innerWidth, window.innerHeight, card.offsetHeight].map(Math.round).join();
+      if (key === lastKey) return;
+      lastKey = key;
       Object.assign(hole.style, { left: `${r.left - pad}px`, top: `${r.top - pad}px`, width: `${r.width + pad * 2}px`, height: `${r.height + pad * 2}px`, borderRadius: st.round ? "50%" : "16px" });
       const vh = window.innerHeight, cw = Math.min(window.innerWidth - 24, 360);
       card.style.width = `${cw}px`;
@@ -592,26 +633,60 @@
       card.style.setProperty("--ax", `${ax}px`);
     };
     const show = async () => {
-      const st = steps[i];
-      // A ticked-off step in the list folds away; open it so the framed row is visible.
-      const folded = st.el.closest(".plan-step.folded");
-      if (folded) { const head = folded.querySelector(".ps-head"); if (head) head.click(); await sleep(60); }
+      const my = ++turn, st = steps[i];
+      const alive = () => my === turn && spot === me && target(st);
+      // While moving to the next part the frame glides there and the callout steps aside.
+      root.classList.add("glide"); card.classList.add("busy");
+      // A ticked-off step in the list folds away; open it and wait for the unfold to finish.
+      // The page may re-render meanwhile (opening the list it is already on), so check again
+      // on the fresh row.
+      for (let tries = 0; tries < 3; tries++) {
+        const el = target(st); if (!el) return;
+        const folded = el.closest(".plan-step.folded");
+        if (folded) { const head = folded.querySelector(".ps-head"); if (head) head.click(); }
+        await settle(el, 900);
+        if (my !== turn || spot !== me) return;
+        const now = target(st);
+        if (now === el && !now.closest(".plan-step.folded")) break;
+      }
+      if (!alive()) return;
       const r = st.el.getBoundingClientRect();
-      if (r.top < 70 || r.bottom > window.innerHeight - 220) { st.el.scrollIntoView({ block: "center", behavior: "smooth" }); await sleep(380); }
+      const off = q => q.top < 70 || q.bottom > window.innerHeight - 220;
+      if (off(r)) {
+        st.el.scrollIntoView({ block: "center", behavior: REDUCED_MOTION() ? "auto" : "smooth" });
+        await settle(st.el, 1400);
+        if (!alive()) return;
+        // Some web views ignore smooth scrolling; jump there instead.
+        if (Math.abs(st.el.getBoundingClientRect().top - r.top) < 2 && off(r)) st.el.scrollIntoView({ block: "center" });
+      }
       const last = i === steps.length - 1;
       fill(card,
-        h("div", { class: "va-co-head" }, h("span", { class: "va-co-icon" }, icon("sparkles", 16)), h("strong", { text: st.title }),
+        h("div", { class: "va-co-head" }, h("span", { class: "va-co-icon" }, icon("sparkles", 16)), h("strong", { text: st.title, "data-pair": st.pair }),
           steps.length > 1 ? h("span", { class: "va-co-count", text: `${i + 1}/${steps.length}` }) : null),
         h("div", { class: "va-co-body" }, st.body || []),
         h("div", { class: "va-co-actions" }, st.action || null,
           h("button", { class: "btn " + (st.action ? "btn-secondary" : "btn-primary"), type: "button", onclick: () => { if (last) endTour(); else { i++; show(); } } }, last ? t("vaGotIt") : t("vaNext"))));
-      place();
+      lastKey = ""; place();
       buzz();
-      root.classList.add("open");
+      root.classList.add("open"); card.classList.remove("busy");
       hole.classList.remove("pulse"); void hole.offsetWidth; hole.classList.add("pulse");
+      // The target has stopped moving: once the glide lands, follow it exactly.
+      setTimeout(() => { if (my === turn) root.classList.remove("glide"); }, 280);
     };
-    spot = { root, place };
+    // Follow the framed part every frame: it can move with no scroll event at all
+    // (a step folding above it, a panel opening, the map panning, the keyboard closing).
+    const follow = () => { place(); raf = requestAnimationFrame(follow); };
+    // Scroll and resize events as well, for when frames are throttled.
+    const vv = window.visualViewport;
+    const me = { root, place, stop: () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", place, true); window.removeEventListener("resize", place);
+      if (vv) vv.removeEventListener("resize", place);
+    } };
+    spot = me;
+    raf = requestAnimationFrame(follow);
     window.addEventListener("scroll", place, true); window.addEventListener("resize", place);
+    if (vv) vv.addEventListener("resize", place);
     TH.onNavigate(endTour);
     show();
   }
