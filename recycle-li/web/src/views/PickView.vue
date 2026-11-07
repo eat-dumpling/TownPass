@@ -51,7 +51,7 @@ function go(id: string) { leaving.value = true; router.replace(`/catch/${id}`) }
           <ItemArt :item="it" :size="64" /><Zy :text="it.name.zh" />
         </button>
       </div>
-      <button class="btn ghost" @click="group = null; useScan = false"><AppIcon name="ArrowBackUp" /> 都不是，換一種</button>
+      <button class="btn ghost" @click="group = null; useScan = false"><AppIcon name="ArrowBackUp" /> <Zy text="都不是，換一種" /></button>
     </template>
   </main>
 </template>

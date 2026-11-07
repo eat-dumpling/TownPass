@@ -4,8 +4,9 @@
 import { computed, ref } from 'vue'
 import TopBar from '@/components/TopBar.vue'
 import AppIcon from '@/components/AppIcon.vue'
+import Zy from '@/components/Zy.vue'
 import ItemArt from '@/components/ItemArt.vue'
-import { categoryMeta, daysText, kindMeta, officialCategories, safetyLabel, visibleItems } from '@/domain/catalog'
+import { binMetaFor, categoryMeta, daysText, officialCategories, safetyLabel, visibleItems } from '@/domain/catalog'
 import type { Item } from '@/domain/types'
 import { useGame } from '@/stores/game'
 
@@ -47,22 +48,22 @@ const tabColor = (t: Tab) => (t === 'general' ? categoryMeta.general.color : cat
     <div class="tabs" role="tablist">
       <button v-for="t in tabs" :key="t.id" role="tab" :aria-selected="tab === t.id" class="tabbtn"
         :style="tab === t.id ? { background: tabColor(t.id), color: '#fff' } : {}" @click="tab = t.id; q = ''">
-        {{ t.label }}
+        <Zy :text="t.label" />
       </button>
     </div>
     <ul v-if="!q" class="subs">
-      <li v-for="s in subs" :key="s.id"><b>{{ s.sub }}</b> <span>{{ s.days.length ? daysText(s.days) + '回收' : s.when }}</span></li>
+      <li v-for="s in subs" :key="s.id"><b><Zy :text="s.sub" /></b> <span><Zy :text="s.days.length ? daysText(s.days) + '回收' : s.when" /></span></li>
     </ul>
     <div class="grid3" role="tabpanel">
       <router-link v-for="it in list" :key="it.id" :to="`/guide/${it.id}`" class="tile item"
         :class="{ gold: game.codex[it.id]?.learned, 'danger-frame': it.safety !== 'none' }">
         <ItemArt :item="it" :size="64" />
-        <span class="nm">{{ it.name.zh }}</span>
-        <span class="kind" :style="{ color: kindMeta[it.kind].color }">{{ kindMeta[it.kind].label }}</span>
-        <span v-if="it.safety !== 'none'" class="badge tag-adult">{{ safetyLabel[it.safety] }}</span>
+        <span class="nm"><Zy :text="it.name.zh" /></span>
+        <span class="kind" :style="{ color: binMetaFor(it, game.age).color }"><Zy :text="binMetaFor(it, game.age).label" /></span>
+        <span v-if="it.safety !== 'none'" class="badge tag-adult"><Zy :text="safetyLabel[it.safety]" /></span>
       </router-link>
     </div>
-    <p class="caption">分類依臺北市環保局「資源回收分類方式」與「回收一點通」整理。</p>
+    <p class="caption"><Zy text="分類依臺北市環保局「資源回收分類方式」與「回收一點通」整理。" /></p>
   </main>
 </template>
 

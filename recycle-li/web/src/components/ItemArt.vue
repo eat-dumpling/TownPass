@@ -1,11 +1,14 @@
 <script setup lang="ts">
-// 品項插圖的佔位版：類別顏色的圓角方塊＋白色線條圖示（參考回收標誌的風格）。M6 換成 monster_{id}.webp。
+// 品項插圖的佔位版：桶子顏色的圓角方塊＋白色線條圖示（參考回收標誌的風格）。
+// 顏色跟著孩子現在要丟的桶（binMetaFor），不會和正確的桶撞色。M6 換成 monster_{id}.webp。
 import { computed } from 'vue'
 import AppIcon from './AppIcon.vue'
-import { kindMeta } from '@/domain/catalog'
+import { binMetaFor } from '@/domain/catalog'
+import { useGame } from '@/stores/game'
 import type { Item } from '@/domain/types'
 const props = withDefaults(defineProps<{ item: Item; size?: number; dim?: boolean }>(), { size: 96 })
-const color = computed(() => (props.dim ? '#CAD1D5' : kindMeta[props.item.kind].color))
+const game = useGame()
+const color = computed(() => (props.dim ? '#CAD1D5' : binMetaFor(props.item, game.age).color))
 </script>
 
 <template>

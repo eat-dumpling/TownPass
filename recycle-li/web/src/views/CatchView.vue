@@ -14,7 +14,7 @@ import ItemArt from '@/components/ItemArt.vue'
 import StepStrip from '@/components/StepStrip.vue'
 import BinDrop from '@/components/BinDrop.vue'
 import {
-  binsFor, collectionOf, correctBin, factFor, isBoss, isNoTouch, itemById, kindMeta, safetyLabel, whereMeta, type BinId,
+  binMetaFor, binsFor, collectionOf, correctBin, factFor, isBoss, isNoTouch, itemById, safetyLabel, type BinId,
 } from '@/domain/catalog'
 import { LEARN_THRESHOLD, useGame } from '@/stores/game'
 
@@ -22,7 +22,7 @@ const route = useRoute()
 const game = useGame()
 const item = computed(() => itemById(route.params.id as string)!)
 const bins = computed(() => binsFor(game.age))
-const kind = computed(() => kindMeta[item.value.kind])
+const bin = computed(() => binMetaFor(item.value, game.age))
 const coll = computed(() => collectionOf(item.value))
 const fact = computed(() => factFor(item.value.category))
 
@@ -46,7 +46,7 @@ const flow = computed(() => {
 const title = computed(() =>
   flow.value === 'ask' ? '問問清潔隊' : flow.value === 'notouch' ? '不要碰！' : flow.value === 'boss' ? '要大人幫忙' : phase.value === 'done' ? '做對了！' : '送它回家！',
 )
-const binLabel = computed(() => bins.value.find((b) => b.id === correctBin(item.value, game.age))?.label ?? kind.value.label)
+const binLabel = computed(() => bins.value.find((b) => b.id === correctBin(item.value, game.age))?.label ?? bin.value.label)
 
 function drop(b: BinId) {
   if (correctBin(item.value, game.age) !== b) {
@@ -70,26 +70,24 @@ function bossPass() {
     <TopBar :title="title" back="/" />
 
     <!-- 指引卡：每一種流程都先清楚說明 -->
-    <section class="guide card" :class="{ 'danger-frame': item.safety !== 'none' }" :style="{ '--k': kind.color }" aria-label="處理指引">
+    <section class="guide card" :class="{ 'danger-frame': item.safety !== 'none' }" :style="{ '--k': bin.color }" aria-label="處理指引">
       <div class="head">
         <ItemArt :item="item" :size="72" class="pop" />
         <div class="stack tight">
           <h2><Zy :text="item.name.zh" /></h2>
-          <span class="kind" :style="{ background: kind.color }"><AppIcon :name="kind.icon" :size="20" /> <Zy :text="kind.label" /></span>
-          <span v-if="item.safety !== 'none'" class="badge tag-adult"><AppIcon name="AlertTriangle" :size="14" /> {{ safetyLabel[item.safety] }}</span>
+          <span class="kind" :style="{ background: bin.color }"><AppIcon :name="bin.icon" :size="20" /> <Zy :text="bin.label" /></span>
+          <span v-if="item.safety !== 'none'" class="badge tag-adult"><AppIcon name="AlertTriangle" :size="14" /> <Zy :text="safetyLabel[item.safety]" /></span>
         </div>
       </div>
-      <dl class="facts">
-        <div><dt><AppIcon name="Category" :size="18" /> 臺北分類</dt><dd>{{ coll.label }}</dd></div>
-        <div v-if="coll.when"><dt><AppIcon name="Calendar" :size="18" /> 什麼時候</dt><dd>{{ coll.when }}</dd></div>
-        <div v-if="item.where.length"><dt><AppIcon name="MapPin" :size="18" /> 交給</dt>
-          <dd class="where"><span v-for="w in item.where" :key="w"><AppIcon :name="whereMeta[w].icon" :size="18" /> {{ whereMeta[w].label }}</span></dd></div>
-      </dl>
       <template v-if="flow !== 'notouch' && item.steps.length">
-        <h3 class="h3">先這樣做</h3>
-        <StepStrip :steps="item.steps" :color="kind.color" />
+        <StepStrip :steps="item.steps" :color="bin.color" />
       </template>
-      <p v-if="item.notes" class="note"><AppIcon name="Bulb" :size="18" /> {{ item.notes }}</p>
+      <p v-if="item.notes" class="note"><AppIcon name="Bulb" :size="18" /> <Zy :text="item.notes" /></p>
+      <!-- 臺北的子類和回收日：大人才需要，收起來 -->
+      <details v-if="coll.when" class="more">
+        <summary><AppIcon name="Calendar" :size="18" /> <Zy text="什麼時候收" /></summary>
+        <p><Zy :text="coll.when" /></p>
+      </details>
     </section>
 
     <!-- 請洽清潔隊 -->
@@ -101,7 +99,7 @@ function bossPass() {
     <!-- 不要碰 -->
     <template v-else-if="flow === 'notouch'">
       <div class="stop center"><AppIcon name="HandStop" :size="64" /><p><Zy text="不要碰，請大人處理" /></p></div>
-      <router-link to="/" class="btn block"><AppIcon name="Home" /> 回首頁</router-link>
+      <router-link to="/" class="btn block"><AppIcon name="Home" /> <Zy text="回首頁" /></router-link>
     </template>
 
     <!-- Boss 怪 -->
@@ -129,7 +127,7 @@ function bossPass() {
       <template v-else>
         <div class="card center stack success pop">
           <p class="ok"><AppIcon name="CircleCheck" :size="28" /> <Zy :text="`放進「${binLabel}」`" /></p>
-          <p v-if="fact" class="fact">它會{{ fact.text.replace(/^會/, '') }}</p>
+          <p v-if="fact" class="fact"><Zy :text="`它會${fact.text.replace(/^會/, '')}`" /></p>
           <!-- 獎勵：星星拿去蓋自己的里 -->
           <p v-if="result?.reward" class="reward pop">
             <StarIcon :size="30" /> +{{ result.reward.stars }}
@@ -140,7 +138,7 @@ function bossPass() {
           <p v-if="result?.justLearned" class="badge tag-draft big"><AppIcon name="Award" :size="18" /> <Zy text="學會了！" /></p>
           <div v-else-if="!result?.already" class="learn" :aria-label="`學會進度 ${progress}/${LEARN_THRESHOLD}`">
             <div><span v-for="n in LEARN_THRESHOLD" :key="n" :class="{ on: n <= progress }"><AppIcon name="Star" :size="26" /></span></div>
-            <small>不同天再分對 {{ LEARN_THRESHOLD - progress }} 次就學會</small>
+            <small><Zy :text="`不同天再分對 ${LEARN_THRESHOLD - progress} 次就學會`" /></small>
           </div>
         </div>
         <Mascot mood="cheer" :size="52" line="做得好！" />
@@ -160,13 +158,9 @@ function bossPass() {
 .tight { gap: 6px; align-items: flex-start; }
 h2 { margin: 0; font-size: var(--fs-h2); }
 .kind { color: #fff; border-radius: 8px; padding: 4px 10px; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; box-shadow: inset 0 0 0 2px rgba(255,255,255,.6); }
-.facts { margin: 0; display: grid; gap: 8px; }
-.facts > div { display: grid; grid-template-columns: 7.5em 1fr; gap: 8px; align-items: start; }
-dt { color: var(--gray-600); font-size: var(--fs-body); display: flex; align-items: center; gap: 4px; }
-dd { margin: 0; font-weight: 700; font-size: var(--fs-h3); }
-.where { display: flex; flex-wrap: wrap; gap: 4px 12px; }
-.where span { display: inline-flex; align-items: center; gap: 4px; }
-.h3 { margin: 4px 0 0; font-size: var(--fs-h3); color: var(--gray-700); }
+.more { color: var(--gray-600); }
+.more summary { min-height: 48px; display: flex; align-items: center; gap: 4px; cursor: pointer; }
+.more p { margin: 0 0 4px; font-weight: 700; color: var(--gray-800); }
 .note { margin: 0; background: var(--secondary-50); border-radius: 12px; padding: 10px 12px; font-weight: 600; display: flex; gap: 6px; }
 .stop { color: var(--orange-600); font-size: var(--fs-h2); font-weight: 800; }
 .stop p { margin: 4px 0 0; }

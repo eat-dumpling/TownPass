@@ -35,10 +35,11 @@
   "safety": "none",
   "notes": "封膜與吸管是一般垃圾",
   "source": "回收一點通：廢塑膠（塑膠杯）；吸管、封膜為一般垃圾",
-  "status": "unknown",
+  "status": "verified",
   "sub": "r3d_general",
   "kind": "plastic",
-  "icon": "Cup"
+  "icon": "Cup",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 668 筆，分類一致"
  },
  {
   "id": "pet_bottle",
@@ -77,10 +78,11 @@
   "safety": "none",
   "notes": "瓶蓋一起回收",
   "source": "回收一點通：廢塑膠類－塑膠容器－寶特瓶；寶特瓶蓋併同回收",
-  "status": "unknown",
+  "status": "verified",
   "sub": "r3d_general",
   "kind": "plastic",
-  "icon": "Bottle"
+  "icon": "Bottle",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 667、884 筆，分類一致"
  },
  {
   "id": "aluminum_can",
@@ -117,10 +119,11 @@
   "adult_only": false,
   "safety": "none",
   "source": "回收一點通：廢金屬容器",
-  "status": "unknown",
+  "status": "verified",
   "sub": "r3d_general",
   "kind": "can",
-  "icon": "Beer"
+  "icon": "Beer",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 756、760、953 筆，分類一致"
  },
  {
   "id": "tetra_pak",
@@ -159,10 +162,11 @@
   "adult_only": false,
   "safety": "none",
   "source": "回收一點通：紙容器－鋁箔包（排空、簡易清潔、壓扁）",
-  "status": "unknown",
+  "status": "verified",
   "sub": "r3d_general",
   "kind": "tetra",
-  "icon": "Milk"
+  "icon": "Milk",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 966 筆，分類一致"
  },
  {
   "id": "glass_bottle",
@@ -200,10 +204,11 @@
   "safety": "none",
   "notes": "去掉瓶蓋與吸管",
   "source": "回收一點通：廢玻璃容器",
-  "status": "unknown",
+  "status": "verified",
   "sub": "r3d_general",
   "kind": "glass",
-  "icon": "Glass"
+  "icon": "Glass",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 709、883 筆，分類一致"
  },
  {
   "id": "paper_cup",
@@ -238,10 +243,11 @@
   "adult_only": false,
   "safety": "none",
   "source": "回收一點通：紙容器－紙杯、紙餐具",
-  "status": "unknown",
+  "status": "verified",
   "sub": "r3d_general",
   "kind": "tetra",
-  "icon": "Coffee"
+  "icon": "Coffee",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 965 筆，分類一致"
  },
  {
   "id": "coconut_shell",
@@ -350,10 +356,11 @@
   "adult_only": false,
   "safety": "none",
   "source": "回收一點通：廚餘－果皮、果核",
-  "status": "unknown",
+  "status": "verified",
   "sub": "food",
   "kind": "food",
-  "icon": "Apple"
+  "icon": "Apple",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 505、514、806 筆，分類一致"
  },
  {
   "id": "tea_leaves",
@@ -388,10 +395,11 @@
   "safety": "none",
   "notes": "瀝乾再倒",
   "source": "回收一點通：廚餘－茶渣、咖啡渣",
-  "status": "unknown",
+  "status": "verified",
   "sub": "food",
   "kind": "food",
-  "icon": "Leaf"
+  "icon": "Leaf",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 508、806 筆，分類一致"
  },
  {
   "id": "big_bone",
@@ -492,10 +500,11 @@
   "adult_only": false,
   "safety": "none",
   "source": "回收一點通：免洗筷、吸管為一般垃圾",
-  "status": "unknown",
+  "status": "verified",
   "sub": "non_recyclable",
   "kind": "general",
-  "icon": "ToolsKitchen2"
+  "icon": "ToolsKitchen2",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 361、449、475 筆，分類一致"
  },
  {
   "id": "eggshell",
@@ -599,10 +608,11 @@
   "adult_only": false,
   "safety": "none",
   "source": "回收一點通：廢紙類",
-  "status": "unknown",
+  "status": "verified",
   "sub": "rflat_paper",
   "kind": "paper",
-  "icon": "News"
+  "icon": "News",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 692、979、984 筆，分類一致"
  },
  {
   "id": "old_book",
@@ -637,10 +647,11 @@
   "safety": "none",
   "notes": "拿掉塑膠書套",
   "source": "回收一點通：廢紙類（舊書）",
-  "status": "unknown",
+  "status": "verified",
   "sub": "rflat_book",
   "kind": "paper",
-  "icon": "Books"
+  "icon": "Books",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 844 筆，分類一致"
  },
  {
   "id": "tissue",
@@ -674,10 +685,11 @@
   "safety": "none",
   "notes": "不能混進廚餘",
   "source": "臺北市環保局資源回收分類方式：平面類「不可回收」列有衛生紙（棉）；回收一點通",
-  "status": "unknown",
+  "status": "verified",
   "sub": "non_recyclable",
   "kind": "general",
-  "icon": "File"
+  "icon": "File",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 805 筆，分類一致"
  },
  {
   "id": "plastic_bag_clean",
@@ -712,10 +724,11 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式：平面類「塑膠袋類」乾淨塑膠袋（不含油漬、湯汁、血水）",
-  "status": "unknown",
+  "status": "verified",
   "sub": "rflat_bag",
   "kind": "plastic",
-  "icon": "ShoppingBag"
+  "icon": "ShoppingBag",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 99、519、520 筆，分類一致"
  },
  {
   "id": "plastic_bag_dirty",
@@ -747,10 +760,11 @@
   "adult_only": false,
   "safety": "none",
   "source": "回收一點通：髒塑膠袋屬一般垃圾",
-  "status": "unknown",
+  "status": "verified",
   "sub": "non_recyclable",
   "kind": "general",
-  "icon": "ShoppingBagX"
+  "icon": "ShoppingBagX",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 2 筆，分類一致"
  },
  {
   "id": "snack_bag",
@@ -825,10 +839,11 @@
   "adult_only": false,
   "safety": "none",
   "source": "回收一點通：廢塑膠－布丁杯、塑膠泡殼",
-  "status": "unknown",
+  "status": "verified",
   "sub": "r3d_general",
   "kind": "plastic",
-  "icon": "IceCream2"
+  "icon": "IceCream2",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 24、139、662 筆，分類一致"
  },
  {
   "id": "styrofoam_clean",
@@ -863,10 +878,11 @@
   "safety": "none",
   "notes": "去掉膠帶、木材、鐵釘；不可有油垢",
   "source": "回收一點通：廢發泡塑膠",
-  "status": "unknown",
+  "status": "verified",
   "sub": "r3d_foam",
   "kind": "plastic",
-  "icon": "Package"
+  "icon": "Package",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 676 筆，分類一致"
  },
  {
   "id": "styrofoam_dirty",
@@ -935,10 +951,11 @@
   "safety": "none",
   "notes": "洗乾淨、不要弄濕、打包（含乾淨且彈性完整的女性內衣）；破舊、髒污、發臭的是一般垃圾",
   "source": "回收一點通：舊衣類（週一、五交回收車）",
-  "status": "unknown",
+  "status": "verified",
   "sub": "rflat_clothes",
   "kind": "other",
-  "icon": "Shirt"
+  "icon": "Shirt",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 1、523、524 筆，分類一致"
  },
  {
   "id": "old_shoes",
@@ -1007,10 +1024,11 @@
   "adult_only": false,
   "safety": "none",
   "source": "回收一點通：口罩、紙尿布為一般垃圾",
-  "status": "unknown",
+  "status": "verified",
   "sub": "non_recyclable",
   "kind": "general",
-  "icon": "Mask"
+  "icon": "Mask",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 310、390、840 筆，分類一致"
  },
  {
   "id": "toothbrush",
@@ -1078,10 +1096,11 @@
   "safety": "help",
   "notes": "先取出電池；拆不下的鋰電池單獨交付",
   "source": "臺北市環保局資源回收分類方式：立體類「一般類資源物」列有吹風機、檯燈、電話等；回收一點通",
-  "status": "unknown",
+  "status": "verified",
   "sub": "r3d_general",
   "kind": "other",
-  "icon": "Plug"
+  "icon": "Plug",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 4、772、773 筆，分類一致"
  },
  {
   "id": "furniture",
@@ -1110,10 +1129,11 @@
   "safety": "adult",
   "notes": "先拆解縮小體積，聯絡區清潔隊預約，免費清運",
   "source": "臺北市環保局資源回收分類方式：大型家具、家電暨四機類；臺北市巨大垃圾執行要點",
-  "status": "unknown",
+  "status": "verified",
   "sub": "bulky",
   "kind": "bulky",
-  "icon": "Sofa"
+  "icon": "Sofa",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）大型家具、家電暨四機類・大型家具、家電暨四機類 說明欄"
  },
  {
   "id": "battery",
@@ -1149,10 +1169,11 @@
   "safety": "help",
   "notes": "從物品中取出，不可混進垃圾",
   "source": "臺北市環保局資源回收分類方式：其他類「照明燈管、電池、廢油類」",
-  "status": "unknown",
+  "status": "verified",
   "sub": "other_hazard",
   "kind": "hazard",
-  "icon": "Battery2"
+  "icon": "Battery2",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）其他類・照明燈管、電池、廢油類 說明欄"
  },
  {
   "id": "power_bank",
@@ -1189,10 +1210,11 @@
   "safety": "adult",
   "notes": "正負極貼絕緣膠帶，單獨存放、避開高溫",
   "source": "臺北市環保局資源回收分類方式：其他類「照明燈管、電池、廢油類」",
-  "status": "unknown",
+  "status": "verified",
   "sub": "other_hazard",
   "kind": "hazard",
-  "icon": "BatteryCharging"
+  "icon": "BatteryCharging",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 631、633、796 筆，分類一致"
  },
  {
   "id": "light_tube",
@@ -1228,10 +1250,11 @@
   "safety": "help",
   "notes": "用紙套包好；含冷陰極燈、感應式螢光燈、HID 燈；LED 崁燈、燈條、手電筒是一般垃圾",
   "source": "臺北市環保局資源回收分類方式：其他類「照明燈管、電池、廢油類」",
-  "status": "unknown",
+  "status": "verified",
   "sub": "other_hazard",
   "kind": "hazard",
-  "icon": "Bulb"
+  "icon": "Bulb",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）其他類・照明燈管、電池、廢油類 說明欄"
  },
  {
   "id": "broken_glass",
@@ -1268,10 +1291,11 @@
   "safety": "adult",
   "notes": "包好防刺破；大片玻璃要預約",
   "source": "回收一點通：廢玻璃",
-  "status": "unknown",
+  "status": "verified",
   "sub": "r3d_general",
   "kind": "glass",
-  "icon": "GlassOff"
+  "icon": "GlassOff",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 106 筆，分類一致"
  },
  {
   "id": "broken_ceramic",
@@ -1381,10 +1405,11 @@
   "safety": "adult",
   "notes": "在空曠處排空氣體，單獨交回收車",
   "source": "回收一點通：廢塑膠（打火機）",
-  "status": "unknown",
+  "status": "verified",
   "sub": "r3d_general",
   "kind": "plastic",
-  "icon": "Flame"
+  "icon": "Flame",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 638 筆，分類一致"
  },
  {
   "id": "cooking_oil",
@@ -1524,9 +1549,10 @@
   "hazard": "sharp",
   "adult_only": false,
   "safety": "help",
-  "status": "unknown",
+  "status": "verified",
   "freq": 1,
-  "rarity": 3
+  "rarity": 3,
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 73、743、801 筆，分類一致"
  },
  {
   "id": "cd_disc",
@@ -1558,9 +1584,10 @@
   "hazard": "none",
   "adult_only": false,
   "safety": "none",
-  "status": "unknown",
+  "status": "verified",
   "freq": 1,
-  "rarity": 3
+  "rarity": 3,
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 10、1013 筆，分類一致"
  },
  {
   "id": "thermometer",
@@ -1596,9 +1623,10 @@
   "hazard": "medical",
   "adult_only": true,
   "safety": "adult",
-  "status": "unknown",
+  "status": "verified",
   "freq": 1,
-  "rarity": 3
+  "rarity": 3,
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 1008 筆，分類一致"
  },
  {
   "id": "phone",
@@ -1632,8 +1660,9 @@
   "safety": "help",
   "notes": "有電池的要先取出，或請大人處理；手機、平板先刪除個人資料",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "DeviceMobile"
+  "status": "verified",
+  "icon": "DeviceMobile",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）立體類・一般類資源物 說明欄"
  },
  {
   "id": "tablet",
@@ -1666,8 +1695,9 @@
   "safety": "help",
   "notes": "有電池的要先取出，或請大人處理；手機、平板先刪除個人資料",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "DeviceTablet"
+  "status": "verified",
+  "icon": "DeviceTablet",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 877 筆，分類一致"
  },
  {
   "id": "hair_dryer",
@@ -1699,8 +1729,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "Wind"
+  "status": "verified",
+  "icon": "Wind",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 800、865 筆，分類一致"
  },
  {
   "id": "desk_lamp",
@@ -1731,8 +1762,9 @@
   "safety": "none",
   "notes": "燈泡或燈管要拆下來另外回收",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "Lamp"
+  "status": "verified",
+  "icon": "Lamp",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 860 筆，分類一致"
  },
  {
   "id": "telephone",
@@ -1763,8 +1795,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "Phone"
+  "status": "verified",
+  "icon": "Phone",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）立體類・一般類資源物 說明欄"
  },
  {
   "id": "video_player",
@@ -1794,8 +1827,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "DeviceTvOld"
+  "status": "verified",
+  "icon": "DeviceTvOld",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 867 筆，分類一致"
  },
  {
   "id": "usb_drive",
@@ -1827,8 +1861,9 @@
   "safety": "none",
   "notes": "先刪除個人資料",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "DeviceUsb"
+  "status": "verified",
+  "icon": "DeviceUsb",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 859、878 筆，分類一致"
  },
  {
   "id": "vacuum",
@@ -1861,8 +1896,9 @@
   "safety": "none",
   "notes": "充電式的要先取出電池",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "VacuumCleaner"
+  "status": "verified",
+  "icon": "VacuumCleaner",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 602、861 筆，分類一致"
  },
  {
   "id": "radio",
@@ -1895,8 +1931,9 @@
   "safety": "none",
   "notes": "乾電池要先取出",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "Radio"
+  "status": "verified",
+  "icon": "Radio",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 800、862 筆，分類一致"
  },
  {
   "id": "mosquito_lamp",
@@ -1931,8 +1968,9 @@
   "safety": "help",
   "notes": "電蚊拍的電池要先取出",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "Bolt"
+  "status": "verified",
+  "icon": "Bolt",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 856、857 筆，分類一致"
  },
  {
   "id": "game_console",
@@ -1966,8 +2004,9 @@
   "safety": "help",
   "notes": "有電池的要先取出，或請大人處理；手機、平板先刪除個人資料",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "DeviceGamepad2"
+  "status": "verified",
+  "icon": "DeviceGamepad2",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 863 筆，分類一致"
  },
  {
   "id": "plastic_lamp",
@@ -1998,8 +2037,9 @@
   "safety": "none",
   "notes": "燈泡或燈管要拆下來另外回收",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "Lamp2"
+  "status": "verified",
+  "icon": "Lamp2",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 858 筆，分類一致"
  },
  {
   "id": "computer",
@@ -2031,8 +2071,9 @@
   "safety": "help",
   "notes": "先刪除個人資料；很重，請大人搬",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "DeviceDesktop"
+  "status": "verified",
+  "icon": "DeviceDesktop",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）立體類・一般類資源物 說明欄"
  },
  {
   "id": "mouse_keyboard",
@@ -2066,8 +2107,9 @@
   "safety": "none",
   "notes": "無線的要先取出電池",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "Mouse"
+  "status": "verified",
+  "icon": "Mouse",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）立體類・一般類資源物 說明欄"
  },
  {
   "id": "printer",
@@ -2099,8 +2141,9 @@
   "safety": "none",
   "notes": "墨水匣另外交給販賣業者回收",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "Printer"
+  "status": "verified",
+  "icon": "Printer",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）立體類・一般類資源物 說明欄"
  },
  {
   "id": "plastic_misc",
@@ -2165,8 +2208,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "Square"
+  "status": "verified",
+  "icon": "Square",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 927 筆，分類一致"
  },
  {
   "id": "plastic_hose",
@@ -2198,8 +2242,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "Ripple"
+  "status": "verified",
+  "icon": "Ripple",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 681、1025 筆，分類一致"
  },
  {
   "id": "toilet_seat",
@@ -2231,8 +2276,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "Bath"
+  "status": "verified",
+  "icon": "Bath",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 869 筆，分類一致"
  },
  {
   "id": "tire",
@@ -2264,8 +2310,9 @@
   "safety": "adult",
   "notes": "很重，請大人處理；輪胎內胎是一般垃圾",
   "source": "臺北市環保局資源回收分類方式（r3d_general）",
-  "status": "unknown",
-  "icon": "Wheel"
+  "status": "verified",
+  "icon": "Wheel",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 541、542、543 筆，分類一致"
  },
  {
   "id": "cassette_tape",
@@ -2337,8 +2384,9 @@
   "safety": "none",
   "notes": "要乾淨沒有油垢，髒的請洽清潔隊",
   "source": "臺北市環保局資源回收分類方式（r3d_foam）",
-  "status": "unknown",
-  "icon": "Bowl"
+  "status": "verified",
+  "icon": "Bowl",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 854 筆，分類一致"
  },
  {
   "id": "fruit_net",
@@ -2406,8 +2454,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（non_recyclable）",
-  "status": "unknown",
-  "icon": "HorseToy"
+  "status": "verified",
+  "icon": "HorseToy",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 321、334、845 筆，分類一致"
  },
  {
   "id": "doormat",
@@ -2441,8 +2490,9 @@
   "safety": "none",
   "notes": "大塊的要剪小再裝袋",
   "source": "臺北市環保局資源回收分類方式（non_recyclable）",
-  "status": "unknown",
-  "icon": "LayoutBottombar"
+  "status": "verified",
+  "icon": "LayoutBottombar",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 381、472、912 筆，分類一致"
  },
  {
   "id": "sponge",
@@ -2506,8 +2556,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（non_recyclable）",
-  "status": "unknown",
-  "icon": "Presentation"
+  "status": "verified",
+  "icon": "Presentation",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）不可回收・不可回收 說明欄"
  },
  {
   "id": "ball",
@@ -2538,8 +2589,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（non_recyclable）",
-  "status": "unknown",
-  "icon": "BallBasketball"
+  "status": "verified",
+  "icon": "BallBasketball",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 473、847 筆，分類一致"
  },
  {
   "id": "wooden_lunchbox",
@@ -2574,8 +2626,9 @@
   "safety": "none",
   "notes": "剩菜倒進廚餘，木片盒是一般垃圾",
   "source": "臺北市環保局資源回收分類方式（non_recyclable）",
-  "status": "unknown",
-  "icon": "Box"
+  "status": "verified",
+  "icon": "Box",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 487 筆，分類一致"
  },
  {
   "id": "inner_tube",
@@ -2607,8 +2660,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（non_recyclable）",
-  "status": "unknown",
-  "icon": "Circle"
+  "status": "verified",
+  "icon": "Circle",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）不可回收・不可回收 說明欄"
  },
  {
   "id": "scooter_parts",
@@ -2639,8 +2693,9 @@
   "safety": "adult",
   "notes": "很重，請大人處理",
   "source": "臺北市環保局資源回收分類方式（non_recyclable）",
-  "status": "unknown",
-  "icon": "Motorbike"
+  "status": "verified",
+  "icon": "Motorbike",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）不可回收・不可回收 說明欄"
  },
  {
   "id": "copy_paper",
@@ -2676,8 +2731,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（rflat_paper）",
-  "status": "unknown",
-  "icon": "FileText"
+  "status": "verified",
+  "icon": "FileText",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 991、1032 筆，分類一致"
  },
  {
   "id": "magazine",
@@ -2712,8 +2768,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（rflat_paper）",
-  "status": "unknown",
-  "icon": "Book"
+  "status": "verified",
+  "icon": "Book",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 992、1032 筆，分類一致"
  },
  {
   "id": "paper_bag",
@@ -2750,8 +2807,9 @@
   "safety": "none",
   "notes": "拿掉塑膠提把",
   "source": "臺北市環保局資源回收分類方式（rflat_paper）",
-  "status": "unknown",
-  "icon": "PaperBag"
+  "status": "verified",
+  "icon": "PaperBag",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 986、1032 筆，分類一致"
  },
  {
   "id": "towel",
@@ -2784,8 +2842,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（non_recyclable）",
-  "status": "unknown",
-  "icon": "Wash"
+  "status": "verified",
+  "icon": "Wash",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 421、484、834 筆，分類一致"
  },
  {
   "id": "hat_socks",
@@ -2820,8 +2879,9 @@
   "safety": "none",
   "notes": "這些不是舊衣回收",
   "source": "臺北市環保局資源回收分類方式（non_recyclable）",
-  "status": "unknown",
-  "icon": "Sock"
+  "status": "verified",
+  "icon": "Sock",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 344、402、836 筆，分類一致"
  },
  {
   "id": "bedding",
@@ -2855,8 +2915,9 @@
   "safety": "none",
   "notes": "大的要剪小再裝袋",
   "source": "臺北市環保局資源回收分類方式（non_recyclable）",
-  "status": "unknown",
-  "icon": "Bed"
+  "status": "verified",
+  "icon": "Bed",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 398、400、440 筆，分類一致"
  },
  {
   "id": "fabric",
@@ -2891,8 +2952,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（non_recyclable）",
-  "status": "unknown",
-  "icon": "Shirt"
+  "status": "verified",
+  "icon": "Shirt",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）不可回收・不可回收 說明欄"
  },
  {
   "id": "dirty_clothes",
@@ -2962,8 +3024,9 @@
   "safety": "none",
   "notes": "有一層塑膠膜的紙不能回收",
   "source": "臺北市環保局資源回收分類方式（non_recyclable）",
-  "status": "unknown",
-  "icon": "Sticker"
+  "status": "verified",
+  "icon": "Sticker",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 367、970 筆，分類一致"
  },
  {
   "id": "photo_paper",
@@ -2996,8 +3059,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（non_recyclable）",
-  "status": "unknown",
-  "icon": "Photo"
+  "status": "verified",
+  "icon": "Photo",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 54、838 筆，分類一致"
  },
  {
   "id": "pesticide_container",
@@ -3068,8 +3132,9 @@
   "safety": "adult",
   "notes": "用容器裝好蓋緊",
   "source": "臺北市環保局資源回收分類方式（other_hazard）",
-  "status": "unknown",
-  "icon": "Droplet"
+  "status": "verified",
+  "icon": "Droplet",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）其他類・照明燈管、電池、廢油類 說明欄"
  },
  {
   "id": "food_shells",
@@ -3106,8 +3171,9 @@
   "safety": "none",
   "notes": "官方分類表：食材外殼是廚餘",
   "source": "臺北市環保局資源回收分類方式（food）",
-  "status": "unknown",
-  "icon": "Fish"
+  "status": "verified",
+  "icon": "Fish",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 87、503、515 筆，分類一致"
  },
  {
   "id": "flowers_leaves",
@@ -3140,8 +3206,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（food）",
-  "status": "unknown",
-  "icon": "Flower"
+  "status": "verified",
+  "icon": "Flower",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 502、806 筆，分類一致"
  },
  {
   "id": "meat",
@@ -3178,8 +3245,9 @@
   "safety": "none",
   "notes": "大骨頭是一般垃圾",
   "source": "臺北市環保局資源回收分類方式（food）",
-  "status": "unknown",
-  "icon": "Meat"
+  "status": "verified",
+  "icon": "Meat",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 806 筆，分類一致"
  },
  {
   "id": "vegetables",
@@ -3215,8 +3283,9 @@
   "adult_only": false,
   "safety": "none",
   "source": "臺北市環保局資源回收分類方式（food）",
-  "status": "unknown",
-  "icon": "Carrot"
+  "status": "verified",
+  "icon": "Carrot",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）其他類・廚餘類 說明欄"
  },
  {
   "id": "frozen_food",
@@ -3252,8 +3321,9 @@
   "safety": "none",
   "notes": "倒出來放廚餘，包裝另外分類",
   "source": "臺北市環保局資源回收分類方式（food）",
-  "status": "unknown",
-  "icon": "Snowflake"
+  "status": "verified",
+  "icon": "Snowflake",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 806 筆，分類一致"
  },
  {
   "id": "range_hood",
@@ -3283,8 +3353,9 @@
   "safety": "adult",
   "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
   "source": "臺北市環保局資源回收分類方式（bulky）",
-  "status": "unknown",
-  "icon": "Wind"
+  "status": "verified",
+  "icon": "Wind",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）大型家具、家電暨四機類・大型家具、家電暨四機類 說明欄"
  },
  {
   "id": "mattress",
@@ -3317,8 +3388,9 @@
   "safety": "adult",
   "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
   "source": "臺北市環保局資源回收分類方式（bulky）",
-  "status": "unknown",
-  "icon": "Bed"
+  "status": "verified",
+  "icon": "Bed",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 1007 筆，分類一致"
  },
  {
   "id": "bed_frame",
@@ -3349,8 +3421,9 @@
   "safety": "adult",
   "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
   "source": "臺北市環保局資源回收分類方式（bulky）",
-  "status": "unknown",
-  "icon": "Bed"
+  "status": "verified",
+  "icon": "Bed",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 813 筆，分類一致"
  },
  {
   "id": "cart",
@@ -3381,8 +3454,9 @@
   "safety": "adult",
   "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
   "source": "臺北市環保局資源回收分類方式（bulky）",
-  "status": "unknown",
-  "icon": "ShoppingCart"
+  "status": "verified",
+  "icon": "ShoppingCart",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）大型家具、家電暨四機類・大型家具、家電暨四機類 說明欄"
  },
  {
   "id": "bicycle",
@@ -3413,8 +3487,9 @@
   "safety": "adult",
   "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
   "source": "臺北市環保局資源回收分類方式（bulky）",
-  "status": "unknown",
-  "icon": "Bike"
+  "status": "verified",
+  "icon": "Bike",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）大型家具、家電暨四機類・大型家具、家電暨四機類 說明欄"
  },
  {
   "id": "electric_fan",
@@ -3445,8 +3520,9 @@
   "safety": "adult",
   "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
   "source": "臺北市環保局資源回收分類方式（bulky）",
-  "status": "unknown",
-  "icon": "CarFan"
+  "status": "verified",
+  "icon": "CarFan",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）大型家具、家電暨四機類・大型家具、家電暨四機類 說明欄"
  },
  {
   "id": "gas_stove",
@@ -3477,8 +3553,9 @@
   "safety": "adult",
   "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積；卡式瓦斯罐要先拿出來",
   "source": "臺北市環保局資源回收分類方式（bulky）",
-  "status": "unknown",
-  "icon": "Flame"
+  "status": "verified",
+  "icon": "Flame",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 807、944 筆，分類一致"
  },
  {
   "id": "water_dispenser",
@@ -3509,8 +3586,9 @@
   "safety": "adult",
   "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
   "source": "臺北市環保局資源回收分類方式（bulky）",
-  "status": "unknown",
-  "icon": "Droplets"
+  "status": "verified",
+  "icon": "Droplets",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 816 筆，分類一致"
  },
  {
   "id": "table_chair",
@@ -3542,8 +3620,9 @@
   "safety": "adult",
   "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
   "source": "臺北市環保局資源回收分類方式（bulky）",
-  "status": "unknown",
-  "icon": "Armchair"
+  "status": "verified",
+  "icon": "Armchair",
+  "verified_by": "臺北市環保局資源回收分類方式（data.taipei）大型家具、家電暨四機類・大型家具、家電暨四機類 說明欄"
  },
  {
   "id": "cabinet",
@@ -3575,8 +3654,9 @@
   "safety": "adult",
   "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
   "source": "臺北市環保局資源回收分類方式（bulky）",
-  "status": "unknown",
-  "icon": "Building"
+  "status": "verified",
+  "icon": "Building",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 814 筆，分類一致"
  },
  {
   "id": "tv",
@@ -3607,8 +3687,9 @@
   "safety": "adult",
   "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積；也可以交給販賣業者回收",
   "source": "臺北市環保局資源回收分類方式（bulky）",
-  "status": "unknown",
-  "icon": "DeviceTv"
+  "status": "verified",
+  "icon": "DeviceTv",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 819、1017 筆，分類一致"
  },
  {
   "id": "fridge",
@@ -3639,8 +3720,9 @@
   "safety": "adult",
   "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積；也可以交給販賣業者回收",
   "source": "臺北市環保局資源回收分類方式（bulky）",
-  "status": "unknown",
-  "icon": "Fridge"
+  "status": "verified",
+  "icon": "Fridge",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 820、1017 筆，分類一致"
  },
  {
   "id": "washing_machine",
@@ -3671,8 +3753,9 @@
   "safety": "adult",
   "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積；也可以交給販賣業者回收",
   "source": "臺北市環保局資源回收分類方式（bulky）",
-  "status": "unknown",
-  "icon": "WashMachine"
+  "status": "verified",
+  "icon": "WashMachine",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 817、1017 筆，分類一致"
  },
  {
   "id": "air_conditioner",
@@ -3703,8 +3786,9 @@
   "safety": "adult",
   "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積；也可以交給販賣業者回收",
   "source": "臺北市環保局資源回收分類方式（bulky）",
-  "status": "unknown",
-  "icon": "AirConditioning"
+  "status": "verified",
+  "icon": "AirConditioning",
+  "verified_by": "回收一點通整理檔（data/回收一點通_1031筆.tsv）第 818 筆，分類一致"
  },
  {
   "id": "misc_trash",

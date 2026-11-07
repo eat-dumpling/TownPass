@@ -49,7 +49,7 @@ const titleOf = (title: string, tier: number) => title.split('／')[Math.max(0, 
         <AppIcon :name="a.icon" :size="40" :stroke="1.6" :class="{ off: !game.achievementTier(a.id).tier }" />
         <span class="nm"><Zy :text="titleOf(a.title, game.achievementTier(a.id).tier)" /></span>
         <span class="caption">
-          <template v-if="game.achievementTier(a.id).tier">{{ tierName[game.achievementTier(a.id).tier] }}・</template>{{ game.achievementTier(a.id).n }}<template v-if="game.achievementTier(a.id).next">/{{ game.achievementTier(a.id).next }}</template>
+          <template v-if="game.achievementTier(a.id).tier"><Zy :text="tierName[game.achievementTier(a.id).tier]" />・</template>{{ game.achievementTier(a.id).n }}<template v-if="game.achievementTier(a.id).next">/{{ game.achievementTier(a.id).next }}</template>
         </span>
         <small v-if="game.achievementTier(a.id).next" class="reward"><AppIcon name="Star" :size="12" /> +{{ TIER_BONUS[game.achievementTier(a.id).tier + 1] }}</small>
       </div>

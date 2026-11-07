@@ -17,6 +17,7 @@ export const router = createRouter({
     { path: '/guide/:id', component: () => import('./views/ItemView.vue'), meta: { title: '品項卡' } },
     { path: '/codex/:id', component: () => import('./views/CardView.vue'), meta: { title: '分辨卡' } },
     { path: '/codex', component: () => import('./views/CodexView.vue'), meta: { title: '圖鑑', dock: true } },
-    { path: '/lab', component: () => import('./views/LabView.vue'), meta: { title: '辨識測試室' } },
+    // 辨識測試室只給開發用，App 內建版與線上版都沒有
+    ...(import.meta.env.DEV ? [{ path: '/lab', component: () => import('./views/LabView.vue'), meta: { title: '辨識測試室' } }] : []),
   ],
 })

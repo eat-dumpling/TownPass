@@ -1,5 +1,5 @@
-// 裝置端 CLIP 辨識（競賽規範：AI 推論須於裝置端完成）。
-// 模型：Xenova/clip-vit-base-patch32（OpenAI CLIP ViT-B/32 的 Transformers.js 版，MIT），只用影像模型的 q8 量化版。
+// 裝置端影像辨識（競賽規範：AI 推論須於裝置端完成）。檔名沿用 clip，實際模型由 vision/params.json 的 MODEL 決定。
+// 正式版：Xenova/siglip-base-patch16-224（Google SigLIP，Apache-2.0）；比較用：Xenova/clip-vit-base-patch32（OpenAI CLIP，MIT）。只用影像模型的 q8 量化版。
 // 文字向量在建置時算好（scripts/build-embeds.mjs → public/data/text_embeds.json），手機上不跑文字模型。
 // 畫面只在記憶體中處理，不上傳、不存檔。
 //

@@ -7,14 +7,12 @@ import Mascot from '@/components/Mascot.vue'
 import IsoLi from '@/components/IsoLi.vue'
 import KidHud from '@/components/KidHud.vue'
 import AppIcon from '@/components/AppIcon.vue'
-import { buildings, missions } from '@/domain/catalog'
+import { missions } from '@/domain/catalog'
 import { LEVELS } from '@/solvers/quiz'
 import { useGame } from '@/stores/game'
 
 const game = useGame()
 const liName = computed(() => game.li.name)
-const freeCell = computed(() => game.slots.some((s, i) => !s && game.buildable(game.liId, i)))
-const canBuild = computed(() => freeCell.value && buildings.some((b) => b.unlock <= game.level && (b.cost.star ?? 0) <= game.stars))
 const nextLevel = computed(() => LEVELS.find((l) => game.levelOpen(l.id) && !(game.levels[l.id]?.stars ?? 0)))
 
 // 今天的任務：只用圖示和進度圈，不用讀字
@@ -24,10 +22,10 @@ const C = 2 * Math.PI * R
 
 // 現在最適合做的一件事
 const next = computed(() => {
-  if (canBuild.value) return { to: '/build', icon: 'Building', text: '去蓋房子', line: '星星夠了，蓋一個新東西吧！', c: 'build' }
+  // 學習主線（掃一掃 → 怎麼丟 → 考考你）；蓋房子只在底部選單和上面的小島
   if (!game.missionProgress('daily_scan3').done) return { to: '/scan', icon: 'Camera', text: '掃一掃', line: '找一個要丟的東西，掃掃看！', c: 'scan' }
   if (nextLevel.value) return { to: `/quiz/${nextLevel.value.id}`, icon: 'Map', text: `第 ${nextLevel.value.id} 關`, line: '來考考你，答對拿星星！', c: 'quiz' }
-  return { to: '/codex', icon: 'Book', text: '看圖鑑', line: '還有好多東西沒找到喔', c: 'codex' }
+  return { to: '/scan', icon: 'Camera', text: '掃一掃', line: '找一個要丟的東西，掃掃看！', c: 'scan' }
 })
 </script>
 

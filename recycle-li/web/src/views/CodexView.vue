@@ -62,7 +62,7 @@ const fruitOf = (i: Item) => game.codex[i.id]?.fruit ?? 0
         </template>
       </div>
     </template>
-    <router-link to="/guide" class="btn block"><AppIcon name="Book2" /> 分類指南</router-link>
+    <router-link to="/guide" class="btn block"><AppIcon name="Book2" /> <Zy text="分類指南" /></router-link>
   </main>
 </template>
 

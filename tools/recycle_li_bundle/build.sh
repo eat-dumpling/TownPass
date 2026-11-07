@@ -29,10 +29,9 @@ node scripts/copy-ort.mjs >/dev/null
 node scripts/gen-icons.mjs >/dev/null
 TMP="$REPO/build/recycle-li-dist"
 rm -rf "$TMP"
-# Same item list as the dev server and 丟丟: items.json has no "verified" items yet (104 are "unknown", 3 "conflict"),
-# so .env.production's VITE_SHOW_UNVERIFIED=false would leave only 3 answers (蛋殼, 貝殼, 髒保麗龍) for every photo.
-# Variables already in the environment override the .env files.
-VITE_SHOW_UNVERIFIED=true VITE_ALLOW_REMOTE_MODEL=false node node_modules/vite/bin/vite.js build --outDir "$TMP" --emptyOutDir >/dev/null
+# Only rules checked against the city's own data go into the app (recycle-li/scripts/verify_items.py):
+# 84 "verified" + 3 "conflict" (shown as "ask the cleaning team"); the 20 "unknown" stay out.
+VITE_SHOW_UNVERIFIED=false VITE_ALLOW_REMOTE_MODEL=false node node_modules/vite/bin/vite.js build --outDir "$TMP" --emptyOutDir >/dev/null
 
 # The shared files must really be the same as 丟丟's, or the app would mix versions.
 for f in ort mediapipe models/mediapipe/efficientdet_lite0.tflite models/Xenova/siglip-base-patch16-224; do

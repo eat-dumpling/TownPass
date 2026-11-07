@@ -8,6 +8,10 @@
 
 **主題：看不懂 #理解限制**
 
+> **垃圾怎麼丟，拍一下、用你的語言、一步一步告訴你。**
+>
+> 一套臺北市官方垃圾規則，兩種讀法：**丟丟 TossTalk** 給大人（外籍人士、新住民、長輩），**回收小里長**是同一套規則的兒童模式。
+
 臺北的垃圾規則寫得很清楚：一般垃圾要用專用袋、週三週日停收、平面和立體回收分不同天、垃圾不落地。問題是，**看得懂這些規則的前提是會讀中文、看得懂分類名詞、會操作層層選單**。我們把同一套官方規則，做成不用讀懂也能照著做的服務。
 
 ### 我們解決誰的痛點 / Whose Problem We Solve
@@ -30,7 +34,7 @@
 | 記得做 | 考考你、分辨卡、任務與成就 | 收藏停靠點，垃圾車到前通知 |
 | 語言 | 繁體中文＋注音 | 繁中、英、越、印、菲、泰、韓、日 |
 
-在台北通的入口：**服務 › 我的服務**、**服務 › 熱門**。兩個服務都隨 App 內建，從手機本身提供頁面，沒有網路也能開；線上版：<https://recycle-li.web.app>、<https://taipei-trash-helper.web.app>。
+在台北通的入口：**服務 › 我的服務**、**服務 › 熱門**。兩個服務都隨 App 內建，從手機本身提供頁面，沒有網路也能開（斷網時丟丟的地圖改成停靠點清單）；丟丟線上版：<https://taipei-trash-helper.web.app>。
 
 ## 系統架構 / System Architecture
 
@@ -53,7 +57,6 @@ flowchart LR
 | `lib/page/trash_helper/` | 內建頁面伺服器、收藏與本機通知排程、語音輸入 |
 | `lib/util/web_message_handler/` | 新增橋接：`trash_favorites`、`trash_reminder_save`／`_cancel`／`_test`、`trash_listen`、`schedule_notify`、`cancel_notify` |
 | `lib/util/tp_web_view.dart` | iOS 點擊延遲與返回鍵修正、只對自己的服務開放相機 |
-| `trash-helper/` | 丟丟較早的 Vue 原型，App 沒有使用，留作參考 |
 
 ## 安裝與執行 / Installation & Run
 
@@ -62,7 +65,8 @@ flowchart LR
 fvm install
 fvm flutter pub get
 fvm dart run build_runner build --delete-conflicting-outputs
-zsh tools/recycle_li_bundle/build.sh                            # 把回收小里長建置進 App
+zsh tools/trash_helper_vision/build.sh                          # 1. 先下載辨識模型與 wasm（約 110 MB，不進 git）建進丟丟
+zsh tools/recycle_li_bundle/build.sh                            # 2. 再把回收小里長建置進 App（和丟丟共用同一份模型）
 fvm flutter run
 
 # 開發時改連自己電腦上的版本
@@ -85,6 +89,25 @@ cd microservices/trash_helper && firebase deploy --only hosting --project taipei
 
 核心資料都是合法開放資料，主要來自臺北市政府環境保護局（data.taipei）：資源回收分類方式、垃圾車點位路線資訊、限時收受點、專用垃圾袋代售點、舊衣回收設施據點，以及衛生局廢棄藥物檢收站。地圖使用 OpenStreetMap（© OpenStreetMap contributors，ODbL）。完整清單、版本與模擬資料標示見兩個作品的 README。
 
+## 分類規則怎麼核對 / How the Rules Are Checked
+
+答案只來自規則表 `recycle-li/web/src/data/items.json`（107 條），每條都有 `source`。`recycle-li/scripts/verify_items.py` 把每條和官方資料逐條比對：
+
+1. 品項名稱出現在環保局「回收一點通」的品名裡，而且那幾筆的大類全部和我們一致（65 條）；
+2. 否則看 data.taipei「資源回收分類方式」：品項名稱列在同一子類的說明欄，且回收一點通沒有相反說法（19 條）。
+
+對上的 84 條標 `verified`，並在 `verified_by` 記下是第幾筆；3 條官方說法不一致的標 `conflict`，畫面上說「請洽清潔隊」；其餘 20 條（例如剩菜剩飯、紙便當盒）官方沒有逐項列出或說法不同，**App 內建版不顯示**。
+
+## 上線後的維運 / Operations After Handover
+
+| 問題 | 做法 |
+|---|---|
+| 資料誰更新 | 垃圾車點位、代售點、限時收受點用 data.taipei 開放資料，重跑抓取腳本即可更新（見丟丟 README）；分類規則表建議由環保局資源回收科每季核對 `status`，改完重跑 `verify_items.py` |
+| 跟現有服務重不重複 | 資料和環保局「回收一點通」、垃圾車即時動態同源，我們是它們的**多語、圖像、兒童前端**：拍照或說母語就能問、一次一步帶著做、孩子用注音學 |
+| 辨識錯了怎麼辦 | 模型只負責認出是什麼東西，答案永遠查規則表；沒把握就不回答，改成讓使用者從圖卡選 |
+| 成本 | 不需要伺服器：頁面和模型隨 App 內建，從手機本機提供；沒有雲端 AI 費用 |
+| 個資 | 不用帳號；相機畫面不上傳、不存檔；位置用完即丟，只存停靠點編號與里名 |
+
 ## 第三方套件 / Third-party Packages（App 端新增）
 
 | 套件 | 授權 | 用途 |
@@ -99,7 +122,8 @@ cd microservices/trash_helper && firebase deploy --only hosting --project taipei
 
 - **執行時**：只有影像辨識模型，在手機的 WebView 內推論，不呼叫雲端 API，不使用生成式 AI。
   - Google SigLIP base patch16 224（`Xenova/siglip-base-patch16-224`），q8 量化 ONNX，Transformers.js／ONNX Runtime Web（WASM），Apache-2.0
-  - MediaPipe Object Detector EfficientDet-Lite0／Lite2，int8 TFLite，@mediapipe/tasks-vision，Apache-2.0
+  - MediaPipe Object Detector EfficientDet-Lite0，int8 TFLite，@mediapipe/tasks-vision，Apache-2.0（App 內建這一個；Lite2 只在開發用的辨識測試室比較）
+  - 開發時曾和 OpenAI CLIP ViT-B/32 比較準確率，正式版不使用、不打包
   - 版本、雜湊與準確率見 [recycle-li/README.md](recycle-li/README.md)「AI 與模型揭露」
 - **語音提問**（丟丟）：使用手機作業系統內建的語音辨識，只在按下麥克風後聆聽。
 - **開發輔助**：Claude Code、Codex 協助撰寫程式、文件與翻譯；回收小里長「我的里」插圖在開發時以影像生成產生，記錄在其 README「插圖來源」。

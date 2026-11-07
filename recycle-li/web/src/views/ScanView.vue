@@ -11,7 +11,8 @@ import TopBar from '@/components/TopBar.vue'
 import Mascot from '@/components/Mascot.vue'
 import AppIcon from '@/components/AppIcon.vue'
 import ItemArt from '@/components/ItemArt.vue'
-import { kindMeta, visibleItems } from '@/domain/catalog'
+import { binMetaFor, kindMeta, visibleItems } from '@/domain/catalog'
+import { useGame } from '@/stores/game'
 import type { Item } from '@/domain/types'
 import { clipDevice, fileToCanvas, INPUT_SIZE, loadClip, recognize, type Decision, type Protos } from '@/vision/clip'
 import { detect, DetTimer, loadDetector, squareCrop, type DetModel } from '@/vision/detector'
@@ -23,6 +24,7 @@ import { coverTransform, drawAnnotations, type Annotation } from '@/vision/annot
 import { addLocalProto, loadLocalProtos } from '@/vision/protos'
 
 const router = useRouter()
+const game = useGame()
 const video = ref<HTMLVideoElement>()
 const overlay = ref<HTMLCanvasElement>()
 const fileIn = ref<HTMLInputElement>()
@@ -146,11 +148,11 @@ function draw(v: HTMLVideoElement) {
     .map(({ t, mode: level }) => {
       const base = { track: t, x: t.x * s + ox, y: t.y * s + oy, w: t.w * s, h: t.h * s, selected: fixing.value === t }
       if (level === 'item') {
-        const k = kindMeta[t.label!.kind]
+        const k = binMetaFor(t.label!, game.age)
         return { ...base, color: k.color, title: t.label!.name.zh, sub: k.label, conf: t.conf, pending: false }
       }
       if (level === 'maybe') {
-        const k = kindMeta[t.guess!.kind]
+        const k = binMetaFor(t.guess!, game.age)
         return { ...base, color: k.color, title: `可能是${t.guess!.name.zh}？`, sub: k.label, conf: t.guessConf, pending: false }
       }
       if (level === 'kind') {
@@ -231,8 +233,8 @@ const pctOf = (t: Track) => Math.round(confOf(t) * 100)
     <div class="cam">
       <video v-show="cam === 'on'" ref="video" playsinline muted aria-hidden="true"></video>
       <canvas v-show="cam === 'on'" ref="overlay" class="overlay" aria-hidden="true" @pointerup="onTap"></canvas>
-      <div v-if="cam === 'off'" class="nocam"><AppIcon name="CameraOff" :size="56" /><p>相機打不開</p></div>
-      <p v-if="model === 'loading'" class="over">準備眼睛… {{ pct ? pct + '%' : '' }}</p>
+      <div v-if="cam === 'off'" class="nocam"><AppIcon name="CameraOff" :size="56" /><p><Zy text="相機打不開" /></p></div>
+      <p v-if="model === 'loading'" class="over"><Zy :text="`準備眼睛… ${pct ? pct + '%' : ''}`" /></p>
       <span v-if="cam === 'on'" class="det">{{ detModel === 'efficientdet_lite2' ? 'Lite2' : detModel ? 'Lite0' : '顯著物體' }}{{ device ? ' · ' + device : '' }}</span>
     </div>
 
@@ -241,36 +243,35 @@ const pctOf = (t: Track) => Math.round(confOf(t) * 100)
 
     <!-- 看到的東西（像 YOLO 的圖例），點了看怎麼丟 -->
     <ul v-if="labeled.length && !fixing" class="found" aria-label="看到的東西">
-      <li v-for="t in labeled" :key="t.id" :style="{ '--k': kindMeta[itemOf(t).kind].color }">
+      <li v-for="t in labeled" :key="t.id" :style="{ '--k': binMetaFor(itemOf(t), game.age).color }">
         <button class="main" @click="open(itemOf(t))">
           <ItemArt :item="itemOf(t)" :size="44" />
-          <span class="txt"><b>{{ sure(t) ? '' : '可能是' }}{{ itemOf(t).name.zh }}{{ sure(t) ? '' : '？' }}</b><small>{{ kindMeta[itemOf(t).kind].label }}・{{ pctOf(t) }}%</small></span>
+          <span class="txt"><b><Zy :text="`${sure(t) ? '' : '可能是'}${itemOf(t).name.zh}${sure(t) ? '' : '？'}`" /></b><small><Zy :text="binMetaFor(itemOf(t), game.age).label" /></small></span>
           <AppIcon name="ChevronRight" />
         </button>
-        <button class="no" :aria-label="`${itemOf(t).name.zh} 認錯了`" @click="fixing = t">不對</button>
+        <button class="no" :aria-label="`${itemOf(t).name.zh} 認錯了`" @click="fixing = t"><Zy text="不對" /></button>
       </li>
     </ul>
 
     <section v-if="fixing" class="card stack">
-      <strong>它是哪一個？</strong>
+      <strong><Zy text="它是哪一個？" /></strong>
       <div class="grid3">
         <button v-for="c in rankedOf(fixing)" :key="c.item.id" class="tile" @click="fix(fixing!, c.item)">
           <ItemArt :item="c.item" :size="48" /><Zy :text="c.item.name.zh" />
         </button>
       </div>
       <div class="grid2">
-        <router-link to="/pick" class="btn"><AppIcon name="HandClick" /> 都不是，用選的</router-link>
-        <button class="btn ghost" @click="fixing = null">繼續掃</button>
+        <router-link to="/pick" class="btn"><AppIcon name="HandClick" /> <Zy text="都不是，用選的" /></router-link>
+        <button class="btn ghost" @click="fixing = null"><Zy text="繼續掃" /></button>
       </div>
-      <p class="caption">選了之後，手機會記住這個樣子（只存數字，不存照片），下次更準。</p>
     </section>
 
     <input ref="fileIn" class="sr-only" type="file" accept="image/*" capture="environment" @change="fromFile" />
     <div class="grid2">
       <button class="btn" :class="{ primary: cam === 'off' }" :disabled="model !== 'ready'" @click="fileIn?.click()">
-        <AppIcon name="Photo" /> {{ cam === 'off' ? '拍照或選照片' : '從相簿選' }}
+        <AppIcon name="Photo" /> <Zy :text="cam === 'off' ? '拍照或選照片' : '從相簿選'" />
       </button>
-      <router-link to="/pick" class="btn ghost"><AppIcon name="HandClick" /> 用選的</router-link>
+      <router-link to="/pick" class="btn ghost"><AppIcon name="HandClick" /> <Zy text="用選的" /></router-link>
     </div>
   </main>
 </template>

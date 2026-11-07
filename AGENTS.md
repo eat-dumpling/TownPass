@@ -7,8 +7,8 @@
 - `lib/`、`android/`、`ios/`、`assets/`：台北通 App（Flutter 3.47，`.fvmrc`）。
 - `recycle-li/`：微服務。規格 `recycle-li/docs/SPEC.md`，進度 `recycle-li/TODO.md`，說明 `recycle-li/README.md`。
 - `recycle-li/web/`：Vue 3 + Vite + TypeScript 前端（在台北通的 WebView 內執行）。
-- `trash-helper/`：另一個微服務「Taipei Trash Helper（台北垃圾生活助手）」，給外籍人士與新住民，中英文、一次一步、不做遊戲化。
-  唯讀引用 `recycle-li/web/src` 的分類規則與辨識模組（`@` alias），自己的程式用 `~`。說明見 `trash-helper/README.md`、進度 `trash-helper/TODO.md`。
+- `microservices/trash_helper/`：另一個微服務「丟丟 TossTalk」，給外籍人士與新住民（8 種語言、一次一步、不做遊戲化），純 HTML/JS＋Leaflet。
+  辨識模組由 `tools/trash_helper_vision/build.sh` 從 `recycle-li/web` 建出。說明見 `microservices/trash_helper/README.md`。
 
 ## 指令
 
@@ -27,7 +27,7 @@ flutter run --dart-define=RECYCLE_LI_URL=http://<區網 IP>:5173/
 
 ## 今年的規則（一定要遵守）
 
-- **AI 推論只能在裝置端**：不呼叫雲端 API、不用遠端模型。本作品只有 CLIP 在 WebView 內推論，不用生成式 AI。README 要揭露模型名稱、版本、量化格式、推論框架與來源。
+- **AI 推論只能在裝置端**：不呼叫雲端 API、不用遠端模型。本作品只有 SigLIP（影像）與 MediaPipe EfficientDet-Lite0（框物品）在 WebView 內推論，不用生成式 AI。README 要揭露模型名稱、版本、量化格式、推論框架與來源。
 - **分類只來自規則表** `recycle-li/web/src/data/items.json`；模型只負責認出品項。每條規則要有 `source`，只有 `status: "verified"` 會在正式版上線。
 - **套件只用開源、免費、寬鬆授權**（MIT、BSD、Apache-2.0）。**地圖用開源方案**（Leaflet、MapLibre＋OSM 或國土測繪中心），不要用 google_maps_flutter 或 Google Maps。
 - 不用危害國家資通安全清單所列的 AI 工具與模型（含大陸廠牌，例如 Chinese-CLIP）。
@@ -41,8 +41,8 @@ flutter run --dart-define=RECYCLE_LI_URL=http://<區網 IP>:5173/
 - 里的插圖在 `web/src/assets/li/`（開發時用 Codex CLI 影像生成，`scripts/gen_sprites.sh`＋`key_sprites.py`）；App 執行時不能呼叫生成式 AI。新插圖要在 README「插圖來源」記錄。
 - **只給孩子用、沒有家長功能**：目標是讓孩子從「看不懂垃圾分類」到「懂」。沒有設定頁、家長關卡、撥電話；分幾個桶跟著等級長大（一開始 3 個、`NINE_BINS_LEVEL` 起 9 個），注音一律開著。要大人幫忙的東西，孩子按「我會找大人」就算認出來。
 - **介面**：主要畫面（家、考考你、蓋房子、圖鑑、任務）用底部選單 `KidDock`＋頂部狀態列 `KidHud`（路由 `meta.dock`）；每個功能一個顏色（家藍綠、考考你天藍、掃一掃黃、蓋房子綠、圖鑑紫）。首頁只有一句話、一個「現在做這個」按鈕。
-- **不做**：線索問答（OR① 題目）、倒垃圾相關（今晚任務、家長確認、本週報告、清運大作戰）。舊畫面在 `recycle-li/web/src/paused/`（不建置）。
-- 辨識（YOLO 風格多物件）：`detector.ts`（MediaPipe EfficientDet-Lite2 框物品）→ `tracker.ts`（追蹤、框平滑、標籤遲滯）→ `clip.worker.ts`（CLIP 在 Web Worker）＋`clip.ts`（評分、範例向量）＋`prior.ts`（偵測器類別先驗）→ `annotate.ts`（畫標註）。CLIP 固定 WASM 單執行緒（q8 在 WebGPU 會壞；Worker 內多執行緒會卡）。
+- **不做**：線索問答（OR① 題目）、倒垃圾相關（今晚任務、家長確認、本週報告、清運大作戰）。舊畫面已移除（在 git 歷史裡）。
+- 辨識（YOLO 風格多物件）：`detector.ts`（MediaPipe EfficientDet-Lite0 框物品；Lite2 只在辨識測試室）→ `tracker.ts`（追蹤、框平滑、標籤遲滯）→ `clip.worker.ts`（SigLIP 在 Web Worker；檔名沿用 clip）＋`clip.ts`（評分、範例向量）＋`prior.ts`（偵測器類別先驗）→ `annotate.ts`（畫標註）。影像模型固定 WASM 單執行緒（q8 在 WebGPU 會壞；Worker 內多執行緒會卡）。
 - 品項要涵蓋臺北市環保局 CSV 說明欄的每一項；新增品項用 `recycle-li/scripts/expand_items.py`，之後重跑 `npm run build:embeds`。
 - 分類兩層：臺北官方子類（`src/data/categories.json`，由 `recycle-li/data/taipei_recycle_categories.csv` 產生）＋孩子的桶（`kind`，回收標誌的分法與顏色）。
 

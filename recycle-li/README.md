@@ -1,16 +1,15 @@
 # 回收小里長（台北通微服務）
 
 孩子拿手機對著要丟的東西，畫面**即時框出物品並說「這是寶特瓶」**，接著清楚告訴他它是哪一類、要先倒空沖洗還是壓扁、交給哪台車。
-孩子把它拖進正確的桶就拿到**資源**，拿去**蓋自己的里**；每天、每週有**任務**，累積**成就**。
+孩子把它拖進正確的桶就拿到**星星**；讀分辨卡、考考你破關也拿星星，星星可以**蓋自己的里**。
 
-> 孩童版只有一條循環：掃描 → 回饋與獎勵 → 蓋里 → 任務與成就（2026-11-07 收斂）。不出題目、不做倒垃圾相關功能，舊畫面在 `web/src/paused/`。
+> 這是丟丟 TossTalk 那套官方規則的**兒童模式**：一條循環——掃描（或用選的）→ 怎麼丟＋拖進桶 → 星星。不做倒垃圾相關功能（舊畫面已移除，在 git 歷史裡）。
 
 - 完整規格：[docs/SPEC.md](docs/SPEC.md)（線上版：<https://claude.ai/artifact/HxnTALGmNC762XDavmRwv8>）
 - 開發進度與分工：[TODO.md](TODO.md)
 - 給 AI 開發工具的說明：repo 根目錄的 [AGENTS.md](../AGENTS.md)
 
-> 目前的範圍（2026-11-07 決定）：先把「ML 辨識＋分類指引」做完。回收工廠、清運大作戰、今晚任務、家長確認、本週報告
-> 暫停（程式在 `web/src/paused/`，求解器與測試仍保留），見 TODO。
+> 回收工廠、清運大作戰、今晚任務、家長確認、本週報告不做（畫面已移除，求解器與測試仍保留）。
 
 ## 快速開始
 
@@ -245,7 +244,7 @@ npm run tune                       # 第一次要算全部照片的向量比較�
 | 資料 | 來源 | 用在哪裡 | 狀態 |
 |---|---|---|---|
 | 資源回收分類方式（大類、子類、回收時間、說明欄列出的每一種東西） | 臺北市政府環境保護局（機關代碼 379150000I 等） | `categories.json`；說明欄的每一項都建成品項（`scripts/expand_items.py`） | 已匯入，涵蓋全部列出項目 |
-| 品項分類細則 | 臺北市環保局「回收一點通」<https://dep-recycle.gov.taipei/>（非開放資料平台資料集，註明出處）；整理檔 `data/回收一點通_1031筆.tsv` | `items.json` 每筆的 `source`；1,031 筆對到品項（`data/taipei_list_mapping.csv`），同一品項的各種樣子當訓練照片的搜尋詞 | 105 筆，`status` 待資料組核對；898/1,031 筆有對應品項 |
+| 品項分類細則 | 臺北市環保局「回收一點通」<https://dep-recycle.gov.taipei/>（非開放資料平台資料集，註明出處）；整理檔 `data/回收一點通_1031筆.tsv` | `items.json` 每筆的 `source`；1,031 筆對到品項（`data/taipei_list_mapping.csv`），同一品項的各種樣子當訓練照片的搜尋詞 | 107 條逐條比對（`scripts/verify_items.py`）：84 條 `verified`（`verified_by` 記錄第幾筆）、3 條 `conflict`、20 條 `unknown`（正式版不顯示）；898/1,031 筆有對應品項 |
 | 115 年家戶廚餘新制 | 臺北市環保局公告 | 廚餘、大骨頭 | 同上 |
 | 焚化廠營運管理報告 | data.gov.tw 資料集 145695 | 知識句「會送到焚化廠燒掉」 | 引用 |
 | TACO（Trash Annotations in Context） | Proença & Simões (2020)，<http://tacodataset.org>，**CC BY 4.0** | 調參與範例向量（572 個標註框） | 照片不重新散布，只發布算出的向量 |
@@ -301,7 +300,6 @@ recycle-li/
     src/data/    items.json、categories.json、questions.json …
     src/solvers/ ask.ts（OR① 線索）＋暫停功能用的 factory、tsptw、chase
     src/views/   首頁、掃描、選圖與線索、指引、分類指南、品項卡、圖鑑、考考你、設定、辨識測試室
-    src/paused/  暫停的畫面
 ```
 
 ## 隱私與兒童安全

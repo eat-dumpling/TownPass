@@ -87,6 +87,13 @@ export function correctBin(item: Item, age: AgeBand): BinId | null {
   return item.kind
 }
 
+/** 孩子看到的顏色與名稱跟著「這個等級要丟的桶」走（例如 3 個桶時寶特瓶是綠色的資源回收，不是紅色的塑膠類），不進桶的用類別本身 */
+export function binMetaFor(item: Item, age: AgeBand): BinMeta {
+  const b = correctBin(item, age)
+  const k = kindMeta[item.kind]
+  return binsFor(age).find((x) => x.id === b) ?? { id: item.kind, label: k.label, color: k.color, icon: k.icon }
+}
+
 /** 交給誰、星期幾：先看官方子類別，沒有的看大類 */
 export function collectionOf(item: Item): { label: string; when: string; source?: string } {
   const off = officialById(item.sub)

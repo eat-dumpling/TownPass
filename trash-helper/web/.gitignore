@@ -1,8 +1,0 @@
-node_modules
-dist
-public/models
-public/ort
-public/mediapipe
-public/data/text_embeds.json
-public/data/image_protos.json
-src/components/icons.gen.ts

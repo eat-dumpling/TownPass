@@ -126,3 +126,24 @@ describe('schedule rules', () => {
     expect(tonightCategories(sat, new Set())).toEqual([])
   })
 })
+
+describe('binMetaFor：品項圖示的顏色跟著孩子要丟的桶', () => {
+  it('3 個桶時寶特瓶是資源回收的顏色，不是塑膠類的紅色', async () => {
+    const { binMetaFor, binsFor, itemById, kindMeta } = await import('@/domain/catalog')
+    const pet = itemById('pet_bottle')!
+    const young = binMetaFor(pet, 'young')
+    expect(young.id).toBe('recycle')
+    expect(young.color).toBe(binsFor('young').find((b) => b.id === 'recycle')!.color)
+    expect(young.color).not.toBe(kindMeta.plastic.color)
+    expect(binMetaFor(pet, 'older').color).toBe(kindMeta[pet.kind].color)
+  })
+  it('每個進桶的品項，顏色都等於它正確的桶', async () => {
+    const { binMetaFor, binsFor, correctBin } = await import('@/domain/catalog')
+    for (const age of ['young', 'older'] as const) {
+      for (const it of allItems) {
+        const b = correctBin(it, age)
+        if (b) expect(binMetaFor(it, age).color).toBe(binsFor(age).find((x) => x.id === b)!.color)
+      }
+    }
+  })
+})

@@ -47,6 +47,8 @@ export interface Item {
   source: string
   /** 只有 verified 會在正式版上線；conflict＝官方說法衝突，顯示「請洽清潔隊」 */
   status: 'verified' | 'conflict' | 'unknown'
+  /** 核對依據：和哪份官方資料逐條比對過（scripts/verify_items.py 產生） */
+  verified_by?: string
 }
 
 export interface Question {
