@@ -42,7 +42,7 @@ flutter run -d <裝置> --dart-define=RECYCLE_LI_URL=https://<區網 IP>:5443/
 ```
 
 台北通的**除錯版**只信任區網位址的自簽憑證（`TPMicroserviceConfig.trustDevCertificate`），正式版照系統的憑證檢查。
-App 裡「服務 › 更多」把「回收小里長」加入我的服務，或從「熱門」直接進入。
+App 裡從「服務 › 我的服務 › 丟丟」進入，按首頁右上角「兒童模式」切到回收小里長（右上角箭頭回丟丟）。
 
 部署（Firebase Hosting）：`npm run build && firebase deploy --only hosting`（`web/firebase.json` 已備好）。
 

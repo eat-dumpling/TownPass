@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:town_pass/gen/assets.gen.dart';
-import 'package:town_pass/util/tp_microservice_config.dart';
 import 'package:town_pass/util/trash_helper.dart';
 
 abstract final class TrendingServiceModel {
@@ -21,12 +20,6 @@ abstract final class TrendingServiceModel {
         icon: Assets.svg.iconLocationSearch.svg(),
         title: '施工資訊',
         url: '',
-      ),
-      TrendingService(
-        icon: Assets.svg.iconRecycleLi.svg(),
-        title: '回收小里長',
-        url: recycleLiUrl,
-        forceWebViewTitle: '回收小里長',
       ),
       // 丟丟和「我的服務」開同一個頁面：隨 App 內建（可離線），開發時可用 TRASH_HELPER_URL 指向開發機。
       TrendingService(

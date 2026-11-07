@@ -4,8 +4,7 @@ import 'package:town_pass/page/city_service/model/my_service_model.dart';
 class PinnedServiceWidgetController extends GetxController {
   final RxList<MyServiceItemId> _pinnedList = RxList(
     [
-      // 黑客松作品：回收小里長、丟丟放在「我的服務」最前面，一點就進入微服務
-      MyServiceItemId.recycleLi,
+      // 黑客松作品：丟丟放在「我的服務」最前面；回收小里長是丟丟裡的「兒童模式」，不另放入口
       MyServiceItemId.trashHelper,
       MyServiceItemId.locationSearch,
       MyServiceItemId.districtOffice,

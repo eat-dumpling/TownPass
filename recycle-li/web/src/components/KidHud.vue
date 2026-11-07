@@ -6,9 +6,11 @@ import AppIcon from './AppIcon.vue'
 import Zy from './Zy.vue'
 import { missions } from '@/domain/catalog'
 import { useGame } from '@/stores/game'
+import { backToDiudiu } from '@/bridge/back'
 
 defineProps<{ title?: string }>()
 const game = useGame()
+const back = backToDiudiu()
 const r = computed(() => game.rank)
 const pct = computed(() => (r.value.next ? Math.min(1, r.value.into / r.value.span) : 1))
 const ring = 2 * Math.PI * 25
@@ -32,7 +34,10 @@ const fresh = computed(() => missions.filter((m) => game.missionProgress(m.id).d
       <span v-else class="rt"><Zy :text="r.title" /></span>
     </div>
     <span class="stars" :aria-label="`手上有 ${game.stars} 顆星`"><AppIcon name="Star" :size="22" :stroke="2" class="st" /> {{ game.stars }}</span>
-    <router-link to="/missions" class="cup" aria-label="任務與成就">
+    <a v-if="back" :href="back" class="cup home" aria-label="回到丟丟">
+      <AppIcon name="ArrowLeft" :size="24" :stroke="2.2" />
+    </a>
+    <router-link v-else to="/missions" class="cup" aria-label="任務與成就">
       <AppIcon name="Trophy" :size="24" :stroke="2" /><i v-if="fresh" class="dot"></i>
     </router-link>
   </header>
@@ -50,5 +55,6 @@ const fresh = computed(() => missions.filter((m) => game.missionProgress(m.id).d
 .stars { display: inline-flex; align-items: center; gap: 4px; background: #fff; border-radius: 999px; padding: 6px 12px 6px 8px; font-weight: 800; font-size: var(--fs-title); color: #AD7B2B; box-shadow: var(--shadow); }
 .st { color: #E7A43C; fill: #FCD56B; }
 .cup { position: relative; width: var(--tap); height: var(--tap); border-radius: 50%; display: grid; place-items: center; background: #fff; box-shadow: var(--shadow); color: var(--primary-700); }
+.home { color: #7A5200; background: #FFF4D6; }
 .dot { position: absolute; top: 6px; right: 6px; width: 11px; height: 11px; border-radius: 50%; background: var(--red-500); border: 2px solid #fff; }
 </style>

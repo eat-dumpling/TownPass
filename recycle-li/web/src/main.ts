@@ -6,6 +6,9 @@ import { i18n } from './i18n'
 import './styles/base.css'
 import 'leaflet/dist/leaflet.css'
 import { useGame } from './stores/game'
+import { rememberBack } from './bridge/back'
+
+rememberBack()
 
 const app = createApp(App).use(createPinia()).use(router).use(i18n)
 useGame().load().finally(() => {

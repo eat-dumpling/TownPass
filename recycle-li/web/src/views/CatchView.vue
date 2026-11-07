@@ -113,7 +113,7 @@ function bossPass() {
         <p v-if="bossReward" class="reward pop"><StarIcon :size="30" /> +{{ bossReward.stars }}</p>
         <div class="grid2">
           <router-link to="/scan" class="btn"><AppIcon name="Camera" /> <Zy text="再掃一個" /></router-link>
-          <router-link to="/build" class="btn primary"><AppIcon name="Building" /> <Zy text="去蓋房子" /></router-link>
+          <router-link to="/quiz" class="btn primary"><AppIcon name="Map" /> <Zy text="考考你" /></router-link>
         </div>
       </template>
     </template>
@@ -128,7 +128,7 @@ function bossPass() {
         <div class="card center stack success pop">
           <p class="ok"><AppIcon name="CircleCheck" :size="28" /> <Zy :text="`放進「${binLabel}」`" /></p>
           <p v-if="fact" class="fact"><Zy :text="`它會${fact.text.replace(/^會/, '')}`" /></p>
-          <!-- 獎勵：星星拿去蓋自己的里 -->
+          <!-- 獎勵：星星 -->
           <p v-if="result?.reward" class="reward pop">
             <StarIcon :size="30" /> +{{ result.reward.stars }}
           </p>
@@ -145,7 +145,7 @@ function bossPass() {
         <router-link :to="`/codex/${item.id}`" class="btn block card-btn"><AppIcon name="Book" /> <Zy text="看分辨卡" /><span v-if="unread" class="plus"><StarIcon :size="18" />+1</span></router-link>
         <div class="grid2">
           <router-link to="/scan" class="btn"><AppIcon name="Camera" /> <Zy text="再掃一個" /></router-link>
-          <router-link to="/build" class="btn primary"><AppIcon name="Building" /> <Zy text="去蓋房子" /></router-link>
+          <router-link to="/quiz" class="btn primary"><AppIcon name="Map" /> <Zy text="考考你" /></router-link>
         </div>
       </template>
     </template>

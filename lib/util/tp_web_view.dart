@@ -105,7 +105,8 @@ class TPWebView extends StatelessWidget {
         onWebViewCreated: (controller) async {
           webViewController.value = controller;
           // The bundled Trash Helper and recycle-li pages are served by the app; make sure that server is up.
-          if (url.startsWith(TrashHelper.url)) await TrashLocalServer.ensureRunning();
+          // 丟丟首頁有「兒童模式」按鈕會切到回收小里長，所以開丟丟時兩個都要先開好。
+          if (url.startsWith(TrashHelper.url)) await Future.wait([TrashLocalServer.ensureRunning(), RecycleLiLocalServer.ensureRunning()]);
           if (url.startsWith(recycleLiUrl)) await RecycleLiLocalServer.ensureRunning();
           try {
             controller.loadUrl(urlRequest: URLRequest(url: WebUri(url)));

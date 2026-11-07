@@ -364,7 +364,7 @@
       h("header", { class: "home-head" },
         h("div", {}, h("div", { class: "home-date", text: `${t("hello" + (now.minutes >= 5 * 60 && now.minutes < 11 * 60 ? 0 : now.minutes >= 11 * 60 && now.minutes < 17 * 60 ? 1 : 2))} · ${TH.lang() === "zh" ? `${now.m}月${now.d}日 週${t("days")[now.day]}` : `${t("days")[now.day]} ${now.m}/${now.d}`}` }),
           h("h1", { class: "home-day", text: t("hQuestion"), "data-pair": TH.pairT("hQuestion") })),
-        TH.views.langButton()),
+        h("div", { class: "head-actions" }, TH.views.kidsButton(), TH.views.langButton())),
       truckStatus(),
       last.length && !sel.size ? h("button", { class: "last-row", type: "button", onclick: () => { last.forEach(id => sel.add(id)); picks.set([...sel]); go("plan"); } },
         h("span", { class: "grow last-arts" }, h("span", { text: t("hLast") }), last.slice(0, 5).map(id => TH.art(TH.itemById(id), 24))), h("strong", { text: t("hAgain") + " ›" })) : null,

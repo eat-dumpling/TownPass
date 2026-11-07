@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// 首頁＝我的里的風景：上面是等級和星星，中間是會動的小島（點了去蓋房子），
+// 首頁＝我的里的風景：上面是等級和星星，中間是會動的小島（點了去蓋房子，右下角有「蓋房子」），
 // 下面小里長只說一句話、只給一個「現在做這個」的大按鈕。其他功能在底部選單。
 import { computed } from 'vue'
 import Zy from '@/components/Zy.vue'
@@ -38,6 +38,7 @@ const next = computed(() => {
       <span class="name"><AppIcon :name="game.li.icon" :size="18" /> <Zy :text="liName" /></span>
       <span class="green"><AppIcon name="Leaf" :size="16" /> {{ game.green }}</span>
       <IsoLi :li="game.li" :slots="game.slots" label="我的里" />
+      <span class="build-chip"><AppIcon name="Building" :size="20" :stroke="2" /> <Zy text="蓋房子" /></span>
     </router-link>
 
     <section class="talk">
@@ -76,6 +77,10 @@ const next = computed(() => {
 }
 .name { left: 12px; color: var(--primary-800); }
 .green { right: 12px; color: #2F6B3A; }
+.build-chip {
+  position: absolute; right: 12px; bottom: 12px; z-index: 2; display: inline-flex; align-items: center; gap: 4px;
+  min-height: 48px; padding: 4px 14px; border-radius: 999px; background: #F5BA4B; color: #3B2A06; font-weight: 800; box-shadow: var(--shadow);
+}
 .talk { display: flex; flex-direction: column; gap: 12px; }
 .go {
   display: flex; align-items: center; gap: 12px; min-height: 76px; padding: 12px 18px; border-radius: 24px;

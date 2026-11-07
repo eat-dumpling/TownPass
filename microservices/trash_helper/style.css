@@ -683,3 +683,8 @@ body.has-tabbar:has(.pick-bar) .va-fab[data-view="home"] { bottom: calc(86px + v
 .map-offline { position: absolute; top: 50%; left: 16px; right: 16px; z-index: 4; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 14px; border-radius: 10px; background: var(--white, #fff); color: var(--g700); font-size: 15px; font-weight: 600; box-shadow: 0 2px 8px rgba(0, 0, 0, .12); transform: translateY(-50%); }
 .map-offline[hidden] { display: none; }
 [data-needs-net]:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Home header: kids mode next to the language button */
+.head-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.kids-pill { display: inline-flex; align-items: center; gap: 6px; min-height: 48px; border-color: #F5BA4B; color: #7A5200; }
+.head-actions .lang-pill { min-height: 48px; }

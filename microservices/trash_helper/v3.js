@@ -84,6 +84,21 @@
     const cur = window.TH_LANGS.find(l => l.code === TH.lang()) || { short: "EN" };
     return h("button", { class: "lang-pill", type: "button", "aria-label": t("langTitle"), onclick: langSheet }, icon("language", 16), h("span", { text: cur.short }));
   }
+  // Kids mode = 回收小里長 (same official rule table, with zhuyin and a drag-into-the-bin game).
+  // In the app it is served next to 丟丟 (127.0.0.1:8791); ?from= gives it a way back here.
+  function kidsUrl() {
+    const c = window.TH_CONFIG || {};
+    const base = c.kidsUrl ? c.kidsUrl
+      : location.port === "8790" ? "http://127.0.0.1:8791/"
+      : location.port === "8788" ? `${location.protocol}//${location.hostname}:5173/`
+      : "https://recycle-li.web.app/";
+    const back = location.href.split("#")[0] + "#/";
+    return `${base}?from=${encodeURIComponent(back)}#/`;
+  }
+  function kidsButton() {
+    return h("button", { class: "lang-pill kids-pill", type: "button", "aria-label": t("kidsMode"), onclick: () => { location.href = kidsUrl(); } },
+      icon("star", 16), h("span", { text: t("kidsMode") }));
+  }
 
   function bagSheet() {
     sheet(t("bagsTitle"),
@@ -204,5 +219,5 @@
       tab("map", "map", t("navNear"), "map"));
   }
 
-  Object.assign(TH.views, { viewPick, viewItem, tabBar, bagSheet, musicSheet, langSheet, langButton });
+  Object.assign(TH.views, { viewPick, viewItem, tabBar, bagSheet, musicSheet, langSheet, langButton, kidsButton });
 })();
