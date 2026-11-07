@@ -76,7 +76,7 @@
 			<string>TownPass 需要精確定位權限才可正常使用</string>
 		</dict>
 		<key>NSCameraUsageDescription</key>
-        <string>This app needs camera access to scan QR codes</string>
+        <string>台北通需要相機來掃描 QR Code，以及在「回收小里長」辨識要丟的垃圾（畫面只在手機上處理，不會上傳）</string>
         <key>NSPhotoLibraryUsageDescription</key>
         <string>This app needs photos access to get QR code from photo library</string>
 		<key>UIStatusBarHidden</key>

@@ -281,3 +281,67 @@ class QRCodeScanMessageHandler extends TPWebMessageHandler {
     );
   }
 }
+
+/// 微服務「回收小里長」：在指定時間排程本機通知（今晚垃圾車停靠前提醒）。
+///
+/// 網頁端送出：
+/// `{ "name": "schedule_notify", "data": { "id": 1107, "title": "...", "content": "...", "at": "2026-11-07T20:55:00+08:00" } }`
+/// 回覆 `data: true` 表示已排程；格式錯誤或時間已過回覆 `false`。
+class ScheduleNotifyMessageHandler extends TPWebMessageHandler {
+  @override
+  String get name => 'schedule_notify';
+
+  @override
+  Future<void> handle({
+    required Object? message,
+    required WebUri? sourceOrigin,
+    required bool isMainFrame,
+    required Function(WebMessage replyWebMessage)? onReply,
+  }) async {
+    if (message is! Map) {
+      onReply?.call(replyWebMessage(data: false));
+      return;
+    }
+    final Object? id = message['id'];
+    final DateTime? at = DateTime.tryParse('${message['at']}');
+    if (id is! int || at == null || at.isBefore(DateTime.now())) {
+      onReply?.call(replyWebMessage(data: false));
+      return;
+    }
+    try {
+      await NotificationService.requestPermission();
+      await NotificationService.scheduleNotification(
+        id: id,
+        at: at,
+        title: message['title']?.toString(),
+        content: message['content']?.toString(),
+      );
+      onReply?.call(replyWebMessage(data: true));
+    } catch (error) {
+      printError(info: error.toString());
+      onReply?.call(replyWebMessage(data: false));
+    }
+  }
+}
+
+/// 取消 schedule_notify 排程的通知：`{ "name": "cancel_notify", "data": { "id": 1107 } }`
+class CancelNotifyMessageHandler extends TPWebMessageHandler {
+  @override
+  String get name => 'cancel_notify';
+
+  @override
+  Future<void> handle({
+    required Object? message,
+    required WebUri? sourceOrigin,
+    required bool isMainFrame,
+    required Function(WebMessage replyWebMessage)? onReply,
+  }) async {
+    final Object? id = message is Map ? message['id'] : null;
+    if (id is! int) {
+      onReply?.call(replyWebMessage(data: false));
+      return;
+    }
+    await NotificationService.cancelNotification(id);
+    onReply?.call(replyWebMessage(data: true));
+  }
+}

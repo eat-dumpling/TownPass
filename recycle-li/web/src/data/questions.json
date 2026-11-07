@@ -1,0 +1,158 @@
+[
+ {
+  "id": "has_food",
+  "text": "裡面有食物嗎？",
+  "yes": {
+   "label": "有剩菜",
+   "icon": "Soup"
+  },
+  "no": {
+   "label": "空的",
+   "icon": "Bowl"
+  }
+ },
+ {
+  "id": "paper",
+  "text": "是紙做的嗎？",
+  "yes": {
+   "label": "紙",
+   "icon": "News"
+  },
+  "no": {
+   "label": "不是紙",
+   "icon": "Bottle"
+  }
+ },
+ {
+  "id": "soft",
+  "text": "捏得扁嗎？",
+  "yes": {
+   "label": "捏得扁",
+   "icon": "HandClick"
+  },
+  "no": {
+   "label": "很硬",
+   "icon": "Bolt"
+  }
+ },
+ {
+  "id": "bag",
+  "text": "是袋子嗎？",
+  "yes": {
+   "label": "袋子",
+   "icon": "ShoppingBag"
+  },
+  "no": {
+   "label": "不是",
+   "icon": "Box"
+  }
+ },
+ {
+  "id": "has_film",
+  "text": "有一層膜嗎？",
+  "yes": {
+   "label": "有膜",
+   "icon": "Package"
+  },
+  "no": {
+   "label": "沒有",
+   "icon": "Cup"
+  }
+ },
+ {
+  "id": "styrofoam",
+  "text": "是保麗龍嗎？",
+  "yes": {
+   "label": "白色輕輕的",
+   "icon": "Package"
+  },
+  "no": {
+   "label": "不是",
+   "icon": "Box"
+  }
+ },
+ {
+  "id": "bottle",
+  "text": "是瓶子嗎？",
+  "yes": {
+   "label": "瓶子",
+   "icon": "Bottle"
+  },
+  "no": {
+   "label": "不是",
+   "icon": "Bowl"
+  }
+ },
+ {
+  "id": "can",
+  "text": "是罐子嗎？",
+  "yes": {
+   "label": "鐵罐、鋁罐",
+   "icon": "Beer"
+  },
+  "no": {
+   "label": "不是",
+   "icon": "Cup"
+  }
+ },
+ {
+  "id": "glass",
+  "text": "是玻璃嗎？",
+  "yes": {
+   "label": "玻璃",
+   "icon": "Glass"
+  },
+  "no": {
+   "label": "不是",
+   "icon": "Cup"
+  }
+ },
+ {
+  "id": "battery",
+  "text": "有電池嗎？",
+  "yes": {
+   "label": "有電池",
+   "icon": "Battery2"
+  },
+  "no": {
+   "label": "沒有",
+   "icon": "Plug"
+  }
+ },
+ {
+  "id": "clothes",
+  "text": "是穿的嗎？",
+  "yes": {
+   "label": "衣服鞋子",
+   "icon": "Shirt"
+  },
+  "no": {
+   "label": "不是",
+   "icon": "Box"
+  }
+ },
+ {
+  "id": "clean",
+  "text": "乾淨嗎？",
+  "yes": {
+   "label": "乾淨",
+   "icon": "Sparkles"
+  },
+  "no": {
+   "label": "髒髒的",
+   "icon": "Droplets"
+  }
+ },
+ {
+  "id": "shell",
+  "text": "是硬硬的殼嗎？",
+  "yes": {
+   "label": "殼",
+   "icon": "EggCracked"
+  },
+  "no": {
+   "label": "不是",
+   "icon": "Apple"
+  }
+ }
+]

@@ -89,3 +89,9 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+# 回收小里長：下載的公開資料集照片不進 git（只發布由照片算出的向量）
+recycle-li/testdata/taco/
+recycle-li/testdata/web/
+recycle-li/testdata/cache/
+recycle-li/testdata/hand/
+

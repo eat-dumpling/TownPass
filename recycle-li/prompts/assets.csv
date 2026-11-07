@@ -1,0 +1,99 @@
+file,size,subject
+monster_bubble_tea_cup.webp,512x512,"a cute bubble tea cup monster character, a plastic bubble tea cup with a sealed film lid"
+monster_pet_bottle.webp,512x512,"a cute pet bottle monster character, a plastic water bottle"
+monster_aluminum_can.webp,512x512,"a cute drink can monster character, an aluminum soda can"
+monster_tetra_pak.webp,512x512,"a cute juice box monster character, a juice box with a small straw"
+monster_glass_bottle.webp,512x512,"a cute glass bottle monster character, a glass bottle"
+monster_paper_cup.webp,512x512,"a cute paper cup monster character, a disposable paper coffee cup"
+monster_coconut_shell.webp,512x512,"a cute coconut shell monster character, a coconut shell"
+monster_leftovers.webp,512x512,"a cute leftover food monster character, leftover rice and vegetables"
+monster_fruit_peel.webp,512x512,"a cute fruit peel monster character, a banana peel"
+monster_tea_leaves.webp,512x512,"a cute tea leaves, coffee grounds monster character, used wet tea leaves"
+monster_big_bone.webp,512x512,"a cute big bone monster character, a big pork bone"
+monster_paper_lunchbox.webp,512x512,"a cute paper lunch box monster character, a paper bento lunch box"
+monster_chopsticks.webp,512x512,"a cute chopsticks, straws monster character, disposable bamboo chopsticks"
+monster_eggshell.webp,512x512,"a cute eggshell monster character, broken eggshells"
+monster_seashell.webp,512x512,"a cute seashell monster character, clam shells"
+monster_newspaper.webp,512x512,"a cute newspaper, cardboard monster character, a stack of newspapers"
+monster_old_book.webp,512x512,"a cute old books monster character, an old textbook"
+monster_tissue.webp,512x512,"a cute used tissue monster character, a crumpled used tissue"
+monster_plastic_bag_clean.webp,512x512,"a cute clean plastic bag monster character, a clean empty plastic shopping bag"
+monster_plastic_bag_dirty.webp,512x512,"a cute dirty plastic bag monster character, a dirty greasy plastic bag"
+monster_snack_bag.webp,512x512,"a cute snack wrapper monster character, an empty potato chip bag"
+monster_pudding_cup.webp,512x512,"a cute pudding cup monster character, an empty plastic pudding cup"
+monster_styrofoam_clean.webp,512x512,"a cute clean styrofoam monster character, white styrofoam packaging"
+monster_styrofoam_dirty.webp,512x512,"a cute dirty styrofoam monster character, a greasy styrofoam food box"
+monster_old_clothes.webp,512x512,"a cute old clothes monster character, a folded old t-shirt"
+monster_old_shoes.webp,512x512,"a cute old shoes monster character, a pair of old sneakers"
+monster_mask.webp,512x512,"a cute mask, diaper monster character, a used face mask"
+monster_toothbrush.webp,512x512,"a cute toothbrush monster character, an old plastic toothbrush"
+monster_small_appliance.webp,512x512,"a cute small appliance monster character, a small hair dryer"
+monster_furniture.webp,512x512,"a cute large furniture monster character, an old sofa"
+monster_battery.webp,512x512,"a cute battery monster character, AA batteries"
+monster_power_bank.webp,512x512,"a cute power bank monster character, a portable power bank"
+monster_light_tube.webp,512x512,"a cute light tube, bulb monster character, a fluorescent light tube"
+monster_broken_glass.webp,512x512,"a cute broken glass monster character, shards of broken glass"
+monster_broken_ceramic.webp,512x512,"a cute broken dishes, mirror monster character, a broken ceramic bowl"
+monster_spray_can.webp,512x512,"a cute spray can monster character, an aerosol spray can"
+monster_lighter.webp,512x512,"a cute lighter monster character, a plastic disposable lighter"
+monster_cooking_oil.webp,512x512,"a cute used cooking oil monster character, used cooking oil in a bottle"
+monster_medicine.webp,512x512,"a cute expired medicine monster character, expired pills in a blister pack"
+monster_needle.webp,512x512,"a cute needle, syringe monster character, a used syringe with a needle"
+bin_general.webp,256x256,a gray trash bin with a friendly face
+bin_food.webp,256x256,a green food waste bin with a friendly face
+bin_recycle_flat.webp,256x256,a blue recycling bin for paper with a friendly face
+bin_recycle_3d.webp,256x256,a teal recycling bin for bottles and cans with a friendly face
+bin_special.webp,256x256,an orange bin with a warning sign for batteries and lamps with a friendly face
+clue_has_food_left.webp,384x384,picture answer: 有剩菜 (for question 裡面有食物嗎？)
+clue_has_food_right.webp,384x384,picture answer: 空的 (for question 裡面有食物嗎？)
+clue_paper_left.webp,384x384,picture answer: 紙 (for question 是紙做的嗎？)
+clue_paper_right.webp,384x384,picture answer: 不是紙 (for question 是紙做的嗎？)
+clue_soft_left.webp,384x384,picture answer: 捏得扁 (for question 捏得扁嗎？)
+clue_soft_right.webp,384x384,picture answer: 很硬 (for question 捏得扁嗎？)
+clue_bag_left.webp,384x384,picture answer: 袋子 (for question 是袋子嗎？)
+clue_bag_right.webp,384x384,picture answer: 不是 (for question 是袋子嗎？)
+clue_has_film_left.webp,384x384,picture answer: 有膜 (for question 有一層膜嗎？)
+clue_has_film_right.webp,384x384,picture answer: 沒有 (for question 有一層膜嗎？)
+clue_styrofoam_left.webp,384x384,picture answer: 白色輕輕的 (for question 是保麗龍嗎？)
+clue_styrofoam_right.webp,384x384,picture answer: 不是 (for question 是保麗龍嗎？)
+clue_bottle_left.webp,384x384,picture answer: 瓶子 (for question 是瓶子嗎？)
+clue_bottle_right.webp,384x384,picture answer: 不是 (for question 是瓶子嗎？)
+clue_can_left.webp,384x384,picture answer: 鐵罐、鋁罐 (for question 是罐子嗎？)
+clue_can_right.webp,384x384,picture answer: 不是 (for question 是罐子嗎？)
+clue_glass_left.webp,384x384,picture answer: 玻璃 (for question 是玻璃嗎？)
+clue_glass_right.webp,384x384,picture answer: 不是 (for question 是玻璃嗎？)
+clue_battery_left.webp,384x384,picture answer: 有電池 (for question 有電池嗎？)
+clue_battery_right.webp,384x384,picture answer: 沒有 (for question 有電池嗎？)
+clue_clothes_left.webp,384x384,picture answer: 衣服鞋子 (for question 是穿的嗎？)
+clue_clothes_right.webp,384x384,picture answer: 不是 (for question 是穿的嗎？)
+clue_clean_left.webp,384x384,picture answer: 乾淨 (for question 乾淨嗎？)
+clue_clean_right.webp,384x384,picture answer: 髒髒的 (for question 乾淨嗎？)
+clue_shell_left.webp,384x384,picture answer: 殼 (for question 是硬硬的殼嗎？)
+clue_shell_right.webp,384x384,picture answer: 不是 (for question 是硬硬的殼嗎？)
+group_drink.webp,384x384,a group of everyday items: 喝的
+group_food.webp,384x384,a group of everyday items: 吃的
+group_paper.webp,384x384,a group of everyday items: 紙
+group_bag.webp,384x384,a group of everyday items: 袋子盒子
+group_home.webp,384x384,a group of everyday items: 家裡用的
+group_danger.webp,384x384,a group of everyday items: 特別的
+building_bench.webp,256x256,isometric small 公園長椅 building for a neighborhood game
+building_tree.webp,256x256,isometric small 遮蔭樹 building for a neighborhood game
+building_library.webp,256x256,isometric small 小圖書角 building for a neighborhood game
+building_playground.webp,256x256,isometric small 遊樂設施 building for a neighborhood game
+building_garden.webp,256x256,isometric small 堆肥花園 building for a neighborhood game
+building_water_station.webp,256x256,isometric small 飲水站 building for a neighborhood game
+res_plastic.webp,128x128,a blue plastic chip
+res_paper.webp,128x128,a roll of paper fiber
+res_metal.webp,128x128,a shiny metal nugget
+res_compost.webp,128x128,a small pile of compost with a sprout
+res_gold.webp,128x128,a golden star resource
+badge_sorter.webp,256x256,a round achievement badge: 分類學徒／達人／大師
+badge_on_time.webp,256x256,a round achievement badge: 準時小尖兵
+badge_streak.webp,256x256,a round achievement badge: 連續守護
+badge_rare_hunter.webp,256x256,a round achievement badge: 稀有怪獵人
+badge_safety_pro.webp,256x256,a round achievement badge: 安全小專家
+badge_teacher.webp,256x256,a round achievement badge: 小老師
+badge_commander.webp,256x256,a round achievement badge: 清運指揮官
+mascot_happy.webp,512x512,"a child neighborhood chief mascot, happy expression"
+mascot_think.webp,512x512,"a child neighborhood chief mascot, think expression"
+mascot_cheer.webp,512x512,"a child neighborhood chief mascot, cheer expression"

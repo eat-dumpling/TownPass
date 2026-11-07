@@ -1,0 +1,42 @@
+[
+ {
+  "id": "drink",
+  "label": "喝的",
+  "icon": "Cup"
+ },
+ {
+  "id": "food",
+  "label": "吃的",
+  "icon": "BowlChopsticks"
+ },
+ {
+  "id": "paper",
+  "label": "紙",
+  "icon": "News"
+ },
+ {
+  "id": "bag",
+  "label": "袋子盒子",
+  "icon": "ShoppingBag"
+ },
+ {
+  "id": "home",
+  "label": "家裡用的",
+  "icon": "Home"
+ },
+ {
+  "id": "device",
+  "label": "電器 3C",
+  "icon": "DeviceMobile"
+ },
+ {
+  "id": "big",
+  "label": "大型家具家電",
+  "icon": "Sofa"
+ },
+ {
+  "id": "danger",
+  "label": "特別的",
+  "icon": "AlertTriangle"
+ }
+]

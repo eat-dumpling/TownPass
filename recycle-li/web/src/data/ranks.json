@@ -1,0 +1,62 @@
+[
+ {
+  "lv": 1,
+  "need": 0,
+  "title": "回收小芽",
+  "icon": "Seedling"
+ },
+ {
+  "lv": 2,
+  "need": 10,
+  "title": "分類小幫手",
+  "icon": "Leaf"
+ },
+ {
+  "lv": 3,
+  "need": 25,
+  "title": "回收小隊員",
+  "icon": "Recycle"
+ },
+ {
+  "lv": 4,
+  "need": 45,
+  "title": "環保小隊長",
+  "icon": "Flag"
+ },
+ {
+  "lv": 5,
+  "need": 70,
+  "title": "見習里長",
+  "icon": "School"
+ },
+ {
+  "lv": 6,
+  "need": 100,
+  "title": "小里長",
+  "icon": "Home"
+ },
+ {
+  "lv": 7,
+  "need": 140,
+  "title": "綠色里長",
+  "icon": "Trees"
+ },
+ {
+  "lv": 8,
+  "need": 190,
+  "title": "模範里長",
+  "icon": "Award"
+ },
+ {
+  "lv": 9,
+  "need": 250,
+  "title": "城市守護者",
+  "icon": "ShieldCheck"
+ },
+ {
+  "lv": 10,
+  "need": 320,
+  "title": "回收大使",
+  "icon": "Crown"
+ }
+]

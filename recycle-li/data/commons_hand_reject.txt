@@ -1,0 +1,122 @@
+# 手拿照片驗證組：用眼睛看過後判定搜錯的 Commons 照片（標題<TAB>原因）。scripts/fetch-commons.mjs --set hand 會跳過並補新的。
+File:"Schlitz Beer" detail, Empty beer cans (cropped).jpg	aluminum_can：看過，物品不在畫面上、太小，或不是這個品項
+File:BEER CAN AND OTHER REFUSE AMONG THE LILY PADS-UNWELCOME MEMENTOES OF A FOURTH OF JULY CELEBRATION AT A COUNTY PARK... - NARA - 550806.jpg	aluminum_can：看過，物品不在畫面上、太小，或不是這個品項
+File:The day I made so much more tetra pak friends... (2109813319).jpg	tetra_pak：看過，物品不在畫面上、太小，或不是這個品項
+File:Millville, New Jersey - Glass bottles. T.C. Wheaton Co. The flint glass shop showing a blower rotating a bottle as he... - NARA - 518640.jpg	glass_bottle：看過，物品不在畫面上、太小，或不是這個品項
+File:DFC 0817 A close-up of hands with black-and-white nail art holding a small measuring glass while a pale yellow liquid is poured from a squeeze bottle.jpg	glass_bottle：看過，物品不在畫面上、太小，或不是這個品項
+File:Drink From My Cup (4286530777).jpg	paper_cup：看過，物品不在畫面上、太小，或不是這個品項
+File:Lady Peeling Matooke.jpg	fruit_peel：看過，物品不在畫面上、太小，或不是這個品項
+File:May 4, 2007 Bento (484298158).jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:Woman reading a newspaper and holding a man by his shirt.jpg	newspaper：看過，物品不在畫面上、太小，或不是這個品項
+File:View of La Valletta, taken from the Gargur Battery during the Seige in 1800 AN00604009 001 l.jpg	battery：看過，物品不在畫面上、太小，或不是這個品項
+File:Exponat on Lamps of 20th century.jpg	light_tube：看過，物品不在畫面上、太小，或不是這個品項
+File:Goodme Bubble Tea in Changsha 20250216.jpg	bubble_tea_cup：看過，物品不在畫面上、太小，或不是這個品項
+File:Goodme Bubble Tea in Changsha 20250403.jpg	bubble_tea_cup：看過，物品不在畫面上、太小，或不是這個品項
+File:Harvey Louisiana August 2016 Frostys Bubble Tea.jpg	bubble_tea_cup：看過，物品不在畫面上、太小，或不是這個品項
+File:Lily's Bubble Tea & Coffee, Delft (2023) 01.jpg	bubble_tea_cup：看過，物品不在畫面上、太小，或不是這個品項
+File:250ml HDPE pump plastic bottle.jpg	pet_bottle：看過，物品不在畫面上、太小，或不是這個品項
+File:Handwasher made from plastic bottle (5570309071).jpg	pet_bottle：看過，物品不在畫面上、太小，或不是這個品項
+File:A person holding a water bottle in Bromo.jpg	pet_bottle：看過，物品不在畫面上、太小，或不是這個品項
+File:Girl in a blue hat holding a water bottle in India - 2013 (11551989134).jpg	pet_bottle：看過，物品不在畫面上、太小，或不是這個品項
+File:Stone Wall & Beer Can.jpg	aluminum_can：看過，物品不在畫面上、太小，或不是這個品項
+File:Nut fruit mix in pouch with test booklet and juice box on table (20681977544).jpg	tetra_pak：看過，物品不在畫面上、太小，或不是這個品項
+File:A boy with juice box and dark hue at home in Maracay, Venezuela.jpg	tetra_pak：看過，物品不在畫面上、太小，或不是這個品項
+File:The Juice Box, Thomasville, Georgia.jpg	tetra_pak：看過，物品不在畫面上、太小，或不是這個品項
+File:Defense.gov News Photo 110728-M-UQ450-055 - Cpl. Henry Garza a turret gunner with Company C 1st Battalion 23rd Marine Regiment helps an Afghan child learn to drink from a juice box during.jpg	tetra_pak：看過，物品不在畫面上、太小，或不是這個品項
+File:The Little Glass Bottle.jpg	glass_bottle：看過，物品不在畫面上、太小，或不是這個品項
+File:Glass bottle Louvre OA 7832.jpg	glass_bottle：看過，物品不在畫面上、太小，或不是這個品項
+File:Partially Open wing position of Euthalia phemius (Doubleday, 1848) - White-edged Blue Baron puddling on decay banana peel (WLB) picture.jpg	fruit_peel：看過，物品不在畫面上、太小，或不是這個品項
+File:Maisel's Indian Trading Post with banana peel.jpg	fruit_peel：看過，物品不在畫面上、太小，或不是這個品項
+File:Taiwan Railway Bento No.5 20190901a.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:Taiwan Railway Bento No.1 20190615.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:Taiwan Railway Bento No.1 closed 20231216.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:Taiwan Railway Bento No.2 20190814.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:Taiwan Railway Bento No.5 20201017.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:Taiwan Railway Bento No.1 20210605.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:Taiwan Railway Bento No.2 20190511.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:Two well-dressed men standing, one holding newspaper and eyeglasses, the other holding a book LCCN95514594.jpg	newspaper：看過，物品不在畫面上、太小，或不是這個品項
+File:Stamp of Albania - 1967 - Colnect 346959 - People holding newspaper.jpeg	newspaper：看過，物品不在畫面上、太小，或不是這個品項
+File:HK Newspaper n Plastic Bag n Facial tissue Package a.jpg	tissue：看過，物品不在畫面上、太小，或不是這個品項
+File:GD 廣東 Guangdong 廣州 Guangzhou 悅匯城 Yue City Shopping Mall shop 廣州陶陶居 To To Kui Restaurant facial tissue bag producer address June 2025 R12S.jpg	tissue：看過，物品不在畫面上、太小，或不是這個品項
+File:GD 廣東 Guangdong 佛山 Foshan 順德 Shunde 四季炖湯 Siji Duntang Chinese Restaurant facial tissue January 2024 R12S.jpg	tissue：看過，物品不在畫面上、太小，或不是這個品項
+File:Empty facial tissue shelves (49665872561).jpg	tissue：看過，物品不在畫面上、太小，或不是這個品項
+File:Small blue drawstring plastic bag - 9 x 17 cm - A.jpg	plastic_bag_clean：看過，物品不在畫面上、太小，或不是這個品項
+File:Bade 3C Holiday information desk, Liang Shing Eclife plastic bag and CoolPC plastic bag 20251012.jpg	plastic_bag_clean：看過，物品不在畫面上、太小，或不是這個品項
+File:Small blue drawstring plastic bag - 9 x 17 cm - B.jpg	plastic_bag_clean：看過，物品不在畫面上、太小，或不是這個品項
+File:Plastic bag jellyfish.JPG	plastic_bag_clean：看過，物品不在畫面上、太小，或不是這個品項
+File:Franske kartofler Potato chips (3135691895).jpg	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Balsnack BBQ flavoured grand potato chips (3).jpg	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Potato chips - Massachusetts.jpg	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Lays Wavy Chocolate Covered Potato Chips.jpg	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Route 11 Potato Chips factory - 1.jpg	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Aa-battery-electrolysis.jpg	battery：看過，物品不在畫面上、太小，或不是這個品項
+File:Fluorescent tube under electric line.jpg	light_tube：看過，物品不在畫面上、太小，或不是這個品項
+File:Fluorescent tube under power lines SETUP.JPG	light_tube：看過，物品不在畫面上、太小，或不是這個品項
+File:Mixue Ice Cream & Tea, Goodme Bubble Tea in Changsha 20250218.jpg	bubble_tea_cup：看過，物品不在畫面上、太小，或不是這個品項
+File:Heeretea bubble tea store in Brisbane.jpg	bubble_tea_cup：看過，物品不在畫面上、太小，或不是這個品項
+File:202403 Goodme Bubble Tea at Wenling Station.jpg	bubble_tea_cup：看過，物品不在畫面上、太小，或不是這個品項
+File:A person hikes with a water bottle in the Agua Fria National Monument (54796780690).jpg	pet_bottle：看過，物品不在畫面上、太小，或不是這個品項
+File:A person hikes with a water bottle in the Agua Fria National Monument (54796780885).jpg	pet_bottle：看過，物品不在畫面上、太小，或不是這個品項
+File:Runner stands with a water bottle at a race event in a busy outdoor area during the day.jpg	pet_bottle：看過，物品不在畫面上、太小，或不是這個品項
+File:Beer can pop-top display, Budweiser Brewery.jpg	aluminum_can：看過，物品不在畫面上、太小，或不是這個品項
+File:Robb's beer can chicken, Chicago (cropped).jpg	aluminum_can：看過，物品不在畫面上、太小，或不是這個品項
+File:Milk carton clip art.png	tetra_pak：看過，物品不在畫面上、太小，或不是這個品項
+File:The Milk Carton Kids at 9-30 Club in Washington DC August 2012.jpg	tetra_pak：看過，物品不在畫面上、太小，或不是這個品項
+File:The Milk Carton Kids Calvin College Grand Rapids MI May 2014.jpg	tetra_pak：看過，物品不在畫面上、太小，或不是這個品項
+File:Drosophila melanogaster on banana peel.jpg	fruit_peel：看過，物品不在畫面上、太小，或不是這個品項
+File:新東陽西螺便當專櫃.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:20221008嘉義站台鐵便當本舖-01.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:20221008新竹車站台鐵便當本舖-02.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:臺鐵鬼頭刀便當 20250622.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:20221008嘉義站台鐵便當本舖-04.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:20221008嘉義站台鐵便當本舖-05.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:20221008嘉義站台鐵便當本舖-02.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:Tissue box cute handmade.jpg	tissue：看過，物品不在畫面上、太小，或不是這個品項
+File:Potato Chips (51717716019).jpg	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Potato chips 2.jpg	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Balsnack vinegar grand potato chips (2).jpg	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Potato Chips in white plate.jpg	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:NTUC FairPrice potato chips truffleF.jpg	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Intel NUC5PPYH - Front with AA battery.jpg	battery：看過，物品不在畫面上、太小，或不是這個品項
+File:Starterless launching of fluorescent lamp.JPG	light_tube：看過，物品不在畫面上、太小，或不是這個品項
+File:A paper straw for bubble tea and the popular straw.jpg	bubble_tea_cup：看過，物品不在畫面上、太小，或不是這個品項
+File:Bubble Tea Station at Robinsons Cybergate Cebu (02-17-2023).jpg	bubble_tea_cup：看過，物品不在畫面上、太小，或不是這個品項
+File:Medical Department - Hospitals - Walter Reed - A training class for war nurses. Nurses at the Walter Reed Hospital in Washington, learning the proper method of filling a hot water bottle. These girls have volunte(...) - NARA - 45496548.jpg	pet_bottle：看過，物品不在畫面上、太小，或不是這個品項
+File:Beer can chicken 3.jpg	aluminum_can：看過，物品不在畫面上、太小，或不是這個品項
+File:20221008新竹車站台鐵便當本舖-01.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:20221008嘉義站台鐵便當本舖-03.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:20220801嘉義車站站員於臺鐵便當本舖前合影.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:臺鐵局長杜微與屏東縣長潘孟安品嘗臺鐵石斑魚便當.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:臺鐵局長杜微與屏東縣長潘孟安攜手開賣臺鐵石斑魚便當.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:西螺服務區 運將便當.jpg	paper_lunchbox：看過，物品不在畫面上、太小，或不是這個品項
+File:Crisp packet dress - Baildon Scarecrow Festival 27 September 2025 (61).JPG	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Crisp packet dress - Baildon Scarecrow Festival 27 September 2025 (59).JPG	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Crisp packet dress - Baildon Scarecrow Festival 27 September 2025 (57).JPG	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Crisp packet dress - Baildon Scarecrow Festival 27 September 2025 (64).JPG	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Crisp packet dress - Baildon Scarecrow Festival 27 September 2025 (63).JPG	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Crisp packet dress - Baildon Scarecrow Festival 27 September 2025 (56).JPG	snack_bag：看過，物品不在畫面上、太小，或不是這個品項
+File:Starter of Fluorescent lamp FE1E.jpg	light_tube：看過，物品不在畫面上、太小，或不是這個品項
+File:My living room, shot with my new camera while I lay on the sofa in the middle of the day.jpg	furniture：看過，物品不在畫面上、太小，或不是這個品項
+File:Canon BX-1 Desktop Computer.jpg	computer：看過，物品不在畫面上、太小，或不是這個品項
+File:Various cables are seen connected to a desktop computer.jpg	computer：看過，物品不在畫面上、太小，或不是這個品項
+File:Blue Maxxter computer mouse (2019) 03.jpg	mouse_keyboard：看過，物品不在畫面上、太小，或不是這個品項
+File:Computer mouse prototype bottom.jpg	mouse_keyboard：看過，物品不在畫面上、太小，或不是這個品項
+File:Sheet Folded into a Mattress MET DP228235.jpg	mattress：看過，物品不在畫面上、太小，或不是這個品項
+File:Sheet Folded into a Mattress MET DP228236.jpg	mattress：看過，物品不在畫面上、太小，或不是這個品項
+File:Sheet Folded into a Mattress MET DP228232.jpg	mattress：看過，物品不在畫面上、太小，或不是這個品項
+File:Sheet Folded into a Mattress MET DP228231.jpg	mattress：看過，物品不在畫面上、太小，或不是這個品項
+File:Hardside waterbed mattress fill valve.jpg	mattress：看過，物品不在畫面上、太小，或不是這個品項
+File:Sheet Folded into a Mattress MET DP228239.jpg	mattress：看過，物品不在畫面上、太小，或不是這個品項
+File:Abandoned Bicycle Beside a Tranquil Pond in Bangladeshi Countryside.jpg	bicycle：看過，物品不在畫面上、太小，或不是這個品項
+File:Abandoned bicycle wheel @ Chambéry (37957800476).jpg	bicycle：看過，物品不在畫面上、太小，或不是這個品項
+File:Abandoned bicycle, Hogsmill River in Kingston.jpg	bicycle：看過，物品不在畫面上、太小，或不是這個品項
+File:Inside of an electric fan, Oude Pekela (2019) 04.jpg	electric_fan：看過，物品不在畫面上、太小，或不是這個品項
+File:PSM V88 D137 Keeping milk cool using an electric fan.png	electric_fan：看過，物品不在畫面上、太小，或不是這個品項
+File:The old chair.jpg	table_chair：看過，物品不在畫面上、太小，或不是這個品項
+File:2016-04-16 14 45 23 Cape Cod style house with an old television antenna along Terrace Boulevard in Ewing, New Jersey.jpg	tv：看過，物品不在畫面上、太小，或不是這個品項
+File:Kitchen Refrigerator Cupboards Counters - Hearst Castle South Wing.jpg	fridge：看過，物品不在畫面上、太小，或不是這個品項
+File:07086 Grand Canyon Historic Bright Angel Trail Washing Machine (7421237910).jpg	washing_machine：看過，物品不在畫面上、太小，或不是這個品項
+File:Old washing machine.JPG	washing_machine：看過，物品不在畫面上、太小，或不是這個品項
+File:Old washing machine 4.JPG	washing_machine：看過，物品不在畫面上、太小，或不是這個品項
+File:Washing machine- spring.jpg	washing_machine：看過，物品不在畫面上、太小，或不是這個品項
+File:Yellow washing machine (2728490277).jpg	washing_machine：看過，物品不在畫面上、太小，或不是這個品項

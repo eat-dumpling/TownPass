@@ -1,13 +1,17 @@
 import 'dart:collection';
 
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:town_pass/gen/assets.gen.dart';
 import 'package:town_pass/util/tp_app_bar.dart';
 import 'package:town_pass/util/tp_colors.dart';
+import 'package:town_pass/util/tp_microservice_config.dart';
 import 'package:town_pass/util/web_message_handler/tp_web_message_listener.dart';
 
 class WebViewArgument {
@@ -93,6 +97,25 @@ class TPWebView extends StatelessWidget {
             true => title,
             false => forceTitle,
           };
+        },
+        // iOS 需要 inline 播放，相機畫面才不會被拉成全螢幕。
+        initialSettings: InAppWebViewSettings(
+          allowsInlineMediaPlayback: true,
+          mediaPlaybackRequiresUserGesture: false,
+        ),
+        // 預設 WebView 會拒絕相機；只對白名單內的微服務開放相機（不含麥克風）。
+        onPermissionRequest: (controller, request) async {
+          final bool allowedSite = TPMicroserviceConfig.canUseCamera(request.origin);
+          final List<PermissionResourceType> camera =
+              request.resources.where((r) => r == PermissionResourceType.CAMERA).toList();
+          if (!allowedSite || camera.isEmpty) {
+            return PermissionResponse(resources: request.resources, action: PermissionResponseAction.DENY);
+          }
+          // Android 的 WebView 要 App 本身先拿到相機權限；iOS 由 WKWebView 自己詢問。
+          if (Platform.isAndroid && !(await Permission.camera.request()).isGranted) {
+            return PermissionResponse(resources: request.resources, action: PermissionResponseAction.DENY);
+          }
+          return PermissionResponse(resources: camera, action: PermissionResponseAction.GRANT);
         },
         onGeolocationPermissionsShowPrompt: (controller, origin) async {
           // should be deal individually (ask for user agreement)

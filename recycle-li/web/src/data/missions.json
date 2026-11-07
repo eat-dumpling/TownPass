@@ -1,0 +1,9 @@
+[
+ {"id": "daily_scan3", "type": "daily_learning", "title": "分對 3 個垃圾", "icon": "Camera", "goal": {"event": "item_caught", "count": 3}, "reward": {"stars": 3}, "verify": "auto"},
+ {"id": "daily_learn_new", "type": "daily_learning", "title": "學會 1 個新垃圾怪", "icon": "School", "goal": {"event": "item_learned", "count": 1}, "reward": {"stars": 3}, "verify": "auto"},
+ {"id": "daily_quiz5", "type": "daily_learning", "title": "考考你答對 5 題", "icon": "Bulb", "goal": {"event": "quiz_correct", "count": 5}, "reward": {"stars": 3}, "verify": "auto"},
+ {"id": "daily_build", "type": "daily_explore", "title": "蓋 1 個建築", "icon": "Building", "goal": {"event": "building_built", "count": 1}, "reward": {"stars": 2}, "verify": "auto"},
+ {"id": "weekly_scan20", "type": "weekly_reduce", "title": "這週分對 20 次", "icon": "Recycle", "goal": {"event": "item_caught", "count": 20}, "reward": {"stars": 5}, "verify": "auto"},
+ {"id": "weekly_level2", "type": "weekly_reduce", "title": "這週過 2 關", "icon": "Map", "goal": {"event": "level_cleared", "count": 2}, "reward": {"stars": 5}, "verify": "auto"},
+ {"id": "weekly_build3", "type": "weekly_reduce", "title": "這週蓋 3 個建築", "icon": "BuildingCommunity", "goal": {"event": "building_built", "count": 3}, "reward": {"stars": 5}, "verify": "auto"}
+]

@@ -16,6 +16,8 @@ abstract class TPWebMessageListener {
         OpenLinkMessageHandler(),
         NotifyMessageHandler(),
         QRCodeScanMessageHandler(),
+        ScheduleNotifyMessageHandler(),
+        CancelNotifyMessageHandler(),
       ];
 
   static List<TPWebMessageHandler> get messageHandler => _cachedMessageHandlers;

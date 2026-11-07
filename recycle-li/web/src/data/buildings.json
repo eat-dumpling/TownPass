@@ -1,0 +1,123 @@
+[
+ {
+  "id": "bench",
+  "name": "公園長椅",
+  "cost": {
+   "star": 3
+  },
+  "green": 4,
+  "unlock": 1,
+  "fact": "塑膠可以做成長椅",
+  "icon": "Armchair"
+ },
+ {
+  "id": "tree",
+  "name": "遮蔭樹",
+  "cost": {
+   "star": 3
+  },
+  "green": 5,
+  "unlock": 1,
+  "fact": "廚餘可以變成肥料，讓樹長大",
+  "icon": "Tree"
+ },
+ {
+  "id": "garden",
+  "name": "堆肥花園",
+  "cost": {
+   "star": 4
+  },
+  "green": 5,
+  "unlock": 2,
+  "fact": "廚餘可以變成肥料",
+  "icon": "Plant2"
+ },
+ {
+  "id": "library",
+  "name": "小圖書角",
+  "cost": {
+   "star": 6
+  },
+  "green": 7,
+  "unlock": 2,
+  "fact": "舊紙可以變成新紙",
+  "icon": "Books"
+ },
+ {
+  "id": "bike_rack",
+  "name": "腳踏車架",
+  "cost": {
+   "star": 5
+  },
+  "green": 6,
+  "unlock": 3,
+  "fact": "鐵鋁罐可以變成新的金屬",
+  "icon": "Bike"
+ },
+ {
+  "id": "playground",
+  "name": "溜滑梯",
+  "cost": {
+   "star": 8
+  },
+  "green": 9,
+  "unlock": 4,
+  "fact": "分對才能變成新東西",
+  "icon": "BuildingCarousel"
+ },
+ {
+  "id": "water_station",
+  "name": "飲水站",
+  "cost": {
+   "star": 8
+  },
+  "green": 8,
+  "unlock": 4,
+  "fact": "自備水壺少一個瓶子",
+  "icon": "Droplet"
+ },
+ {
+  "id": "windmill",
+  "name": "小風車",
+  "cost": {
+   "star": 10
+  },
+  "green": 11,
+  "unlock": 5,
+  "fact": "省下能源也是愛地球",
+  "icon": "Windmill"
+ },
+ {
+  "id": "recycle_station",
+  "name": "回收站",
+  "cost": {
+   "star": 12
+  },
+  "green": 13,
+  "unlock": 6,
+  "fact": "分好類，回收車才收得走",
+  "icon": "Recycle"
+ },
+ {
+  "id": "treehouse",
+  "name": "樹屋",
+  "cost": {
+   "star": 14
+  },
+  "green": 15,
+  "unlock": 7,
+  "fact": "樹越多，里越涼快",
+  "icon": "BuildingCottage"
+ },
+ {
+  "id": "lighthouse",
+  "name": "燈塔",
+  "cost": {
+   "star": 18
+  },
+  "green": 20,
+  "unlock": 9,
+  "fact": "你是里的回收小燈塔",
+  "icon": "BuildingLighthouse"
+ }
+]

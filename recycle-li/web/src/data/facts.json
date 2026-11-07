@@ -1,0 +1,38 @@
+[
+ {
+  "category": "general",
+  "text": "會送到焚化廠燒掉",
+  "source": "臺北市焚化廠營運管理報告（data.gov.tw 資料集 145695）",
+  "status": "draft"
+ },
+ {
+  "category": "food",
+  "text": "會變成堆肥或養分",
+  "source": "回收一點通：廚餘處理流程（堆肥）",
+  "status": "draft"
+ },
+ {
+  "category": "recycle_flat",
+  "text": "紙會打成漿做新紙",
+  "source": "回收一點通：廢紙類處理流程（解包→散漿→…→抄紙）",
+  "status": "draft"
+ },
+ {
+  "category": "recycle_3d",
+  "text": "塑膠會打碎再利用",
+  "source": "回收一點通：廢塑膠處理流程（分類→分選→粉碎→清洗）",
+  "status": "draft"
+ },
+ {
+  "category": "special",
+  "text": "要專門的工廠處理",
+  "source": "回收一點通：廢乾電池處理流程",
+  "status": "draft"
+ },
+ {
+  "category": "other",
+  "text": "要分開送去專門處理",
+  "source": "臺北市環保局資源回收分類方式：其他類（請確實包裝並分開攜出）",
+  "status": "draft"
+ }
+]

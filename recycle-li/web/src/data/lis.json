@@ -1,0 +1,114 @@
+[
+ {
+  "id": "sprout",
+  "name": "新芽里",
+  "unlock": 1,
+  "cols": 7,
+  "rows": 7,
+  "ground": "#8FCB7E",
+  "icon": "Seedling",
+  "terrain": {}
+ },
+ {
+  "id": "river",
+  "name": "河濱里",
+  "unlock": 3,
+  "cols": 8,
+  "rows": 8,
+  "ground": "#93CF84",
+  "icon": "Ripple",
+  "terrain": {
+   "water": [
+    4,
+    12,
+    20,
+    28,
+    36,
+    44,
+    52,
+    60,
+    45,
+    53,
+    61
+   ]
+  }
+ },
+ {
+  "id": "oldstreet",
+  "name": "老街里",
+  "unlock": 5,
+  "cols": 8,
+  "rows": 8,
+  "ground": "#A3CF86",
+  "icon": "BuildingStore",
+  "terrain": {
+   "road": [
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    34,
+    42,
+    50,
+    58
+   ]
+  }
+ },
+ {
+  "id": "hill",
+  "name": "山腳里",
+  "unlock": 7,
+  "cols": 9,
+  "rows": 8,
+  "ground": "#86C27A",
+  "icon": "Mountain",
+  "terrain": {
+   "rock": [
+    0,
+    1,
+    9,
+    2,
+    10,
+    71,
+    70
+   ]
+  }
+ },
+ {
+  "id": "harbor",
+  "name": "港口里",
+  "unlock": 9,
+  "cols": 9,
+  "rows": 9,
+  "ground": "#9AD08A",
+  "icon": "BuildingLighthouse",
+  "terrain": {
+   "water": [
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    62,
+    54
+   ]
+  }
+ }
+]

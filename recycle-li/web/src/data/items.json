@@ -1,0 +1,3709 @@
+[
+ {
+  "id": "bubble_tea_cup",
+  "name": {
+   "zh": "手搖飲料杯",
+   "en": "Bubble tea cup",
+   "vi": "Cốc trà sữa",
+   "id": "Gelas bubble tea"
+  },
+  "prompts": [
+   "a clear plastic bubble tea cup with tapioca pearls and a sealed plastic film lid",
+   "an empty takeaway iced drink cup from a Taiwanese tea shop with a thick straw",
+   "a plastic milk tea cup with a printed sealing film"
+  ],
+  "group": "drink",
+  "attrs": {
+   "soft": true,
+   "has_film": true,
+   "clean": true
+  },
+  "category": "recycle_3d",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "empty",
+   "rinse",
+   "remove_film"
+  ],
+  "material": "plastic",
+  "rarity": 2,
+  "freq": 3,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "封膜與吸管是一般垃圾",
+  "source": "回收一點通：廢塑膠（塑膠杯）；吸管、封膜為一般垃圾",
+  "status": "unknown",
+  "sub": "r3d_general",
+  "kind": "plastic",
+  "icon": "Cup"
+ },
+ {
+  "id": "pet_bottle",
+  "name": {
+   "zh": "寶特瓶",
+   "en": "PET bottle",
+   "vi": "Chai nhựa PET",
+   "id": "Botol PET"
+  },
+  "prompts": [
+   "a clear plastic PET water bottle with a cap",
+   "an empty plastic soda bottle",
+   "a crushed plastic drink bottle",
+   "a plastic bottle of green tea"
+  ],
+  "group": "drink",
+  "attrs": {
+   "soft": true,
+   "bottle": true,
+   "clean": true
+  },
+  "category": "recycle_3d",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "empty",
+   "rinse",
+   "flatten"
+  ],
+  "material": "plastic",
+  "rarity": 1,
+  "freq": 3,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "瓶蓋一起回收",
+  "source": "回收一點通：廢塑膠類－塑膠容器－寶特瓶；寶特瓶蓋併同回收",
+  "status": "unknown",
+  "sub": "r3d_general",
+  "kind": "plastic",
+  "icon": "Bottle"
+ },
+ {
+  "id": "aluminum_can",
+  "name": {
+   "zh": "鋁罐、鐵罐",
+   "en": "Drink can",
+   "vi": "Lon nhôm",
+   "id": "Kaleng minuman"
+  },
+  "prompts": [
+   "an aluminum soda can",
+   "an empty beer can",
+   "a crushed metal drink can",
+   "a tin food can with the lid removed"
+  ],
+  "group": "drink",
+  "attrs": {
+   "can": true,
+   "clean": true
+  },
+  "category": "recycle_3d",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "empty",
+   "rinse",
+   "flatten"
+  ],
+  "material": "metal",
+  "rarity": 1,
+  "freq": 3,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "回收一點通：廢金屬容器",
+  "status": "unknown",
+  "sub": "r3d_general",
+  "kind": "can",
+  "icon": "Beer"
+ },
+ {
+  "id": "tetra_pak",
+  "name": {
+   "zh": "鋁箔包、利樂包",
+   "en": "Juice box",
+   "vi": "Hộp giấy đựng nước",
+   "id": "Kotak jus"
+  },
+  "prompts": [
+   "a small juice box with a straw",
+   "a paper milk carton",
+   "a tetra pak drink carton",
+   "a soy milk carton box"
+  ],
+  "group": "drink",
+  "attrs": {
+   "paper": true,
+   "soft": true,
+   "clean": true
+  },
+  "category": "recycle_3d",
+  "where": [
+   "recycle_truck",
+   "retailer"
+  ],
+  "steps": [
+   "empty",
+   "rinse",
+   "flatten"
+  ],
+  "material": "paper",
+  "rarity": 2,
+  "freq": 3,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "回收一點通：紙容器－鋁箔包（排空、簡易清潔、壓扁）",
+  "status": "unknown",
+  "sub": "r3d_general",
+  "kind": "tetra",
+  "icon": "Milk"
+ },
+ {
+  "id": "glass_bottle",
+  "name": {
+   "zh": "玻璃瓶",
+   "en": "Glass bottle",
+   "vi": "Chai thủy tinh",
+   "id": "Botol kaca"
+  },
+  "prompts": [
+   "a glass beer bottle",
+   "an empty glass sauce jar",
+   "a glass juice bottle",
+   "a brown glass bottle"
+  ],
+  "group": "drink",
+  "attrs": {
+   "bottle": true,
+   "glass": true,
+   "clean": true
+  },
+  "category": "recycle_3d",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "empty",
+   "rinse"
+  ],
+  "material": "glass",
+  "rarity": 2,
+  "freq": 2,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "去掉瓶蓋與吸管",
+  "source": "回收一點通：廢玻璃容器",
+  "status": "unknown",
+  "sub": "r3d_general",
+  "kind": "glass",
+  "icon": "Glass"
+ },
+ {
+  "id": "paper_cup",
+  "name": {
+   "zh": "紙杯",
+   "en": "Paper cup",
+   "vi": "Cốc giấy",
+   "id": "Gelas kertas"
+  },
+  "prompts": [
+   "a disposable paper coffee cup with a plastic lid",
+   "a used white paper cup",
+   "a paper cup from a convenience store"
+  ],
+  "group": "drink",
+  "attrs": {
+   "paper": true,
+   "clean": true
+  },
+  "category": "recycle_3d",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "empty",
+   "rinse"
+  ],
+  "material": "paper",
+  "rarity": 3,
+  "freq": 3,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "回收一點通：紙容器－紙杯、紙餐具",
+  "status": "unknown",
+  "sub": "r3d_general",
+  "kind": "tetra",
+  "icon": "Coffee"
+ },
+ {
+  "id": "coconut_shell",
+  "name": {
+   "zh": "椰子殼",
+   "en": "Coconut shell",
+   "vi": "Vỏ dừa",
+   "id": "Batok kelapa"
+  },
+  "prompts": [
+   "a green coconut shell cut open",
+   "a durian husk with spikes",
+   "an empty coconut with a straw hole"
+  ],
+  "group": "drink",
+  "attrs": {
+   "shell": true,
+   "has_food": true
+  },
+  "category": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "compost",
+  "rarity": 3,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "另外裝袋交回收車，不要混進廚餘",
+  "source": "臺北市環保局資源回收分類方式：廚餘類備註（椰子殼、榴槤殼另收集後交回收車）",
+  "status": "unknown",
+  "sub": "food",
+  "kind": "other",
+  "icon": "Plant"
+ },
+ {
+  "id": "leftovers",
+  "name": {
+   "zh": "剩菜剩飯",
+   "en": "Leftover food",
+   "vi": "Thức ăn thừa",
+   "id": "Sisa makanan"
+  },
+  "prompts": [
+   "leftover rice and vegetables in a bowl",
+   "food scraps on a plate",
+   "leftover noodles and soup",
+   "half eaten lunch food"
+  ],
+  "group": "food",
+  "attrs": {
+   "has_food": true,
+   "soft": true
+  },
+  "category": "food",
+  "where": [
+   "food_bin"
+  ],
+  "steps": [
+   "drain"
+  ],
+  "material": "compost",
+  "rarity": 1,
+  "freq": 3,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市 115 年家戶廚餘新制",
+  "status": "unknown",
+  "sub": "food",
+  "kind": "food",
+  "icon": "Bowl"
+ },
+ {
+  "id": "fruit_peel",
+  "name": {
+   "zh": "果皮",
+   "en": "Fruit peel",
+   "vi": "Vỏ trái cây",
+   "id": "Kulit buah"
+  },
+  "prompts": [
+   "a banana peel",
+   "orange peels",
+   "apple cores and fruit peels",
+   "watermelon rind"
+  ],
+  "group": "food",
+  "attrs": {
+   "has_food": true,
+   "soft": true
+  },
+  "category": "food",
+  "where": [
+   "food_bin"
+  ],
+  "steps": [
+   "drain"
+  ],
+  "material": "compost",
+  "rarity": 1,
+  "freq": 3,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "回收一點通：廚餘－果皮、果核",
+  "status": "unknown",
+  "sub": "food",
+  "kind": "food",
+  "icon": "Apple"
+ },
+ {
+  "id": "tea_leaves",
+  "name": {
+   "zh": "茶葉渣、咖啡渣",
+   "en": "Tea leaves, coffee grounds",
+   "vi": "Bã trà, bã cà phê",
+   "id": "Ampas teh, ampas kopi"
+  },
+  "prompts": [
+   "used wet tea leaves",
+   "used coffee grounds in a filter",
+   "brewed tea leaves in a teapot"
+  ],
+  "group": "food",
+  "attrs": {
+   "has_food": true,
+   "soft": true
+  },
+  "category": "food",
+  "where": [
+   "food_bin"
+  ],
+  "steps": [
+   "drain"
+  ],
+  "material": "compost",
+  "rarity": 2,
+  "freq": 2,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "瀝乾再倒",
+  "source": "回收一點通：廚餘－茶渣、咖啡渣",
+  "status": "unknown",
+  "sub": "food",
+  "kind": "food",
+  "icon": "Leaf"
+ },
+ {
+  "id": "big_bone",
+  "name": {
+   "zh": "大骨頭",
+   "en": "Big bone",
+   "vi": "Xương to",
+   "id": "Tulang besar"
+  },
+  "prompts": [
+   "a big pork bone",
+   "leftover chicken bones on a plate",
+   "a large beef bone from soup"
+  ],
+  "group": "food",
+  "attrs": {
+   "has_food": true
+  },
+  "category": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 3,
+  "freq": 2,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市 115 年家戶廚餘新制（大骨頭為一般垃圾）",
+  "status": "unknown",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "icon": "Bone"
+ },
+ {
+  "id": "paper_lunchbox",
+  "name": {
+   "zh": "紙便當盒",
+   "en": "Paper lunch box",
+   "vi": "Hộp cơm giấy",
+   "id": "Kotak makan kertas"
+  },
+  "prompts": [
+   "a paper bento lunch box",
+   "a used paper takeout food box with sauce stains",
+   "a brown kraft paper meal box"
+  ],
+  "group": "food",
+  "attrs": {
+   "paper": true
+  },
+  "category": "recycle_3d",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "empty",
+   "rinse"
+  ],
+  "material": "paper",
+  "rarity": 3,
+  "freq": 3,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "剩菜倒進廚餘；木片便當盒是一般垃圾",
+  "source": "回收一點通：紙容器（紙餐具）；木片便當盒為一般垃圾",
+  "status": "unknown",
+  "sub": "r3d_general",
+  "kind": "tetra",
+  "icon": "BowlChopsticks"
+ },
+ {
+  "id": "chopsticks",
+  "name": {
+   "zh": "竹筷、吸管",
+   "en": "Chopsticks, straws",
+   "vi": "Đũa, ống hút",
+   "id": "Sumpit, sedotan"
+  },
+  "prompts": [
+   "a pair of disposable wooden chopsticks",
+   "a plastic drinking straw",
+   "bamboo skewers"
+  ],
+  "group": "food",
+  "attrs": {},
+  "category": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 3,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "回收一點通：免洗筷、吸管為一般垃圾",
+  "status": "unknown",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "icon": "ToolsKitchen2"
+ },
+ {
+  "id": "eggshell",
+  "name": {
+   "zh": "蛋殼",
+   "en": "Eggshell",
+   "vi": "Vỏ trứng",
+   "id": "Kulit telur"
+  },
+  "prompts": [
+   "broken eggshells",
+   "an empty cracked egg shell"
+  ],
+  "group": "food",
+  "attrs": {
+   "shell": true,
+   "has_food": true,
+   "soft": true
+  },
+  "category": "unknown",
+  "where": [],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 2,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "回收一點通仍用舊用語「堆肥廚餘」，新制頁沒有點名；確認前請洽清潔隊",
+  "source": "回收一點通：堆肥廚餘－蛋殼",
+  "status": "conflict",
+  "sub": null,
+  "kind": "unknown",
+  "icon": "EggCracked"
+ },
+ {
+  "id": "seashell",
+  "name": {
+   "zh": "貝殼",
+   "en": "Seashell",
+   "vi": "Vỏ sò",
+   "id": "Cangkang kerang"
+  },
+  "prompts": [
+   "clam shells",
+   "oyster shells",
+   "mussel shells on a plate"
+  ],
+  "group": "food",
+  "attrs": {
+   "shell": true,
+   "has_food": true
+  },
+  "category": "unknown",
+  "where": [],
+  "steps": [],
+  "material": "none",
+  "rarity": 3,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "廚餘新制頁與回收一點通說法不同；確認前請洽清潔隊",
+  "source": "115 年廚餘新制；回收一點通",
+  "status": "conflict",
+  "sub": null,
+  "kind": "unknown",
+  "icon": "Fish"
+ },
+ {
+  "id": "newspaper",
+  "name": {
+   "zh": "報紙、紙箱",
+   "en": "Newspaper, cardboard",
+   "vi": "Báo, thùng giấy",
+   "id": "Koran, kardus"
+  },
+  "prompts": [
+   "a stack of newspapers",
+   "a flattened cardboard box",
+   "a corrugated cardboard shipping box",
+   "a newspaper folded"
+  ],
+  "group": "paper",
+  "attrs": {
+   "paper": true,
+   "soft": true,
+   "clean": true
+  },
+  "category": "recycle_flat",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "flatten"
+  ],
+  "material": "paper",
+  "rarity": 1,
+  "freq": 3,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "回收一點通：廢紙類",
+  "status": "unknown",
+  "sub": "rflat_paper",
+  "kind": "paper",
+  "icon": "News"
+ },
+ {
+  "id": "old_book",
+  "name": {
+   "zh": "舊書、作業簿",
+   "en": "Old books",
+   "vi": "Sách cũ",
+   "id": "Buku bekas"
+  },
+  "prompts": [
+   "an old textbook",
+   "a used school notebook",
+   "a pile of old books"
+  ],
+  "group": "paper",
+  "attrs": {
+   "paper": true,
+   "clean": true
+  },
+  "category": "recycle_flat",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "remove_film"
+  ],
+  "material": "paper",
+  "rarity": 1,
+  "freq": 2,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "拿掉塑膠書套",
+  "source": "回收一點通：廢紙類（舊書）",
+  "status": "unknown",
+  "sub": "rflat_book",
+  "kind": "paper",
+  "icon": "Books"
+ },
+ {
+  "id": "tissue",
+  "name": {
+   "zh": "用過的衛生紙",
+   "en": "Used tissue",
+   "vi": "Giấy vệ sinh đã dùng",
+   "id": "Tisu bekas"
+  },
+  "prompts": [
+   "a crumpled used tissue",
+   "used paper napkins",
+   "dirty paper towels",
+   "a ball of used toilet paper"
+  ],
+  "group": "paper",
+  "attrs": {
+   "paper": true,
+   "soft": true
+  },
+  "category": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 3,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "不能混進廚餘",
+  "source": "臺北市環保局資源回收分類方式：平面類「不可回收」列有衛生紙（棉）；回收一點通",
+  "status": "unknown",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "icon": "File"
+ },
+ {
+  "id": "plastic_bag_clean",
+  "name": {
+   "zh": "乾淨塑膠袋",
+   "en": "Clean plastic bag",
+   "vi": "Túi nhựa sạch",
+   "id": "Kantong plastik bersih"
+  },
+  "prompts": [
+   "a clean empty plastic shopping bag",
+   "a folded thin plastic bag",
+   "a clear plastic produce bag"
+  ],
+  "group": "bag",
+  "attrs": {
+   "bag": true,
+   "soft": true,
+   "clean": true
+  },
+  "category": "recycle_flat",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "empty"
+  ],
+  "material": "plastic",
+  "rarity": 2,
+  "freq": 3,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式：平面類「塑膠袋類」乾淨塑膠袋（不含油漬、湯汁、血水）",
+  "status": "unknown",
+  "sub": "rflat_bag",
+  "kind": "plastic",
+  "icon": "ShoppingBag"
+ },
+ {
+  "id": "plastic_bag_dirty",
+  "name": {
+   "zh": "髒塑膠袋",
+   "en": "Dirty plastic bag",
+   "vi": "Túi nhựa bẩn",
+   "id": "Kantong plastik kotor"
+  },
+  "prompts": [
+   "a dirty greasy plastic bag",
+   "a plastic bag with food stains and sauce",
+   "a wet dirty plastic bag"
+  ],
+  "group": "bag",
+  "attrs": {
+   "bag": true,
+   "soft": true
+  },
+  "category": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 3,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "回收一點通：髒塑膠袋屬一般垃圾",
+  "status": "unknown",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "icon": "ShoppingBagX"
+ },
+ {
+  "id": "snack_bag",
+  "name": {
+   "zh": "零食包裝、保鮮膜",
+   "en": "Snack wrapper",
+   "vi": "Bao bì snack",
+   "id": "Bungkus camilan"
+  },
+  "prompts": [
+   "an empty potato chip bag",
+   "a shiny metallic snack wrapper",
+   "used plastic cling wrap",
+   "a candy wrapper"
+  ],
+  "group": "bag",
+  "attrs": {
+   "bag": true,
+   "soft": true,
+   "has_film": true
+  },
+  "category": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 3,
+  "freq": 3,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式：平面類「不可回收」列有複合材質塑膠袋（餅乾、零食之包裝袋）",
+  "status": "unknown",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "icon": "Cookie"
+ },
+ {
+  "id": "pudding_cup",
+  "name": {
+   "zh": "布丁杯、塑膠盒",
+   "en": "Pudding cup",
+   "vi": "Cốc pudding",
+   "id": "Cup puding"
+  },
+  "prompts": [
+   "an empty plastic pudding cup",
+   "a clear plastic food container with a lid",
+   "a plastic blister pack",
+   "a plastic yogurt cup"
+  ],
+  "group": "bag",
+  "attrs": {
+   "soft": true,
+   "has_film": true,
+   "clean": true
+  },
+  "category": "recycle_3d",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "empty",
+   "rinse",
+   "remove_film"
+  ],
+  "material": "plastic",
+  "rarity": 2,
+  "freq": 2,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "回收一點通：廢塑膠－布丁杯、塑膠泡殼",
+  "status": "unknown",
+  "sub": "r3d_general",
+  "kind": "plastic",
+  "icon": "IceCream2"
+ },
+ {
+  "id": "styrofoam_clean",
+  "name": {
+   "zh": "乾淨保麗龍",
+   "en": "Clean styrofoam",
+   "vi": "Xốp sạch",
+   "id": "Styrofoam bersih"
+  },
+  "prompts": [
+   "white styrofoam packaging blocks",
+   "a clean foam box for shipping",
+   "styrofoam packing material"
+  ],
+  "group": "bag",
+  "attrs": {
+   "styrofoam": true,
+   "clean": true
+  },
+  "category": "recycle_3d",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "remove_film"
+  ],
+  "material": "plastic",
+  "rarity": 3,
+  "freq": 2,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "去掉膠帶、木材、鐵釘；不可有油垢",
+  "source": "回收一點通：廢發泡塑膠",
+  "status": "unknown",
+  "sub": "r3d_foam",
+  "kind": "plastic",
+  "icon": "Package"
+ },
+ {
+  "id": "styrofoam_dirty",
+  "name": {
+   "zh": "髒保麗龍",
+   "en": "Dirty styrofoam",
+   "vi": "Xốp bẩn",
+   "id": "Styrofoam kotor"
+  },
+  "prompts": [
+   "a greasy styrofoam food box",
+   "a dirty foam takeout container with food"
+  ],
+  "group": "bag",
+  "attrs": {
+   "styrofoam": true
+  },
+  "category": "unknown",
+  "where": [],
+  "steps": [],
+  "material": "none",
+  "rarity": 3,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "查無明文；確認前請洽清潔隊",
+  "source": "—",
+  "status": "conflict",
+  "sub": null,
+  "kind": "unknown",
+  "icon": "PackageOff"
+ },
+ {
+  "id": "old_clothes",
+  "name": {
+   "zh": "舊衣",
+   "en": "Old clothes",
+   "vi": "Quần áo cũ",
+   "id": "Pakaian bekas"
+  },
+  "prompts": [
+   "a folded old t-shirt",
+   "clean used clothes",
+   "a pile of old clothing",
+   "a pair of old jeans"
+  ],
+  "group": "home",
+  "attrs": {
+   "clothes": true,
+   "soft": true,
+   "clean": true
+  },
+  "category": "recycle_flat",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "wrap"
+  ],
+  "material": "textile",
+  "rarity": 2,
+  "freq": 2,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "洗乾淨、不要弄濕、打包（含乾淨且彈性完整的女性內衣）；破舊、髒污、發臭的是一般垃圾",
+  "source": "回收一點通：舊衣類（週一、五交回收車）",
+  "status": "unknown",
+  "sub": "rflat_clothes",
+  "kind": "other",
+  "icon": "Shirt"
+ },
+ {
+  "id": "old_shoes",
+  "name": {
+   "zh": "舊鞋",
+   "en": "Old shoes",
+   "vi": "Giày cũ",
+   "id": "Sepatu bekas"
+  },
+  "prompts": [
+   "a pair of old sneakers",
+   "worn out shoes",
+   "old leather shoes",
+   "plastic slippers"
+  ],
+  "group": "home",
+  "attrs": {
+   "clothes": true
+  },
+  "category": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 3,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "舊鞋不是舊衣類",
+  "source": "臺北市環保局資源回收分類方式：立體類「不可回收」列有各種鞋類；回收一點通",
+  "status": "unknown",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "icon": "Shoe"
+ },
+ {
+  "id": "mask",
+  "name": {
+   "zh": "口罩、紙尿布",
+   "en": "Mask, diaper",
+   "vi": "Khẩu trang, tã",
+   "id": "Masker, popok"
+  },
+  "prompts": [
+   "a used disposable face mask",
+   "a used disposable diaper",
+   "a surgical face mask"
+  ],
+  "group": "home",
+  "attrs": {
+   "soft": true
+  },
+  "category": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [
+   "wrap"
+  ],
+  "material": "none",
+  "rarity": 1,
+  "freq": 3,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "回收一點通：口罩、紙尿布為一般垃圾",
+  "status": "unknown",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "icon": "Mask"
+ },
+ {
+  "id": "toothbrush",
+  "name": {
+   "zh": "牙刷",
+   "en": "Toothbrush",
+   "vi": "Bàn chải đánh răng",
+   "id": "Sikat gigi"
+  },
+  "prompts": [
+   "an old plastic toothbrush",
+   "a bamboo toothbrush",
+   "a used toothbrush"
+  ],
+  "group": "home",
+  "attrs": {},
+  "category": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 2,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "電動牙刷是小家電，要先取出電池",
+  "source": "回收一點通：牙刷為一般垃圾；電動牙刷為廢家電",
+  "status": "unknown",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "icon": "Brush"
+ },
+ {
+  "id": "small_appliance",
+  "name": {
+   "zh": "小家電",
+   "en": "Small appliance",
+   "vi": "Đồ điện nhỏ",
+   "id": "Peralatan listrik kecil"
+  },
+  "prompts": [
+   "a small electric kettle",
+   "a handheld USB fan",
+   "an electric rice cooker",
+   "a small kitchen appliance"
+  ],
+  "group": "device",
+  "attrs": {
+   "battery": true
+  },
+  "category": "recycle_3d",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "tape_terminals"
+  ],
+  "material": "metal",
+  "rarity": 3,
+  "freq": 1,
+  "hazard": "fire",
+  "adult_only": false,
+  "safety": "help",
+  "notes": "先取出電池；拆不下的鋰電池單獨交付",
+  "source": "臺北市環保局資源回收分類方式：立體類「一般類資源物」列有吹風機、檯燈、電話等；回收一點通",
+  "status": "unknown",
+  "sub": "r3d_general",
+  "kind": "other",
+  "icon": "Plug"
+ },
+ {
+  "id": "furniture",
+  "name": {
+   "zh": "沙發",
+   "en": "Sofa",
+   "vi": "Ghế sofa",
+   "id": "Sofa"
+  },
+  "prompts": [
+   "an old sofa",
+   "a worn couch"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "bulky",
+  "where": [
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 3,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "先拆解縮小體積，聯絡區清潔隊預約，免費清運",
+  "source": "臺北市環保局資源回收分類方式：大型家具、家電暨四機類；臺北市巨大垃圾執行要點",
+  "status": "unknown",
+  "sub": "bulky",
+  "kind": "bulky",
+  "icon": "Sofa"
+ },
+ {
+  "id": "battery",
+  "name": {
+   "zh": "乾電池",
+   "en": "Battery",
+   "vi": "Pin",
+   "id": "Baterai"
+  },
+  "prompts": [
+   "AA batteries",
+   "a button cell battery",
+   "used alkaline batteries",
+   "AAA batteries"
+  ],
+  "group": "danger",
+  "attrs": {
+   "battery": true
+  },
+  "category": "other",
+  "where": [
+   "recycle_truck",
+   "retailer"
+  ],
+  "steps": [
+   "tape_terminals"
+  ],
+  "material": "metal",
+  "rarity": 3,
+  "freq": 2,
+  "hazard": "fire",
+  "adult_only": false,
+  "safety": "help",
+  "notes": "從物品中取出，不可混進垃圾",
+  "source": "臺北市環保局資源回收分類方式：其他類「照明燈管、電池、廢油類」",
+  "status": "unknown",
+  "sub": "other_hazard",
+  "kind": "hazard",
+  "icon": "Battery2"
+ },
+ {
+  "id": "power_bank",
+  "name": {
+   "zh": "行動電源、鋰電池",
+   "en": "Power bank",
+   "vi": "Sạc dự phòng",
+   "id": "Power bank"
+  },
+  "prompts": [
+   "a portable power bank",
+   "a lithium ion battery pack",
+   "a phone battery",
+   "a swollen phone battery"
+  ],
+  "group": "danger",
+  "attrs": {
+   "battery": true,
+   "clean": true
+  },
+  "category": "other",
+  "where": [
+   "recycle_truck",
+   "retailer"
+  ],
+  "steps": [
+   "tape_terminals"
+  ],
+  "material": "metal",
+  "rarity": 3,
+  "freq": 1,
+  "hazard": "fire",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "正負極貼絕緣膠帶，單獨存放、避開高溫",
+  "source": "臺北市環保局資源回收分類方式：其他類「照明燈管、電池、廢油類」",
+  "status": "unknown",
+  "sub": "other_hazard",
+  "kind": "hazard",
+  "icon": "BatteryCharging"
+ },
+ {
+  "id": "light_tube",
+  "name": {
+   "zh": "燈管、燈泡",
+   "en": "Light tube, bulb",
+   "vi": "Bóng đèn",
+   "id": "Lampu"
+  },
+  "prompts": [
+   "a fluorescent light tube",
+   "an LED light bulb",
+   "a compact fluorescent lamp",
+   "an incandescent light bulb"
+  ],
+  "group": "danger",
+  "attrs": {
+   "glass": true
+  },
+  "category": "other",
+  "where": [
+   "recycle_truck",
+   "retailer"
+  ],
+  "steps": [
+   "wrap"
+  ],
+  "material": "glass",
+  "rarity": 3,
+  "freq": 1,
+  "hazard": "sharp",
+  "adult_only": false,
+  "safety": "help",
+  "notes": "用紙套包好；含冷陰極燈、感應式螢光燈、HID 燈；LED 崁燈、燈條、手電筒是一般垃圾",
+  "source": "臺北市環保局資源回收分類方式：其他類「照明燈管、電池、廢油類」",
+  "status": "unknown",
+  "sub": "other_hazard",
+  "kind": "hazard",
+  "icon": "Bulb"
+ },
+ {
+  "id": "broken_glass",
+  "name": {
+   "zh": "碎玻璃",
+   "en": "Broken glass",
+   "vi": "Kính vỡ",
+   "id": "Pecahan kaca"
+  },
+  "prompts": [
+   "shards of broken glass",
+   "a broken drinking glass",
+   "a cracked glass cup"
+  ],
+  "group": "danger",
+  "attrs": {
+   "glass": true,
+   "clean": true
+  },
+  "category": "recycle_3d",
+  "where": [
+   "recycle_truck",
+   "appointment"
+  ],
+  "steps": [
+   "wrap",
+   "label"
+  ],
+  "material": "glass",
+  "rarity": 3,
+  "freq": 1,
+  "hazard": "sharp",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "包好防刺破；大片玻璃要預約",
+  "source": "回收一點通：廢玻璃",
+  "status": "unknown",
+  "sub": "r3d_general",
+  "kind": "glass",
+  "icon": "GlassOff"
+ },
+ {
+  "id": "broken_ceramic",
+  "name": {
+   "zh": "破碗盤、鏡子",
+   "en": "Broken dishes, mirror",
+   "vi": "Bát đĩa vỡ, gương",
+   "id": "Piring pecah, cermin"
+  },
+  "prompts": [
+   "a broken ceramic bowl",
+   "a cracked porcelain plate",
+   "a small broken mirror",
+   "a broken ceramic mug"
+  ],
+  "group": "danger",
+  "attrs": {},
+  "category": "special",
+  "where": [
+   "recycle_truck",
+   "garbage_truck"
+  ],
+  "steps": [
+   "wrap",
+   "label"
+  ],
+  "material": "none",
+  "rarity": 3,
+  "freq": 1,
+  "hazard": "sharp",
+  "adult_only": false,
+  "safety": "help",
+  "notes": "陶瓷不可回收但不能焚化，包好交回收車；鏡子用報紙包好丟一般垃圾",
+  "source": "回收一點通：陶瓷為不可回收物品，但因無法焚化，包好交回收車；鏡子為一般垃圾",
+  "status": "unknown",
+  "sub": null,
+  "kind": "special",
+  "icon": "Bowl"
+ },
+ {
+  "id": "spray_can",
+  "name": {
+   "zh": "噴霧罐",
+   "en": "Spray can",
+   "vi": "Bình xịt",
+   "id": "Kaleng semprot"
+  },
+  "prompts": [
+   "an aerosol spray can",
+   "a hairspray can",
+   "a spray paint can"
+  ],
+  "group": "danger",
+  "attrs": {
+   "can": true,
+   "clean": true
+  },
+  "category": "recycle_3d",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "vent_gas",
+   "label"
+  ],
+  "material": "metal",
+  "rarity": 3,
+  "freq": 1,
+  "hazard": "pressure",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "確認用完，單獨打包，標示「內有高壓瓶」",
+  "source": "回收一點通：廢鐵類（噴霧罐）",
+  "status": "unknown",
+  "sub": "r3d_general",
+  "kind": "can",
+  "icon": "Spray"
+ },
+ {
+  "id": "lighter",
+  "name": {
+   "zh": "打火機",
+   "en": "Lighter",
+   "vi": "Bật lửa",
+   "id": "Korek api"
+  },
+  "prompts": [
+   "a plastic disposable lighter",
+   "a used cigarette lighter"
+  ],
+  "group": "danger",
+  "attrs": {
+   "clean": true
+  },
+  "category": "recycle_3d",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "vent_gas"
+  ],
+  "material": "plastic",
+  "rarity": 3,
+  "freq": 1,
+  "hazard": "fire",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "在空曠處排空氣體，單獨交回收車",
+  "source": "回收一點通：廢塑膠（打火機）",
+  "status": "unknown",
+  "sub": "r3d_general",
+  "kind": "plastic",
+  "icon": "Flame"
+ },
+ {
+  "id": "cooking_oil",
+  "name": {
+   "zh": "廢食用油",
+   "en": "Used cooking oil",
+   "vi": "Dầu ăn đã qua sử dụng",
+   "id": "Minyak jelantah"
+  },
+  "prompts": [
+   "used cooking oil in a plastic bottle",
+   "a jar of old frying oil",
+   "a bottle of vegetable oil"
+  ],
+  "group": "danger",
+  "attrs": {
+   "bottle": true,
+   "has_food": true
+  },
+  "category": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "label"
+  ],
+  "material": "none",
+  "rarity": 3,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "help",
+  "notes": "用容器裝好蓋緊",
+  "source": "臺北市環保局資源回收分類方式：其他類「照明燈管、電池、廢油類」食用油",
+  "status": "unknown",
+  "sub": "other_hazard",
+  "kind": "hazard",
+  "icon": "Droplet"
+ },
+ {
+  "id": "medicine",
+  "name": {
+   "zh": "過期藥品",
+   "en": "Expired medicine",
+   "vi": "Thuốc hết hạn",
+   "id": "Obat kedaluwarsa"
+  },
+  "prompts": [
+   "expired pills in a blister pack",
+   "a bottle of old medicine syrup",
+   "a box of medicine tablets"
+  ],
+  "group": "danger",
+  "attrs": {
+   "has_film": true
+  },
+  "category": "special",
+  "where": [
+   "garbage_truck",
+   "clinic"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 3,
+  "freq": 1,
+  "hazard": "medical",
+  "adult_only": true,
+  "safety": "no_touch",
+  "notes": "一般藥：倒進夾鏈袋混入茶渣或咖啡渣，密封後丟一般垃圾；特殊藥交醫院或藥局；勿倒水槽、勿沖馬桶",
+  "source": "食藥署廢棄藥品處理方式",
+  "status": "unknown",
+  "sub": null,
+  "kind": "special",
+  "icon": "Pill"
+ },
+ {
+  "id": "needle",
+  "name": {
+   "zh": "針頭、針筒",
+   "en": "Needle, syringe",
+   "vi": "Kim tiêm",
+   "id": "Jarum suntik"
+  },
+  "prompts": [
+   "a used syringe with a needle",
+   "an insulin pen needle"
+  ],
+  "group": "danger",
+  "attrs": {},
+  "category": "special",
+  "where": [
+   "clinic"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 3,
+  "freq": 1,
+  "hazard": "medical",
+  "adult_only": true,
+  "safety": "no_touch",
+  "notes": "裝進硬質、不易被刺穿的容器並標示，交醫療院所或居家廢棄藥物檢收站",
+  "source": "食藥署；居家廢棄藥物檢收站",
+  "status": "unknown",
+  "sub": null,
+  "kind": "special",
+  "icon": "Vaccine"
+ },
+ {
+  "id": "metal_utensils",
+  "icon": "Scissors",
+  "name": {
+   "zh": "金屬湯匙、剪刀、衣架",
+   "en": "Metal spoons, scissors, hangers",
+   "vi": "Thìa, kéo, móc áo kim loại",
+   "id": "Sendok, gunting, gantungan logam"
+  },
+  "prompts": [
+   "a metal spoon and fork",
+   "a pair of metal scissors",
+   "a wire clothes hanger",
+   "a stainless steel spoon"
+  ],
+  "group": "home",
+  "attrs": {
+   "can": false
+  },
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "metal",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "metal",
+  "notes": "剪刀、刀子要包好",
+  "source": "回收一點通：其他金屬（金屬湯匙、金屬剪刀）、廢鐵類（曬衣架）",
+  "hazard": "sharp",
+  "adult_only": false,
+  "safety": "help",
+  "status": "unknown",
+  "freq": 1,
+  "rarity": 3
+ },
+ {
+  "id": "cd_disc",
+  "icon": "Disc",
+  "name": {
+   "zh": "光碟片",
+   "en": "CD / DVD disc",
+   "vi": "Đĩa CD",
+   "id": "Cakram CD"
+  },
+  "prompts": [
+   "a shiny CD disc",
+   "a DVD optical disc"
+  ],
+  "group": "home",
+  "attrs": {
+   "clean": true
+  },
+  "category": "other",
+  "sub": "other_hazard",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "plastic",
+  "notes": "光碟片屬其他類；CD 外殼是塑膠類",
+  "source": "臺北市環保局資源回收分類方式：其他類列有光碟片",
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "status": "unknown",
+  "freq": 1,
+  "rarity": 3
+ },
+ {
+  "id": "thermometer",
+  "icon": "Temperature",
+  "name": {
+   "zh": "水銀體溫計",
+   "en": "Mercury thermometer",
+   "vi": "Nhiệt kế thủy ngân",
+   "id": "Termometer raksa"
+  },
+  "prompts": [
+   "a glass mercury thermometer",
+   "an old glass fever thermometer"
+  ],
+  "group": "danger",
+  "attrs": {
+   "glass": true,
+   "battery": false,
+   "has_film": true
+  },
+  "category": "other",
+  "sub": "other_hazard",
+  "kind": "hazard",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "wrap"
+  ],
+  "material": "none",
+  "notes": "破了不要碰，請大人處理",
+  "source": "臺北市環保局資源回收分類方式：其他類列有水銀體溫計",
+  "hazard": "medical",
+  "adult_only": true,
+  "safety": "adult",
+  "status": "unknown",
+  "freq": 1,
+  "rarity": 3
+ },
+ {
+  "id": "phone",
+  "name": {
+   "zh": "手機",
+   "en": "Mobile phone",
+   "vi": "Mobile phone",
+   "id": "Mobile phone"
+  },
+  "prompts": [
+   "a used smartphone",
+   "an old mobile phone with a cracked screen",
+   "a cell phone lying on a table"
+  ],
+  "group": "device",
+  "attrs": {
+   "battery": true
+  },
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "fire",
+  "adult_only": false,
+  "safety": "help",
+  "notes": "有電池的要先取出，或請大人處理；手機、平板先刪除個人資料",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "DeviceMobile"
+ },
+ {
+  "id": "tablet",
+  "name": {
+   "zh": "平板電腦",
+   "en": "Tablet computer",
+   "vi": "Tablet computer",
+   "id": "Tablet computer"
+  },
+  "prompts": [
+   "an old tablet computer",
+   "an ipad style tablet with a black screen"
+  ],
+  "group": "device",
+  "attrs": {
+   "battery": true
+  },
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "fire",
+  "adult_only": false,
+  "safety": "help",
+  "notes": "有電池的要先取出，或請大人處理；手機、平板先刪除個人資料",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "DeviceTablet"
+ },
+ {
+  "id": "hair_dryer",
+  "name": {
+   "zh": "吹風機",
+   "en": "Hair dryer",
+   "vi": "Hair dryer",
+   "id": "Hair dryer"
+  },
+  "prompts": [
+   "a handheld hair dryer",
+   "a hair blow dryer with a cord"
+  ],
+  "group": "device",
+  "attrs": {
+   "battery": false
+  },
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "Wind"
+ },
+ {
+  "id": "desk_lamp",
+  "name": {
+   "zh": "檯燈",
+   "en": "Desk lamp",
+   "vi": "Desk lamp",
+   "id": "Desk lamp"
+  },
+  "prompts": [
+   "a desk lamp",
+   "a small reading lamp"
+  ],
+  "group": "device",
+  "attrs": {},
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "燈泡或燈管要拆下來另外回收",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "Lamp"
+ },
+ {
+  "id": "telephone",
+  "name": {
+   "zh": "電話、傳真機",
+   "en": "Telephone, fax machine",
+   "vi": "Telephone, fax machine",
+   "id": "Telephone, fax machine"
+  },
+  "prompts": [
+   "a landline telephone",
+   "an old fax machine",
+   "a cordless home phone"
+  ],
+  "group": "device",
+  "attrs": {},
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "Phone"
+ },
+ {
+  "id": "video_player",
+  "name": {
+   "zh": "錄放影機",
+   "en": "VCR, DVD player",
+   "vi": "VCR, DVD player",
+   "id": "VCR, DVD player"
+  },
+  "prompts": [
+   "an old VCR video player",
+   "a DVD player box"
+  ],
+  "group": "device",
+  "attrs": {},
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "DeviceTvOld"
+ },
+ {
+  "id": "usb_drive",
+  "name": {
+   "zh": "隨身碟、外接硬碟",
+   "en": "USB drive, external hard drive",
+   "vi": "USB drive, external hard drive",
+   "id": "USB drive, external hard drive"
+  },
+  "prompts": [
+   "a usb flash drive",
+   "an external hard drive",
+   "a memory stick"
+  ],
+  "group": "device",
+  "attrs": {},
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "先刪除個人資料",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "DeviceUsb"
+ },
+ {
+  "id": "vacuum",
+  "name": {
+   "zh": "吸塵器",
+   "en": "Vacuum cleaner",
+   "vi": "Vacuum cleaner",
+   "id": "Vacuum cleaner"
+  },
+  "prompts": [
+   "a vacuum cleaner",
+   "a handheld cordless vacuum cleaner"
+  ],
+  "group": "device",
+  "attrs": {
+   "battery": true
+  },
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "充電式的要先取出電池",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "VacuumCleaner"
+ },
+ {
+  "id": "radio",
+  "name": {
+   "zh": "收錄音機",
+   "en": "Radio, cassette player",
+   "vi": "Radio, cassette player",
+   "id": "Radio, cassette player"
+  },
+  "prompts": [
+   "a portable radio cassette player",
+   "a small radio"
+  ],
+  "group": "device",
+  "attrs": {
+   "battery": true
+  },
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "乾電池要先取出",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "Radio"
+ },
+ {
+  "id": "mosquito_lamp",
+  "name": {
+   "zh": "捕蚊燈、電蚊拍",
+   "en": "Mosquito lamp, electric swatter",
+   "vi": "Mosquito lamp, electric swatter",
+   "id": "Mosquito lamp, electric swatter"
+  },
+  "prompts": [
+   "an electric mosquito swatter racket",
+   "a UV mosquito killer lamp"
+  ],
+  "group": "device",
+  "attrs": {
+   "battery": true
+  },
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "tape_terminals"
+  ],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "fire",
+  "adult_only": false,
+  "safety": "help",
+  "notes": "電蚊拍的電池要先取出",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "Bolt"
+ },
+ {
+  "id": "game_console",
+  "name": {
+   "zh": "電子遊樂器",
+   "en": "Game console",
+   "vi": "Game console",
+   "id": "Game console"
+  },
+  "prompts": [
+   "a video game console",
+   "a handheld game console",
+   "a game controller"
+  ],
+  "group": "device",
+  "attrs": {
+   "battery": true
+  },
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "fire",
+  "adult_only": false,
+  "safety": "help",
+  "notes": "有電池的要先取出，或請大人處理；手機、平板先刪除個人資料",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "DeviceGamepad2"
+ },
+ {
+  "id": "plastic_lamp",
+  "name": {
+   "zh": "塑膠外殼燈具",
+   "en": "Plastic light fixture",
+   "vi": "Plastic light fixture",
+   "id": "Plastic light fixture"
+  },
+  "prompts": [
+   "a plastic ceiling light fixture",
+   "a plastic lamp shade"
+  ],
+  "group": "device",
+  "attrs": {},
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "燈泡或燈管要拆下來另外回收",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "Lamp2"
+ },
+ {
+  "id": "computer",
+  "name": {
+   "zh": "電腦主機、螢幕",
+   "en": "Computer, monitor",
+   "vi": "Computer, monitor",
+   "id": "Computer, monitor"
+  },
+  "prompts": [
+   "a desktop computer tower",
+   "a computer monitor",
+   "an old LCD screen"
+  ],
+  "group": "device",
+  "attrs": {},
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "help",
+  "notes": "先刪除個人資料；很重，請大人搬",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "DeviceDesktop"
+ },
+ {
+  "id": "mouse_keyboard",
+  "name": {
+   "zh": "滑鼠、鍵盤",
+   "en": "Mouse, keyboard",
+   "vi": "Mouse, keyboard",
+   "id": "Mouse, keyboard"
+  },
+  "prompts": [
+   "a computer mouse",
+   "a computer keyboard",
+   "a wireless mouse"
+  ],
+  "group": "device",
+  "attrs": {
+   "battery": true
+  },
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "無線的要先取出電池",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "Mouse"
+ },
+ {
+  "id": "printer",
+  "name": {
+   "zh": "印表機、掃描機",
+   "en": "Printer, scanner",
+   "vi": "Printer, scanner",
+   "id": "Printer, scanner"
+  },
+  "prompts": [
+   "an inkjet printer",
+   "a flatbed scanner",
+   "a home office printer"
+  ],
+  "group": "device",
+  "attrs": {},
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "墨水匣另外交給販賣業者回收",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "Printer"
+ },
+ {
+  "id": "plastic_misc",
+  "name": {
+   "zh": "其他塑膠製品",
+   "en": "Other plastic items",
+   "vi": "Other plastic items",
+   "id": "Other plastic items"
+  },
+  "prompts": [
+   "a plastic storage box",
+   "a plastic toy",
+   "a plastic basket"
+  ],
+  "group": "home",
+  "attrs": {},
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "plastic",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "plastic",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "塑膠容器要倒空沖乾淨",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "Box"
+ },
+ {
+  "id": "acrylic",
+  "name": {
+   "zh": "壓克力",
+   "en": "Acrylic sheet",
+   "vi": "Acrylic sheet",
+   "id": "Acrylic sheet"
+  },
+  "prompts": [
+   "a clear acrylic sheet",
+   "an acrylic display stand"
+  ],
+  "group": "home",
+  "attrs": {
+   "clean": true
+  },
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "plastic",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "plastic",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "Square"
+ },
+ {
+  "id": "plastic_hose",
+  "name": {
+   "zh": "塑膠軟管",
+   "en": "Plastic hose",
+   "vi": "Plastic hose",
+   "id": "Plastic hose"
+  },
+  "prompts": [
+   "a plastic garden hose",
+   "a flexible plastic tube"
+  ],
+  "group": "home",
+  "attrs": {
+   "soft": true
+  },
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "plastic",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "plastic",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "Ripple"
+ },
+ {
+  "id": "toilet_seat",
+  "name": {
+   "zh": "馬桶蓋",
+   "en": "Toilet seat",
+   "vi": "Toilet seat",
+   "id": "Toilet seat"
+  },
+  "prompts": [
+   "a plastic toilet seat lid",
+   "a toilet seat cover"
+  ],
+  "group": "home",
+  "attrs": {},
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "plastic",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "rinse"
+  ],
+  "material": "plastic",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "Bath"
+ },
+ {
+  "id": "tire",
+  "name": {
+   "zh": "廢輪胎",
+   "en": "Tire",
+   "vi": "Tire",
+   "id": "Tire"
+  },
+  "prompts": [
+   "a used car tire",
+   "a bicycle tire",
+   "an old rubber tire"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "很重，請大人處理；輪胎內胎是一般垃圾",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "Wheel"
+ },
+ {
+  "id": "cassette_tape",
+  "name": {
+   "zh": "錄音帶、錄影帶",
+   "en": "Cassette, video tape",
+   "vi": "Cassette, video tape",
+   "id": "Cassette, video tape"
+  },
+  "prompts": [
+   "an audio cassette tape",
+   "a VHS video tape"
+  ],
+  "group": "device",
+  "attrs": {},
+  "category": "recycle_3d",
+  "sub": "r3d_general",
+  "kind": "other",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "remove_tape"
+  ],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "請抽除磁帶（磁帶是一般垃圾）",
+  "source": "臺北市環保局資源回收分類方式（r3d_general）",
+  "status": "unknown",
+  "icon": "DeviceAudioTape"
+ },
+ {
+  "id": "foam_tableware",
+  "name": {
+   "zh": "保麗龍餐具",
+   "en": "Styrofoam tableware",
+   "vi": "Styrofoam tableware",
+   "id": "Styrofoam tableware"
+  },
+  "prompts": [
+   "a white styrofoam bowl",
+   "a foam takeout box",
+   "a styrofoam cup"
+  ],
+  "group": "food",
+  "attrs": {
+   "styrofoam": true,
+   "clean": true
+  },
+  "category": "recycle_3d",
+  "sub": "r3d_foam",
+  "kind": "plastic",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "empty",
+   "rinse"
+  ],
+  "material": "plastic",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "要乾淨沒有油垢，髒的請洽清潔隊",
+  "source": "臺北市環保局資源回收分類方式（r3d_foam）",
+  "status": "unknown",
+  "icon": "Bowl"
+ },
+ {
+  "id": "fruit_net",
+  "name": {
+   "zh": "水果網套",
+   "en": "Fruit foam net",
+   "vi": "Fruit foam net",
+   "id": "Fruit foam net"
+  },
+  "prompts": [
+   "a white foam mesh net for fruit",
+   "a protective foam net sleeve for apples"
+  ],
+  "group": "food",
+  "attrs": {
+   "styrofoam": true,
+   "soft": true,
+   "clean": true
+  },
+  "category": "recycle_3d",
+  "sub": "r3d_foam",
+  "kind": "plastic",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [],
+  "material": "plastic",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（r3d_foam）",
+  "status": "unknown",
+  "icon": "GridDots"
+ },
+ {
+  "id": "plush_toy",
+  "name": {
+   "zh": "布偶、絨毛玩具",
+   "en": "Plush toy",
+   "vi": "Plush toy",
+   "id": "Plush toy"
+  },
+  "prompts": [
+   "a stuffed teddy bear",
+   "a plush toy",
+   "a fluffy stuffed animal"
+  ],
+  "group": "home",
+  "attrs": {
+   "soft": true
+  },
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（non_recyclable）",
+  "status": "unknown",
+  "icon": "HorseToy"
+ },
+ {
+  "id": "doormat",
+  "name": {
+   "zh": "腳踏墊、地毯",
+   "en": "Doormat, carpet",
+   "vi": "Doormat, carpet",
+   "id": "Doormat, carpet"
+  },
+  "prompts": [
+   "a doormat",
+   "a rolled up carpet rug",
+   "a bath mat"
+  ],
+  "group": "home",
+  "attrs": {
+   "soft": true
+  },
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "大塊的要剪小再裝袋",
+  "source": "臺北市環保局資源回收分類方式（non_recyclable）",
+  "status": "unknown",
+  "icon": "LayoutBottombar"
+ },
+ {
+  "id": "sponge",
+  "name": {
+   "zh": "泡棉、海綿",
+   "en": "Sponge, foam padding",
+   "vi": "Sponge, foam padding",
+   "id": "Sponge, foam padding"
+  },
+  "prompts": [
+   "a kitchen sponge",
+   "a piece of foam padding",
+   "a yellow cleaning sponge"
+  ],
+  "group": "home",
+  "attrs": {
+   "soft": true
+  },
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（non_recyclable）",
+  "status": "unknown",
+  "icon": "Wash"
+ },
+ {
+  "id": "whiteboard",
+  "name": {
+   "zh": "白板",
+   "en": "Whiteboard",
+   "vi": "Whiteboard",
+   "id": "Whiteboard"
+  },
+  "prompts": [
+   "a small whiteboard",
+   "a dry erase board"
+  ],
+  "group": "home",
+  "attrs": {},
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（non_recyclable）",
+  "status": "unknown",
+  "icon": "Presentation"
+ },
+ {
+  "id": "ball",
+  "name": {
+   "zh": "球類",
+   "en": "Ball",
+   "vi": "Ball",
+   "id": "Ball"
+  },
+  "prompts": [
+   "a basketball",
+   "a soccer ball",
+   "a rubber ball"
+  ],
+  "group": "home",
+  "attrs": {},
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（non_recyclable）",
+  "status": "unknown",
+  "icon": "BallBasketball"
+ },
+ {
+  "id": "wooden_lunchbox",
+  "name": {
+   "zh": "木片便當盒",
+   "en": "Wooden lunch box",
+   "vi": "Wooden lunch box",
+   "id": "Wooden lunch box"
+  },
+  "prompts": [
+   "a thin wooden bento lunch box",
+   "a wood veneer food box"
+  ],
+  "group": "food",
+  "attrs": {
+   "has_food": true
+  },
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [
+   "empty"
+  ],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "剩菜倒進廚餘，木片盒是一般垃圾",
+  "source": "臺北市環保局資源回收分類方式（non_recyclable）",
+  "status": "unknown",
+  "icon": "Box"
+ },
+ {
+  "id": "inner_tube",
+  "name": {
+   "zh": "輪胎內胎",
+   "en": "Inner tube",
+   "vi": "Inner tube",
+   "id": "Inner tube"
+  },
+  "prompts": [
+   "a rubber bicycle inner tube",
+   "a deflated inner tube"
+  ],
+  "group": "big",
+  "attrs": {
+   "soft": true
+  },
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（non_recyclable）",
+  "status": "unknown",
+  "icon": "Circle"
+ },
+ {
+  "id": "scooter_parts",
+  "name": {
+   "zh": "機車車殼、座墊",
+   "en": "Scooter body panel, seat",
+   "vi": "Scooter body panel, seat",
+   "id": "Scooter body panel, seat"
+  },
+  "prompts": [
+   "a plastic scooter body panel",
+   "a motorcycle seat cushion"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "很重，請大人處理",
+  "source": "臺北市環保局資源回收分類方式（non_recyclable）",
+  "status": "unknown",
+  "icon": "Motorbike"
+ },
+ {
+  "id": "copy_paper",
+  "name": {
+   "zh": "影印紙、紙張",
+   "en": "Copy paper",
+   "vi": "Copy paper",
+   "id": "Copy paper"
+  },
+  "prompts": [
+   "a stack of white printer paper",
+   "used A4 paper sheets"
+  ],
+  "group": "paper",
+  "attrs": {
+   "paper": true,
+   "soft": true,
+   "clean": true
+  },
+  "category": "recycle_flat",
+  "sub": "rflat_paper",
+  "kind": "paper",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "flatten"
+  ],
+  "material": "paper",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（rflat_paper）",
+  "status": "unknown",
+  "icon": "FileText"
+ },
+ {
+  "id": "magazine",
+  "name": {
+   "zh": "雜誌",
+   "en": "Magazine",
+   "vi": "Magazine",
+   "id": "Magazine"
+  },
+  "prompts": [
+   "a glossy magazine",
+   "a stack of old magazines"
+  ],
+  "group": "paper",
+  "attrs": {
+   "paper": true,
+   "clean": true
+  },
+  "category": "recycle_flat",
+  "sub": "rflat_paper",
+  "kind": "paper",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "flatten"
+  ],
+  "material": "paper",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（rflat_paper）",
+  "status": "unknown",
+  "icon": "Book"
+ },
+ {
+  "id": "paper_bag",
+  "name": {
+   "zh": "紙袋",
+   "en": "Paper bag",
+   "vi": "Paper bag",
+   "id": "Paper bag"
+  },
+  "prompts": [
+   "a brown paper shopping bag",
+   "a paper gift bag"
+  ],
+  "group": "paper",
+  "attrs": {
+   "paper": true,
+   "bag": true,
+   "clean": true
+  },
+  "category": "recycle_flat",
+  "sub": "rflat_paper",
+  "kind": "paper",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "flatten"
+  ],
+  "material": "paper",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "拿掉塑膠提把",
+  "source": "臺北市環保局資源回收分類方式（rflat_paper）",
+  "status": "unknown",
+  "icon": "PaperBag"
+ },
+ {
+  "id": "towel",
+  "name": {
+   "zh": "毛巾、浴巾",
+   "en": "Towel",
+   "vi": "Towel",
+   "id": "Towel"
+  },
+  "prompts": [
+   "a used bath towel",
+   "a folded face towel"
+  ],
+  "group": "home",
+  "attrs": {
+   "soft": true,
+   "clothes": true
+  },
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（non_recyclable）",
+  "status": "unknown",
+  "icon": "Wash"
+ },
+ {
+  "id": "hat_socks",
+  "name": {
+   "zh": "帽子、襪子、內褲",
+   "en": "Hat, socks, underwear",
+   "vi": "Hat, socks, underwear",
+   "id": "Hat, socks, underwear"
+  },
+  "prompts": [
+   "an old baseball cap",
+   "a pair of socks",
+   "old underwear"
+  ],
+  "group": "home",
+  "attrs": {
+   "soft": true,
+   "clothes": true
+  },
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "這些不是舊衣回收",
+  "source": "臺北市環保局資源回收分類方式（non_recyclable）",
+  "status": "unknown",
+  "icon": "Sock"
+ },
+ {
+  "id": "bedding",
+  "name": {
+   "zh": "棉被、枕頭、床單",
+   "en": "Bedding",
+   "vi": "Bedding",
+   "id": "Bedding"
+  },
+  "prompts": [
+   "a folded blanket",
+   "a pillow",
+   "a bed sheet"
+  ],
+  "group": "home",
+  "attrs": {
+   "soft": true
+  },
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "大的要剪小再裝袋",
+  "source": "臺北市環保局資源回收分類方式（non_recyclable）",
+  "status": "unknown",
+  "icon": "Bed"
+ },
+ {
+  "id": "fabric",
+  "name": {
+   "zh": "布料、窗簾、桌布、圍裙",
+   "en": "Fabric scraps, curtains",
+   "vi": "Fabric scraps, curtains",
+   "id": "Fabric scraps, curtains"
+  },
+  "prompts": [
+   "fabric scraps",
+   "an old curtain",
+   "a tablecloth",
+   "a kitchen apron"
+  ],
+  "group": "home",
+  "attrs": {
+   "soft": true,
+   "clothes": true
+  },
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（non_recyclable）",
+  "status": "unknown",
+  "icon": "Shirt"
+ },
+ {
+  "id": "dirty_clothes",
+  "name": {
+   "zh": "髒、破、發臭的舊衣",
+   "en": "Dirty or torn clothes",
+   "vi": "Dirty or torn clothes",
+   "id": "Dirty or torn clothes"
+  },
+  "prompts": [
+   "a torn dirty t-shirt",
+   "wet moldy old clothes"
+  ],
+  "group": "home",
+  "attrs": {
+   "soft": true,
+   "clothes": true
+  },
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "乾淨完整的才能舊衣回收",
+  "source": "臺北市環保局資源回收分類方式（non_recyclable）",
+  "status": "unknown",
+  "icon": "Shirt"
+ },
+ {
+  "id": "glossy_paper",
+  "name": {
+   "zh": "光面紙、複寫紙、貼紙底紙",
+   "en": "Coated paper, carbon paper, sticker backing",
+   "vi": "Coated paper, carbon paper, sticker backing",
+   "id": "Coated paper, carbon paper, sticker backing"
+  },
+  "prompts": [
+   "glossy plastic coated paper",
+   "carbon copy paper",
+   "sticker backing paper"
+  ],
+  "group": "paper",
+  "attrs": {
+   "paper": true,
+   "has_film": true
+  },
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "有一層塑膠膜的紙不能回收",
+  "source": "臺北市環保局資源回收分類方式（non_recyclable）",
+  "status": "unknown",
+  "icon": "Sticker"
+ },
+ {
+  "id": "photo_paper",
+  "name": {
+   "zh": "照片紙",
+   "en": "Photo paper",
+   "vi": "Photo paper",
+   "id": "Photo paper"
+  },
+  "prompts": [
+   "a printed photograph",
+   "old photo prints"
+  ],
+  "group": "paper",
+  "attrs": {
+   "paper": true,
+   "has_film": true
+  },
+  "category": "general",
+  "sub": "non_recyclable",
+  "kind": "general",
+  "where": [
+   "garbage_truck"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（non_recyclable）",
+  "status": "unknown",
+  "icon": "Photo"
+ },
+ {
+  "id": "pesticide_container",
+  "name": {
+   "zh": "殺蟲劑等環境用藥空罐",
+   "en": "Empty insecticide container",
+   "vi": "Empty insecticide container",
+   "id": "Empty insecticide container"
+  },
+  "prompts": [
+   "an empty insecticide spray can",
+   "an empty bug killer bottle"
+  ],
+  "group": "danger",
+  "attrs": {
+   "can": true
+  },
+  "category": "other",
+  "sub": "other_hazard",
+  "kind": "hazard",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "label"
+  ],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "medical",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "確定用完，包好分開拿給回收車",
+  "source": "臺北市環保局資源回收分類方式（other_hazard）",
+  "status": "unknown",
+  "icon": "Bug"
+ },
+ {
+  "id": "lubricant",
+  "name": {
+   "zh": "潤滑油",
+   "en": "Lubricant oil",
+   "vi": "Lubricant oil",
+   "id": "Lubricant oil"
+  },
+  "prompts": [
+   "a bottle of motor oil",
+   "a can of lubricating oil"
+  ],
+  "group": "danger",
+  "attrs": {
+   "bottle": true
+  },
+  "category": "other",
+  "sub": "other_hazard",
+  "kind": "hazard",
+  "where": [
+   "recycle_truck"
+  ],
+  "steps": [
+   "label"
+  ],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "fire",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "用容器裝好蓋緊",
+  "source": "臺北市環保局資源回收分類方式（other_hazard）",
+  "status": "unknown",
+  "icon": "Droplet"
+ },
+ {
+  "id": "food_shells",
+  "name": {
+   "zh": "蝦殼、蟹殼、花生殼",
+   "en": "Shrimp shells, peanut shells",
+   "vi": "Shrimp shells, peanut shells",
+   "id": "Shrimp shells, peanut shells"
+  },
+  "prompts": [
+   "shrimp shells on a plate",
+   "crab shells",
+   "peanut shells"
+  ],
+  "group": "food",
+  "attrs": {
+   "has_food": true,
+   "shell": true
+  },
+  "category": "food",
+  "sub": "food",
+  "kind": "food",
+  "where": [
+   "food_bin"
+  ],
+  "steps": [
+   "drain"
+  ],
+  "material": "compost",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "官方分類表：食材外殼是廚餘",
+  "source": "臺北市環保局資源回收分類方式（food）",
+  "status": "unknown",
+  "icon": "Fish"
+ },
+ {
+  "id": "flowers_leaves",
+  "name": {
+   "zh": "花、樹葉",
+   "en": "Flowers, leaves",
+   "vi": "Flowers, leaves",
+   "id": "Flowers, leaves"
+  },
+  "prompts": [
+   "wilted cut flowers",
+   "a pile of fallen leaves"
+  ],
+  "group": "food",
+  "attrs": {
+   "has_food": true,
+   "soft": true
+  },
+  "category": "food",
+  "sub": "food",
+  "kind": "food",
+  "where": [
+   "food_bin"
+  ],
+  "steps": [],
+  "material": "compost",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（food）",
+  "status": "unknown",
+  "icon": "Flower"
+ },
+ {
+  "id": "meat",
+  "name": {
+   "zh": "肉、內臟",
+   "en": "Meat scraps",
+   "vi": "Meat scraps",
+   "id": "Meat scraps"
+  },
+  "prompts": [
+   "leftover meat scraps",
+   "raw chicken skin",
+   "fish leftovers"
+  ],
+  "group": "food",
+  "attrs": {
+   "has_food": true,
+   "soft": true
+  },
+  "category": "food",
+  "sub": "food",
+  "kind": "food",
+  "where": [
+   "food_bin"
+  ],
+  "steps": [
+   "drain"
+  ],
+  "material": "compost",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "大骨頭是一般垃圾",
+  "source": "臺北市環保局資源回收分類方式（food）",
+  "status": "unknown",
+  "icon": "Meat"
+ },
+ {
+  "id": "vegetables",
+  "name": {
+   "zh": "蔬菜、水果",
+   "en": "Vegetables, fruit",
+   "vi": "Vegetables, fruit",
+   "id": "Vegetables, fruit"
+  },
+  "prompts": [
+   "vegetable scraps",
+   "rotten fruit",
+   "cabbage leaves"
+  ],
+  "group": "food",
+  "attrs": {
+   "has_food": true,
+   "soft": true
+  },
+  "category": "food",
+  "sub": "food",
+  "kind": "food",
+  "where": [
+   "food_bin"
+  ],
+  "steps": [
+   "drain"
+  ],
+  "material": "compost",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "source": "臺北市環保局資源回收分類方式（food）",
+  "status": "unknown",
+  "icon": "Carrot"
+ },
+ {
+  "id": "frozen_food",
+  "name": {
+   "zh": "過期冷凍食品、調味料",
+   "en": "Expired frozen food, seasoning",
+   "vi": "Expired frozen food, seasoning",
+   "id": "Expired frozen food, seasoning"
+  },
+  "prompts": [
+   "expired frozen dumplings",
+   "old seasoning sauce",
+   "expired spices"
+  ],
+  "group": "food",
+  "attrs": {
+   "has_food": true
+  },
+  "category": "food",
+  "sub": "food",
+  "kind": "food",
+  "where": [
+   "food_bin"
+  ],
+  "steps": [
+   "empty"
+  ],
+  "material": "compost",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": false,
+  "safety": "none",
+  "notes": "倒出來放廚餘，包裝另外分類",
+  "source": "臺北市環保局資源回收分類方式（food）",
+  "status": "unknown",
+  "icon": "Snowflake"
+ },
+ {
+  "id": "range_hood",
+  "name": {
+   "zh": "抽油煙機",
+   "en": "Range hood",
+   "vi": "Range hood",
+   "id": "Range hood"
+  },
+  "prompts": [
+   "a kitchen range hood"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "bulky",
+  "sub": "bulky",
+  "kind": "bulky",
+  "where": [
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
+  "source": "臺北市環保局資源回收分類方式（bulky）",
+  "status": "unknown",
+  "icon": "Wind"
+ },
+ {
+  "id": "mattress",
+  "name": {
+   "zh": "彈簧床墊",
+   "en": "Spring mattress",
+   "vi": "Spring mattress",
+   "id": "Spring mattress"
+  },
+  "prompts": [
+   "an old spring mattress",
+   "a mattress leaning on a wall"
+  ],
+  "group": "big",
+  "attrs": {
+   "soft": true
+  },
+  "category": "bulky",
+  "sub": "bulky",
+  "kind": "bulky",
+  "where": [
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
+  "source": "臺北市環保局資源回收分類方式（bulky）",
+  "status": "unknown",
+  "icon": "Bed"
+ },
+ {
+  "id": "bed_frame",
+  "name": {
+   "zh": "床組",
+   "en": "Bed frame",
+   "vi": "Bed frame",
+   "id": "Bed frame"
+  },
+  "prompts": [
+   "a wooden bed frame",
+   "a metal bed frame"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "bulky",
+  "sub": "bulky",
+  "kind": "bulky",
+  "where": [
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
+  "source": "臺北市環保局資源回收分類方式（bulky）",
+  "status": "unknown",
+  "icon": "Bed"
+ },
+ {
+  "id": "cart",
+  "name": {
+   "zh": "手推車",
+   "en": "Hand cart",
+   "vi": "Hand cart",
+   "id": "Hand cart"
+  },
+  "prompts": [
+   "a folding hand cart",
+   "a shopping trolley cart"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "bulky",
+  "sub": "bulky",
+  "kind": "bulky",
+  "where": [
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
+  "source": "臺北市環保局資源回收分類方式（bulky）",
+  "status": "unknown",
+  "icon": "ShoppingCart"
+ },
+ {
+  "id": "bicycle",
+  "name": {
+   "zh": "腳踏車",
+   "en": "Bicycle",
+   "vi": "Bicycle",
+   "id": "Bicycle"
+  },
+  "prompts": [
+   "an old bicycle",
+   "a rusty bike"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "bulky",
+  "sub": "bulky",
+  "kind": "bulky",
+  "where": [
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
+  "source": "臺北市環保局資源回收分類方式（bulky）",
+  "status": "unknown",
+  "icon": "Bike"
+ },
+ {
+  "id": "electric_fan",
+  "name": {
+   "zh": "電風扇",
+   "en": "Electric fan",
+   "vi": "Electric fan",
+   "id": "Electric fan"
+  },
+  "prompts": [
+   "an electric standing fan",
+   "a desk fan"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "bulky",
+  "sub": "bulky",
+  "kind": "bulky",
+  "where": [
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
+  "source": "臺北市環保局資源回收分類方式（bulky）",
+  "status": "unknown",
+  "icon": "CarFan"
+ },
+ {
+  "id": "gas_stove",
+  "name": {
+   "zh": "瓦斯爐",
+   "en": "Gas stove",
+   "vi": "Gas stove",
+   "id": "Gas stove"
+  },
+  "prompts": [
+   "a gas stove",
+   "a portable gas cooker"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "bulky",
+  "sub": "bulky",
+  "kind": "bulky",
+  "where": [
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "fire",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積；卡式瓦斯罐要先拿出來",
+  "source": "臺北市環保局資源回收分類方式（bulky）",
+  "status": "unknown",
+  "icon": "Flame"
+ },
+ {
+  "id": "water_dispenser",
+  "name": {
+   "zh": "大型飲水機",
+   "en": "Water dispenser",
+   "vi": "Water dispenser",
+   "id": "Water dispenser"
+  },
+  "prompts": [
+   "a water dispenser",
+   "a drinking water cooler"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "bulky",
+  "sub": "bulky",
+  "kind": "bulky",
+  "where": [
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
+  "source": "臺北市環保局資源回收分類方式（bulky）",
+  "status": "unknown",
+  "icon": "Droplets"
+ },
+ {
+  "id": "table_chair",
+  "name": {
+   "zh": "桌椅",
+   "en": "Table, chair",
+   "vi": "Table, chair",
+   "id": "Table, chair"
+  },
+  "prompts": [
+   "an old wooden table",
+   "a broken office chair",
+   "a dining chair"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "bulky",
+  "sub": "bulky",
+  "kind": "bulky",
+  "where": [
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
+  "source": "臺北市環保局資源回收分類方式（bulky）",
+  "status": "unknown",
+  "icon": "Armchair"
+ },
+ {
+  "id": "cabinet",
+  "name": {
+   "zh": "櫥櫃",
+   "en": "Cabinet",
+   "vi": "Cabinet",
+   "id": "Cabinet"
+  },
+  "prompts": [
+   "a wooden cabinet",
+   "a wardrobe",
+   "a bookshelf"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "bulky",
+  "sub": "bulky",
+  "kind": "bulky",
+  "where": [
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積",
+  "source": "臺北市環保局資源回收分類方式（bulky）",
+  "status": "unknown",
+  "icon": "Building"
+ },
+ {
+  "id": "tv",
+  "name": {
+   "zh": "電視機",
+   "en": "Television",
+   "vi": "Television",
+   "id": "Television"
+  },
+  "prompts": [
+   "an old television set",
+   "a flat screen TV"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "bulky",
+  "sub": "bulky",
+  "kind": "bulky",
+  "where": [
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積；也可以交給販賣業者回收",
+  "source": "臺北市環保局資源回收分類方式（bulky）",
+  "status": "unknown",
+  "icon": "DeviceTv"
+ },
+ {
+  "id": "fridge",
+  "name": {
+   "zh": "電冰箱",
+   "en": "Refrigerator",
+   "vi": "Refrigerator",
+   "id": "Refrigerator"
+  },
+  "prompts": [
+   "a refrigerator",
+   "an old fridge"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "bulky",
+  "sub": "bulky",
+  "kind": "bulky",
+  "where": [
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積；也可以交給販賣業者回收",
+  "source": "臺北市環保局資源回收分類方式（bulky）",
+  "status": "unknown",
+  "icon": "Fridge"
+ },
+ {
+  "id": "washing_machine",
+  "name": {
+   "zh": "洗衣機",
+   "en": "Washing machine",
+   "vi": "Washing machine",
+   "id": "Washing machine"
+  },
+  "prompts": [
+   "a washing machine",
+   "a front loading washer"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "bulky",
+  "sub": "bulky",
+  "kind": "bulky",
+  "where": [
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積；也可以交給販賣業者回收",
+  "source": "臺北市環保局資源回收分類方式（bulky）",
+  "status": "unknown",
+  "icon": "WashMachine"
+ },
+ {
+  "id": "air_conditioner",
+  "name": {
+   "zh": "冷氣機",
+   "en": "Air conditioner",
+   "vi": "Air conditioner",
+   "id": "Air conditioner"
+  },
+  "prompts": [
+   "a window air conditioner",
+   "an air conditioning unit"
+  ],
+  "group": "big",
+  "attrs": {},
+  "category": "bulky",
+  "sub": "bulky",
+  "kind": "bulky",
+  "where": [
+   "appointment"
+  ],
+  "steps": [],
+  "material": "none",
+  "rarity": 2,
+  "freq": 1,
+  "hazard": "none",
+  "adult_only": true,
+  "safety": "adult",
+  "notes": "先打電話給各區清潔隊約時間，免費清運；先拆解縮小體積；也可以交給販賣業者回收",
+  "source": "臺北市環保局資源回收分類方式（bulky）",
+  "status": "unknown",
+  "icon": "AirConditioning"
+ }
+]

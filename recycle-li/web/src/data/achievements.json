@@ -1,0 +1,11 @@
+[
+ { "id": "scanner", "title": "掃描小幫手／掃描隊長／掃描達人", "icon": "Camera", "event": "item_caught", "tiers": [10, 50, 150] },
+ { "id": "sorter", "title": "分類學徒／分類達人／分類大師", "icon": "Award", "event": "item_learned", "tiers": [5, 20, 60] },
+ { "id": "builder", "title": "小小建築師／里的設計師／綠色里長", "icon": "Building", "event": "building_built", "tiers": [1, 6, 12] },
+ { "id": "quiz_master", "title": "小博士／分類博士／回收博士", "icon": "School", "event": "quiz_correct", "tiers": [10, 50, 150] },
+ { "id": "explorer", "title": "破關小勇士／破關達人／地圖征服者", "icon": "Map", "event": "level_cleared", "tiers": [2, 5, 8] },
+ { "id": "finder", "title": "小小探險家／圖鑑收藏家／萬物博士", "icon": "Search", "event": "item_found", "tiers": [10, 30, 60] },
+ { "id": "reader", "title": "愛讀卡／分辨小偵探／分辨大偵探", "icon": "Book", "event": "card_read", "tiers": [5, 20, 50] },
+ { "id": "rare_hunter", "title": "稀有怪獵人", "icon": "Diamond", "event": "rare_caught", "tiers": [5] },
+ { "id": "safety_pro", "title": "安全小專家", "icon": "ShieldCheck", "event": "boss_recognized", "tiers": [5] }
+]

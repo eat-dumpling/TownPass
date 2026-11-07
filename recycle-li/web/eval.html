@@ -1,0 +1,14 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>pipeline eval</title></head>
+<body><pre id="out">running…</pre>
+<script type="module">
+  const opts = Object.fromEntries(new URLSearchParams(location.search))
+  const m = await import('./src/vision/evalPipeline.ts')
+  window.__ev = { status: 'running' }
+  try {
+    const r = await m.evalPipeline('./_eval/manifest.json', { select: opts.select !== '0', legacy: opts.legacy === '1', otherPrior: opts.other ? Number(opts.other) : undefined, only: opts.only ? opts.only.split(',') : undefined })
+    window.__ev = { status: 'done', r }
+    const { rows, ...sum } = r
+    document.getElementById('out').textContent = JSON.stringify(sum, null, 1)
+  } catch (e) { window.__ev = { status: 'error', e: String(e) }; document.getElementById('out').textContent = String(e) }
+</script></body></html>
