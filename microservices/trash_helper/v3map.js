@@ -426,8 +426,9 @@
       let loaded = 0;
       const layer = tileLayer = window.L.tileLayer(tiles.url || "https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: tiles.maxZoom || 19, attribution: tiles.attribution || "© OpenStreetMap contributors" });
       layer.on("tileload", () => { loaded++; });
-      // The first tile error before any tile has loaded means no background: switch to the list right away.
-      layer.on("tileerror", () => { if (loaded === 0 && !failed) goOffline(); });
+      // No background: several tile errors before any tile has loaded (one bad tile is not "offline").
+      let errors = 0;
+      layer.on("tileerror", () => { errors++; if (loaded === 0 && errors >= 3 && !failed) goOffline(); });
       layer.addTo(leafletMap);
       layerRoutes = window.L.layerGroup().addTo(leafletMap);
       layerStops = window.L.layerGroup().addTo(leafletMap);

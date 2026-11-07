@@ -161,13 +161,13 @@ class TPWebView extends StatelessWidget {
           return PermissionResponse(resources: camera, action: PermissionResponseAction.GRANT);
         },
         // 實機測試：除錯版只信任區網開發機的自簽憑證（相機要 https 才能用）；其他網站照系統的憑證檢查。
+        // 其他主機一定要回 null（= 系統預設檢查）：回 CANCEL 會讓每個 https 請求都被拒絕，
+        // 例如丟丟地圖的 OpenStreetMap 圖磚全部失敗，頁面就以為沒有網路。
         onReceivedServerTrustAuthRequest: (controller, challenge) async {
           final String host = challenge.protectionSpace.host;
-          return ServerTrustAuthResponse(
-            action: TPMicroserviceConfig.trustDevCertificate(host)
-                ? ServerTrustAuthResponseAction.PROCEED
-                : ServerTrustAuthResponseAction.CANCEL,
-          );
+          return TPMicroserviceConfig.trustDevCertificate(host)
+              ? ServerTrustAuthResponse(action: ServerTrustAuthResponseAction.PROCEED)
+              : null;
         },
         onGeolocationPermissionsShowPrompt: (controller, origin) async {
           // should be deal individually (ask for user agreement)

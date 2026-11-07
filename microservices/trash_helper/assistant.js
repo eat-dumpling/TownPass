@@ -621,7 +621,7 @@
       await sleep(450);
       const steps = [];
       const pin = document.querySelector(".place-pin.sel");
-      const navBtn = best ? h("button", { class: "btn btn-primary", type: "button", onclick: () => TH.openMap(best) }, icon("direction-sign", 18), t("vaNav")) : null;
+      const navBtn = best ? h("button", { class: "btn btn-primary", type: "button", onclick: () => TH.openMap(best) }, t("vaNav")) : null;
       const body = [];
       if (best) {
         body.push(h("p", { class: "va-co-strong", text: best.name }));
