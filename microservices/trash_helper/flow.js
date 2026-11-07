@@ -18,7 +18,7 @@
   Object.assign(window.TH_STRINGS.zh, {
     tonightWord: "今晚", commGeneral: "一般垃圾（專用袋）", commFood: "廚餘", commFlat: "平面回收", commRigid: "立體回收", commBattery: "電池另裝",
     wTitle: "第一次在臺北丟垃圾？",
-    wLead: "設定一次，之後只要勾選要丟的東西。",
+    wLead: "設定一次，之後點「這些東西要怎麼丟」就好。",
     wP1: "你家的垃圾車幾點來", wP2: "大型垃圾、電池找誰", wP3: "勾選後自動排好步驟",
     wStart: "開始設定", wSkip: "先逛逛",
     wWhere: "你住哪裡附近？", wWhereLead: "位置只在手機上使用，不會上傳。",
@@ -29,7 +29,7 @@
     wBags: "專用垃圾袋", wBagsText: "{district} {n} 家代售點",
     wNext: "下一步", wCommunity: "你住的地方有人代收垃圾嗎？", wCommunityLead: "例如大樓管理室或社區垃圾間。",
     wCommYes: "有，社區代收", wCommYesText: "照社區規定分類就好", wCommNo: "沒有，我自己追垃圾車", wCommNoText: "幫你算好時間地點",
-    wDone: "設定好了！", wDoneLead: "之後打開，勾選要丟的東西就好。", wRemind: "垃圾車來前 10 分鐘提醒我", wGo: "開始丟垃圾",
+    wDone: "設定好了！", wDoneLead: "之後打開，點「這些東西要怎麼丟」就好。", wRemind: "垃圾車來前 10 分鐘提醒我", wGo: "開始丟垃圾",
     wChange: "更改", hello0: "早安", hello1: "午安", hello2: "晚安",
     hQuestion: "今天要丟什麼？", hLead: "點選手上的東西，我們幫你排好步驟。",
     gDaily: "每天都會有的", gSometimes: "偶爾才有的", gBig: "大型的",
@@ -65,13 +65,13 @@
     spBulky: "預約清潔隊來載", spAsk: "先問清潔隊", spCall: "打電話", spTake: "便利商店、超市",
     spClothes: "舊衣回收箱", spPills: "藥局回收", spSpray: "戶外排空，再交回收車",
     stepDone: "做好了，下一步", allStepsDone: "全部完成", prevStep: "上一步",
-    doneLead: "下次打開，勾選要丟的東西就好。", seeAgain: "再看一次步驟",
+    doneLead: "下次打開，點「這些東西要怎麼丟」就好。", seeAgain: "再看一次步驟",
     s3OtherDay: "換一天", s1For: "要裝：", s1BuyMap: "附近哪裡買", s1ShopList: "全部代售點", s1BagRule: "回收物、廚餘不用專用袋。新北市專用袋也能用。", moreSizes: "容量", moreDetails: "看詳情", fullGuide: "完整說明", moreParts: "拆成哪些", moreHow: "怎麼分", moreOptions: "其他方式",
   });
   Object.assign(window.TH_STRINGS.en, {
     tonightWord: "Tonight", commGeneral: "General (official bag)", commFood: "Food waste", commFlat: "Flat recycling", commRigid: "3-D recycling", commBattery: "Batteries apart",
     wTitle: "New to trash in Taipei?",
-    wLead: "Set up once. After that, just tick what you're throwing out.",
+    wLead: "Set up once. After that, just tap “How do I throw these out?”",
     wP1: "When your truck comes", wP2: "Who takes bulky items and batteries", wP3: "Steps planned for you",
     wStart: "Set up", wSkip: "Just look around",
     wWhere: "Where do you live?", wWhereLead: "Your location is only used on this phone.",
@@ -82,7 +82,7 @@
     wBags: "Official bags", wBagsText: "{n} shops in {district}",
     wNext: "Next", wCommunity: "Does someone collect trash where you live?", wCommunityLead: "For example a building manager or trash room.",
     wCommYes: "Yes, the building collects", wCommYesText: "Just sort it their way", wCommNo: "No, I take it to the truck", wCommNoText: "We work out time and place",
-    wDone: "All set!", wDoneLead: "Next time, just tick what you're throwing out.", wRemind: "Remind me 10 min before my truck", wGo: "Start",
+    wDone: "All set!", wDoneLead: "Next time, just tap “How do I throw these out?”", wRemind: "Remind me 10 min before my truck", wGo: "Start",
     wChange: "Change", hello0: "Good morning", hello1: "Good afternoon", hello2: "Good evening",
     hQuestion: "What are you throwing out?", hLead: "Tap what you have. We'll put the steps in order.",
     gDaily: "Everyday", gSometimes: "Now and then", gBig: "Big items",
@@ -116,19 +116,20 @@
     spBulky: "Book a free squad pickup", spAsk: "Ask the cleaning squad", spCall: "Call", spTake: "Convenience store, supermarket",
     spClothes: "Clothes bin", spPills: "Pharmacy take-back", spSpray: "Empty outdoors, then recycling",
     stepDone: "Done, next", allStepsDone: "All done", prevStep: "Back",
-    doneLead: "Next time, just tick what you're throwing out.", seeAgain: "See the steps again",
+    doneLead: "Next time, just tap “How do I throw these out?”", seeAgain: "See the steps again",
     s3OtherDay: "Other days", s1For: "For: ", s1BuyMap: "Where to buy nearby", s1ShopList: "All shops", s1BagRule: "Recycling and food waste need no official bag. New Taipei bags are accepted too.", moreSizes: "Sizes", moreDetails: "Details", fullGuide: "Full guide", moreParts: "Parts", moreHow: "How to sort", moreOptions: "Other options",
   });
 
-  // The two guiding labels in the other languages (the generated i18n/<code>.js files load first).
-  for (const [code, pickRow, seeHow] of [
-    ["vi", "Những thứ này vứt thế nào?", "Xem cách vứt"],
-    ["id", "Bagaimana membuang barang-barang ini?", "Lihat cara buang"],
-    ["fil", "Paano itapon ang mga ito?", "Ipakita kung paano"],
-    ["th", "ของพวกนี้ทิ้งยังไง", "ดูวิธีทิ้ง"],
-    ["ko", "이 물건들은 어떻게 버리나요?", "버리는 방법 보기"],
-    ["ja", "これはどう捨てる？", "捨て方を見る"],
-  ]) if (window.TH_STRINGS[code]) Object.assign(window.TH_STRINGS[code], { hPickRow: pickRow, hSeeHow: seeHow });
+  // The guiding labels in the other languages (the generated i18n/<code>.js files load first),
+  // and the welcome / finish lines that point at the home row by its name.
+  for (const [code, pickRow, seeHow, lead, doneLead] of [
+    ["vi", "Những thứ này vứt thế nào?", "Xem cách vứt", "Cài đặt một lần. Sau đó chỉ cần chạm vào “Những thứ này vứt thế nào?”", "Lần sau mở ra, chỉ cần chạm vào “Những thứ này vứt thế nào?”"],
+    ["id", "Bagaimana membuang barang-barang ini?", "Lihat cara buang", "Atur sekali saja. Setelah itu, cukup ketuk “Bagaimana membuang barang-barang ini?”", "Lain kali, cukup ketuk “Bagaimana membuang barang-barang ini?”"],
+    ["fil", "Paano itapon ang mga ito?", "Ipakita kung paano", "Mag-set up nang isang beses. Pagkatapos, i-tap na lang ang “Paano itapon ang mga ito?”", "Sa susunod, i-tap na lang ang “Paano itapon ang mga ito?”"],
+    ["th", "ของพวกนี้ทิ้งยังไง", "ดูวิธีทิ้ง", "ตั้งค่าครั้งเดียว หลังจากนั้นแค่แตะ “ของพวกนี้ทิ้งยังไง”", "ครั้งหน้าเปิดแอป แล้วแค่แตะ “ของพวกนี้ทิ้งยังไง”"],
+    ["ko", "이 물건들은 어떻게 버리나요?", "버리는 방법 보기", "한 번만 설정하면, 다음부터는 ‘이 물건들은 어떻게 버리나요?’를 누르면 돼요.", "다음부터는 앱을 열고 ‘이 물건들은 어떻게 버리나요?’를 누르면 돼요."],
+    ["ja", "これはどう捨てる？", "捨て方を見る", "一度設定すれば、あとは「これはどう捨てる？」を押すだけです。", "次からは、「これはどう捨てる？」を押すだけです。"],
+  ]) if (window.TH_STRINGS[code]) Object.assign(window.TH_STRINGS[code], { hPickRow: pickRow, hSeeHow: seeHow, wLead: lead, wDoneLead: doneLead, doneLead });
 
   // ------------------------------------------------------------ local state
   const LS = {
