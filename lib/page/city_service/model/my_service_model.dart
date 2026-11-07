@@ -38,12 +38,12 @@ extension MyServiceIdExt on MyServiceItemId {
   MyServiceItem get item {
     return switch (this) {
       MyServiceItemId.trashHelper => MyServiceItem(
-          title: '垃圾生活助手',
-          description: 'Trash Helper：垃圾分類、今天能不能丟、第一次倒垃圾教學',
+          title: '丟丟',
+          description: '丟丟 TossTalk：垃圾分類、今天能不能丟、垃圾車幾點到',
           icon: Assets.svg.iconTrashOpen.svg(),
           category: MyServiceCategory.cityLife,
           destinationUrl: TrashHelper.url,
-          forceWebViewTitle: 'Trash Helper 垃圾生活助手',
+          forceWebViewTitle: '丟丟 TossTalk',
         ),
       MyServiceItemId.dedicatedLine => MyServiceItem(
           title: '1999',

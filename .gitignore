@@ -89,3 +89,7 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+# Trash Helper photo recognition (回收小里長): models and wasm are rebuilt by tools/trash_helper_vision/build.sh
+microservices/trash_helper/vendor/recycle-vision/models/
+microservices/trash_helper/vendor/recycle-vision/ort/
+microservices/trash_helper/vendor/recycle-vision/mediapipe/

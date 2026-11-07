@@ -19,6 +19,9 @@ BLOCKED = ('/server.py', '/data/source/', '/README.md')
 
 
 class Handler(SimpleHTTPRequestHandler):
+    # Module workers and wasm need the right types (photo recognition, vendor/recycle-vision/).
+    extensions_map = {**SimpleHTTPRequestHandler.extensions_map, '.mjs': 'text/javascript', '.js': 'text/javascript', '.wasm': 'application/wasm', '.json': 'application/json'}
+
     def do_GET(self):
         path = self.path.split('?', 1)[0]
         if any(path == b or path.startswith(b) for b in BLOCKED):

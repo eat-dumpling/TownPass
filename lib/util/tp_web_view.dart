@@ -1,13 +1,17 @@
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:town_pass/gen/assets.gen.dart';
 import 'package:town_pass/util/tp_app_bar.dart';
 import 'package:town_pass/util/tp_colors.dart';
+import 'package:town_pass/page/trash_helper/trash_local_server.dart';
+import 'package:town_pass/util/trash_helper.dart';
 import 'package:town_pass/util/web_message_handler/tp_web_message_listener.dart';
 
 class WebViewArgument {
@@ -96,15 +100,39 @@ class TPWebView extends StatelessWidget {
       body: TPInAppWebView(
         // Without this, Flutter's iOS platform-view gesture arbitration delays taps inside the page.
         preventGestureDelay: true,
-        onWebViewCreated: (controller) {
+        // Trash Helper loads OpenStreetMap tiles; OSM's tile policy asks apps to identify themselves.
+        initialSettings: url.startsWith(TrashHelper.url)
+            ? InAppWebViewSettings(
+                applicationNameForUserAgent: 'TownPass-TrashHelper/1.0',
+                // Live camera for the 回收小里長 recognition: inline video, no tap needed to start it.
+                allowsInlineMediaPlayback: true,
+                mediaPlaybackRequiresUserGesture: false,
+              )
+            : null,
+        // WebViews refuse the camera by default. Only Trash Helper's own page (main frame origin)
+        // gets it, and only the camera (never the microphone). The picture stays on the phone.
+        onPermissionRequest: (controller, request) async {
+          final camera = request.resources.where((r) => r == PermissionResourceType.CAMERA).toList();
+          if (camera.isEmpty || !TrashHelper.isTrustedSource(request.origin, true)) {
+            return PermissionResponse(resources: request.resources, action: PermissionResponseAction.DENY);
+          }
+          // Android's WebView needs the app's own camera permission first; iOS asks by itself.
+          if (Platform.isAndroid && !(await Permission.camera.request()).isGranted) {
+            return PermissionResponse(resources: request.resources, action: PermissionResponseAction.DENY);
+          }
+          return PermissionResponse(resources: camera, action: PermissionResponseAction.GRANT);
+        },
+        onWebViewCreated: (controller) async {
           webViewController.value = controller;
+          // The bundled Trash Helper page is served by the app; make sure that server is up.
+          if (url.startsWith(TrashHelper.url)) await TrashLocalServer.ensureRunning();
           try {
             controller.loadUrl(urlRequest: URLRequest(url: WebUri(url)));
           } catch (_) {
             controller.loadData(data: _failedToLoadUrlData(url: url));
           }
         },
-        onUpdateVisitedHistory: (_, __, ___) => _refreshCanGoBack(),
+        onUpdateVisitedHistory: (_, _, _) => _refreshCanGoBack(),
         onTitleChanged: (_, title) {
           appBarController.title.value = switch (forceTitle == null) {
             true => title,

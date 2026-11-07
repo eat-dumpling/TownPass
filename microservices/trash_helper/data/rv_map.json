@@ -1,0 +1,251 @@
+{
+ "note": "回收小里長 item id → Trash Helper rules.json item id. Items not listed in \"map\" fall back to \"group\" (Trash Helper group from the item's official Taipei category); the result page then shows the recognised name with that group's rules.",
+ "source": "recycle-li/web/src/data/items.json @ develop",
+ "map": {
+  "bubble_tea_cup": "cup",
+  "pet_bottle": "pet",
+  "aluminum_can": "can",
+  "tetra_pak": "carton",
+  "glass_bottle": "glass",
+  "paper_cup": "papercup",
+  "coconut_shell": "coconut",
+  "leftovers": "leftovers",
+  "fruit_peel": "peel",
+  "tea_leaves": "tea",
+  "paper_lunchbox": "lunchbox",
+  "chopsticks": "straw",
+  "newspaper": "paper",
+  "old_book": "books",
+  "tissue": "tissue",
+  "plastic_bag_clean": "bag",
+  "plastic_bag_dirty": "dirtybag",
+  "snack_bag": "snackbag",
+  "pudding_cup": "plastic",
+  "styrofoam_clean": "styrofoam",
+  "old_clothes": "clothes",
+  "old_shoes": "shoes",
+  "mask": "tissue",
+  "small_appliance": "phone",
+  "furniture": "furniture",
+  "battery": "battery",
+  "power_bank": "battery",
+  "light_tube": "bulb",
+  "broken_glass": "brokenglass",
+  "broken_ceramic": "ceramic",
+  "spray_can": "spray",
+  "cooking_oil": "oil",
+  "medicine": "pills",
+  "thermometer": "medicine",
+  "pesticide_container": "medicine",
+  "metal_utensils": "plastic",
+  "phone": "phone",
+  "tablet": "phone",
+  "hair_dryer": "phone",
+  "desk_lamp": "phone",
+  "telephone": "phone",
+  "video_player": "phone",
+  "usb_drive": "phone",
+  "vacuum": "phone",
+  "radio": "phone",
+  "mosquito_lamp": "phone",
+  "game_console": "phone",
+  "plastic_lamp": "phone",
+  "computer": "phone",
+  "mouse_keyboard": "phone",
+  "printer": "phone",
+  "plastic_misc": "plastic",
+  "acrylic": "plastic",
+  "plastic_hose": "plastic",
+  "toilet_seat": "plastic",
+  "foam_tableware": "styrofoam",
+  "fruit_net": "fruitnet",
+  "plush_toy": "toy",
+  "ball": "toy",
+  "wooden_lunchbox": "woodbox",
+  "copy_paper": "paper",
+  "magazine": "paper",
+  "paper_bag": "paper",
+  "towel": "towel",
+  "hat_socks": "towel",
+  "bedding": "towel",
+  "fabric": "towel",
+  "dirty_clothes": "towel",
+  "glossy_paper": "receipt",
+  "photo_paper": "receipt",
+  "food_shells": "peel",
+  "flowers_leaves": "peel",
+  "vegetables": "peel",
+  "meat": "leftovers",
+  "frozen_food": "leftovers",
+  "range_hood": "appliance",
+  "electric_fan": "appliance",
+  "gas_stove": "appliance",
+  "water_dispenser": "appliance",
+  "tv": "appliance",
+  "fridge": "appliance",
+  "washing_machine": "appliance",
+  "air_conditioner": "appliance",
+  "mattress": "furniture",
+  "bed_frame": "furniture",
+  "cart": "furniture",
+  "bicycle": "furniture",
+  "table_chair": "furniture",
+  "cabinet": "furniture",
+  "luggage": "furniture"
+ },
+ "fallback": {
+  "big_bone": {
+   "name": {
+    "zh": "大骨頭",
+    "en": "Big bone"
+   },
+   "group": "general",
+   "note": "",
+   "source": "臺北市 115 年家戶廚餘新制（大骨頭為一般垃圾）"
+  },
+  "eggshell": {
+   "name": {
+    "zh": "蛋殼",
+    "en": "Eggshell"
+   },
+   "group": "verify",
+   "note": "回收一點通仍用舊用語「堆肥廚餘」，新制頁沒有點名；確認前請洽清潔隊",
+   "source": "回收一點通：堆肥廚餘－蛋殼"
+  },
+  "seashell": {
+   "name": {
+    "zh": "貝殼",
+    "en": "Seashell"
+   },
+   "group": "verify",
+   "note": "廚餘新制頁與回收一點通說法不同；確認前請洽清潔隊",
+   "source": "115 年廚餘新制；回收一點通"
+  },
+  "styrofoam_dirty": {
+   "name": {
+    "zh": "髒保麗龍",
+    "en": "Dirty styrofoam"
+   },
+   "group": "verify",
+   "note": "查無明文；確認前請洽清潔隊",
+   "source": "—"
+  },
+  "toothbrush": {
+   "name": {
+    "zh": "牙刷",
+    "en": "Toothbrush"
+   },
+   "group": "general",
+   "note": "電動牙刷是小家電，要先取出電池",
+   "source": "回收一點通：牙刷為一般垃圾；電動牙刷為廢家電"
+  },
+  "lighter": {
+   "name": {
+    "zh": "打火機",
+    "en": "Lighter"
+   },
+   "group": "rigid",
+   "note": "在空曠處排空氣體，單獨交回收車",
+   "source": "回收一點通：廢塑膠（打火機）"
+  },
+  "needle": {
+   "name": {
+    "zh": "針頭、針筒",
+    "en": "Needle, syringe"
+   },
+   "group": "verify",
+   "note": "裝進硬質、不易被刺穿的容器並標示，交醫療院所或居家廢棄藥物檢收站",
+   "source": "食藥署；居家廢棄藥物檢收站"
+  },
+  "cd_disc": {
+   "name": {
+    "zh": "光碟片",
+    "en": "CD / DVD disc"
+   },
+   "group": "hazard",
+   "note": "光碟片屬其他類；CD 外殼是塑膠類",
+   "source": "臺北市環保局資源回收分類方式：其他類列有光碟片"
+  },
+  "tire": {
+   "name": {
+    "zh": "廢輪胎",
+    "en": "Tire"
+   },
+   "group": "rigid",
+   "note": "很重，請大人處理；輪胎內胎是一般垃圾",
+   "source": "臺北市環保局資源回收分類方式（r3d_general）"
+  },
+  "cassette_tape": {
+   "name": {
+    "zh": "錄音帶、錄影帶",
+    "en": "Cassette, video tape"
+   },
+   "group": "rigid",
+   "note": "請抽除磁帶（磁帶是一般垃圾）",
+   "source": "臺北市環保局資源回收分類方式（r3d_general）"
+  },
+  "doormat": {
+   "name": {
+    "zh": "腳踏墊、地毯",
+    "en": "Doormat, carpet"
+   },
+   "group": "general",
+   "note": "大塊的要剪小再裝袋",
+   "source": "臺北市環保局資源回收分類方式（non_recyclable）"
+  },
+  "sponge": {
+   "name": {
+    "zh": "泡棉、海綿",
+    "en": "Sponge, foam padding"
+   },
+   "group": "general",
+   "note": "",
+   "source": "臺北市環保局資源回收分類方式（non_recyclable）"
+  },
+  "whiteboard": {
+   "name": {
+    "zh": "白板",
+    "en": "Whiteboard"
+   },
+   "group": "general",
+   "note": "",
+   "source": "臺北市環保局資源回收分類方式（non_recyclable）"
+  },
+  "inner_tube": {
+   "name": {
+    "zh": "輪胎內胎",
+    "en": "Inner tube"
+   },
+   "group": "general",
+   "note": "",
+   "source": "臺北市環保局資源回收分類方式（non_recyclable）"
+  },
+  "scooter_parts": {
+   "name": {
+    "zh": "機車車殼、座墊",
+    "en": "Scooter body panel, seat"
+   },
+   "group": "general",
+   "note": "很重，請大人處理",
+   "source": "臺北市環保局資源回收分類方式（non_recyclable）"
+  },
+  "lubricant": {
+   "name": {
+    "zh": "潤滑油",
+    "en": "Lubricant oil"
+   },
+   "group": "hazard",
+   "note": "用容器裝好蓋緊",
+   "source": "臺北市環保局資源回收分類方式（other_hazard）"
+  },
+  "misc_trash": {
+   "name": {
+    "zh": "原子筆、梳子等小東西",
+    "en": "Pens, combs and small items"
+   },
+   "group": "general",
+   "note": "原子筆、筆芯、眉筆、蠟筆、梳子、耳塞、浴帽、手套都是一般垃圾；只剩外殼筆桿的原子筆是塑膠回收",
+   "source": "臺北市環保局「回收一點通」（原子筆、原子筆筆芯、眉筆、蠟筆、按摩梳、矽膠耳塞、防水浴帽、手套：一般垃圾）"
+  }
+ }
+}

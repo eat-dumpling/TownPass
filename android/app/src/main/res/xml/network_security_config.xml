@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Trash Helper is bundled in the app and served on the device's own loopback address.
+     Only that address may use plain HTTP. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+    <domain-config cleartextTrafficPermitted="true">
+        <domain>127.0.0.1</domain>
+    </domain-config>
+</network-security-config>
