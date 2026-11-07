@@ -109,7 +109,13 @@ cd microservices/trash_helper && firebase deploy --only hosting --project taipei
 
 - 兩個微服務：**AGPL-3.0**（`recycle-li/LICENSE`、`microservices/trash_helper/LICENSE`）
 - 台北通本身：GPL-3.0（根目錄 `LICENSE`）
-- 主辦指定的授權聲明：**待補**（依競賽須知 115.08.27 版）
+
+本作品為 2026 臺北秋季程式設計節「城市通微服務大黑客松」參賽作品，依競賽規則：
+
+- 主辦單位及所屬機關得依照 AGPL 條款規範使用本作品。
+- 本作品授權維持 AGPL-3.0，且自得獎公布起 1 年內不擅自下架。
+- 本作品沒有侵害他人智慧財產權或違反法令的情事。
+- 若獲獎，授權主辦單位使用參賽成果，並配合與城市通開源程式碼整合。
 
 ---
 
