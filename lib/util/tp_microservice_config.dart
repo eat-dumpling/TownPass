@@ -16,7 +16,7 @@ const String trashHelperUrl = String.fromEnvironment(
 );
 
 /// 允許在 WebView 內使用相機的網站（只給相機，不給麥克風）。
-/// 正式網址固定列出；除錯版另外允許本機與區網，方便連到開發機。
+/// 正式網址固定列出；除錯版與 Profile 版另外允許本機與區網，方便實機連到開發機。
 abstract class TPMicroserviceConfig {
   static final Set<String> _cameraHosts = {
     Uri.parse(recycleLiUrl).host,
@@ -26,9 +26,9 @@ abstract class TPMicroserviceConfig {
     'recycle-li.firebaseapp.com',
   };
 
-  /// 除錯版連到開發機（區網、自簽 https 憑證）時信任憑證，正式版一律照系統規則。
+  /// 除錯版與 Profile 版（實機測試用）連到開發機（區網、自簽 https 憑證）時信任憑證；正式版（Release）一律照系統規則。
   static bool trustDevCertificate(String host) {
-    if (!kDebugMode) return false;
+    if (kReleaseMode) return false;
     return host == 'localhost' ||
         host == '127.0.0.1' ||
         host.startsWith('192.168.') ||
@@ -39,7 +39,7 @@ abstract class TPMicroserviceConfig {
   static bool canUseCamera(WebUri origin) {
     final String host = origin.host;
     if (_cameraHosts.contains(host)) return true;
-    if (!kDebugMode) return false;
+    if (kReleaseMode) return false; // 除錯版、Profile 版另外允許本機與區網
     return host == 'localhost' ||
         host == '127.0.0.1' ||
         host == '10.0.2.2' ||
