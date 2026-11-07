@@ -1,27 +1,27 @@
 <!doctype html>
-<!-- README 主圖原始檔。輸出：overview.png（見 docs/readme/README.md）。截圖來自線上版。 -->
+<!-- README 主圖原始檔，用 Chrome headless 輸出 overview.png。screen-scan.png 是 iPhone 實機截圖（背景已模糊），其他兩張截自本機開發版。 -->
 <html lang="zh-Hant-TW"><head><meta charset="utf-8">
 <style>
 @font-face { font-family: PF; src: url(../../fonts/PingFangTC-Regular.otf); font-weight: 400; }
 @font-face { font-family: PF; src: url(../../fonts/PingFangTC-Semibold.otf); font-weight: 600; }
 * { box-sizing: border-box; }
 body { margin: 0; width: 1600px; height: 900px; font-family: PF, sans-serif; color: #171B1D; background: #F1F3F4; overflow: hidden; }
-.wrap { display: grid; grid-template-columns: 760px 1fr; height: 100%; }
-.left { padding: 88px 0 0 88px; }
+.wrap { display: grid; grid-template-columns: 680px 1fr; height: 100%; }
+.left { padding: 104px 0 0 88px; }
 .tag { display: inline-block; padding: 6px 18px; border-radius: 20px; background: #5AB4C5; color: #fff; font-size: 24px; font-weight: 600; }
-h1 { margin: 22px 0 10px; font-size: 64px; line-height: 1.2; font-weight: 600; }
-.lead { margin: 0 0 40px; font-size: 26px; color: #475259; }
+h1 { margin: 22px 0 10px; font-size: 60px; line-height: 1.2; font-weight: 600; }
+.lead { margin: 0 0 40px; font-size: 22px; color: #475259; }
 .label { font-size: 20px; color: #738995; margin: 0 0 12px; }
 .row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 34px; }
-.chip { padding: 10px 20px; border-radius: 14px; background: #fff; font-size: 26px; font-weight: 600; border: 2px solid #E3E7E9; }
+.chip { padding: 9px 16px; border-radius: 14px; background: #fff; font-size: 22px; font-weight: 600; border: 2px solid #E3E7E9; }
 .chip.d { background: #DBF1F5; border-color: #DBF1F5; color: #22474E; }
 .right { position: relative; }
-.phone { position: absolute; top: 70px; width: 340px; height: 736px; border-radius: 48px; background: #171B1D; padding: 12px; box-shadow: 0 24px 48px rgba(23,27,29,.2); }
-.phone img { width: 316px; height: 712px; border-radius: 38px; object-fit: cover; object-position: top; display: block; }
-.p1 { left: 40px; } .p2 { left: 430px; }
-.cap { position: absolute; top: 820px; width: 340px; text-align: center; font-size: 22px; color: #30383D; font-weight: 600; }
+.phone { position: absolute; top: 112px; width: 270px; height: 584px; border-radius: 40px; background: #171B1D; padding: 10px; box-shadow: 0 24px 48px rgba(23,27,29,.2); }
+.phone img { width: 250px; height: 564px; border-radius: 31px; object-fit: cover; object-position: top; display: block; }
+.p1 { left: 10px; } .p2 { left: 310px; } .p3 { left: 610px; }
+.cap { position: absolute; top: 720px; width: 270px; text-align: center; font-size: 22px; color: #30383D; font-weight: 600; }
 .cap span { display: block; font-size: 18px; font-weight: 400; color: #738995; }
-.c1 { left: 40px; } .c2 { left: 430px; }
+.c1 { left: 10px; } .c2 { left: 310px; } .c3 { left: 610px; }
 </style></head><body>
 <div class="wrap">
   <div class="left">
@@ -34,10 +34,12 @@ h1 { margin: 22px 0 10px; font-size: 64px; line-height: 1.2; font-weight: 600; }
     <div class="row"><span class="chip d">多語服務</span><span class="chip d">易讀設計</span><span class="chip d">圖像化指引</span><span class="chip d">分齡介面</span></div>
   </div>
   <div class="right">
-    <div class="phone p1"><img src="screen-recycle-li.png" alt=""></div>
-    <div class="phone p2"><img src="screen-diudiu.png" alt=""></div>
-    <div class="cap c1">回收小里長<span>給兒童：注音、拍一拍、拖進桶</span></div>
-    <div class="cap c2">丟丟 TossTalk<span>給外籍人士與新住民：8 種語言</span></div>
+    <div class="phone p1"><img src="screen-scan.png" alt=""></div>
+    <div class="phone p2"><img src="screen-recycle-li.png" alt=""></div>
+    <div class="phone p3"><img src="screen-diudiu.png" alt=""></div>
+    <div class="cap c1">拍一拍就知道<span>在手機上辨識，不上傳</span></div>
+    <div class="cap c2">回收小里長<span>給兒童：注音、拖進桶</span></div>
+    <div class="cap c3">丟丟 TossTalk<span>給外籍人士：8 種語言</span></div>
   </div>
 </div>
 </body></html>

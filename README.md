@@ -103,7 +103,7 @@ cd microservices/trash_helper && firebase deploy --only hosting --project taipei
   - 版本、雜湊與準確率見 [recycle-li/README.md](recycle-li/README.md)「AI 與模型揭露」
 - **語音提問**（丟丟）：使用手機作業系統內建的語音辨識，只在按下麥克風後聆聽。
 - **開發輔助**：Claude Code、Codex 協助撰寫程式、文件與翻譯；回收小里長「我的里」插圖在開發時以影像生成產生，記錄在其 README「插圖來源」。
-- **本頁主圖**：`docs/readme/overview.html` 排版、截圖取自線上版，沒有使用生成圖片。
+- **本頁主圖**：`docs/readme/overview.html` 排版；掃描畫面是 iPhone 實機截圖（背景已模糊），其他兩張截自開發版，沒有使用生成圖片。
 
 ## 授權 / License
 
