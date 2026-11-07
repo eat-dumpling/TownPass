@@ -67,6 +67,9 @@
   const pairT = key => { const p = pairLang(); if (!p) return undefined; const s = tIn(p, key); return typeof s === "string" && s !== t(key) ? s : undefined; };
   const pairOf = obj => { const p = pairLang(); if (!p || !obj) return undefined; const s = LIn(p, obj); return s && s !== L(obj) ? s : undefined; };
   function setPair(code) { store.set("th.pair", code || ""); render(); }
+  // Run a synchronous text builder in another language (t, L and fmtWhen follow it), e.g. to show
+  // the voice assistant's reply in the side-by-side language too.
+  function inLang(code, fn) { const prev = lang; lang = code; try { return fn(); } finally { lang = prev; } }
 
   function L(obj) {
     if (!obj) return "";
@@ -433,7 +436,7 @@
     dSel.addEventListener("change", draw);
     q.addEventListener("input", draw);
     return [
-      h("p", { class: "lead", text: t("buyLead") }),
+      h("p", { class: "lead", text: t("buyLead"), "data-pair": TH.pairT("buyLead") }),
       dSel, h("label", { class: "search v3", style: "margin-top:8px" }, I("search", 18), q),
       count, list,
       sourceFooter([sourceById("vendors")], vendorsData && vendorsData.source.sourceModified ? t("dataVersion", { v: vendorsData.source.sourceModified.slice(0, 10) }) : null),
@@ -660,7 +663,7 @@
   const TH = window.TH = {
     h, t, L, go, fill, btn, SCH, views: {},
     rules: () => rules, whenRulesReady: () => loadRules(), lang: () => lang, setLang, depth: () => depth,
-    pairLang, setPair, pairT, pairOf, tIn, LIn,
+    pairLang, setPair, pairT, pairOf, tIn, LIn, inLang,
     loadStops, loadDrops, loadVendors, vendorsData: () => vendorsData, loadFavs, favOp, applyFavReply, favState: () => favState, isFav,
     stopsData: () => stopsData, dropData: () => dropData, visitsOf, haversine, itemById, sourceById,
     lastPosition: () => lastPosition, setLastPosition: p => { lastPosition = p; }, getLocation,

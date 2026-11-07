@@ -68,7 +68,12 @@
 
   function viewScan() {
     TH.setHeader(null);
-    const lang = TH.lang() === "en" ? "en" : "zh";
+    // The module labels in Chinese or English; other languages get English on the camera overlay
+    // and their own names in the list and the choice sheet (TH.rvLocalize, sort.js).
+    const lang = TH.lang() === "zh" ? "zh" : "en";
+    let loc = null;
+    if (TH.lang() !== "zh" && TH.lang() !== "en" && TH.rvLocalize) TH.rvLocalize().then(f => { loc = f; }).catch(() => {});
+    const local = f => loc ? { ...f, ...loc(f.id, f.name, f.kindLabel) } : f;
     const video = h("video", { playsinline: true, muted: true, autoplay: true, "aria-hidden": "true" });
     const overlay = h("canvas", { class: "rv-overlay", "aria-hidden": "true" });
     const placeholder = h("div", { class: "rv-placeholder" }, icon("camera", 56));
@@ -83,7 +88,7 @@
     fill(root,
       h("div", { class: "cam-head" },
         h("button", { class: "icon-round dark", type: "button", "aria-label": t("close"), onclick: () => (TH.depth() > 0 ? history.back() : go("", { replace: true })) }, icon("x", 22)),
-        h("h1", { text: t("scanTitleV3") }), h("span", { style: "width:44px" })),
+        h("h1", { text: t("scanTitleV3"), "data-pair": TH.pairT("scanTitleV3") }), h("span", { style: "width:44px" })),
       h("div", { class: "viewfinder live" }, placeholder, video, overlay),
       hint, list,
       h("div", { class: "cam-controls" },
@@ -93,7 +98,7 @@
       h("p", { class: "cam-privacy", text: t("scanPrivacy") }),
       fileIn);
 
-    const drawList = () => fill(list, found.slice(0, 3).map(f => h("button", { class: "rv-card", type: "button", style: `--k:${f.color}`, onclick: () => openFound(map, f.id) },
+    const drawList = () => fill(list, found.slice(0, 3).map(local).map(f => h("button", { class: "rv-card", type: "button", style: `--k:${f.color}`, onclick: () => openFound(map, f.id) },
       foundArt(map, f.id, 40),
       h("span", { class: "grow" }, h("b", { text: (f.sure ? "" : t("scanMaybe") + " ") + f.name }), h("small", { text: f.kindLabel })),
       icon("chev", 18))));
@@ -115,7 +120,7 @@
     function chooseSheet(cands) {
       const sureOne = cands.length === 1 && cands[0].sure;
       TH.sheet(sureOne ? t("isThisIt") : t("notSureWhich"),
-        h("div", { class: "cand3" }, cands.slice(0, 3).map((c, i) => h("button", { class: "cand-tile" + (i === 0 ? " top" : ""), type: "button", onclick: () => openFound(map, c.id) },
+        h("div", { class: "cand3" }, cands.slice(0, 3).map(local).map((c, i) => h("button", { class: "cand-tile" + (i === 0 ? " top" : ""), type: "button", onclick: () => openFound(map, c.id) },
           foundArt(map, c.id, 52), h("span", { class: "cand-name", text: c.name }), h("span", { class: "caption", text: `${c.kindLabel}・${Math.round(c.p * 100)}%` })))),
         btn("btn-secondary wide", t("noneOfThese"), () => go("pick")));
     }

@@ -14,20 +14,10 @@
   // "19:30" today, "週一 19:30" / "Mon 19:30" otherwise.
   const compactWhen = v => SCH.comesToday(v) ? hhmm(v.arriveMs) : `${t("dayShort", { d: t("days")[SCH.taipeiParts(v.arriveMs).day] })} ${hhmm(v.arriveMs)}`;
 
-  // Strings used only by the route lines and the no-collection-day fallback.
-  const LOCAL = {
-    en: { trucks: "Trucks", takesToday: "Today", takesNext: "No pickup today · {day}", tFlat: "Recycling, flat", tRigid: "Recycling, 3-D", tHazard: "Batteries, bulbs", offToday: "No pickup today · {day}", routeNote: "Numbered dots show this truck's stops in timetable order. The city data has no street path or live position.", routeName: "Route {route} · {trip}",
-      routeTitle: "This truck · {n} stops", routeDay: "", routeNow: "Now near stop {n}", routeBefore: "Starts {time}", routeDone: "Done for today", routeHere: "you", routeEstimate: "",
-      foot: "Scheduled times, not live", today: "Today", details: "More" },
-    zh: { trucks: "垃圾車", takesToday: "今天收", takesNext: "今天停收・{day}收", tFlat: "回收・平面類", tRigid: "回收・立體類", tHazard: "電池・燈管", offToday: "今天停收・看{day}", routeNote: "編號圓點是這台車依班表的停靠順序。市府資料沒有行駛路徑和即時位置。", routeName: "路線 {route}・{trip}",
-      routeTitle: "這台車停 {n} 站", routeDay: "", routeNow: "現在約在第 {n} 站", routeBefore: "{time} 開始收", routeDone: "今天已收完", routeHere: "這裡", routeEstimate: "",
-      foot: "預定時間，非即時位置", today: "今天", details: "更多" },
-  };
-  const tl = (k, vars) => {
-    let s = (LOCAL[TH.lang()] || LOCAL.en)[k] || LOCAL.en[k];
-    for (const [a, b] of Object.entries(vars || {})) s = s.split(`{${a}}`).join(b);
-    return s;
-  };
+  // Strings used only by the route lines and the no-collection-day fallback (UI strings, so every language gets them).
+  Object.assign(window.TH_STRINGS.en, { mp_trucks: "Trucks", mp_takesToday: "Today", mp_takesNext: "No pickup today · {day}", mp_tFlat: "Recycling, flat", mp_tRigid: "Recycling, 3-D", mp_tHazard: "Batteries, bulbs", mp_offToday: "No pickup today · {day}", mp_routeNote: "Numbered dots show this truck's stops in timetable order. The city data has no street path or live position.", mp_routeName: "Route {route} · {trip}", mp_routeTitle: "This truck · {n} stops", mp_routeDay: "", mp_routeNow: "Now near stop {n}", mp_routeBefore: "Starts {time}", mp_routeDone: "Done for today", mp_routeHere: "you", mp_routeEstimate: "", mp_foot: "Scheduled times, not live", mp_today: "Today", mp_details: "More" });
+  Object.assign(window.TH_STRINGS.zh, { mp_trucks: "垃圾車", mp_takesToday: "今天收", mp_takesNext: "今天停收・{day}收", mp_tFlat: "回收・平面類", mp_tRigid: "回收・立體類", mp_tHazard: "電池・燈管", mp_offToday: "今天停收・看{day}", mp_routeNote: "編號圓點是這台車依班表的停靠順序。市府資料沒有行駛路徑和即時位置。", mp_routeName: "路線 {route}・{trip}", mp_routeTitle: "這台車停 {n} 站", mp_routeDay: "", mp_routeNow: "現在約在第 {n} 站", mp_routeBefore: "{time} 開始收", mp_routeDone: "今天已收完", mp_routeHere: "這裡", mp_routeEstimate: "", mp_foot: "預定時間，非即時位置", mp_today: "今天", mp_details: "更多" });
+  const tl = (k, vars) => t("mp_" + k, vars);
 
   // Small time labels next to the selected trip's stops (Leaflet's default tooltip is too big here).
   if (!document.getElementById("route-time-css")) {
@@ -160,10 +150,10 @@
     const sub = p.layer === "pills" ? t(p.hospital ? "placeHospital" : "placePharmacy") : p.layer === "clothes" ? `${t("placeOrg")} ${p.org}` : null;
     TH.sheet(p.name,
       h("div", { class: "place-head" }, h("span", { class: `place-art place-${p.layer}` }, icon(L.icon, 24)),
-        h("span", { class: "grow" }, h("strong", { text: t(L.label) }), sub ? h("span", { class: "caption dark", text: sub }) : null),
+        h("span", { class: "grow" }, h("strong", { text: t(L.label), "data-pair": TH.pairT(L.label) }), sub ? h("span", { class: "caption dark", text: sub }) : null),
         a ? h("span", { class: "caption dark", text: awayText(a, p) }) : null),
       p.address ? h("p", { class: "place-addr" }, icon("map-pin", 16), h("span", { text: p.address.replace(/^臺北市/, "") })) : null,
-      h("p", { class: "caption dark", text: t(L.note) }),
+      h("p", { class: "caption dark", text: t(L.note), "data-pair": TH.pairT(L.note) }),
       p.approx ? h("p", { class: "caption", text: t("placeApprox") }) : null,
       h("div", { class: "sheet-actions" },
         btn("btn-primary grow", t("navGoogle"), () => TH.openMap(p)),
@@ -525,8 +515,8 @@
       const near = first ? data.stops.filter(s => !TH.isFav(s.id) && TH.haversine(first, s) < 700)
         .map(s => ({ s, v: TH.visitsOf(s)[0] })).filter(x => x.v && SCH.comesToday(x.v)).sort((a, b) => a.v.arriveMs - b.v.arriveMs).slice(0, 5) : [];
       fill(out,
-        h("h3", { class: "section-title", text: t("myFavs") }), cards,
-        near.length ? h("h3", { class: "section-title", text: t("tonightCan") }) : null,
+        h("h3", { class: "section-title", text: t("myFavs"), "data-pair": TH.pairT("myFavs") }), cards,
+        near.length ? h("h3", { class: "section-title", text: t("tonightCan"), "data-pair": TH.pairT("tonightCan") }) : null,
         near.length ? h("div", { class: "near-list" }, near.map(x => h("div", { class: "near-row" },
           h("button", { class: "near-row-main", type: "button", onclick: () => stopSheet(x.s) }, h("b", { text: hhmm(x.v.arriveMs) }), h("span", { class: "grow", text: shortAddr(x.s) }),
             h("span", { class: "caption", text: pos ? t("minShort", { n: walkMin(pos, x.s) }) : `${Math.round(TH.haversine(first, x.s))} m` })),

@@ -88,10 +88,10 @@
   function bagSheet() {
     sheet(t("bagsTitle"),
       h("div", { class: "bag-rows" },
-        h("div", { class: "bag-row" }, catArt("general", 36), h("span", { class: "grow", text: t("cat_general") }), h("strong", { class: "accent", text: t("needBag") })),
+        h("div", { class: "bag-row" }, catArt("general", 36), h("span", { class: "grow", text: t("cat_general") }), h("strong", { class: "accent", text: t("needBag"), "data-pair": TH.pairT("needBag") })),
         h("div", { class: "bag-row" }, catArt("recycle", 36), h("span", { class: "grow", text: t("cat_recycle") }), h("span", { class: "muted", text: t("noBag") })),
         h("div", { class: "bag-row" }, catArt("food", 36), h("span", { class: "grow", text: t("cat_food") }), h("span", { class: "muted", text: t("noBag") }))),
-      h("p", { class: "caption dark", text: t("fineNote") }),
+      h("p", { class: "caption dark", text: t("fineNote"), "data-pair": TH.pairT("fineNote") }),
       h("div", { class: "sheet-actions" }, btn("btn-primary grow", t("s1Buy"), () => go("buy")), btn("btn-secondary grow", t("sizesPrices"), () => go("bags"))));
   }
 
@@ -118,7 +118,7 @@
   function musicSheet() {
     const eliseBtn = h("button", { class: "play-row", type: "button", onclick: () => playElise(eliseBtn) },
       h("span", { class: "play-dot" }, icon("play", 16)), h("span", { class: "grow", text: t("musicElise") }));
-    sheet(t("musicTitle"), h("p", { class: "caption dark", text: t("musicLead") }), eliseBtn,
+    sheet(t("musicTitle"), h("p", { class: "caption dark", text: t("musicLead"), "data-pair": TH.pairT("musicLead") }), eliseBtn,
       h("div", { class: "play-row disabled" }, h("span", { class: "play-dot" }, icon("play", 16)), h("span", { class: "grow", text: t("musicMaiden") }), h("span", { class: "caption", text: t("musicNA") })));
   }
 
@@ -186,7 +186,7 @@
       }
       if (item.warn) out.push(h("div", { class: "warn-pill" }, icon("alert-triangle", 16), h("span", { text: L(item.warn), "data-pair": TH.pairOf(item.warn) })));
       if (item.verify) out.push(TH.verifyBox(L(item.verify)));
-      if (item.components) out.push(h("section", { class: "card" }, h("h3", { class: "card-title", text: t("secParts") }), h("ul", { class: "parts" }, item.components.map(TH.componentCard))));
+      if (item.components) out.push(h("section", { class: "card" }, h("h3", { class: "card-title", text: t("secParts"), "data-pair": TH.pairT("secParts") }), h("ul", { class: "parts" }, item.components.map(TH.componentCard))));
       if (cat === "verify") out.push(TH.bookingPanel());
       out.push(nextTruckCard(cat));
       if (cat !== "verify") out.push(h("div", { class: "actions" }, btn("btn-primary", t("takeMe"), () => go("map/" + (TH.placeLayerOf(item) || cat)))));

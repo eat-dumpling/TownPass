@@ -18,6 +18,8 @@ window.TH_LANGS = [
 // Translated rules content per language, keyed by the English source text (filled by i18n/<code>.js).
 window.TH_CONTENT = window.TH_CONTENT || {};
 window.TH_VOICE = window.TH_VOICE || {};
+// Photo-recognition item names and notes per language (回收小里長 rv_items), keyed by item id.
+window.TH_RVTXT = window.TH_RVTXT || {};
 
 window.TH_STRINGS = {
   en: {

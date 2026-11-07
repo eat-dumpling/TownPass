@@ -16,6 +16,7 @@
 
   // ------------------------------------------------------------ strings
   Object.assign(window.TH_STRINGS.zh, {
+    tonightWord: "今晚", commGeneral: "一般垃圾（專用袋）", commFood: "廚餘", commFlat: "平面回收", commRigid: "立體回收", commBattery: "電池另裝",
     wTitle: "第一次在臺北丟垃圾？",
     wLead: "設定一次，之後只要勾選要丟的東西。",
     wP1: "你家的垃圾車幾點來", wP2: "大型垃圾、電池找誰", wP3: "勾選後自動排好步驟",
@@ -68,6 +69,7 @@
     s3OtherDay: "換一天", s1For: "要裝：", s1BuyMap: "附近哪裡買", s1ShopList: "全部代售點", s1BagRule: "回收物、廚餘不用專用袋。新北市專用袋也能用。", moreSizes: "容量", moreDetails: "看詳情", fullGuide: "完整說明", moreParts: "拆成哪些", moreHow: "怎麼分", moreOptions: "其他方式", stepDoneTag: "完成",
   });
   Object.assign(window.TH_STRINGS.en, {
+    tonightWord: "Tonight", commGeneral: "General (official bag)", commFood: "Food waste", commFlat: "Flat recycling", commRigid: "3-D recycling", commBattery: "Batteries apart",
     wTitle: "New to trash in Taipei?",
     wLead: "Set up once. After that, just tick what you're throwing out.",
     wP1: "When your truck comes", wP2: "Who takes bulky items and batteries", wP3: "Steps planned for you",
@@ -136,7 +138,7 @@
   const fmtDist = m => m < 1000 ? `${Math.round(m / 10) * 10} m` : `${(m / 1000).toFixed(1)} km`;
   const whenWord = v => {
     const now = Date.now();
-    if (SCH.comesToday(v, now)) return SCH.taipeiParts(v.arriveMs).minutes >= 17 * 60 ? (TH.lang() === "zh" ? "今晚" : "Tonight") : t("today");
+    if (SCH.comesToday(v, now)) return SCH.taipeiParts(v.arriveMs).minutes >= 17 * 60 ? t("tonightWord") : t("today");
     if (SCH.comesToday(v, now - 86400000)) return t("tomorrow");
     return t("dayShort", { d: t("days")[SCH.taipeiParts(v.arriveMs).day] });
   };
@@ -187,7 +189,7 @@
     if (step === 0) {
       return wrap(
         h("div", { class: "w-hero", "aria-hidden": "true" }, h("span", { class: "w-hero-main" }, icon("truck", 64)), h("span", { class: "w-badge b1" }, icon("shopping-bag", 22)), h("span", { class: "w-badge b2" }, icon("recycle", 22)), h("span", { class: "w-badge b3" }, icon("leaf", 22))),
-        h("h1", { class: "w-title", text: t("wTitle") }), h("p", { class: "lead", text: t("wLead") }),
+        h("h1", { class: "w-title", text: t("wTitle"), "data-pair": TH.pairT("wTitle") }), h("p", { class: "lead", text: t("wLead"), "data-pair": TH.pairT("wLead") }),
         h("ul", { class: "w-promises" }, [["map-pin", "wP1"], ["phone", "wP2"], ["list", "wP3"]].map(([ic, k]) => h("li", {}, h("span", { class: "wp-icon" }, icon(ic, 20)), t(k)))),
         h("div", { class: "w-actions" },
           btn("btn-primary wide", t("wStart"), () => go("welcome/1")),
@@ -202,9 +204,9 @@
         chosen = chosen && stops.some(x => x.s.id === chosen) ? chosen : stops[0] && stops[0].s.id;
         const draw = () => fill(out,
           h("div", { class: "w-place" }, icon("map-pin", 16), `${district} ${village}`),
-          h("h3", { class: "section-title", text: t("wYourTruck") }), h("p", { class: "caption dark", text: t("wPickTruck") }),
+          h("h3", { class: "section-title", text: t("wYourTruck"), "data-pair": TH.pairT("wYourTruck") }), h("p", { class: "caption dark", text: t("wPickTruck"), "data-pair": TH.pairT("wPickTruck") }),
           stopChoice(stops, chosen, id => { chosen = id; draw(); }),
-          h("h3", { class: "section-title", text: t("wYourInfo") }),
+          h("h3", { class: "section-title", text: t("wYourInfo"), "data-pair": TH.pairT("wYourInfo") }),
           h("div", { class: "info-card" }, infoRows(district, drop)),
           btn("btn-primary wide sticky-cta", t("wNext"), () => {
             profile.set({ district, village, stopId: chosen });
@@ -242,7 +244,7 @@
         showResult(dSel.value, vSel.value, list, drop);
       });
       return wrap(
-        h("h1", { class: "w-title", text: t("wWhere") }), h("p", { class: "lead", text: t("wWhereLead") }),
+        h("h1", { class: "w-title", text: t("wWhere"), "data-pair": TH.pairT("wWhere") }), h("p", { class: "lead", text: t("wWhereLead"), "data-pair": TH.pairT("wWhereLead") }),
         h("button", { class: "btn btn-primary wide", type: "button", onclick: locate }, icon("current-location", 20), t("wLocate")),
         h("details", { class: "w-manual" }, h("summary", { text: t("wOrArea") }), dSel, vSel),
         out);
@@ -251,7 +253,7 @@
       const choose = c => { profile.set({ community: c }); go("welcome/3"); };
       const card = (c, e, title, text) => h("button", { class: "comm-card" + (p.community === c ? " on" : ""), type: "button", onclick: () => choose(c) },
         h("span", { class: "comm-art", "aria-hidden": "true" }, icon(e, 30)), h("div", { class: "grow" }, h("strong", { text: title }), h("div", { class: "caption dark", text })), icon("chev", 18));
-      return wrap(h("h1", { class: "w-title", text: t("wCommunity") }), h("p", { class: "lead", text: t("wCommunityLead") }),
+      return wrap(h("h1", { class: "w-title", text: t("wCommunity"), "data-pair": TH.pairT("wCommunity") }), h("p", { class: "lead", text: t("wCommunityLead"), "data-pair": TH.pairT("wCommunityLead") }),
         card(true, "building-community", t("wCommYes"), t("wCommYesText")), card(false, "truck", t("wCommNo"), t("wCommNoText")));
     }
     // step 3
@@ -261,7 +263,7 @@
       catch (_) { remindBtn.disabled = false; }
     }) : null;
     return wrap(h("div", { class: "w-hero done", "aria-hidden": "true" }, h("span", { class: "w-hero-main" }, icon("circle-check", 64))),
-      h("h1", { class: "w-title", text: t("wDone") }), h("p", { class: "lead", text: t("wDoneLead") }),
+      h("h1", { class: "w-title", text: t("wDone"), "data-pair": TH.pairT("wDone") }), h("p", { class: "lead", text: t("wDoneLead"), "data-pair": TH.pairT("wDoneLead") }),
       remindBtn,
       btn("btn-primary wide", t("wGo"), () => { profile.set({ setupDone: true }); go("", { replace: true }); }));
   }
@@ -307,7 +309,7 @@
     const p = profile.get();
     const draw = () => {
       const s = myStop();
-      if (p.community) { fill(box, h("span", { class: "ts-icon" }, icon("building-community", 20)), h("strong", { text: t("commBadge") }), h("span", { class: "grow caption dark", text: `${p.district || ""} ${p.village || ""}` }), h("span", { class: "ts-change", text: t("wChange") })); return; }
+      if (p.community) { fill(box, h("span", { class: "ts-icon" }, icon("building-community", 20)), h("strong", { text: t("commBadge"), "data-pair": TH.pairT("commBadge") }), h("span", { class: "grow caption dark", text: `${p.district || ""} ${p.village || ""}` }), h("span", { class: "ts-change", text: t("wChange") })); return; }
       if (!s) { fill(box, h("span", { class: "grow", text: t("truckNone") }), h("span", { class: "ts-change", text: t("wChange") + " ›" })); return; }
       const v = TH.chosenVisit ? TH.chosenVisit(s) : TH.visitsOf(s)[0]; // the time picked on this card, else the next one
       const mins = v ? Math.round((v.arriveMs - Date.now()) / 60000) : null;
@@ -361,7 +363,7 @@
     return [
       h("header", { class: "home-head" },
         h("div", {}, h("div", { class: "home-date", text: `${t("hello" + (now.minutes >= 5 * 60 && now.minutes < 11 * 60 ? 0 : now.minutes >= 11 * 60 && now.minutes < 17 * 60 ? 1 : 2))} · ${TH.lang() === "zh" ? `${now.m}月${now.d}日 週${t("days")[now.day]}` : `${t("days")[now.day]} ${now.m}/${now.d}`}` }),
-          h("h1", { class: "home-day", text: t("hQuestion") })),
+          h("h1", { class: "home-day", text: t("hQuestion"), "data-pair": TH.pairT("hQuestion") })),
         TH.views.langButton()),
       truckStatus(),
       last.length && !sel.size ? h("button", { class: "last-row", type: "button", onclick: () => { last.forEach(id => sel.add(id)); picks.set([...sel]); go("plan"); } },
@@ -524,7 +526,7 @@
         setTimeout(() => doneCard.scrollIntoView({ behavior: REDUCED() ? "auto" : "smooth", block: "center" }), REDUCED() ? 0 : 750);
       } else doneCard.hidden = !allDone;
     };
-    const doneCard = h("div", { class: "done-card", hidden: true }, h("span", { class: "done-icon" }, icon("circle-check", 44)), h("strong", { text: t("allDone") }),
+    const doneCard = h("div", { class: "done-card", hidden: true }, h("span", { class: "done-icon" }, icon("circle-check", 44)), h("strong", { text: t("allDone"), "data-pair": TH.pairT("allDone") }),
       btn("btn-primary", t("backHomeBtn"), () => { picks.set([]); go("", { replace: true }); }));
     const dest = (artEl, text, strong, pair) => h("span", { class: "dest" }, artEl, h(strong ? "strong" : "span", { text, "data-pair": pair }));
     const out = [
@@ -552,8 +554,8 @@
     const bagBelow = h("div"), bagMore = h("div");
     const needsBag = items.filter(i => catOf(i) === "general" || (i.components || []).some(c => rules.groups[c.group].cat === "general"));
     if (has("general")) fillNearest("bags", bagBelow, bagMore,
-      h("p", { class: "caption dark", text: t("s1GeneralSize") }),
-      h("p", { class: "caption dark", text: t("s1BagRule") }),
+      h("p", { class: "caption dark", text: t("s1GeneralSize"), "data-pair": TH.pairT("s1GeneralSize") }),
+      h("p", { class: "caption dark", text: t("s1BagRule"), "data-pair": TH.pairT("s1BagRule") }),
       h("div", { class: "row-actions" }, lbtn("list", t("s1ShopList"), () => go("buy")), lbtn(null, t("s1Sizes"), () => go("bags"))));
     if (has("general") || has("recycle") || has("food") || has("special")) out.push(step(t("s1"), () => [
       has("general") ? checkRow("bag-general", dest(TH.catArt("general", 28), t("s1General"), true, TH.pairT("s1General")), {
@@ -577,10 +579,9 @@
     // 3. take it out / hand it to the building
     if (truckItems.length) {
       if (p.community) {
-        const COMM = [["general", "一般垃圾（專用袋）", "General (official bag)"], ["food", "廚餘", "Food waste"], ["recycle", "平面回收", "Flat recycling"],
-          ["recycle", "立體回收", "3-D recycling"], ["special", "電池另裝", "Batteries apart"]];
+        const COMM = [["general", "commGeneral"], ["food", "commFood"], ["recycle", "commFlat"], ["recycle", "commRigid"], ["special", "commBattery"]];
         out.push(step(t("s3Comm"), () => checkRow("drop-comm", dest(h("span", { class: "lr-icon" }, icon("building-community", 18)), t("s3CommText"), true, TH.pairT("s3CommText")), {
-          details: h("div", { class: "parts-chips" }, COMM.map(([c, zh, en]) => h("span", { class: `part-chip pc-${c}` }, icon((rules.categories[c] || {}).icon || "help-circle", 14), TH.lang() === "zh" ? zh : en))) }), "s3Comm"));
+          details: h("div", { class: "parts-chips" }, COMM.map(([c, key]) => h("span", { class: `part-chip pc-${c}` }, icon((rules.categories[c] || {}).icon || "help-circle", 14), h("span", { text: t(key), "data-pair": TH.pairT(key) })))) }), "s3Comm"));
       } else out.push(step(t("s3Truck"), () => {
         const slot = h("div");
         const dests = [];
@@ -595,7 +596,7 @@
           : (truckItems.find(i => ["flat", "rigid"].includes(i.group)) || {}).group || "general";
         TH.loadStops().then(() => TH.loadDrops().catch(() => null)).then(() => {
           const s = myStop();
-          if (!s) { fill(slot, h("p", { class: "caption dark", text: t("s3NoStop") }), btn("btn-secondary wide", t("s3PickStop"), () => go("welcome/1"))); return; }
+          if (!s) { fill(slot, h("p", { class: "caption dark", text: t("s3NoStop"), "data-pair": TH.pairT("s3NoStop") }), btn("btn-secondary wide", t("s3PickStop"), () => go("welcome/1"))); return; }
           const v = TH.chosenVisit ? TH.chosenVisit(s) : TH.visitsOf(s)[0];
           const timeEl = h("span", { class: "ts-left" });
           const tick = () => { if (!v) return; const m = Math.round((v.arriveMs - Date.now()) / 60000); timeEl.textContent = m <= 5 ? t("truckNow") : m < 60 ? t("truckLeftM", { m }) : m < 1440 ? t("truckLeft", { h: Math.floor(m / 60), m: m % 60 }) : ""; timeEl.classList.toggle("soon", m <= 30); timeEl.hidden = !timeEl.textContent; };
@@ -641,7 +642,7 @@
         const title = () => dest(TH.art(i, 28), label(i), true, labelPair(i));
         if (c === "bulky") return checkRow("sp-" + i.id, title(), { sub: destLine("spBulky"),
           buttons: [rbtn("message-circle", t("tcScript"), () => go("talk/phone")), rbtn("phone", squad ? t("sBulkyCall", { district: p.district }) : "1999", () => TH.dial(squad || rules.contacts.hotline), "primary")],
-          details: [h("p", { class: "caption dark", text: t("sBulkyPut") }),
+          details: [h("p", { class: "caption dark", text: t("sBulkyPut"), "data-pair": TH.pairT("sBulkyPut") }),
             h("div", { class: "row-actions" }, lbtn("phone", "1999", () => TH.dial(rules.contacts.hotline)), lbtn(null, t("bookOnline"), () => TH.openExternal(rules.contacts.online)))] });
         if (c === "verify") return checkRow("sp-" + i.id, title(), { sub: destLine("spAsk"), buttons: [rbtn("phone", t("spCall"), () => TH.dial(squad || rules.contacts.hotline), "primary")] });
         if (i.takeback) return placeRow(i, "spTake", "battery");

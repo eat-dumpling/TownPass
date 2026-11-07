@@ -20,7 +20,7 @@ function blocks(src) {
   }
   return out;
 }
-["flow.js", "scan.js", "sort.js", "assistant.js", "talkcard.js"].forEach(function (f) {
+["v3map.js", "flow.js", "scan.js", "sort.js", "assistant.js", "talkcard.js", "when.js", "leave.js"].forEach(function (f) {
   blocks(readFile(dir + "/" + f)).forEach(function (b) {
     var obj = eval("(" + b[1] + ")");
     var target = window.TH_STRINGS[b[0]];

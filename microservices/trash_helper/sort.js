@@ -30,6 +30,9 @@
     lnBag_special: "No official bag — pack it apart from other recycling", lnBag_booking: "No bag — phone the cleaning squad to book first", lnBag_unknown: "Ask the cleaning squad (1999) first",
   });
 
+  // Labels of the 回收小里長 tables below, as UI strings so every language gets them.
+  Object.assign(window.TH_STRINGS.zh, { rvK_general: "一般垃圾", rvK_food: "廚餘", rvK_paper: "紙類", rvK_plastic: "塑膠類", rvK_glass: "玻璃類", rvK_can: "鐵鋁罐", rvK_tetra: "鋁箔包・紙容器", rvK_metal: "金屬類", rvK_other: "其他回收", rvK_hazard: "電池・燈管・廢油", rvK_bulky: "大型家具家電", rvK_special: "特殊處理", rvK_unknown: "請洽清潔隊", rvC_recycle_3d: "立體類", rvC_recycle_flat: "平面類", rvC_other: "其他類", rvC_food: "廚餘", rvC_general: "一般垃圾", rvC_bulky: "大型家具家電", rvC_special: "特殊處理", rvC_unknown: "請洽清潔隊", rvW_garbage_truck: "垃圾車", rvW_food_bin: "廚餘桶", rvW_recycle_truck: "資源回收車", rvW_retailer: "商店回收", rvW_appointment: "預約清潔隊", rvW_clinic: "醫院或藥局", rvP_empty: "倒空", rvPx_empty: "倒掉裡面剩下的飲料、食物或內容物。", rvP_rinse: "沖一下", rvPx_rinse: "用清水簡單沖一下，不用洗到全乾淨。", rvP_flatten: "壓扁", rvPx_flatten: "壓扁可以節省空間。", rvP_remove_film: "撕膜", rvPx_remove_film: "撕下封膜、抽出吸管；封膜和吸管丟一般垃圾。", rvP_wrap: "包好", rvPx_wrap: "用報紙或厚紙包好，避免割傷或漏出來。", rvP_tape_terminals: "貼膠帶", rvPx_tape_terminals: "電池兩端（電極）貼上膠帶，避免短路起火。", rvP_label: "寫標示", rvPx_label: "外面寫上內容物，例如「碎玻璃」「針頭」，提醒收的人。", rvP_drain: "瀝乾", rvPx_drain: "先把水分瀝乾再倒。", rvP_vent_gas: "排空氣", rvPx_vent_gas: "到戶外通風處按壓噴頭，把剩下的氣體排空，遠離火源。", rvP_remove_tape: "抽出磁帶", rvPx_remove_tape: "把磁帶抽出來；磁帶丟一般垃圾，外殼回收。", rvGenLabel: "一般垃圾（不可回收）", rvGenWhen: "交垃圾車（週三、週日停收）", rvUnkLabel: "官方說法不一致", rvUnkWhen: "請問清潔隊" });
+  Object.assign(window.TH_STRINGS.en, { rvK_general: "Other trash", rvK_food: "Food waste", rvK_paper: "Paper", rvK_plastic: "Plastic", rvK_glass: "Glass", rvK_can: "Cans", rvK_tetra: "Cartons", rvK_metal: "Metal", rvK_other: "Other recycling", rvK_hazard: "Hazardous", rvK_bulky: "Bulky", rvK_special: "Special", rvK_unknown: "Ask first", rvC_recycle_3d: "Recycling, 3-D", rvC_recycle_flat: "Recycling, flat", rvC_other: "Recycling, other", rvC_food: "Food waste", rvC_general: "General trash", rvC_bulky: "Bulky items", rvC_special: "Special handling", rvC_unknown: "Ask the cleaning squad", rvW_garbage_truck: "Garbage truck", rvW_food_bin: "Food bucket", rvW_recycle_truck: "Recycling truck", rvW_retailer: "Shop take-back", rvW_appointment: "Book the squad", rvW_clinic: "Hospital or pharmacy", rvP_empty: "Empty", rvPx_empty: "Pour out whatever is left inside.", rvP_rinse: "Rinse", rvPx_rinse: "A quick rinse with water is enough.", rvP_flatten: "Flatten", rvPx_flatten: "Squash it to save space.", rvP_remove_film: "Peel film", rvPx_remove_film: "Peel off the film and take out the straw; those go in general trash.", rvP_wrap: "Wrap", rvPx_wrap: "Wrap it in newspaper or thick paper so no one gets cut and nothing leaks.", rvP_tape_terminals: "Tape ends", rvPx_tape_terminals: "Tape over the battery ends so they can't short and catch fire.", rvP_label: "Label", rvPx_label: "Write what is inside on the outside, e.g. \"broken glass\", so the collector knows.", rvP_drain: "Drain", rvPx_drain: "Drain off the liquid first.", rvP_vent_gas: "Vent gas", rvPx_vent_gas: "Outdoors, away from flames, press the nozzle until it is empty.", rvP_remove_tape: "Pull tape", rvPx_remove_tape: "Pull the tape out; the tape is general trash, the case is recycled.", rvGenLabel: "General trash (not recyclable)", rvGenWhen: "Garbage truck (no pickup Wed, Sun)", rvUnkLabel: "Official sources disagree", rvUnkWhen: "Ask the cleaning squad" });
   // ---- 回收小里長 domain/catalog.ts (labels in Chinese and English)
   const KIND = {
     general: ["一般垃圾", "Other trash", "#D2552A", "trash"], food: ["廚餘", "Food waste", "#6E8B3D", "leaf"],
@@ -91,17 +94,31 @@
     go("", { replace: true });
   }
 
-  const zh = () => TH.lang() !== "en";
-  const pick = pair => zh() ? pair[0] : pair[1];
+  // Each table row gets the key of its translated label (the zh/en columns stay as documentation).
+  for (const [tbl, pre] of [[KIND, "rvK_"], [CATEGORY, "rvC_"], [WHERE, "rvW_"], [PREP, "rvP_"]]) for (const [id, row] of Object.entries(tbl)) { row.key = pre + id; row.textKey = "rvPx_" + id; }
+  const zh = () => TH.lang() === "zh";
+  const pick = row => t(row.key);
+  // Item names and notes in the user's language: rv_items.json has zh/en/vi/id names and zh notes;
+  // the rest come from i18n/<code>.js (TH_RVTXT).
+  const rvTxt = () => (window.TH_RVTXT || {})[TH.lang()] || {};
+  const nameOf = it => it.name[TH.lang()] || (rvTxt().names || {})[it.id] || it.name.en || it.name.zh;
+  const noteOf = it => zh() ? it.notes || "" : (rvTxt().notes || {})[it.id] || "";
+  TH.rvNameOf = nameOf;
+  // For the camera page: recognised names and kinds in the user's language.
+  TH.rvLocalize = () => load().then(() => (id, name, kindLabel) => {
+    const it = data.items.get(id); if (!it) return { name, kindLabel };
+    const k = KIND[it.kind];
+    return { name: nameOf(it), kindLabel: k ? pick(k) : kindLabel };
+  });
   const days = list => zh() ? "星期" + list.map(d => "日一二三四五六"[d]).join("、") : list.map(d => t("days")[d]).join(", ");
 
   // collectionOf(): 臺北分類 + 什麼時候, from the official list.
   function collection(it) {
     const off = data.cats.find(c => c.id === it.sub);
     if (off && off.id !== "non_recyclable") return zh() ? { label: `${off.major}・${off.sub}`, when: off.when } : { label: pick(CATEGORY[it.category] || CATEGORY.unknown), when: days(off.days) };
-    if (it.category === "general") return zh() ? { label: "一般垃圾（不可回收）", when: "交垃圾車（週三、週日停收）" } : { label: "General trash (not recyclable)", when: "Garbage truck (no pickup Wed, Sun)" };
-    if (it.category === "special") return { label: pick(CATEGORY.special), when: zh() ? it.notes || "" : "" };
-    if (it.category === "unknown") return zh() ? { label: "官方說法不一致", when: "請問清潔隊" } : { label: "Official sources disagree", when: "Ask the cleaning squad" };
+    if (it.category === "general") return { label: t("rvGenLabel"), when: t("rvGenWhen") };
+    if (it.category === "special") return { label: pick(CATEGORY.special), when: noteOf(it) };
+    if (it.category === "unknown") return { label: t("rvUnkLabel"), when: t("rvUnkWhen") };
     const c = CATEGORY[it.category];
     const off2 = c && c[2] ? data.cats.find(x => x.id === c[2]) : null;
     return { label: pick(c || CATEGORY.unknown), when: off2 ? days(off2.days) : "" };
@@ -126,31 +143,34 @@
     const bagKey = ["required", "booking", "unknown"].includes(bag) ? bag : cat === "food" ? "food" : cat === "special" ? "special" : "exempt";
     // Special items: their days come from Trash Helper's group (the official list has no day for them).
     const when = it.category === "special" ? (group && group.days.length && !group.ask ? days(group.days) : "") : coll.when;
-    const handover = ours && ours.handover ? TH.L(ours.handover) : group && group.note ? TH.L(group.note) : vague && zh() ? it.notes || "" : "";
+    const handover = ours && ours.handover ? TH.L(ours.handover) : group && group.note ? TH.L(group.note) : vague ? noteOf(it) : "";
     const steps = ours && (ours.steps || []).length
-      ? ours.steps.map(s => ({ icon: s.icon || "check", title: TH.L(s.title), text: s.text ? TH.L(s.text) : "", warn: s.warn ? TH.L(s.warn) : "" }))
-      : (it.steps || []).filter(s => PREP[s]).map(s => ({ icon: PREP[s][2], title: pick(PREP[s]), text: zh() ? PREP[s][3] : PREP[s][4], warn: "" }));
+      ? ours.steps.map(s => ({ icon: s.icon || "check", title: TH.L(s.title), pair: TH.pairOf(s.title), text: s.text ? TH.L(s.text) : "", warn: s.warn ? TH.L(s.warn) : "" }))
+      : (it.steps || []).filter(s => PREP[s]).map(s => ({ icon: PREP[s][2], title: pick(PREP[s]), pair: TH.pairT(PREP[s].key), text: t(PREP[s].textKey), warn: "" }));
+    // Side-by-side language: the item's name in the second language (Chinese is already under it in other languages).
+    const pl = TH.pairLang();
+    const namePair = pl && pl !== "zh" ? (it.name[pl] || ((window.TH_RVTXT || {})[pl] || { names: {} }).names[it.id]) : undefined;
     const row = (ic, label, ...body) => h("div", {}, h("dt", {}, icon(ic, 18), label), h("dd", {}, body));
     return h("section", { class: "guide" + (it.safety !== "none" ? " danger" : ""), style: `--k:${k[2]}`, "aria-label": t("lnTitle") },
       h("div", { class: "guide-head" },
         art(it, k, 72),
         h("div", { class: "guide-name" },
-          h("h2", { text: zh() ? it.name.zh : it.name.en || it.name.zh }),
+          h("h2", { text: nameOf(it), "data-pair": namePair }),
           !zh() ? h("small", { text: it.name.zh }) : null,
-          h("span", { class: "guide-kind", style: `background:${k[2]}` }, icon(k[3], 20), pick(k)))),
+          h("span", { class: "guide-kind", style: `background:${k[2]}` }, icon(k[3], 20), h("span", { text: pick(k), "data-pair": TH.pairT(k.key) })))),
       it.safety && it.safety !== "none" ? h("p", { class: "guide-safety" }, icon(it.safety === "no_touch" ? "hand-stop" : "alert-triangle", 18), t("lnSafe_" + it.safety)) : null,
       h("dl", { class: "guide-facts" },
         row("category", t("lnTaipei"), coll.label),
         when ? row("calendar", t("lnWhen"), when) : null,
-        vague ? null : row(BAG_ICON[bagKey], t("lnBag"), t("lnBag_" + bagKey)),
+        vague ? null : row(BAG_ICON[bagKey], t("lnBag"), h("span", { text: t("lnBag_" + bagKey), "data-pair": TH.pairT("lnBag_" + bagKey) })),
         (it.where || []).length || handover ? row("map-pin", t("lnTo"),
-          (it.where || []).length ? h("span", { class: "guide-where" }, it.where.filter(w => WHERE[w]).map(w => h("span", {}, icon(WHERE[w][2], 18), pick(WHERE[w])))) : null,
+          (it.where || []).length ? h("span", { class: "guide-where" }, it.where.filter(w => WHERE[w]).map(w => h("span", {}, icon(WHERE[w][2], 18), h("span", { text: pick(WHERE[w]), "data-pair": TH.pairT(WHERE[w].key) })))) : null,
           handover ? h("small", { class: "guide-detail", text: handover }) : null) : null),
-      steps.length ? [h("h3", { text: t("lnPrep") }),
+      steps.length ? [h("h3", { text: t("lnPrep"), "data-pair": TH.pairT("lnPrep") }),
         h("ol", { class: "guide-steps", "aria-label": t("lnPrep") }, steps.map((s, i) => h("li", {},
           h("span", { class: "guide-step-ic" }, icon(s.icon, 26), h("span", { class: "num", text: String(i + 1) })),
-          h("span", { class: "guide-step-text" }, h("b", { text: s.title }), s.text ? h("small", { text: s.text }) : null, s.warn ? h("small", { class: "warn", text: s.warn }) : null))))] : null,
-      zh() && it.notes && it.notes !== when && it.notes !== handover ? h("p", { class: "guide-note" }, icon("bulb", 18), h("span", { text: it.notes })) : null);
+          h("span", { class: "guide-step-text" }, h("b", { text: s.title, "data-pair": s.pair }), s.text ? h("small", { text: s.text }) : null, s.warn ? h("small", { class: "warn", text: s.warn }) : null))))] : null,
+      noteOf(it) && noteOf(it) !== when && noteOf(it) !== handover ? h("p", { class: "guide-note" }, icon("bulb", 18), h("span", { text: noteOf(it) })) : null);
   }
 
   function viewLearn(rvId) {
