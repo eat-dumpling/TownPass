@@ -5,7 +5,7 @@
 Input folder (one set per language):
   <code>.ui.json       {uiKey: text}            UI strings (export the source with
                                                 tools/trash_helper_i18n_export.js)
-  <code>.ui2.json      {uiKey: text}            optional later additions
+  <code>.ui2.json …    {uiKey: text}            later additions (merged in name order)
   <code>.content.json  {englishText: text}      rules.json / rv_map.json content, keyed by English
   <code>.voice.json    {"items": {id: [..]}, "intents": {id: [..]}}   voice-assistant keywords
 
@@ -27,7 +27,9 @@ def load(p: Path):
 
 
 def build(folder: Path, src: dict, code: str) -> None:
-    ui = {**load(folder / f'{code}.ui.json'), **load(folder / f'{code}.ui2.json')}
+    ui = {}
+    for part in sorted(folder.glob(f'{code}.ui*.json')):   # .ui.json, then later batches .ui2.json, .ui3.json…
+        ui.update(load(part))
     content = load(folder / f'{code}.content.json')
     voice = load(folder / f'{code}.voice.json') or {'items': {}, 'intents': {}}
     problems, missing = [], []

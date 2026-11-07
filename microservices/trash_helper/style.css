@@ -589,3 +589,10 @@ html[data-lang="ja"] body { font-family: -apple-system, "Hiragino Sans", "Hiragi
 .check-row { cursor: default; }
 .cb-hit { grid-column: 1; position: relative; display: grid; place-items: center; width: 44px; height: 44px; margin: -10px; cursor: pointer; }
 .cb-hit .cb { margin-top: 0; }
+/* assistant: the user's words can be tapped to correct them; "which one?" choices */
+.va-edit { display: inline-flex; align-items: center; gap: 6px; max-width: 86%; padding: 10px 14px; border: 0; border-radius: 16px 16px 4px 16px; background: var(--p500); color: var(--white); font-size: 15px; line-height: 1.45; text-align: left; cursor: pointer; }
+.va-edit svg { flex: none; opacity: .75; }
+.va-msg.bot { flex-direction: column; align-items: flex-start; gap: 8px; }
+.va-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.va-option { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 6px 14px 6px 8px; border: 1px solid var(--p200); border-radius: 12px; background: var(--white); font-size: 15px; color: var(--g800); cursor: pointer; }
+.va-option:active { background: var(--p50); }

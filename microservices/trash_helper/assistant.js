@@ -24,6 +24,8 @@
     vaUnknown: "我還聽不懂這個問題。可以說要丟的東西，例如「電池」「舊衣服」「沙發」。",
     vaPrep: "先處理", vaWhere: "怎麼交出去", vaNext: "下一個", vaGotIt: "知道了", vaSeeMap: "看地圖", vaNav: "Google 地圖導航",
     vaNearest: "離你最近", vaReadAloud: "朗讀回覆", vaPrivacy: "語音由手機的語音辨識轉成文字，App 不保存。",
+    vaFramed: "重點幫你框起來了。", vaAddReply: "加進清單了：{items}。", vaWhich: "你是說哪一個？", vaMaybe: "是不是這個？",
+    vaNearestAt: "最近的{place}：{name}，{d}。", vaTruckNext: "下一班垃圾車：{when}，{place}。", vaEdit: "點一下可以修改",
   });
   Object.assign(window.TH_STRINGS.en, {
     vaOpen: "Voice assistant", vaTitle: "Ask me how to throw it out", vaTap: "Tap the mic and ask your question", vaListening: "Listening…", vaThinking: "Looking it up…",
@@ -35,6 +37,8 @@
     vaUnknown: "I don't understand that yet. Try naming the thing, like \"battery\", \"old clothes\" or \"sofa\".",
     vaPrep: "Prepare it", vaWhere: "Hand it over", vaNext: "Next", vaGotIt: "Got it", vaSeeMap: "See map", vaNav: "Navigate in Google Maps",
     vaNearest: "Nearest", vaReadAloud: "Read replies aloud", vaPrivacy: "Your phone's speech service turns your voice into text. The app does not keep it.",
+    vaFramed: "I've framed the key parts.", vaAddReply: "Added to your list: {items}.", vaWhich: "Which one do you mean?", vaMaybe: "Did you mean one of these?",
+    vaNearestAt: "Nearest {place}: {name}, {d}.", vaTruckNext: "Next garbage truck: {when}, {place}.", vaEdit: "Tap to edit",
   });
 
   // ------------------------------------------------------------ understanding
@@ -72,8 +76,30 @@
     where_dropoff: ["錯過", "沒趕上", "來不及", "收受點", "missed", "drop-off", "drop off point"],
     bulky: ["大型垃圾", "大型廢棄物", "大件", "bulky", "big item", "large item"],
     buy_bags: ["專用垃圾袋", "垃圾袋", "專用袋", "買袋", "garbage bag", "trash bag", "official bag", "buy bags"],
+    how: ["怎麼丟", "怎麼處理", "怎麼", "如何", "要丟哪", "丟哪", "how", "which bin", "how do i"],
+    throw: ["想丟", "要丟", "丟掉", "丟", "回收", "throw", "throw away", "dispose", "get rid of", "recycle"],
+    // Pointing back at what was just asked about ("那它呢？"), in all eight languages.
+    ref: ["它", "這個", "那個", "這些", "那些", "it", "that", "this", "them", "those", "nó", "cái này", "cái đó", "itu", "ini", "nya",
+      "iyan", "ito", "yan", "yun", "มัน", "อันนี้", "อันนั้น", "그거", "이거", "그것", "이것", "それ", "これ", "あれ"],
+    // "Also / add": put the new things into the current list instead of replacing it.
+    add: ["還要", "也要", "還有", "再加", "加上", "另外", "順便", "also", "too", "as well", "add", "plus", "thêm", "cũng", "nữa",
+      "juga", "tambah", "sekalian", "pati", "din", "rin", "dagdag", "ด้วย", "เพิ่ม", "추가", "그리고", "같이", "追加", "あと", "それと"],
   };
+  // Words that could mean several items: ask which one instead of guessing.
+  const AMBIG = [
+    [["瓶子", "瓶", "bottle", "bottles"], ["pet", "glass"]],
+    [["罐子", "罐", "can", "cans"], ["can", "spray"]],
+    [["袋子", "袋", "bag", "bags"], ["bag", "snackbag", "dirtybag"]],
+    [["紙", "paper"], ["paper", "papercup", "receipt", "tissue"]],
+    [["盒子", "盒", "box", "boxes"], ["lunchbox", "carton", "paper"]],
+    [["杯子", "杯", "cup", "cups"], ["cup", "papercup"]],
+    [["玻璃", "glass"], ["glass", "brokenglass"]],
+    [["電器", "家電", "appliance", "electronics"], ["phone", "appliance"]],
+  ];
   const LAYER_OF = { battery: "battery", clothes: "clothes", pills: "pills" };
+  // A word that fits several items never stands for one of them on its own (Japanese 瓶 is a glass
+  // bottle, but Chinese 瓶子 is any bottle), so it leads to the "which one?" question instead.
+  const AMBIG_WORDS = new Set(AMBIG.flatMap(([words]) => words.map(w => String(w).normalize("NFC").toLowerCase())));
   // Everyday words that are also item keywords ("where can I…" is not about cans).
   const STOP = new Set(["can", "bag", "bags", "box", "cup", "paper"]);
 
@@ -91,7 +117,8 @@
     if (THAI.test(kw) && kw.length < 3) return -1;
     if (LATIN.test(kw)) {
       const esc = kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const m = new RegExp(`(^|[^\\p{L}\\p{N}])${esc}(?=$|[^\\p{L}\\p{N}])`, "u").exec(text);
+      // Whole words, allowing an English plural ("garbage bags" matches "garbage bag").
+      const m = new RegExp(`(^|[^\\p{L}\\p{N}])${esc}(?:e?s)?(?=$|[^\\p{L}\\p{N}])`, "u").exec(text);
       return m ? m.index + m[1].length : -1;
     }
     return text.indexOf(kw);
@@ -110,7 +137,7 @@
       (it.keywords || []).forEach(add);
       (EXTRA[it.id] || []).forEach(add);
       for (const code of Object.keys(voice)) ((voice[code].items || {})[it.id] || []).forEach(add);
-      items.push({ id: it.id, words: [...words].filter(w => !STOP.has(w)) });
+      items.push({ id: it.id, words: [...words].filter(w => !STOP.has(w) && !AMBIG_WORDS.has(w)) });
     }
     const intents = {};
     for (const [k, list] of Object.entries(INTENTS)) intents[k] = new Set(list.map(norm));
@@ -147,11 +174,65 @@
     for (const [k, list] of Object.entries(index.intents)) has[k] = list.some(w => found(rest, w) >= 0);
     // "Where do I buy garbage bags?" names a bag but asks about the official bags.
     if (index.intents.buy_bags.some(w => found(text, w) >= 0) && items.every(id => id === "bag")) { items.length = 0; has.buy_bags = true; }
-    return { items, has };
+    // Nothing named exactly: a word that fits several items ("瓶子"), else the closest-sounding items.
+    let amb = [], near = [];
+    if (!items.length && !has.buy_bags) {
+      const hit = AMBIG.find(([words]) => words.some(w => found(text, norm(w)) >= 0));
+      if (hit) amb = hit[1].filter(id => TH.itemById(id));
+      else near = closest(plain);
+    }
+    return { items, has, amb, near };
   }
 
+  // Closest items for a sentence that matched nothing, so a misheard word ("店池") still offers
+  // 電池. Chinese/Japanese/Korean: shared characters; Latin scripts: words one or two letters off.
+  const CJK = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u;
+  function editDistance(a, b) {
+    const d = Array.from({ length: b.length + 1 }, (_, j) => j);
+    for (let i = 1; i <= a.length; i++) {
+      let prev = d[0]; d[0] = i;
+      for (let j = 1; j <= b.length; j++) { const tmp = d[j]; d[j] = Math.min(d[j] + 1, d[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = tmp; }
+    }
+    return d[b.length];
+  }
+  function closest(plain) {
+    const chars = new Set([...plain].filter(c => CJK.test(c)));
+    const words = strip(plain).split(" ").filter(w => w.length >= 4);
+    const scored = [];
+    for (const it of index.items) {
+      let best = 0;
+      for (const w of it.words) {
+        if (CJK.test(w) && chars.size && w.length >= 2) {
+          const ws = [...w].filter(c => CJK.test(c));
+          const shared = ws.filter(c => chars.has(c)).length;
+          if (shared) best = Math.max(best, shared / ws.length);
+        } else if (LATIN.test(w) && w.length >= 4) {
+          const sw = strip(w);
+          for (const x of words) {
+            if (Math.abs(x.length - sw.length) > 2) continue;
+            const dist = editDistance(x, sw);
+            if (dist <= (sw.length >= 7 ? 2 : 1)) best = Math.max(best, 1 - dist / sw.length);
+          }
+        }
+      }
+      if (best >= 0.5) scored.push([it.id, best]);
+    }
+    return scored.sort((a, b) => b[1] - a[1]).slice(0, 3).map(x => x[0]);
+  }
+
+  // What the conversation was about, so "最近的在哪？" or "那它幾點丟？" can follow up.
+  const ctx = { items: [], at: 0 };
+  const remember = items => { if (items && items.length) { ctx.items = items.slice(); ctx.at = Date.now(); } };
+
   function decide(q) {
-    const { items, has } = q;
+    let { items, has } = q;
+    const fresh = ctx.items.length && Date.now() - ctx.at < 15 * 60 * 1000;
+    const follow = !items.length && fresh && (has.ref || has.where || has.map || has.convenience_store || has.pharmacy || has.how || has.throw || has.truck_time);
+    if (follow) {
+      items = ctx.items.slice();
+      if (has.truck_time) return { kind: "truck" };
+    }
+    if (!items.length && q.amb && q.amb.length) return { kind: "choose", options: q.amb, has, ask: "vaWhich" };
     const placeQ = has.where || has.map || has.convenience_store || has.pharmacy;
     const fromItem = items.map(id => LAYER_OF[id]).find(Boolean);
     let layer = has.where_clothes ? "clothes" : has.where_battery ? "battery" : has.where_pills ? "pills" : null;
@@ -163,8 +244,9 @@
     if (!items.length && (has.truck || has.truck_time) && !has.buy_bags) return { kind: "truck" };
     if (!items.length && has.buy_bags) return { kind: "bags" };
     if (!items.length && has.bulky) return { kind: "plan", items: ["furniture"] };
-    if (items.length) return { kind: "plan", items: items.slice(0, 4) };
+    if (items.length) return { kind: "plan", items: items.slice(0, 4), add: !!has.add && !follow };
     if (has.map || has.where) return { kind: "map", layer: null, items };
+    if (q.near && q.near.length) return { kind: "choose", options: q.near, has, ask: "vaMaybe" };
     return { kind: "unknown" };
   }
 
@@ -236,18 +318,34 @@
       if (!on && window.speechSynthesis) window.speechSynthesis.cancel();
     });
     let busy = false, listening = false, retried = false;
-    const bubble = (who, text) => { log.append(h("div", { class: "va-msg " + who }, h("span", { text }))); log.scrollTop = log.scrollHeight; };
+    // The user's words can be tapped to correct them (speech recognition gets names wrong).
+    const bubble = (who, text, extra) => {
+      const inner = who === "me"
+        ? h("button", { class: "va-edit", type: "button", "aria-label": `${text}, ${t("vaEdit")}`, onclick: () => { input.value = text; input.focus(); } }, text, icon("pencil", 14))
+        : h("span", { text });
+      log.append(h("div", { class: "va-msg " + who }, inner, extra || null)); log.scrollTop = log.scrollHeight;
+    };
     async function ask(text) {
       text = (text || "").trim(); if (!text) return;
       bubble("me", text);
       status.textContent = t("vaThinking");
       await TH.whenRulesReady();
-      const plan = decide(understand(text));
+      await respond(decide(understand(text)));
+    }
+    // Answer in one line first (shown and read aloud), then open the page and frame the details.
+    async function respond(plan) {
       const reply = await act(plan, true);
-      bubble("bot", reply);
+      let extra = null;
+      if (plan.kind === "choose") {
+        extra = h("div", { class: "va-options" }, plan.options.map(id => {
+          const it = itemById(id);
+          return h("button", { class: "va-option", type: "button", onclick: () => { buzz(); respond(decide({ items: [id], has: plan.has || {} })); } }, TH.art(it, 28), h("span", { text: nameOf(id) }));
+        }));
+      }
+      bubble("bot", reply, extra);
       say(reply);
       status.textContent = canListen() ? t("vaTap") : t("vaNoMic");
-      if (plan.kind !== "unknown") setTimeout(() => { closePanel(); act(plan, false); }, 650);
+      if (plan.kind !== "unknown" && plan.kind !== "choose") setTimeout(() => { closePanel(); act(plan, false); }, 1300);
     }
     mic.addEventListener("click", async () => {
       if (!canListen()) { input.focus(); return; }
@@ -316,11 +414,42 @@
   const layerLabel = layer => t({ clothes: "layerClothes", battery: "layerBattery", pills: "layerPills" }[layer] || "mapTitle");
 
   // With dryRun the reply text is returned and nothing moves yet (so the panel can show it first).
+  const cjkLang = () => TH.lang() === "zh" || TH.lang() === "ja";
+  const endMark = () => cjkLang() ? "。" : ". ";
+  // "電池：確實包裝、電極貼膠帶。" — the steps of one item in a line.
+  function itemLine(it) {
+    const steps = (it.steps || []).map(x => L(x.title)).filter(Boolean).slice(0, 3);
+    const what = steps.length ? steps.join(cjkLang() ? "、" : ", ") : (L(it.handover) || "").split(/[。.]/)[0];
+    return `${L(it.name)}${t("colon")}${what}${endMark()}`;
+  }
+  const currentPicks = () => { try { return JSON.parse(localStorage.getItem("th.picks") || "[]"); } catch (_) { return []; } };
+  async function nearestFor(layer) {
+    await TH.loadPlaces();
+    const a = TH.placeAnchor();
+    const best = a ? TH.nearestPlaces(layer, a.pos, 1)[0] : null;
+    return best ? { a, best } : null;
+  }
+  async function nextTruck() {
+    const id = TH.profile && TH.profile.get().stopId; if (!id) return null;
+    await TH.loadStops();
+    const s = TH.stopsData() && TH.stopsData().byId.get(id); if (!s) return null;
+    const v = TH.visitsOf(s)[0]; if (!v) return null;
+    return { when: TH.fmtWhen(v.arriveMs), place: s.address.replace(/^臺北市/, "").replace(s.district, "").replace(/[（(].*?[)）]/g, "") };
+  }
+
   async function act(plan, dryRun) {
     if (plan.kind === "unknown") return t("vaUnknown");
+    if (plan.kind === "choose") return t(plan.ask || "vaWhich");
     if (plan.kind === "plan") {
-      if (dryRun) return t("vaPlanReply", { items: joinNames(plan.items) });
-      try { localStorage.setItem("th.picks", JSON.stringify(plan.items)); localStorage.setItem("th.lastPicks", JSON.stringify(plan.items)); } catch (_) { /* ignore */ }
+      if (dryRun) {
+        if (plan.add) return t("vaAddReply", { items: joinNames(plan.items) });
+        if (plan.items.length === 1) { const it = itemById(plan.items[0]); if (it) return `${itemLine(it)}${t("vaFramed")}`; }
+        return t("vaPlanReply", { items: joinNames(plan.items) });
+      }
+      remember(plan.items);
+      // "還要丟…" keeps what is already on the list and frames only the new things.
+      const picks = plan.add ? [...new Set([...currentPicks(), ...plan.items])] : plan.items;
+      try { localStorage.setItem("th.picks", JSON.stringify(picks)); localStorage.setItem("th.lastPicks", JSON.stringify(picks)); } catch (_) { /* ignore */ }
       go("plan");
       const stops = [];
       for (const id of plan.items) {
@@ -345,8 +474,11 @@
       const layer = plan.layer;
       if (dryRun) {
         if (!layer) return t("vaMapNoPos", { place: t("mapTitle") });
+        const n = await nearestFor(layer).catch(() => null);
+        if (n) return t("vaNearestAt", { place: layerLabel(layer), name: n.best.name, d: TH.placeAway(n.a, n.best) });
         return t("vaMapReply", { place: layerLabel(layer) });
       }
+      remember(plan.items);
       if (!layer) { go("map"); return ""; }
       await TH.loadPlaces();
       let a = TH.placeAnchor();
@@ -374,7 +506,10 @@
       return "";
     }
     if (plan.kind === "truck") {
-      if (dryRun) return t("vaTruckReply");
+      if (dryRun) {
+        const n = await nextTruck().catch(() => null);
+        return n ? t("vaTruckNext", n) : t("vaTruckReply");
+      }
       go("");
       const el = await waitFor(".truck-status");
       if (el) tour([{ el, title: t("vaTruckReply"), body: [] }]);
