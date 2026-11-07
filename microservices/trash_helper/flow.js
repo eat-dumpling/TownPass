@@ -367,17 +367,27 @@
         h("span", { class: "fs-ring", "aria-hidden": "true" }, icon("camera", 64)),
         h("strong", { text: t("taskScanTitle"), "data-pair": TH.pairT("taskScanTitle") }),
         h("span", { text: t("taskScanDesc") })),
+      planRow(),
       h("div", { class: "focus-alt" },
         h("button", { class: "focus-link", type: "button", onclick: () => go("sort") }, icon("search", 20), h("span", { text: t("hSearch") })),
         h("button", { class: "focus-link", type: "button", onclick: () => TH.assistant && TH.assistant.open() }, icon("microphone", 20), h("span", { text: t("vaTitle") }))),
     ];
+  }
+  // The second main path: tick what you have and get one list of steps. With things already
+  // picked (e.g. 「我要丟棄」 after a photo) it goes straight to those steps.
+  function planRow() {
+    const n = picks.get().filter(id => TH.itemById(id)).length;
+    return h("button", { class: "focus-plan" + (n ? " has" : ""), type: "button", onclick: () => go(n ? "plan" : "list") },
+      h("span", { class: "hs-icon", "aria-hidden": "true" }, icon("list", 24)),
+      h("span", { class: "grow" }, h("strong", { text: t("hMakePlan"), "data-pair": TH.pairT("hMakePlan") }),
+        h("span", { class: "caption dark", text: n ? t("hSelected", { n }) : t("taskSortDesc") })),
+      icon("chev", 20));
   }
   // Everything that is not the main path: one sheet, one tap away.
   function moreSheet() {
     const row = (ic, label, fn) => h("button", { class: "more-row", type: "button", onclick: () => { close(); fn(); } },
       h("span", { class: "tt-icon" }, icon(ic, 22)), h("span", { class: "grow", text: label }), icon("chev", 18));
     const close = TH.sheet(t("hMore"), h("div", { class: "more-list" },
-      row("list", t("taskSortDesc"), () => go("list")),
       row("map-pin", t("taskNearbyTitle"), () => go("nearby")),
       row("star", t("taskFavTitle"), () => go("favorites")),
       row("message-circle", t("tcTitle"), () => go("talk/truck")),
