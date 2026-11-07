@@ -645,14 +645,7 @@
       }
       const previewBtn = btn("btn-secondary", t("remPreview"), () => send(true, previewBtn));
       const saveBtn = btn("btn-primary", t("remSave"), () => send(false, saveBtn));
-      const testBtn = btn("btn-ghost", t("remTest"), async () => {
-        testBtn.disabled = true;
-        try {
-          const r = await askApp("trash_reminder_test", { stopId: s.id, lang }, 30000);
-          fill(msg, r && r.ok ? notice(t("remTestOk", { time: fmtWhen(Date.parse(r.at)) }), "notice-ok") : notice(r && r.permission === "denied" ? t("remDenied") : t("remError"), "notice-warn"));
-        } catch (_) { fill(msg, notice(t("remError"), "notice-warn")); }
-        testBtn.disabled = false;
-      });
+      // The 1-minute test notification is on the 什麼時候丟 page (when.js), one step earlier.
       fill(out,
         h("section", { class: "card" },
           h("strong", { text: s.address.replace(/^臺北市/, "") }),
@@ -669,8 +662,7 @@
           catch (_) { fill(msg, notice(t("remError"), "notice-warn")); }
         }) : null,
         h("p", { class: "caption", text: t("remNote") }),
-        fs.platform === "android" ? h("p", { class: "caption", text: t("remAndroid") }) : null,
-        h("div", { class: "test-box" }, testBtn));
+        fs.platform === "android" ? h("p", { class: "caption", text: t("remAndroid") }) : null);
       if (existing && existing.status) showStatus({ status: existing.status });
     }).catch(() => fill(out, h("p", { class: "empty", text: t("loadError") }), btn("btn-primary", t("retry"), render)));
     return out;

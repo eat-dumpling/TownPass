@@ -209,7 +209,27 @@
   function viewWhen(groupId) {
     TH.setHeader(t("whnTitle"));
     const id = TH.rules().groups[groupId] ? groupId : "general";
-    return h("div", { class: "whn-page" }, whenPicker({ group: id }));
+    return h("div", { class: "whn-page" }, whenPicker({ group: id }), testBox(id));
+  }
+
+  // At the bottom of this page (home 「今天停收」 → here): a notification 1 minute from now for your
+  // stop, to check that reminders reach the phone. Only inside TownPass, which schedules it.
+  function testBox(groupId) {
+    if (!TH.bridge()) return null;
+    const msg = h("div", { "aria-live": "polite" });
+    const b = btn("btn-ghost", t("remTest"), async () => {
+      b.disabled = true;
+      try {
+        await TH.loadStops();
+        const stop = myStop(TH.rules().groups[groupId].cat);
+        if (!stop) { fill(msg, TH.notice(t("whnNoStop"), "notice-warn")); return; }
+        const r = await TH.askApp("trash_reminder_test", { stopId: stop.id, lang: TH.lang() }, 30000);
+        fill(msg, r && r.ok ? TH.notice(t("remTestOk", { time: TH.fmtWhen(Date.parse(r.at)) }), "notice-ok")
+          : TH.notice(r && r.permission === "denied" ? t("remDenied") : t("remError"), "notice-warn"));
+      } catch (_) { fill(msg, TH.notice(t("remError"), "notice-warn")); }
+      finally { b.disabled = false; }
+    });
+    return h("div", { class: "test-box" }, b, msg);
   }
 
   TH.whenPicker = whenPicker;
