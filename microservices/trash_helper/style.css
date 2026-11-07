@@ -602,9 +602,20 @@ html[data-lang="ja"] body { font-family: -apple-system, "Hiragino Sans", "Hiragi
 [data-pair]::after { content: attr(data-pair); display: block; margin-top: 2px; font-size: .78em; font-weight: 400; line-height: 1.35; color: var(--g500); letter-spacing: 0; }
 .verdict3 [data-pair]::after { color: rgba(255, 255, 255, .85); }
 /* pair.js wraps a text in .pair-auto so its second line sits right under it, in rows and buttons alike. */
-.pair-auto { display: inline-block; max-width: 100%; vertical-align: middle; }
-/* The second line takes the text's own colour, lighter, so it reads on white cards and coloured chips alike. */
-[data-pair-auto][data-pair]::after { white-space: normal; color: inherit; opacity: .72; }
+.pair-auto { display: inline-block; max-width: 100%; vertical-align: top; }
+/* The second line takes the text's own colour, lighter, so it reads on white cards and coloured chips
+   alike, and stays small under big titles and times. */
+[data-pair-auto][data-pair]::after { white-space: normal; color: inherit; opacity: .72; font-size: min(.78em, 14px); }
+/* An icon beside a two-line label lines up with the first line, not the middle. */
+.pair-on .dest { align-items: flex-start; }
+.pair-on .dest > .art { margin-top: 1px; }
+/* The picked-items bar: one row when it fits; with longer words (or a second language) the main
+   button moves to its own full-width row instead of squeezing the count into a column. */
+.pick-bar { flex-wrap: wrap; row-gap: 8px; }
+.pick-count { flex: 0 1 auto; min-width: 0; }
+.pick-bar .btn { flex: 1 0 auto; justify-content: center; white-space: nowrap; }
+/* The voice button sits above the bar, also when the bar takes two rows. */
+body.has-tabbar:has(.pick-bar) .va-fab[data-view="home"] { bottom: calc(86px + var(--pick-bar-h, 64px) + 12px + env(safe-area-inset-bottom)); }
 /* The bottom bar grows a little to fit the second line under each label. */
 .pair-on .tabbar { height: calc(80px + env(safe-area-inset-bottom)); }
 .pair-on .tab { padding: 6px 0 6px; }

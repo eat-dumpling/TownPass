@@ -11,6 +11,7 @@
 (function () {
   const TH = window.TH;
   const STR = window.TH_STRINGS;
+  if (!TH || !STR) return;   // the app did not load; nothing to pair
   // Not paired: form fields, the map, things already marked, the talk card (it already shows
   // Chinese and the user's language on purpose) and what the user typed or said to the assistant.
   const SKIP = "script, style, textarea, input, select, option, svg, .leaflet-container, [data-pair], [data-pair-skip], "
@@ -80,12 +81,20 @@
     if (k && HAS_WORD.test(k) && !map.has(k)) map.set(k, norm(other));
   }
 
+  // How much of a text is words (not digits, times or signs).
+  const wordShare = (s, words) => {
+    const all = s.replace(/[\s\p{P}\p{S}]/gu, "").length;
+    return all ? words.replace(/[\s\p{P}\p{S}\p{N}]/gu, "").length / all : 0;
+  };
   function translate(s) {
     const hit = maps.exact.get(s);
     if (hit) return hit;
     for (const tp of maps.templates) {
       const m = tp.re.exec(s);
       if (!m) continue;
+      // Mostly numbers ("0 / 9 完成"): the second line would only repeat them.
+      const filled = m.slice(1).join("");
+      if (wordShare(s, s.replace(filled, "")) < 0.5 && !m.slice(1).some(v => maps.exact.has(v))) return null;
       let out = tp.other;
       tp.names.forEach((n, i) => { out = out.split(`{${n}}`).join(maps.exact.get(m[i + 1]) || m[i + 1]); });
       return out;
@@ -97,18 +106,20 @@
     if (!s || !HAS_WORD.test(s)) return null;
     const whole = translate(s);
     if (whole) return whole !== s ? whole : null;
-    // Joined labels ("今天・週日"), then words around numbers ("週一 21:10", "5 分"): translate the
-    // parts we know, keep the rest (times, numbers, names).
+    // Joined labels ("今天停收・週一收"), then words around numbers ("5 分"): translate the parts we
+    // know. Every part with words must be known, or the line would mix the two languages, and
+    // the words must be most of the text, or it would only repeat a time ("週一 21:10").
     for (const splitter of [SEP, NUM]) {
       if (!splitter.test(s)) continue;
-      let any = false;
+      let ok = true, known = "";
       const out = s.split(splitter).map((part, i) => {
-        if (i % 2) return part;
-        const tr = part.trim() && translate(part.trim());
-        if (tr) { any = true; return part.replace(part.trim(), tr); }
+        if (i % 2 || !part.trim()) return part;
+        const tr = translate(part.trim());
+        if (tr) { known += part; return part.replace(part.trim(), tr); }
+        if (HAS_WORD.test(part)) ok = false;
         return part;
       }).join("");
-      if (any && out !== s) return out;
+      if (ok && known && out !== s && wordShare(s, known) >= 0.5) return out;
     }
     return null;
   }
@@ -165,9 +176,22 @@
     return { changed: false };
   }
 
+  // The picked-items bar grows to two rows with longer words or a second language; style.css keeps
+  // the voice button above it with --pick-bar-h.
+  let barSeen = null;
+  const barSize = new ResizeObserver(([e]) => document.documentElement.style.setProperty("--pick-bar-h", `${Math.ceil(e.target.offsetHeight)}px`));
+  function watchBar() {
+    const bar = document.querySelector(".pick-bar");
+    if (bar === barSeen) return;
+    if (barSeen) barSize.unobserve(barSeen);
+    barSeen = bar;
+    if (bar) barSize.observe(bar);
+  }
+
   let queued = new Set(), frame = 0;
   function flush() {
     frame = 0;
+    watchBar();
     const { changed } = current();
     const nodes = changed ? [document.body] : [...queued];
     queued = new Set();
