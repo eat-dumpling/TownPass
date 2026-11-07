@@ -110,7 +110,17 @@ cd microservices/trash_helper && firebase deploy --only hosting --project taipei
 - 兩個微服務：**AGPL-3.0**（`recycle-li/LICENSE`、`microservices/trash_helper/LICENSE`）
 - 台北通本身：GPL-3.0（根目錄 `LICENSE`）
 
-本作品為 2026 臺北秋季程式設計節「城市通微服務大黑客松」參賽作品，依競賽規則：
+依競賽須知第捌條「智慧財產聲明」，授權聲明如下（也放在兩個微服務 `LICENSE` 的開頭）：
+
+```
+回收小里長＋丟丟 TossTalk — 2026 臺北秋季程式設計節「城市通微服務大黑客松」參賽作品，以台北通（TownPass）為基礎的垃圾分類與垃圾生活微服務。
+Copyright (C) 2026 我們早餐吃水餃
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+```
+
+依競賽規則：
 
 - 主辦單位及所屬機關得依照 AGPL 條款規範使用本作品。
 - 本作品授權維持 AGPL-3.0，且自得獎公布起 1 年內不擅自下架。
