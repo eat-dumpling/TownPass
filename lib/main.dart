@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:town_pass/gen/assets.gen.dart';
+import 'package:town_pass/page/trash_helper/trash_helper_service.dart';
 import 'package:town_pass/service/account_service.dart';
 import 'package:town_pass/service/device_service.dart';
 import 'package:town_pass/service/geo_locator_service.dart';
@@ -36,6 +37,7 @@ Future<void> initServices() async {
   await Get.putAsync<SharedPreferencesService>(() async => await SharedPreferencesService().init());
   await Get.putAsync<GeoLocatorService>(() async => await GeoLocatorService().init());
   await Get.putAsync<NotificationService>(() async => await NotificationService().init());
+  await Get.putAsync<TrashHelperService>(() async => await TrashHelperService().init());
 
   Get.put<SubscriptionService>(SubscriptionService());
 }
@@ -72,6 +74,7 @@ class MyApp extends StatelessWidget {
       onInit: () {
         NotificationService.requestPermission();
       },
+      onReady: () => Get.find<TrashHelperService>().onAppReady(),
       getPages: TPRoute.page,
     );
   }

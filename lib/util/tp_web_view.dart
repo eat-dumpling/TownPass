@@ -1,6 +1,6 @@
 import 'dart:collection';
-
 import 'dart:io';
+
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -11,7 +11,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:town_pass/gen/assets.gen.dart';
 import 'package:town_pass/util/tp_app_bar.dart';
 import 'package:town_pass/util/tp_colors.dart';
+import 'package:town_pass/page/trash_helper/trash_local_server.dart';
 import 'package:town_pass/util/tp_microservice_config.dart';
+import 'package:town_pass/util/trash_helper.dart';
 import 'package:town_pass/util/web_message_handler/tp_web_message_listener.dart';
 
 class WebViewArgument {
@@ -50,6 +52,23 @@ class TPWebView extends StatelessWidget {
 
   final RxBool canGoBack = RxBool(false);
 
+  /// On iOS, same-document navigations (pushState / hash changes) report the
+  /// visited-history update before WKWebView's back list is final, so a single
+  /// read can leave a stale back arrow that does nothing. Read again shortly after.
+  Future<void> _refreshCanGoBack() async {
+    canGoBack.value = await webViewController.value?.canGoBack() ?? false;
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    canGoBack.value = await webViewController.value?.canGoBack() ?? false;
+  }
+
+  Future<void> _goBack() async {
+    final controller = webViewController.value;
+    if (controller != null && await controller.canGoBack()) {
+      await controller.goBack();
+    }
+    await _refreshCanGoBack();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +79,7 @@ class TPWebView extends StatelessWidget {
           () => switch (canGoBack.value) {
             true => IconButton(
                 icon: Assets.svg.expand.svg(),
-                onPressed: () async => await webViewController.value?.goBack(),
+                onPressed: _goBack,
                 style: const ButtonStyle(
                   iconSize: WidgetStatePropertyAll<double>(24),
                 ),
@@ -81,17 +100,19 @@ class TPWebView extends StatelessWidget {
         controller: appBarController,
       ),
       body: TPInAppWebView(
-        onWebViewCreated: (controller) {
+        // Without this, Flutter's iOS platform-view gesture arbitration delays taps inside the page.
+        preventGestureDelay: true,
+        onWebViewCreated: (controller) async {
           webViewController.value = controller;
+          // The bundled Trash Helper page is served by the app; make sure that server is up.
+          if (url.startsWith(TrashHelper.url)) await TrashLocalServer.ensureRunning();
           try {
             controller.loadUrl(urlRequest: URLRequest(url: WebUri(url)));
           } catch (_) {
             controller.loadData(data: _failedToLoadUrlData(url: url));
           }
         },
-        onUpdateVisitedHistory: (_, __, ___) async {
-          canGoBack.value = await webViewController.value?.canGoBack() ?? false;
-        },
+        onUpdateVisitedHistory: (_, _, _) => _refreshCanGoBack(),
         onTitleChanged: (_, title) {
           appBarController.title.value = switch (forceTitle == null) {
             true => title,
@@ -99,13 +120,16 @@ class TPWebView extends StatelessWidget {
           };
         },
         // iOS 需要 inline 播放，相機畫面才不會被拉成全螢幕。
+        // 丟丟會載入 OpenStreetMap 圖磚；OSM 圖磚政策要求 App 標明身分。
         initialSettings: InAppWebViewSettings(
           allowsInlineMediaPlayback: true,
           mediaPlaybackRequiresUserGesture: false,
+          applicationNameForUserAgent: url.startsWith(TrashHelper.url) ? 'TownPass-TrashHelper/1.0' : null,
         ),
         // 預設 WebView 會拒絕相機；只對白名單內的微服務開放相機（不含麥克風）。
         onPermissionRequest: (controller, request) async {
-          final bool allowedSite = TPMicroserviceConfig.canUseCamera(request.origin);
+          // 白名單微服務（回收小里長等），或 App 內建的丟丟頁面（主框架）。
+          final bool allowedSite = TPMicroserviceConfig.canUseCamera(request.origin) || TrashHelper.isTrustedSource(request.origin, true);
           final List<PermissionResourceType> camera =
               request.resources.where((r) => r == PermissionResourceType.CAMERA).toList();
           if (!allowedSite || camera.isEmpty) {

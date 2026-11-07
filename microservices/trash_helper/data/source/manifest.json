@@ -1,0 +1,32 @@
+{
+ "stops": {
+  "dataset": "6bb3304b-4f46-4bb0-8cd1-60c66dcd1cae",
+  "resource": "a6e90031-7ec4-4089-afb5-361a4efe7202",
+  "file": "taipei_garbage_truck_stops.csv",
+  "encoding": "utf-8-sig",
+  "last_modified": "2026-10-30 16:46:54",
+  "downloaded_on": "2026-11-07",
+  "rows": 4012,
+  "sha1": "af01c5be3c1ff568e7bb53ba9f9d3dd610112fc6"
+ },
+ "vendors": {
+  "dataset": "cd95ab7d-dd94-4825-a6c5-b2ea0329ff0f",
+  "resource": "9edad46b-6f4f-4931-9452-2669f622060e",
+  "file": "bag_vendors_big5.csv",
+  "encoding": "big5hkscs",
+  "last_modified": "2026-10-20 17:53:08",
+  "downloaded_on": "2026-11-07",
+  "rows": 2421,
+  "sha1": "d2dc385a97ac0ee07ba7c66c655f374b2ac2af06"
+ },
+ "dropoffs": {
+  "dataset": "1acf38f3-1509-4cb1-898a-9b1d4f31a3af",
+  "resource": "0263f0ce-403a-45ed-a407-c69285b6cad2",
+  "file": "dropoff_big5.csv",
+  "encoding": "big5hkscs",
+  "last_modified": "2026-02-23 10:41:28",
+  "downloaded_on": "2026-11-07",
+  "rows": 30,
+  "sha1": "07bd150cf4e609160800ea6ee5e164cc969f26e2"
+ }
+}

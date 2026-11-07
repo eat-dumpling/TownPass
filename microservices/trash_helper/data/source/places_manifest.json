@@ -1,0 +1,22 @@
+{
+ "clothes": {
+  "file": "clothes_bins_big5.csv",
+  "last_modified": "2026-07-23 15:59:27",
+  "downloaded_on": "2026-11-08",
+  "rows": 1184,
+  "sha1": "8eea65f543db0d26168275331dbded9f62ed05ff"
+ },
+ "pills": {
+  "file": "medicine_takeback_big5.csv",
+  "last_modified": "2024-09-24 16:07:35",
+  "downloaded_on": "2026-11-08",
+  "rows": 378,
+  "sha1": "bf08170c213a5fba7341a691bbf38c704a9cdf83"
+ },
+ "osm": {
+  "file": "osm_shops.json",
+  "downloaded_on": "2026-11-08",
+  "elements": 4921,
+  "sha1": "1168c00e3b339238623e0114e77b3a627660b5b6"
+ }
+}

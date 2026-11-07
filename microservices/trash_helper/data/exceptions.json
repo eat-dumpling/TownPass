@@ -1,0 +1,10 @@
+{
+ "version": "2026-11-07",
+ "checked": "2026-11-07",
+ "note": "Only dates confirmed by an official DEP announcement. Each entry overrides the normal weekday rule for that service day. type: suspend = no collection; normal = collected as usual (e.g. a holiday that is NOT a stop day). groups: which groups are affected, or [\"all\"]. Lunar New Year 2027 has not been announced yet (checked 2026-11-07).",
+ "exceptions": [
+  {"id": "2026-new-year", "date": "2026-01-01", "type": "normal", "groups": ["all"],
+   "title": {"en": "New Year's Day: collection as usual", "zh": "元旦照常收運"},
+   "src": "https://epib.dep.gov.taipei/News_Content.aspx?n=408C712E96A4EDF5&s=8A1761680F0D50F3"}
+ ]
+}

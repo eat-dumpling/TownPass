@@ -77,7 +77,10 @@ class LaunchMapWebMessageHandler extends TPWebMessageHandler {
     );
 
     if (canLaunch) {
-      await launchUrl(uri);
+      // Google Maps links go to the system so they open the Google Maps app when installed
+      // (an in-app browser cannot hand a universal link over to another app).
+      final bool googleMaps = uri.host.endsWith('google.com') && uri.path.startsWith('/maps');
+      await launchUrl(uri, mode: googleMaps ? LaunchMode.externalApplication : LaunchMode.platformDefault);
     }
   }
 }

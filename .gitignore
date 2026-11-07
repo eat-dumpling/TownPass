@@ -95,3 +95,12 @@ recycle-li/testdata/web/
 recycle-li/testdata/cache/
 recycle-li/testdata/hand/
 
+# 丟丟 photo recognition (from 回收小里長): models and wasm are rebuilt by tools/trash_helper_vision/build.sh
+# (the folders stay, with a .gitkeep, because pubspec.yaml lists them as assets)
+microservices/trash_helper/vendor/recycle-vision/models/**
+microservices/trash_helper/vendor/recycle-vision/ort/**
+microservices/trash_helper/vendor/recycle-vision/mediapipe/**
+!microservices/trash_helper/vendor/recycle-vision/models/**/
+!microservices/trash_helper/vendor/recycle-vision/ort/**/
+!microservices/trash_helper/vendor/recycle-vision/mediapipe/**/
+!microservices/trash_helper/vendor/recycle-vision/**/.gitkeep

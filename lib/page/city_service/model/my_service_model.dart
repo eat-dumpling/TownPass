@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:town_pass/gen/assets.gen.dart';
 import 'package:town_pass/util/tp_microservice_config.dart';
+import 'package:town_pass/util/trash_helper.dart';
 
 // 先於 MyServiceItemId enum 加入新服務；
 // 再在 MyServiceIdExt 擴充中加入該服務的 MyServiceItem 物件。
@@ -38,6 +39,14 @@ enum MyServiceItemId {
 extension MyServiceIdExt on MyServiceItemId {
   MyServiceItem get item {
     return switch (this) {
+      MyServiceItemId.trashHelper => MyServiceItem(
+          title: '丟丟',
+          description: '丟丟 TossTalk：垃圾分類、今天能不能丟、垃圾車幾點到',
+          icon: Assets.svg.iconTrashOpen.svg(),
+          category: MyServiceCategory.cityLife,
+          destinationUrl: TrashHelper.url,
+          forceWebViewTitle: '丟丟 TossTalk',
+        ),
       MyServiceItemId.dedicatedLine => MyServiceItem(
           title: '1999',
           description: '播打網路語音通話',
@@ -193,14 +202,6 @@ extension MyServiceIdExt on MyServiceItemId {
           category: MyServiceCategory.cityLife,
           destinationUrl: recycleLiUrl,
           forceWebViewTitle: '回收小里長',
-        ),
-      MyServiceItemId.trashHelper => MyServiceItem(
-          title: '垃圾生活助手',
-          description: 'Trash Helper：拍照查分類、今天能不能丟、第一次倒垃圾（中英）',
-          icon: Assets.svg.iconTrashHelper.svg(),
-          category: MyServiceCategory.cityLife,
-          destinationUrl: trashHelperUrl,
-          forceWebViewTitle: 'Taipei Trash Helper',
         ),
     };
   }
