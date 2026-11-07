@@ -115,6 +115,13 @@ class TPWebView extends StatelessWidget {
           }
         },
         onUpdateVisitedHistory: (_, _, _) => _refreshCanGoBack(),
+        // 除錯版、Profile 版把網頁的 console 印到 App log（看辨識模型載入失敗的原因）；正式版不印。
+        onConsoleMessage: kReleaseMode ? null : (_, message) => debugPrint('[web] ${message.messageLevel} ${message.message}'),
+        // iOS 記憶體吃緊時會關掉網頁行程（兩個辨識模型都載入時可能發生），畫面會停住；重新載入就恢復。
+        onWebContentProcessDidTerminate: (controller) {
+          debugPrint('[web] content process terminated, reloading');
+          controller.reload();
+        },
         onTitleChanged: (_, title) {
           appBarController.title.value = switch (forceTitle == null) {
             true => title,

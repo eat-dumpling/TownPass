@@ -718,3 +718,17 @@ body.has-tabbar:has(.pick-bar:not([hidden])) main { padding-bottom: calc(86px + 
 .fold-body { padding: 0 12px 12px; }
 .fold-head strong, .fold-sub { display: block; }
 .pick-bar[hidden] { display: none; }
+
+/* One-screen home (winners' pattern): the camera is the page. */
+.va-fab[data-view="home"] { display: none; }
+.focus-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 4px 0 8px; }
+.focus-q { margin: 8px 0 12px; font-size: 26px; font-weight: 700; }
+.focus-snap { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 44vh; margin: 4px 0 16px; padding: 24px 16px; border: 0; border-radius: 28px; background: var(--p500); color: var(--white); font: inherit; cursor: pointer; box-shadow: 0 10px 28px rgba(90, 180, 197, .4); }
+.focus-snap:active { transform: scale(.98); }
+.focus-snap .fs-ring { display: grid; place-items: center; width: 132px; height: 132px; border-radius: 66px; background: rgba(255, 255, 255, .2); box-shadow: inset 0 0 0 4px rgba(255, 255, 255, .5); margin-bottom: 8px; }
+.focus-snap strong { font-size: 26px; }
+.focus-snap > span:last-child { font-size: 16px; opacity: .92; }
+.focus-alt { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.focus-link { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 56px; padding: 8px 10px; border: 1px solid var(--g100); border-radius: 14px; background: var(--white); color: var(--p700, #2f6f86); font: inherit; font-weight: 600; font-size: 15px; cursor: pointer; text-align: center; }
+.more-list { display: grid; gap: 8px; }
+.more-row { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 8px 12px; border: 0; border-radius: 12px; background: var(--g50, #f5f7f8); font: inherit; font-size: 16px; text-align: left; cursor: pointer; }

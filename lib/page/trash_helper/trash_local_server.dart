@@ -115,6 +115,10 @@ class LocalSiteServer {
         return;
       }
       final ext = path.contains('.') ? path.substring(path.lastIndexOf('.') + 1).toLowerCase() : '';
+      // The size up front: the model loader (Transformers.js) then reads the 95 MB model into one
+      // buffer of the right size. Without it, it keeps growing the buffer and the WebView runs out
+      // of memory on the phone ("[wasm] RangeError: Out of memory").
+      res.contentLength = data.lengthInBytes;
       res.headers
         ..set(HttpHeaders.contentTypeHeader, _types[ext] ?? 'application/octet-stream')
         // Hashed build files never change; everything else is re-checked (the app update replaces it).

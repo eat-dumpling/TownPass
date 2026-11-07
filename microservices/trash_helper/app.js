@@ -691,7 +691,7 @@
   };
 
   // ---------------------------------------------------------------- router
-  const TABBED = new Set(["", "map", "nearby"]);
+  const TABBED = new Set(["list", "map", "nearby"]); // home is one screen with no tab bar
   async function render() {
     navListeners.splice(0).forEach(fn => { try { fn(); } catch (_) { /* ignore */ } });
     document.documentElement.lang = lang === "zh" ? "zh-Hant-TW" : lang;
@@ -723,7 +723,7 @@
     document.body.classList.toggle("has-tabbar", tabbed);
     document.body.classList.toggle("dark", view === "scan");
     document.body.classList.toggle("full", view === "map" || view === "nearby" || view === "scan");
-    fill(app, content, tabbed ? V.tabBar(view ? "map" : "home") : null);
+    fill(app, content, tabbed ? V.tabBar(view === "list" ? "home" : "map") : null);
     devLog("render", { view: view || "home", ms: Math.round(performance.now() - T0) });
     window.scrollTo(0, 0);
   }

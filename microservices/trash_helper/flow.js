@@ -350,7 +350,42 @@
     head.addEventListener("click", () => { open = !open; panel.hidden = !open; head.setAttribute("aria-expanded", String(open)); LS.set(key, open); });
     return h("section", { class: "fold-block" }, head, panel);
   }
+  // Home, after the TownPass winners' pattern (2024 即時雨晴, 2024 ParkFlow, 2025 RideFlow): the
+  // first screen is the tool itself — one big camera button and one line about today. Typing,
+  // voice and everything else are one tap further; the truck time and reminder come with the answer.
   function viewHome() {
+    const now = SCH.taipeiParts(Date.now());
+    TH.setHeader(null);
+    TH.onScanPick = null;
+    return [
+      h("header", { class: "focus-top" },
+        h("button", { class: "lang-pill more-pill", type: "button", "aria-label": t("hMore"), onclick: moreSheet }, icon("layout-grid", 18), h("span", { text: t("hMore") })),
+        h("div", { class: "head-actions" }, TH.views.kidsButton(), TH.views.langButton())),
+      h("h1", { class: "focus-q", text: t("hQuestion"), "data-pair": TH.pairT("hQuestion") }),
+      todayCard(now),
+      h("button", { class: "focus-snap", type: "button", onclick: () => go("scan") },
+        h("span", { class: "fs-ring", "aria-hidden": "true" }, icon("camera", 64)),
+        h("strong", { text: t("taskScanTitle"), "data-pair": TH.pairT("taskScanTitle") }),
+        h("span", { text: t("taskScanDesc") })),
+      h("div", { class: "focus-alt" },
+        h("button", { class: "focus-link", type: "button", onclick: () => go("sort") }, icon("search", 20), h("span", { text: t("hSearch") })),
+        h("button", { class: "focus-link", type: "button", onclick: () => TH.assistant && TH.assistant.open() }, icon("microphone", 20), h("span", { text: t("vaTitle") }))),
+    ];
+  }
+  // Everything that is not the main path: one sheet, one tap away.
+  function moreSheet() {
+    const row = (ic, label, fn) => h("button", { class: "more-row", type: "button", onclick: () => { close(); fn(); } },
+      h("span", { class: "tt-icon" }, icon(ic, 22)), h("span", { class: "grow", text: label }), icon("chev", 18));
+    const close = TH.sheet(t("hMore"), h("div", { class: "more-list" },
+      row("list", t("taskSortDesc"), () => go("list")),
+      row("map-pin", t("taskNearbyTitle"), () => go("nearby")),
+      row("star", t("taskFavTitle"), () => go("favorites")),
+      row("message-circle", t("tcTitle"), () => go("talk/truck")),
+      row("shopping-bag", t("bagsTitle"), TH.views.bagSheet)));
+  }
+
+  // The checklist "what are you throwing out today" (pick several, get one plan): the old home.
+  function viewList() {
     const p = profile.get();
     if (!p.setupDone) { setTimeout(() => go("welcome/0", { replace: true }), 0); return h("div"); }
     TH.setHeader(null);
@@ -390,12 +425,6 @@
         h("div", {}, h("div", { class: "home-date", text: `${t("hello" + (now.minutes >= 5 * 60 && now.minutes < 11 * 60 ? 0 : now.minutes >= 11 * 60 && now.minutes < 17 * 60 ? 1 : 2))} · ${TH.lang() === "zh" ? `${now.m}月${now.d}日 週${t("days")[now.day]}` : `${t("days")[now.day]} ${now.m}/${now.d}`}` }),
           h("h1", { class: "home-day", text: t("hQuestion"), "data-pair": TH.pairT("hQuestion") })),
         h("div", { class: "head-actions" }, TH.views.kidsButton(), TH.views.langButton())),
-      // Demo focus: the two things everyone needs — snap it, and what goes out today.
-      h("button", { class: "home-snap", type: "button", onclick: () => go("scan") },
-        h("span", { class: "hs-icon", "aria-hidden": "true" }, icon("camera", 34)),
-        h("span", { class: "grow" }, h("strong", { text: t("taskScanTitle"), "data-pair": TH.pairT("taskScanTitle") }), h("span", { text: t("taskScanDesc") })),
-        icon("chev", 22)),
-      todayCard(now),
       truckStatus(),
       last.length && !sel.size ? h("button", { class: "last-row", type: "button", onclick: () => { last.forEach(id => sel.add(id)); picks.set([...sel]); go("plan"); } },
         h("span", { class: "grow last-arts" }, h("span", { text: t("hLast") }), last.slice(0, 5).map(id => TH.art(TH.itemById(id), 24))), h("strong", { text: t("hAgain") + " ›" })) : null,
@@ -689,6 +718,7 @@
     return out;
   }
 
-  Object.assign(TH.views, { viewHome });
+  Object.assign(TH.views, { viewHome, viewList });
+  TH.routes = Object.assign(TH.routes || {}, { list: () => viewList() });
   TH.routes = Object.assign(TH.routes || {}, { welcome: viewWelcome, plan: viewPlan });
 })();
