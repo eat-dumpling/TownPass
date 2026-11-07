@@ -104,3 +104,9 @@ microservices/trash_helper/vendor/recycle-vision/mediapipe/**
 !microservices/trash_helper/vendor/recycle-vision/ort/**/
 !microservices/trash_helper/vendor/recycle-vision/mediapipe/**/
 !microservices/trash_helper/vendor/recycle-vision/**/.gitkeep
+
+# 回收小里長 bundled into the app: build output of recycle-li/web (zsh tools/recycle_li_bundle/build.sh)
+microservices/recycle_li/**
+!microservices/recycle_li/**/
+!microservices/recycle_li/**/.gitkeep
+build/recycle-li-dist/

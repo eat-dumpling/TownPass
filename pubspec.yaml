@@ -113,6 +113,11 @@ flutter:
     - microservices/trash_helper/vendor/recycle-vision/models/mediapipe/
     - microservices/trash_helper/vendor/recycle-vision/models/Xenova/siglip-base-patch16-224/
     - microservices/trash_helper/vendor/recycle-vision/models/Xenova/siglip-base-patch16-224/onnx/
+    # 回收小里長 production build (tools/recycle_li_bundle/build.sh); models are shared with 丟丟 above.
+    - microservices/recycle_li/
+    - microservices/recycle_li/assets/
+    - microservices/recycle_li/data/
+    - microservices/recycle_li/data/stops/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

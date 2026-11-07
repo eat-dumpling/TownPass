@@ -104,8 +104,9 @@ class TPWebView extends StatelessWidget {
         preventGestureDelay: true,
         onWebViewCreated: (controller) async {
           webViewController.value = controller;
-          // The bundled Trash Helper page is served by the app; make sure that server is up.
+          // The bundled Trash Helper and recycle-li pages are served by the app; make sure that server is up.
           if (url.startsWith(TrashHelper.url)) await TrashLocalServer.ensureRunning();
+          if (url.startsWith(recycleLiUrl)) await RecycleLiLocalServer.ensureRunning();
           try {
             controller.loadUrl(urlRequest: URLRequest(url: WebUri(url)));
           } catch (_) {
