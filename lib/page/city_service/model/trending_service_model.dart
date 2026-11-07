@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:town_pass/gen/assets.gen.dart';
 import 'package:town_pass/util/tp_microservice_config.dart';
+import 'package:town_pass/util/trash_helper.dart';
 
 abstract final class TrendingServiceModel {
   static List<TrendingService> get serviceList {
@@ -27,11 +28,12 @@ abstract final class TrendingServiceModel {
         url: recycleLiUrl,
         forceWebViewTitle: '回收小里長',
       ),
+      // 丟丟和「我的服務」開同一個頁面：隨 App 內建（可離線），開發時可用 TRASH_HELPER_URL 指向開發機。
       TrendingService(
         icon: Assets.svg.iconTrashHelper.svg(),
-        title: '垃圾生活助手',
-        url: trashHelperUrl,
-        forceWebViewTitle: 'Taipei Trash Helper',
+        title: '丟丟',
+        url: TrashHelper.url,
+        forceWebViewTitle: '丟丟 TossTalk',
       ),
       // 在此列表後加入新熱門按鈕
       // add new trending service button here
