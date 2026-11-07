@@ -36,7 +36,7 @@
     hSearch: "搜尋要丟的東西", hScanAdd: "拍照", hLast: "上次丟的：", hAgain: "再一次",
     // Home row (opens the list) and the list's main button (opens the steps): said as what the
     // newcomer does next, "pick what you're throwing out" then "see how to throw them out".
-    hSelected: "已選 {n} 樣", hPickRow: "勾選要丟的東西", hSeeHow: "看怎麼丟",
+    hSelected: "已選 {n} 樣", hPickRow: "這些東西要怎麼丟", hSeeHow: "看怎麼丟",
     truckToday: "{when} {time}", truckLeft: "還有 {h} 小時 {m} 分", truckLeftM: "還有 {m} 分鐘", truckNow: "車快到了！",
     truckNone: "還沒設定你的垃圾車", commBadge: "社區代收",
     pTitle: "我的丟垃圾清單", pEdit: "修改",
@@ -87,7 +87,7 @@
     hQuestion: "What are you throwing out?", hLead: "Tap what you have. We'll put the steps in order.",
     gDaily: "Everyday", gSometimes: "Now and then", gBig: "Big items",
     hSearch: "Search for an item", hScanAdd: "Photo", hLast: "Last time: ", hAgain: "Same again",
-    hSelected: "{n} picked", hPickRow: "Pick what you're throwing out", hSeeHow: "Show me how",
+    hSelected: "{n} picked", hPickRow: "How do I throw these out?", hSeeHow: "Show me how",
     truckToday: "{when} {time}", truckLeft: "in {h} h {m} min", truckLeftM: "in {m} min", truckNow: "The truck is almost here!",
     truckNone: "No truck stop chosen yet", commBadge: "Building collects",
     pTitle: "My trash plan", pEdit: "Edit",
@@ -122,12 +122,12 @@
 
   // The two guiding labels in the other languages (the generated i18n/<code>.js files load first).
   for (const [code, pickRow, seeHow] of [
-    ["vi", "Chọn đồ bạn muốn vứt", "Xem cách vứt"],
-    ["id", "Pilih barang yang mau dibuang", "Lihat cara buang"],
-    ["fil", "Piliin ang itatapon mo", "Ipakita kung paano"],
-    ["th", "เลือกของที่จะทิ้ง", "ดูวิธีทิ้ง"],
-    ["ko", "버릴 물건 고르기", "버리는 방법 보기"],
-    ["ja", "捨てる物を選ぶ", "捨て方を見る"],
+    ["vi", "Những thứ này vứt thế nào?", "Xem cách vứt"],
+    ["id", "Bagaimana membuang barang-barang ini?", "Lihat cara buang"],
+    ["fil", "Paano itapon ang mga ito?", "Ipakita kung paano"],
+    ["th", "ของพวกนี้ทิ้งยังไง", "ดูวิธีทิ้ง"],
+    ["ko", "이 물건들은 어떻게 버리나요?", "버리는 방법 보기"],
+    ["ja", "これはどう捨てる？", "捨て方を見る"],
   ]) if (window.TH_STRINGS[code]) Object.assign(window.TH_STRINGS[code], { hPickRow: pickRow, hSeeHow: seeHow });
 
   // ------------------------------------------------------------ local state
