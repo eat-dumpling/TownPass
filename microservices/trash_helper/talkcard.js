@@ -155,7 +155,9 @@
     TH.setHeader(t("tcTitle"));
     const s = SCENES[scene];
     const rules = TH.rules();
-    const out = [];
+    // The language button right on the card: every phrase is Chinese plus the user's language,
+    // so switching here redraws the whole card in the new language.
+    const out = [h("div", { class: "head-actions res-actions" }, TH.views.langButton())];
     out.push(h("div", { class: "tc-tabs", role: "tablist" }, Object.entries(SCENES).map(([k, v]) =>
       h("button", { class: "tc-tab" + (k === scene ? " on" : ""), type: "button", role: "tab", "aria-selected": String(k === scene), onclick: () => go("talk/" + k, { replace: true }) },
         icon(v.icon, 20), h("span", { text: t(v.label) })))));
