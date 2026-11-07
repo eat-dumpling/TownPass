@@ -34,7 +34,9 @@
     hQuestion: "今天要丟什麼？", hLead: "點選手上的東西，我們幫你排好步驟。",
     gDaily: "每天都會有的", gSometimes: "偶爾才有的", gBig: "大型的",
     hSearch: "搜尋要丟的東西", hScanAdd: "拍照", hLast: "上次丟的：", hAgain: "再一次",
-    hSelected: "已選 {n} 樣", hMakePlan: "產生步驟", 
+    // Home row (opens the list) and the list's main button (opens the steps): said as what the
+    // newcomer does next, "pick what you're throwing out" then "see how to throw them out".
+    hSelected: "已選 {n} 樣", hPickRow: "勾選要丟的東西", hSeeHow: "看怎麼丟",
     truckToday: "{when} {time}", truckLeft: "還有 {h} 小時 {m} 分", truckLeftM: "還有 {m} 分鐘", truckNow: "車快到了！",
     truckNone: "還沒設定你的垃圾車", commBadge: "社區代收",
     pTitle: "我的丟垃圾清單", pEdit: "修改",
@@ -85,7 +87,7 @@
     hQuestion: "What are you throwing out?", hLead: "Tap what you have. We'll put the steps in order.",
     gDaily: "Everyday", gSometimes: "Now and then", gBig: "Big items",
     hSearch: "Search for an item", hScanAdd: "Photo", hLast: "Last time: ", hAgain: "Same again",
-    hSelected: "{n} picked", hMakePlan: "Show my steps", 
+    hSelected: "{n} picked", hPickRow: "Pick what you're throwing out", hSeeHow: "Show me how",
     truckToday: "{when} {time}", truckLeft: "in {h} h {m} min", truckLeftM: "in {m} min", truckNow: "The truck is almost here!",
     truckNone: "No truck stop chosen yet", commBadge: "Building collects",
     pTitle: "My trash plan", pEdit: "Edit",
@@ -117,6 +119,16 @@
     doneLead: "Next time, just tick what you're throwing out.", seeAgain: "See the steps again",
     s3OtherDay: "Other days", s1For: "For: ", s1BuyMap: "Where to buy nearby", s1ShopList: "All shops", s1BagRule: "Recycling and food waste need no official bag. New Taipei bags are accepted too.", moreSizes: "Sizes", moreDetails: "Details", fullGuide: "Full guide", moreParts: "Parts", moreHow: "How to sort", moreOptions: "Other options",
   });
+
+  // The two guiding labels in the other languages (the generated i18n/<code>.js files load first).
+  for (const [code, pickRow, seeHow] of [
+    ["vi", "Chọn đồ bạn muốn vứt", "Xem cách vứt"],
+    ["id", "Pilih barang yang mau dibuang", "Lihat cara buang"],
+    ["fil", "Piliin ang itatapon mo", "Ipakita kung paano"],
+    ["th", "เลือกของที่จะทิ้ง", "ดูวิธีทิ้ง"],
+    ["ko", "버릴 물건 고르기", "버리는 방법 보기"],
+    ["ja", "捨てる物を選ぶ", "捨て方を見る"],
+  ]) if (window.TH_STRINGS[code]) Object.assign(window.TH_STRINGS[code], { hPickRow: pickRow, hSeeHow: seeHow });
 
   // ------------------------------------------------------------ local state
   const LS = {
@@ -329,7 +341,14 @@
     const takes = day => Object.keys(LABEL).filter(id => g[id].days.includes(day));
     const today = takes(now.day), tmr = takes((now.day + 1) % 7);
     const chips = ids => h("span", { class: "tc-chips" }, ids.map(id => h("span", { class: "tc-chip tc-" + id, text: t(LABEL[id]) })));
-    return h("button", { class: "home-today" + (today.length ? "" : " off"), type: "button", onclick: () => go("when/general") },
+    // With a truck stop set, tapping opens the same time menu as the truck card (pick a day, then
+    // your stop or one nearby); without one, the page of collection days.
+    const open = () => {
+      const p = profile.get();
+      if (!p.community && p.stopId && TH.pickTimeSheet) TH.pickTimeSheet(() => go("", { replace: true }));
+      else go("when/general");
+    };
+    return h("button", { class: "home-today" + (today.length ? "" : " off"), type: "button", onclick: open },
       h("span", { class: "hs-icon", "aria-hidden": "true" }, icon("truck", 26)),
       h("span", { class: "grow" },
         h("strong", { text: today.length ? t("todayOn") : t("todayOff"), "data-pair": TH.pairT(today.length ? "todayOn" : "todayOff") }),
@@ -339,7 +358,9 @@
 
   // Where the truck setup returns: to the steps if things are picked (it is usually started from
   // the plan's "pick my truck"), otherwise home.
-  const afterSetup = () => (picks.get().some(id => TH.itemById(id)) ? "plan" : "");
+  // Coming from the pick list (first time, not set up yet), it goes back to that list.
+  let setupReturn = null;
+  const afterSetup = () => { const to = setupReturn; setupReturn = null; return to || (picks.get().some(id => TH.itemById(id)) ? "plan" : ""); };
 
   // Home, after the TownPass winners' pattern (2024 即時雨晴, 2024 ParkFlow, 2025 RideFlow): the
   // first screen is the tool itself — one big camera button and one line about today. Typing,
@@ -366,13 +387,13 @@
         h("button", { class: "focus-link", type: "button", onclick: () => TH.assistant && TH.assistant.open() }, icon("microphone", 20), h("span", { text: t("vaTitle") }))),
     ];
   }
-  // The second main path: tick what you have and get one list of steps. With things already
-  // picked (e.g. 「我要丟棄」 after a photo) it goes straight to those steps.
+  // The second main path: tick what you have, then see how to throw each out. It always opens the
+  // list first, so what is picked can be checked and changed before the steps.
   function planRow() {
     const n = picks.get().filter(id => TH.itemById(id)).length;
-    return h("button", { class: "focus-plan" + (n ? " has" : ""), type: "button", onclick: () => go(n ? "plan" : "list") },
+    return h("button", { class: "focus-plan" + (n ? " has" : ""), type: "button", onclick: () => go("list") },
       h("span", { class: "hs-icon", "aria-hidden": "true" }, icon("list", 24)),
-      h("span", { class: "grow" }, h("strong", { text: t("hMakePlan"), "data-pair": TH.pairT("hMakePlan") }),
+      h("span", { class: "grow" }, h("strong", { text: t("hPickRow"), "data-pair": TH.pairT("hPickRow") }),
         h("span", { class: "caption dark", text: n ? t("hSelected", { n }) : t("taskSortDesc") })),
       icon("chev", 20));
   }
@@ -383,7 +404,7 @@
   // The checklist "what are you throwing out today" (pick several, get one plan): the old home.
   function viewList() {
     const p = profile.get();
-    if (!p.setupDone) { setTimeout(() => go("welcome/0", { replace: true }), 0); return h("div"); }
+    if (!p.setupDone) { setupReturn = "list"; setTimeout(() => go("welcome/0", { replace: true }), 0); return h("div"); }
     TH.setHeader(null);
     const rules = TH.rules();
     const now = SCH.taipeiParts(Date.now());
@@ -394,7 +415,7 @@
     const drawBar = () => heads.forEach(f => f()) || (bar.hidden = !sel.size) || fill(bar,
       h("span", { class: "pick-count", text: t("hSelected", { n: sel.size }) }),
       sel.size ? h("button", { class: "clear-picks", type: "button", onclick: () => { sel.clear(); picks.set([]); document.querySelectorAll(".pick-chip.on").forEach(b => { b.classList.remove("on"); b.setAttribute("aria-pressed", "false"); }); drawBar(); } }, icon("x", 16), t("clearPicks")) : null,
-      h("button", { class: "btn btn-primary", type: "button", disabled: !sel.size, onclick: () => { picks.set([...sel]); LS.set("th.lastPicks", [...sel]); go("plan"); } }, t("hMakePlan"), icon("chev", 18)));
+      h("button", { class: "btn btn-primary", type: "button", disabled: !sel.size, onclick: () => { picks.set([...sel]); LS.set("th.lastPicks", [...sel]); go("plan"); } }, t("hSeeHow"), icon("chev", 18)));
     const chip = it => {
       const b = h("button", { class: "pick-chip" + (sel.has(it.id) ? " on" : ""), type: "button", "aria-pressed": String(sel.has(it.id)) },
         TH.art(it, 44), h("span", { class: "pc-name", text: label(it), "data-pair": labelPair(it) }), h("span", { class: "pc-check", "aria-hidden": "true" }, icon("check", 12)));
