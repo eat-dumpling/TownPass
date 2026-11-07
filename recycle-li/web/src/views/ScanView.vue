@@ -206,7 +206,7 @@ function onTap(e: PointerEvent) {
     .sort((a, b) => a.w * a.h - b.w * b.h)[0]
   if (hit && shown(hit.track)) open(itemOf(hit.track))
 }
-const open = (it: Item) => router.push(`/catch/${it.id}`)
+const open = (it: Item) => router.replace(`/catch/${it.id}`)
 async function fix(t: Track, it: Item) {
   const v = vecs.get(t.id)
   if (v) await addLocalProto(it.id, v) // 只存向量，不存照片
@@ -214,9 +214,9 @@ async function fix(t: Track, it: Item) {
   open(it)
 }
 function go(d: Decision) {
-  if (d.kind === 'reveal') router.push(`/catch/${d.item.id}`)
-  else if (d.kind === 'clue') router.push({ path: '/pick', query: { c: d.cands.map((x) => `${x.item.id}:${x.p.toFixed(3)}`).join(',') } })
-  else router.push('/pick')
+  if (d.kind === 'reveal') router.replace(`/catch/${d.item.id}`)
+  else if (d.kind === 'clue') router.replace({ path: '/pick', query: { c: d.cands.map((x) => `${x.item.id}:${x.p.toFixed(3)}`).join(',') } })
+  else router.replace('/pick')
 }
 async function fromFile(e: Event) {
   const f = (e.target as HTMLInputElement).files?.[0]
@@ -261,7 +261,7 @@ const pctOf = (t: Track) => Math.round(confOf(t) * 100)
         </button>
       </div>
       <div class="grid2">
-        <router-link to="/pick" class="btn"><AppIcon name="HandClick" /> <Zy text="都不是，用選的" /></router-link>
+        <router-link to="/pick" replace class="btn"><AppIcon name="HandClick" /> <Zy text="都不是，用選的" /></router-link>
         <button class="btn ghost" @click="fixing = null"><Zy text="繼續掃" /></button>
       </div>
     </section>
@@ -271,7 +271,7 @@ const pctOf = (t: Track) => Math.round(confOf(t) * 100)
       <button class="btn" :class="{ primary: cam === 'off' }" :disabled="model !== 'ready'" @click="fileIn?.click()">
         <AppIcon name="Photo" /> <Zy :text="cam === 'off' ? '拍照或選照片' : '從相簿選'" />
       </button>
-      <router-link to="/pick" class="btn ghost"><AppIcon name="HandClick" /> <Zy text="用選的" /></router-link>
+      <router-link to="/pick" replace class="btn ghost"><AppIcon name="HandClick" /> <Zy text="用選的" /></router-link>
     </div>
   </main>
 </template>

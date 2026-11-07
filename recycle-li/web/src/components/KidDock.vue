@@ -1,23 +1,25 @@
 <script setup lang="ts">
 // 孩子的底部選單（照台北通 Figma）：白底、灰色線條圖示，選到的那一個變藍綠；中間凸起的藍綠圓鈕是「掃一掃」。
 // 決選版收斂成三個：家、掃一掃、圖鑑（考考你從首頁的大按鈕進去；蓋房子從首頁的小島進去）。
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { switchTab } from '@/nav'
 import AppIcon from './AppIcon.vue'
 import Zy from './Zy.vue'
 
 const route = useRoute()
+const router = useRouter()
 const on = (p: string) => (p === '/' ? route.path === '/' : route.path.startsWith(p))
 </script>
 
 <template>
   <nav class="dock" aria-label="主選單">
-    <router-link to="/" class="it home" :class="{ on: on('/') }" :aria-current="on('/') ? 'page' : undefined">
+    <router-link to="/" @click.prevent="switchTab(router, '/')" class="it home" :class="{ on: on('/') }" :aria-current="on('/') ? 'page' : undefined">
       <span class="ic"><AppIcon name="Home" :size="26" :stroke="2" /></span><span class="lb"><Zy text="家" /></span>
     </router-link>
-    <router-link to="/scan" class="it scan" aria-label="掃一掃">
+    <router-link to="/scan" @click.prevent="switchTab(router, '/scan')" class="it scan" aria-label="掃一掃">
       <span class="ic big"><AppIcon name="Camera" :size="36" :stroke="2" /></span>
     </router-link>
-    <router-link to="/codex" class="it codex" :class="{ on: on('/codex') }" :aria-current="on('/codex') ? 'page' : undefined">
+    <router-link to="/codex" @click.prevent="switchTab(router, '/codex')" class="it codex" :class="{ on: on('/codex') }" :aria-current="on('/codex') ? 'page' : undefined">
       <span class="ic"><AppIcon name="Book" :size="26" :stroke="2" /></span><span class="lb"><Zy text="圖鑑" /></span>
     </router-link>
   </nav>

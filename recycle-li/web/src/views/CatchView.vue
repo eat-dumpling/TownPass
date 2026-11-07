@@ -5,7 +5,8 @@
 // 不要碰（針頭、藥品）：不出現遊戲畫面，直接顯示去處。官方說法衝突：告訴孩子「請大人問清潔隊」。
 import Zy from '@/components/Zy.vue'
 import { computed, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { goBackTo } from '@/nav'
 import TopBar from '@/components/TopBar.vue'
 import Mascot from '@/components/Mascot.vue'
 import AppIcon from '@/components/AppIcon.vue'
@@ -20,6 +21,7 @@ import { LEARN_THRESHOLD, useGame } from '@/stores/game'
 import { FULL_GAME } from '@/focus'
 
 const route = useRoute()
+const router = useRouter()
 const game = useGame()
 const item = computed(() => itemById(route.params.id as string)!)
 const bins = computed(() => binsFor(game.age))
@@ -94,13 +96,13 @@ function bossPass() {
     <!-- 請洽清潔隊 -->
     <template v-if="flow === 'ask'">
       <Mascot mood="think" :size="52" line="這個連大人也不確定，請大人問清潔隊" />
-      <router-link to="/scan" class="btn primary block"><AppIcon name="Camera" /> <Zy text="掃別的東西" /></router-link>
+      <router-link to="/scan" replace class="btn primary block"><AppIcon name="Camera" /> <Zy text="掃別的東西" /></router-link>
     </template>
 
     <!-- 不要碰 -->
     <template v-else-if="flow === 'notouch'">
       <div class="stop center"><AppIcon name="HandStop" :size="64" /><p><Zy text="不要碰，請大人處理" /></p></div>
-      <router-link to="/" class="btn block"><AppIcon name="Home" /> <Zy text="回首頁" /></router-link>
+      <router-link to="/" class="btn block" @click.prevent="goBackTo(router, '/')"><AppIcon name="Home" /> <Zy text="回首頁" /></router-link>
     </template>
 
     <!-- Boss 怪 -->
@@ -113,7 +115,7 @@ function bossPass() {
         <Mascot mood="cheer" :size="56" line="你是安全小專家！" />
         <p v-if="bossReward" class="reward pop"><StarIcon :size="30" /> +{{ bossReward.stars }}</p>
         <div class="grid2">
-          <router-link to="/scan" class="btn" :class="{ primary: !FULL_GAME }"><AppIcon name="Camera" /> <Zy text="再掃一個" /></router-link>
+          <router-link to="/scan" replace class="btn" :class="{ primary: !FULL_GAME }"><AppIcon name="Camera" /> <Zy text="再掃一個" /></router-link>
           <router-link v-if="FULL_GAME" to="/quiz" class="btn primary"><AppIcon name="Map" /> <Zy text="考考你" /></router-link>
           <router-link v-else to="/codex" class="btn"><AppIcon name="Book" /> <Zy text="圖鑑" /></router-link>
         </div>
@@ -146,7 +148,7 @@ function bossPass() {
         <Mascot mood="cheer" :size="52" line="做得好！" />
         <router-link :to="`/codex/${item.id}`" class="btn block card-btn"><AppIcon name="Book" /> <Zy text="看分辨卡" /><span v-if="unread" class="plus"><StarIcon :size="18" />+1</span></router-link>
         <div class="grid2">
-          <router-link to="/scan" class="btn" :class="{ primary: !FULL_GAME }"><AppIcon name="Camera" /> <Zy text="再掃一個" /></router-link>
+          <router-link to="/scan" replace class="btn" :class="{ primary: !FULL_GAME }"><AppIcon name="Camera" /> <Zy text="再掃一個" /></router-link>
           <router-link v-if="FULL_GAME" to="/quiz" class="btn primary"><AppIcon name="Map" /> <Zy text="考考你" /></router-link>
           <router-link v-else to="/codex" class="btn"><AppIcon name="Book" /> <Zy text="圖鑑" /></router-link>
         </div>

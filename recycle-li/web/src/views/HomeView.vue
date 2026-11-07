@@ -2,7 +2,6 @@
 // 首頁＝我的里的風景：上面是等級和星星，中間是會動的小島（點了去蓋房子，右下角有「蓋房子」），
 // 下面小里長只說一句話、只給一個「現在做這個」的大按鈕。其他功能在底部選單。
 import { computed } from 'vue'
-import { RouterLink } from 'vue-router'
 import { FULL_GAME } from '@/focus'
 import Zy from '@/components/Zy.vue'
 import Mascot from '@/components/Mascot.vue'
@@ -36,13 +35,13 @@ const next = computed(() => {
     <h1 class="sr-only">回收小里長</h1>
     <KidHud />
 
-    <!-- 收斂版：小島只是風景，不連到蓋房子（src/focus.ts） -->
-    <component :is="FULL_GAME ? RouterLink : 'div'" v-bind="FULL_GAME ? { to: '/build', 'aria-label': '我的里，點了去蓋房子' } : {}" class="scene">
+    <!-- 小島是風景；右下角的「蓋房子」按鈕一律保留（src/focus.ts） -->
+    <div class="scene">
       <span class="name"><AppIcon :name="game.li.icon" :size="18" /> <Zy :text="liName" /></span>
       <span v-if="FULL_GAME" class="green"><AppIcon name="Leaf" :size="16" /> {{ game.green }}</span>
       <IsoLi :li="game.li" :slots="game.slots" label="我的里" />
-      <span v-if="FULL_GAME" class="build-chip"><AppIcon name="Building" :size="20" :stroke="2" /> <Zy text="蓋房子" /></span>
-    </component>
+      <router-link to="/build" class="build-chip" aria-label="蓋房子"><AppIcon name="Building" :size="20" :stroke="2" /> <Zy text="蓋房子" /></router-link>
+    </div>
 
     <section class="talk">
       <Mascot :size="60" :line="next.line" />
@@ -82,7 +81,7 @@ const next = computed(() => {
 .green { right: 12px; color: #2F6B3A; }
 .build-chip {
   position: absolute; right: 12px; bottom: 12px; z-index: 2; display: inline-flex; align-items: center; gap: 4px;
-  min-height: 48px; padding: 4px 14px; border-radius: 999px; background: #F5BA4B; color: #3B2A06; font-weight: 800; box-shadow: var(--shadow);
+  min-height: 48px; padding: 4px 14px; border-radius: 999px; background: #F5BA4B; text-decoration: none; color: #3B2A06; font-weight: 800; box-shadow: var(--shadow);
 }
 .talk { display: flex; flex-direction: column; gap: 12px; }
 .go {
