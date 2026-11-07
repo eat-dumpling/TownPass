@@ -229,10 +229,10 @@
   function tabBar(active) {
     const tab = (route, ic, label, key) => h("button", { class: "tab" + (active === key ? " on" : ""), type: "button", onclick: () => go(route, { replace: true }), "aria-current": active === key ? "page" : null }, icon(ic, 24), h("span", { text: label }));
     return h("nav", { class: "tabbar", "aria-label": t("appTitle") },
-      // Three places, following how people use it: home (today, my truck, what to do), the
-      // camera, and what is nearby. The talk card, bags and reminders come up in the steps.
+      // Two places: home (today, my truck, the big camera button, what to do) and what is nearby.
+      // The camera is the home page's own big button, so the bar has no second one. The talk card,
+      // bags and reminders come up in the steps.
       tab("", "home", t("navHome"), "home"),
-      h("button", { class: "fab", type: "button", onclick: () => go("scan"), "aria-label": t("navScan") }, h("span", { class: "fab-btn" }, icon("camera", 28)), h("span", { text: t("navScan") })),
       tab("map", "map", t("navNear"), "map"));
   }
 

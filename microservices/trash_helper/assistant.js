@@ -698,6 +698,9 @@
     const s = spot; spot = null;
     s.stop();
     s.root.classList.remove("open"); setTimeout(() => s.root.remove(), 180);
+    // Framing a row can scroll the page; a full-screen page (map, camera) must not stay shifted,
+    // or its top chips are cut off and its floating buttons no longer line up with the bottom card.
+    if (document.body.classList.contains("full")) window.scrollTo(0, 0);
   }
   function tour(steps) {
     steps = steps.filter(s => s && s.el);

@@ -449,6 +449,15 @@
       if (failed) goOffline();
     }).catch(() => goOffline());
 
+    // The locate and voice buttons stack just above the bottom card, whatever its height
+    // (a second language or a voice answer makes it taller): style.css reads --map-bottom-h.
+    const root = document.documentElement;
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(() => root.style.setProperty("--map-bottom-h", bottom.offsetHeight + "px"));
+      ro.observe(bottom);
+      TH.onNavigate(() => { ro.disconnect(); root.style.removeProperty("--map-bottom-h"); });
+    }
+
     return h("div", { class: "map-page" }, mapEl, offHint, chipsEl, todayEl,
       h("button", { class: "locate-btn", type: "button", "aria-label": t("useLocation"), onclick: locate }, icon("locate", 20)),
       bottom);

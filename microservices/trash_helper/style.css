@@ -746,3 +746,13 @@ body.has-tabbar .va-fab[data-view="map"]::after, body.has-tabbar .va-fab[data-vi
 /* Kids mode: a spinner while the kids page loads (v3.js kidsButton). */
 .kids-pill.busy { opacity: .75; pointer-events: none; }
 .kids-pill .spinner { border-color: #FCE7BD; border-top-color: #F5BA4B; }
+
+/* Map controls follow the bottom card (2026-11-08): with a second language, or after a voice answer,
+   the card is taller than the fixed 190px / 250px assumed, and it covered the locate and voice buttons.
+   v3map.js measures the card into --map-bottom-h; 86px is the plain one-language card. */
+.map-page .locate-btn { bottom: calc(92px + var(--map-bottom-h, 86px) + 12px + env(safe-area-inset-bottom)); }
+body.has-tabbar .va-fab[data-view="map"], body.has-tabbar .va-fab[data-view="nearby"] { bottom: calc(92px + var(--map-bottom-h, 86px) + 72px + env(safe-area-inset-bottom)); }
+
+/* Bottom bar without the centre camera button (2026-11-08): home and nearby only;
+   the camera is home's big 拍一件垃圾 button. */
+.tabbar { grid-template-columns: 1fr 1fr; align-items: center; }
