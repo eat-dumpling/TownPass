@@ -220,7 +220,10 @@
           btn("btn-primary wide sticky-cta", t("wNext"), () => {
             profile.set({ district, village, stopId: chosen });
             if (chosen) TH.favOp("save", { stopId: chosen }).catch(() => {});
-            go("welcome/2");
+            // Someone already set up who only changes their stop goes straight back; the building
+            // and "all set" pages are for the first time (or for leaving building collection).
+            if (p.setupDone && p.community === false) go(afterSetup(), { replace: true });
+            else go("welcome/2");
           }));
         draw();
       };
@@ -310,11 +313,10 @@
     const s = labelIn(p, it);
     return s && s !== label(it) ? s : undefined;
   };
+  // My truck stop (time + address). Tapping it changes the stop; the day and time are picked from
+  // the "today" card above it.
   function truckStatus() {
-    const box = h("button", { class: "truck-status", type: "button", onclick: () => {
-      const pp = profile.get();
-      if (!pp.community && pp.stopId && TH.pickTimeSheet) TH.pickTimeSheet(draw); else go("welcome/1");
-    } });
+    const box = h("button", { class: "truck-status", type: "button", onclick: () => changeStop() });
     const p = profile.get();
     const draw = () => {
       const s = myStop();
@@ -328,7 +330,7 @@
       fill(box, h("span", { class: "ts-icon", "aria-hidden": "true" }, icon("truck", 20)),
         h("span", { class: "grow" }, h("strong", { text: v ? t("truckToday", { when: whenWord(v), time: hhmm(v.arriveMs) }) : "—" }), h("span", { class: "caption dark", text: " " + shortAddr(s) })),
         left ? h("span", { class: "ts-left" + ((lp && ["soon", "now", "due"].includes(lp.state)) || mins <= 30 ? " soon" : ""), text: left }) : null,
-        h("span", { class: "ts-pick", "aria-hidden": "true" }, icon("chevron-down", 18)));
+        h("span", { class: "ts-change", text: t("wChange") + " ›" }));
     };
     Promise.all([TH.loadStops()]).then(draw).catch(() => {});
     const timer = setInterval(() => { if (document.body.contains(box)) draw(); else clearInterval(timer); }, 30000);
@@ -342,8 +344,8 @@
     const takes = day => Object.keys(LABEL).filter(id => g[id].days.includes(day));
     const today = takes(now.day), tmr = takes((now.day + 1) % 7);
     const chips = ids => h("span", { class: "tc-chips" }, ids.map(id => h("span", { class: "tc-chip tc-" + id, text: t(LABEL[id]) })));
-    // With a truck stop set, tapping opens the same time menu as the truck card (pick a day, then
-    // your stop or one nearby); without one, the page of collection days.
+    // With a truck stop set, tapping picks when to throw out (a day, then your stop or one nearby);
+    // without one, the page of collection days. Changing the stop itself is the row below.
     const open = () => {
       const p = profile.get();
       if (!p.community && p.stopId && TH.pickTimeSheet) TH.pickTimeSheet(() => go("", { replace: true }));
@@ -357,11 +359,14 @@
       icon("chev", 20));
   }
 
-  // Where the truck setup returns: to the steps if things are picked (it is usually started from
-  // the plan's "pick my truck"), otherwise home.
-  // Coming from the pick list (first time, not set up yet), it goes back to that list.
+  // Where the truck setup returns: the page that sent people there (changeStop, or the pick list
+  // for a first-timer), else the steps if things are picked, else home.
   let setupReturn = null;
-  const afterSetup = () => { const to = setupReturn; setupReturn = null; return to || (picks.get().some(id => TH.itemById(id)) ? "plan" : ""); };
+  const afterSetup = () => { const to = setupReturn; setupReturn = null; return to != null ? to : (picks.get().some(id => TH.itemById(id)) ? "plan" : ""); };
+  // "Change my stop" from anywhere (home truck row, the time sheet, the plan, the when page): pick
+  // the place and stop, then straight back to that page.
+  const changeStop = back => { setupReturn = back != null ? back : location.hash.replace(/^#\/?/, ""); go("welcome/1"); };
+  TH.changeStop = changeStop;
 
   // Home, after the TownPass winners' pattern (2024 即時雨晴, 2024 ParkFlow, 2025 RideFlow): the
   // first screen is the tool itself — one big camera button and one line about today. Typing,
@@ -616,7 +621,7 @@
           : (truckItems.find(i => ["flat", "rigid"].includes(i.group)) || {}).group || "general";
         TH.loadStops().then(() => TH.loadDrops().catch(() => null)).then(() => {
           const s = myStop();
-          if (!s) { fill(slot, h("p", { class: "caption dark", text: t("s3NoStop"), "data-pair": TH.pairT("s3NoStop") }), btn("btn-secondary wide", t("s3PickStop"), () => go("welcome/1"))); return; }
+          if (!s) { fill(slot, h("p", { class: "caption dark", text: t("s3NoStop"), "data-pair": TH.pairT("s3NoStop") }), btn("btn-secondary wide", t("s3PickStop"), () => changeStop("plan"))); return; }
           const v = TH.chosenVisit ? TH.chosenVisit(s) : TH.visitsOf(s)[0];
           const timeEl = h("span", { class: "ts-left" });
           const tick = () => { if (!v) return; const m = Math.round((v.arriveMs - Date.now()) / 60000); timeEl.textContent = m <= 5 ? t("truckNow") : m < 60 ? t("truckLeftM", { m }) : m < 1440 ? t("truckLeft", { h: Math.floor(m / 60), m: m % 60 }) : ""; timeEl.classList.toggle("soon", m <= 30); timeEl.hidden = !timeEl.textContent; };

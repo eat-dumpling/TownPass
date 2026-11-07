@@ -95,7 +95,7 @@
     if (g.booking) { fill(root, h("p", { class: "muted", text: t("whnBooking") })); return root; }
     if (g.ask) { fill(root, h("p", { class: "muted", text: t("whnAsk") })); return root; }
 
-    const pickStop = () => go("welcome/1");
+    const pickStop = () => (TH.changeStop ? TH.changeStop() : go("welcome/1"));
     function noStop(msg) {
       const status = h("p", { class: "caption", "aria-live": "polite", text: msg || "" });
       fill(root,
@@ -167,7 +167,7 @@
       const sd = TH.stopsData();
       const p = TH.profile.get();
       const mine = p.stopId ? sd.byId.get(p.stopId) : null;
-      if (!mine) { go("welcome/1"); return; }
+      if (!mine) { if (TH.changeStop) TH.changeStop(); else go("welcome/1"); return; }
       const list = days(mine, "general").filter(d => !d.off);
       const cur = chosenVisit(mine);
       let sel = list.find(d => cur && SCH.dateKey(d.p) === cur.date) || list[0];
@@ -200,7 +200,7 @@
       }));
       drawChips(); drawTimes();
       close = TH.sheet(t("ptTitle"), chips, times,
-        h("button", { class: "link-btn small", type: "button", onclick: () => { if (close) close(); go("welcome/1"); }, text: t("ptOtherStop") }));
+        h("button", { class: "link-btn small", type: "button", onclick: () => { if (close) close(); if (TH.changeStop) TH.changeStop(); else go("welcome/1"); }, text: t("ptOtherStop") }));
     }).catch(() => {});
   }
   Object.assign(window.TH_STRINGS.zh, { ptTitle: "選丟垃圾的時間", ptMine: "你的收運點", ptAway: "離你的點 {m} 公尺", ptOtherStop: "換別區的收運點 ›" });
