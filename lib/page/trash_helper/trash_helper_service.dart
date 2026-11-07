@@ -50,7 +50,9 @@ class TrashHelperService extends GetxService with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
+      // Both bundled sites: 丟丟's "kids mode" switches to 回收小里長 on 8791.
       unawaited(TrashLocalServer.ensureRunning());
+      unawaited(RecycleLiLocalServer.ensureRunning());
       unawaited(reminders.reschedule().catchError((Object e) => debugPrint('Trash reminders: $e')));
     }
   }

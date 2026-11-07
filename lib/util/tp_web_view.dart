@@ -134,7 +134,17 @@ class TPWebView extends StatelessWidget {
           allowsInlineMediaPlayback: true,
           mediaPlaybackRequiresUserGesture: false,
           applicationNameForUserAgent: url.startsWith(TrashHelper.url) ? 'TownPass-TrashHelper/1.0' : null,
+          // 丟丟和兒童模式（回收小里長）互相切換時，先確定對方的本機伺服器開著。
+          useShouldOverrideUrlLoading: url.startsWith(TrashHelper.url) || url.startsWith(recycleLiUrl),
         ),
+        // iOS 在背景會收回本機伺服器的連線；切到 127.0.0.1:8791（兒童模式）或切回丟丟之前先重開，
+        // 不然「兒童模式」按了沒反應。其他網址照常放行。
+        shouldOverrideUrlLoading: (controller, action) async {
+          final String next = action.request.url?.toString() ?? '';
+          if (next.startsWith(recycleLiUrl)) await RecycleLiLocalServer.ensureRunning();
+          if (next.startsWith(TrashHelper.url)) await TrashLocalServer.ensureRunning();
+          return NavigationActionPolicy.ALLOW;
+        },
         // 預設 WebView 會拒絕相機；只對白名單內的微服務開放相機（不含麥克風）。
         onPermissionRequest: (controller, request) async {
           // 白名單微服務（回收小里長等），或 App 內建的丟丟頁面（主框架）。

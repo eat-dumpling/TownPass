@@ -98,9 +98,19 @@
     const back = location.href.split("#")[0] + "#/";
     return `${base}?from=${encodeURIComponent(back)}#/`;
   }
+  // The kids page loads its recognition model before it first paints (about 2 s on a phone), so the
+  // button shows it is opening right away; otherwise it looks dead and gets tapped again.
   function kidsButton() {
-    return h("button", { class: "lang-pill kids-pill", type: "button", "aria-label": t("kidsMode"), onclick: () => { location.replace(kidsUrl()); } },
-      icon("star", 16), h("span", { text: t("kidsMode") }));
+    const b = h("button", { class: "lang-pill kids-pill", type: "button", "aria-label": t("kidsMode"), onclick: () => {
+      if (b.classList.contains("busy")) return;
+      b.classList.add("busy"); b.setAttribute("aria-busy", "true");
+      const star = b.firstChild, spin = h("span", { class: "spinner", "aria-hidden": "true" });
+      star.replaceWith(spin);
+      // If the page never leaves (no connection to the kids page), the button comes back.
+      setTimeout(() => { if (spin.isConnected) { spin.replaceWith(star); b.classList.remove("busy"); b.removeAttribute("aria-busy"); } }, 8000);
+      location.replace(kidsUrl());
+    } }, icon("star", 16), h("span", { text: t("kidsMode") }));
+    return b;
   }
 
   function bagSheet() {

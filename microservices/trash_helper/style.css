@@ -742,3 +742,7 @@ body.fab-float:not(.full):not(.has-tabbar) main { padding-bottom: calc(104px + e
    instead of sitting over the truck stops on the left. */
 body.has-tabbar .va-fab[data-view="map"], body.has-tabbar .va-fab[data-view="nearby"] { left: auto; right: 14px; bottom: calc(250px + env(safe-area-inset-bottom)); width: 48px; height: 48px; border-radius: 24px; }
 body.has-tabbar .va-fab[data-view="map"]::after, body.has-tabbar .va-fab[data-view="nearby"]::after { display: none; }
+
+/* Kids mode: a spinner while the kids page loads (v3.js kidsButton). */
+.kids-pill.busy { opacity: .75; pointer-events: none; }
+.kids-pill .spinner { border-color: #FCE7BD; border-top-color: #F5BA4B; }
