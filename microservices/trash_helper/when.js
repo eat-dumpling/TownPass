@@ -190,7 +190,7 @@
         const curId = cur && p.trip && p.trip.date === SCH.dateKey(sel.p) ? p.trip.stopId : (cur && SCH.dateKey(sel.p) === cur.date ? mine.id : null);
         fill(times, rows.map(s => h("button", { class: "pt-row" + (s.id === curId ? " on" : ""), type: "button", "aria-pressed": String(s.id === curId), onclick: () => choose(s, sel) },
           h("b", { text: hhmm(s.arrive) }),
-          h("span", { class: "grow" }, h("span", { class: "pt-addr", text: shortAddr(s) }), h("small", { text: s.id === mine.id ? t("ptMine") : t("ptAway", { m: Math.round(TH.haversine(mine, s) / 10) * 10 }) })),
+          h("span", { class: "grow" }, h("span", { class: "pt-addr", text: shortAddr(s) }), h("small", { text: s.id === mine.id ? t("ptMine") : t("ptAway", { m: Math.max(10, Math.round(TH.haversine(mine, s) / 10) * 10) }) })),
           s.id === curId ? icon("circle-check", 22) : h("span", { class: "whn-radio", "aria-hidden": "true" }))));
       };
       const drawChips = () => fill(chips, list.map(d => {

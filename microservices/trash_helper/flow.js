@@ -156,7 +156,9 @@
   const pad2 = n => String(n).padStart(2, "0");
   const hhmm = ms => { const p = SCH.taipeiParts(ms); return `${pad2(Math.floor(p.minutes / 60))}:${pad2(p.minutes % 60)}`; };
   const shortAddr = s => s.address.replace(/^臺北市/, "").replace(s.district, "");
-  const fmtDist = m => m < 1000 ? `${Math.round(m / 10) * 10} m` : `${(m / 1000).toFixed(1)} km`;
+  // Under 50 m reads "< 50 m": rounding put places at your stop's own address at "0 m", and the
+  // positions (truck stop, shops placed by house number) are not that precise anyway.
+  const fmtDist = m => m < 50 ? "< 50 m" : m < 1000 ? `${Math.round(m / 10) * 10} m` : `${(m / 1000).toFixed(1)} km`;
   const whenWord = v => {
     const now = Date.now();
     if (SCH.comesToday(v, now)) return SCH.taipeiParts(v.arriveMs).minutes >= 17 * 60 ? t("tonightWord") : t("today");

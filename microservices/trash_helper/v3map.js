@@ -132,7 +132,9 @@
     bags: { icon: "shopping-bag", label: "layerBags", chip: "chipBags", note: "placeBagsNote" },
   };
   const isPlaceLayer = k => !!LAYERS[k];
-  const fmtDist = m => m < 1000 ? `${Math.round(m / 10) * 10} m` : `${(m / 1000).toFixed(1)} km`;
+  // Under 50 m reads "< 50 m": rounding put places at your stop's own address at "0 m", and the
+  // positions (truck stop, shops placed by house number) are not that precise anyway.
+  const fmtDist = m => m < 50 ? "< 50 m" : m < 1000 ? `${Math.round(m / 10) * 10} m` : `${(m / 1000).toFixed(1)} km`;
   // Where distances are measured from: live position, else the stop chosen during setup.
   function anchor() {
     const pos = TH.lastPosition(); if (pos) return { pos, live: true };
