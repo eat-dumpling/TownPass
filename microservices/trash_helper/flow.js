@@ -354,7 +354,6 @@
     TH.onScanPick = null;
     return [
       h("header", { class: "focus-top" },
-        h("button", { class: "lang-pill more-pill", type: "button", "aria-label": t("hMore"), onclick: moreSheet }, icon("layout-grid", 18), h("span", { text: t("hMore") })),
         h("div", { class: "head-actions" }, TH.views.kidsButton(), TH.views.langButton())),
       h("h1", { class: "focus-q", text: t("hQuestion"), "data-pair": TH.pairT("hQuestion") }),
       todayCard(now),
@@ -378,16 +377,9 @@
         h("span", { class: "caption dark", text: n ? t("hSelected", { n }) : t("taskSortDesc") })),
       icon("chev", 20));
   }
-  // Everything that is not the main path: one sheet, one tap away.
-  function moreSheet() {
-    const row = (ic, label, fn) => h("button", { class: "more-row", type: "button", onclick: () => { close(); fn(); } },
-      h("span", { class: "tt-icon" }, icon(ic, 22)), h("span", { class: "grow", text: label }), icon("chev", 18));
-    const close = TH.sheet(t("hMore"), h("div", { class: "more-list" },
-      row("map-pin", t("taskNearbyTitle"), () => go("nearby")),
-      row("star", t("taskFavTitle"), () => go("favorites")),
-      row("message-circle", t("tcTitle"), () => go("talk/truck")),
-      row("shopping-bag", t("bagsTitle"), TH.views.bagSheet)));
-  }
+  // No "More" menu: the map, garbage bags, talk card and reminders each show up at the step
+  // that needs them (the answer card and the step plan), like the winners' cards that appear
+  // one step at a time.
 
   // The checklist "what are you throwing out today" (pick several, get one plan): the old home.
   function viewList() {

@@ -742,3 +742,4 @@ body.has-tabbar:has(.pick-bar:not([hidden])) main { padding-bottom: calc(86px + 
 .check-row { grid-template-columns: minmax(0, 1fr) auto; }
 .check-row > .grow { grid-column: 1; }
 .row-btns { grid-column: 2; }
+.focus-top { justify-content: flex-end; }
