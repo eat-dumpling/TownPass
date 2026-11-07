@@ -1,0 +1,43 @@
+<!doctype html>
+<!-- README 主圖原始檔。輸出：overview.png（見 docs/readme/README.md）。截圖來自線上版。 -->
+<html lang="zh-Hant-TW"><head><meta charset="utf-8">
+<style>
+@font-face { font-family: PF; src: url(../../fonts/PingFangTC-Regular.otf); font-weight: 400; }
+@font-face { font-family: PF; src: url(../../fonts/PingFangTC-Semibold.otf); font-weight: 600; }
+* { box-sizing: border-box; }
+body { margin: 0; width: 1600px; height: 900px; font-family: PF, sans-serif; color: #171B1D; background: #F1F3F4; overflow: hidden; }
+.wrap { display: grid; grid-template-columns: 760px 1fr; height: 100%; }
+.left { padding: 88px 0 0 88px; }
+.tag { display: inline-block; padding: 6px 18px; border-radius: 20px; background: #5AB4C5; color: #fff; font-size: 24px; font-weight: 600; }
+h1 { margin: 22px 0 10px; font-size: 64px; line-height: 1.2; font-weight: 600; }
+.lead { margin: 0 0 40px; font-size: 26px; color: #475259; }
+.label { font-size: 20px; color: #738995; margin: 0 0 12px; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 34px; }
+.chip { padding: 10px 20px; border-radius: 14px; background: #fff; font-size: 26px; font-weight: 600; border: 2px solid #E3E7E9; }
+.chip.d { background: #DBF1F5; border-color: #DBF1F5; color: #22474E; }
+.right { position: relative; }
+.phone { position: absolute; top: 70px; width: 340px; height: 736px; border-radius: 48px; background: #171B1D; padding: 12px; box-shadow: 0 24px 48px rgba(23,27,29,.2); }
+.phone img { width: 316px; height: 712px; border-radius: 38px; object-fit: cover; object-position: top; display: block; }
+.p1 { left: 40px; } .p2 { left: 430px; }
+.cap { position: absolute; top: 820px; width: 340px; text-align: center; font-size: 22px; color: #30383D; font-weight: 600; }
+.cap span { display: block; font-size: 18px; font-weight: 400; color: #738995; }
+.c1 { left: 40px; } .c2 { left: 430px; }
+</style></head><body>
+<div class="wrap">
+  <div class="left">
+    <span class="tag">主題：看不懂 #理解限制</span>
+    <h1>垃圾怎麼丟，<br>每個人都看得懂</h1>
+    <p class="lead">臺北的垃圾規則寫得很清楚，但不是每個人都讀得懂。</p>
+    <p class="label">對象</p>
+    <div class="row"><span class="chip">外籍人士・新住民</span><span class="chip">兒童</span><span class="chip">數位素養不足者</span></div>
+    <p class="label">方向</p>
+    <div class="row"><span class="chip d">多語服務</span><span class="chip d">易讀設計</span><span class="chip d">圖像化指引</span><span class="chip d">分齡介面</span></div>
+  </div>
+  <div class="right">
+    <div class="phone p1"><img src="screen-recycle-li.png" alt=""></div>
+    <div class="phone p2"><img src="screen-diudiu.png" alt=""></div>
+    <div class="cap c1">回收小里長<span>給兒童：注音、拍一拍、拖進桶</span></div>
+    <div class="cap c2">丟丟 TossTalk<span>給外籍人士與新住民：8 種語言</span></div>
+  </div>
+</div>
+</body></html>
