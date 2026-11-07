@@ -205,11 +205,29 @@
   // Walking directions in Google Maps (the app if installed, otherwise the web). Places whose pin
   // is estimated from an address pass `byAddress`, so Google resolves the exact address itself.
   function openMap(p) {
+    if (navigator.onLine === false) return;
     const dest = p.byAddress && p.address ? p.address : `${p.lat},${p.lng}`;
     const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dest)}&travelmode=walking`;
     if (bridge()) askApp("launch_map", url).catch(() => {});
     else window.open(url, "_blank", "noopener");
   }
+
+  // Buttons that open Google Maps need the internet: shown disabled while offline, updated live.
+  function needsNet(el) {
+    if (!el) return el;
+    el.setAttribute("data-needs-net", "");
+    netState(el);
+    return el;
+  }
+  function netState(el) {
+    const off = navigator.onLine === false;
+    el.disabled = off;
+    if (off) { el.setAttribute("aria-disabled", "true"); el.title = t("navOffline"); }
+    else { el.removeAttribute("aria-disabled"); el.removeAttribute("title"); }
+  }
+  const netAll = () => document.querySelectorAll("[data-needs-net]").forEach(netState);
+  window.addEventListener("online", netAll);
+  window.addEventListener("offline", netAll);
 
   // Small in-page confirm (native JS dialogs are not reliable inside every WebView).
   function confirmDialog(text, okLabel) {
@@ -354,7 +372,7 @@
   const I = (name, size) => TH.icon(name, size || 16);
   const catChip = cat => h("span", { class: `chip-cat cat-${cat}` }, I(rules.categories[cat].icon, 14), t("cat_" + cat));
   const notice = (text, cls) => h("div", { class: "notice " + (cls || ""), text });
-  const verifyBox = text => h("div", { class: "verify" }, h("strong", {}, I("help-circle"), " ", t("needsCheck")), h("div", { text }));
+  const verifyBox = text => h("div", { class: "verify" }, h("strong", {}, I("info-circle"), " ", t("needsCheck")), h("div", { text }));
 
   // ---------------------------------------------------------------- item result
   function matches(item, q) {
@@ -510,7 +528,7 @@
           s.note.confirm ? notice(t("stopConfirm"), "notice-warn") : null) : null,
         h("div", { class: "actions" }, saveBtn,
           btn("btn-secondary", t("remind"), () => go("remind/" + s.id)),
-          btn("btn-ghost", t("openMap"), () => openMap(s))),
+          needsNet(btn("btn-ghost", t("openMap"), () => openMap(s)))),
         h("p", { class: "caption", text: t("scheduleNote") }),
         sourceFooter([sourceById("truck")], t("dataVersion", { v: stopsData.version })));
     }).catch(() => fill(out, h("p", { class: "empty", text: t("loadError") })));
@@ -539,7 +557,7 @@
         section(t("dropAccepts"), h("p", {}, catsTxt, d.acceptsBasis === "title" ? h("span", { class: "caption", text: " " + t("dropAcceptsTitle") }) : null)),
         h("div", { class: "actions" },
           d.phone ? btn("btn-primary", t("callPoint") + " " + d.phone, () => dial(d.phone)) : null,
-          btn("btn-secondary", t("openMap"), () => openMap(d))),
+          needsNet(btn("btn-secondary", t("openMap"), () => openMap(d)))),
         sourceFooter([sourceById("dropoffs"), sourceById("dropoffpage")], dd.source.sourceModified ? t("dataVersion", { v: dd.source.sourceModified.slice(0, 10) }) : null));
     }).catch(() => fill(out, h("p", { class: "empty", text: t("loadError") })));
     return out;
@@ -667,7 +685,7 @@
     loadStops, loadDrops, loadVendors, vendorsData: () => vendorsData, loadFavs, favOp, applyFavReply, favState: () => favState, isFav,
     stopsData: () => stopsData, dropData: () => dropData, visitsOf, haversine, itemById, sourceById,
     lastPosition: () => lastPosition, setLastPosition: p => { lastPosition = p; }, getLocation,
-    bridge, askApp, dial, openExternal, extLink, openMap, loadPlaces, placesData: () => placesData, placeLayerOf, confirmDialog, notice, verifyBox, componentCard, bookingPanel,
+    bridge, askApp, dial, openExternal, extLink, openMap, needsNet, loadPlaces, placesData: () => placesData, placeLayerOf, confirmDialog, notice, verifyBox, componentCard, bookingPanel,
     sourceFooter, setHeader, matches, stopFits, dropFits, stopRow, fmtTime, fmtWhen, mapState,
     onNavigate: fn => navListeners.push(fn),
   };

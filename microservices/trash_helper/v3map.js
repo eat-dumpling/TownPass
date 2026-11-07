@@ -115,7 +115,7 @@
       s.note && s.note.noFood ? TH.notice(t("stopNoFood"), "notice-warn") : null,
       s.note && s.note.confirm ? TH.notice(t("stopConfirm"), "notice-warn") : null,
       h("div", { class: "sheet-actions" },
-        btn("btn-primary grow", t("navigate"), () => TH.openMap(s)),
+        TH.needsNet(btn("btn-primary grow", t("navigate"), () => TH.openMap(s))),
         h("button", { class: "square-btn", type: "button", "aria-label": t("remind"), onclick: () => go("remind/" + s.id) }, icon("bell", 20)),
         star),
       routeTimeline(s, v),
@@ -156,7 +156,7 @@
       h("p", { class: "caption dark", text: t(L.note), "data-pair": TH.pairT(L.note) }),
       p.approx ? h("p", { class: "caption", text: t("placeApprox") }) : null,
       h("div", { class: "sheet-actions" },
-        btn("btn-primary grow", t("navGoogle"), () => TH.openMap(p)),
+        TH.needsNet(btn("btn-primary grow", t("navGoogle"), () => TH.openMap(p))),
         p.phone ? h("button", { class: "square-btn", type: "button", "aria-label": p.phone, onclick: () => TH.dial(p.phone.replace(/\s*#.*/, "")) }, icon("phone", 20)) : null),
       src ? h("p", { class: "caption", text: `${t("placeSource")}${t("colon")}${src.name}（${src.publisher}）` }) : null);
   }
@@ -177,8 +177,28 @@
     else if (catParam || !isPlaceLayer(ms.cat)) ms.cat = "all";
     const mapEl = h("div", { class: "map-full", role: "application", "aria-label": t("mapTitle") });
     const bottom = h("div", { class: "map-bottom" });
-    let failed = false, layerStops = null, layerDrops = null, layerMe = null, layerRoutes = null, shown = [], places = [];
+    // failed: no map background (offline, tiles unreachable or no Leaflet); the stop list takes over.
+    let failed = navigator.onLine === false, listShown = false, tileLayer = null, layerStops = null, layerDrops = null, layerMe = null, layerRoutes = null, shown = [], places = [];
     const today = SCH.taipeiParts(Date.now()).day;
+    const offHint = h("div", { class: "map-offline", role: "status", hidden: true }, icon("info-circle", 18), h("span", { text: t("mapOffline") }));
+    // Offline: show the one-line hint and open the stop list once; back online: the map returns.
+    const goOffline = () => {
+      failed = true; offHint.hidden = false; drawBottom();
+      if (!listShown && TH.stopsData()) { listShown = true; listSheet(); }
+    };
+    const onNet = () => {
+      if (!mapEl.isConnected) { window.removeEventListener("online", onNet); window.removeEventListener("offline", offNet); return; }
+      if (!window.L || !leafletMap) return;
+      failed = false; listShown = false; offHint.hidden = true;
+      if (tileLayer) tileLayer.redraw();
+      leafletMap.invalidateSize(); refresh();
+    };
+    const offNet = () => {
+      if (!mapEl.isConnected) { window.removeEventListener("online", onNet); window.removeEventListener("offline", offNet); return; }
+      goOffline();
+    };
+    window.addEventListener("online", onNet);
+    window.addEventListener("offline", offNet);
 
     const chipBtn = (label, on, fn, extra) => h("button", { class: "map-chip" + (on ? " on" : ""), type: "button", "aria-pressed": String(on), onclick: fn }, label, extra || null);
     const chipsEl = h("div", { class: "map-chips" });
@@ -326,7 +346,7 @@
       const pos = TH.lastPosition();
       const first = shown[0];
       const listBtn = h("button", { class: "map-list-btn", type: "button", onclick: listSheet }, icon("list", 18), t("listView"));
-      if (failed) { fill(bottom, h("div", { class: "near-card" }, h("span", { class: "grow", text: t("tilesFailed") }), listBtn)); return; }
+      if (failed) { fill(bottom, h("div", { class: "near-card" }, h("span", { class: "grow", text: t("mapOffline") }), listBtn)); return; }
       if (isPlaceLayer(ms.cat)) {
         const L = LAYERS[ms.cat], a = anchor();
         // Nearest to me (or my stop) when known; otherwise nearest to the map centre.
@@ -338,7 +358,7 @@
             h("span", { class: "grow" }, h("strong", { text: best.name }),
               h("span", { class: "caption dark", text: [t("nearestLabel"), a ? awayText(a, best) : null].filter(Boolean).join("・") })),
             icon("chev", 18)),
-          h("button", { class: "map-list-btn nav-btn", type: "button", onclick: () => TH.openMap(best) }, icon("direction-sign", 18), t("seeOnMapNav"))));
+          TH.needsNet(h("button", { class: "map-list-btn nav-btn", type: "button", onclick: () => TH.openMap(best) }, icon("direction-sign", 18), t("seeOnMapNav")))));
         return;
       }
       if (!first) {
@@ -400,13 +420,14 @@
 
     Promise.all([TH.loadStops(), TH.loadDrops().catch(() => null), TH.loadFavs().catch(() => null), TH.loadPlaces().catch(() => null)]).then(() => {
       TH.dropMap();
-      if (!window.L) { failed = true; refresh(); return; }
+      if (!window.L) { refresh(); goOffline(); return; }
       const tiles = (window.TH_CONFIG || {}).tiles || {};
       leafletMap = window.L.map(mapEl, { zoomControl: false, attributionControl: true }).setView(ms.center || [25.0478, 121.5319], ms.zoom || 13);
-      let loaded = 0, errors = 0;
-      const layer = window.L.tileLayer(tiles.url || "https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: tiles.maxZoom || 19, attribution: tiles.attribution || "© OpenStreetMap contributors" });
+      let loaded = 0;
+      const layer = tileLayer = window.L.tileLayer(tiles.url || "https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: tiles.maxZoom || 19, attribution: tiles.attribution || "© OpenStreetMap contributors" });
       layer.on("tileload", () => { loaded++; });
-      layer.on("tileerror", () => { errors++; if (errors >= 3 && loaded === 0 && !failed) { failed = true; drawBottom(); } });
+      // The first tile error before any tile has loaded means no background: switch to the list right away.
+      layer.on("tileerror", () => { if (loaded === 0 && !failed) goOffline(); });
       layer.addTo(leafletMap);
       layerRoutes = window.L.layerGroup().addTo(leafletMap);
       layerStops = window.L.layerGroup().addTo(leafletMap);
@@ -424,9 +445,10 @@
       if (!focusPlaces()) refresh();
       centerChip();
       if (!pos && !ms.center && TH.bridge()) locate();
-    }).catch(() => { failed = true; drawBottom(); });
+      if (failed) goOffline();
+    }).catch(() => goOffline());
 
-    return h("div", { class: "map-page" }, mapEl, chipsEl, todayEl,
+    return h("div", { class: "map-page" }, mapEl, offHint, chipsEl, todayEl,
       h("button", { class: "locate-btn", type: "button", "aria-label": t("useLocation"), onclick: locate }, icon("locate", 20)),
       bottom);
   }

@@ -755,8 +755,8 @@
      },
      "item": "leftovers",
      "verify": {
-      "en": "Not listed item by item by the city.",
-      "zh": "官方沒有逐項列出。"
+      "en": "Not listed item by item by the city. Do as shown here; if unsure, call 1999.",
+      "zh": "官方清單沒有逐項列出；照這裡做，不確定可撥 1999 問清潔隊。"
      }
     },
     {
@@ -1910,8 +1910,8 @@
    ],
    "basis": "legacy",
    "verify": {
-    "en": "Not in the current official list; older city leaflets say general trash.",
-    "zh": "現行官方清單沒有列出；較舊的宣導資料列為一般垃圾。"
+    "en": "Not listed item by item by the city. Put it in an official bag as general trash; if unsure, call 1999.",
+    "zh": "官方清單沒有逐項列出；先當一般垃圾裝專用袋，不確定可撥 1999 問清潔隊。"
    },
    "steps": [],
    "handover": {
@@ -2059,8 +2059,8 @@
    ],
    "basis": "inferred",
    "verify": {
-    "en": "Not named in the official list; shown as general trash.",
-    "zh": "官方清單沒有列出，暫列一般垃圾。"
+    "en": "Not listed item by item by the city. Put it in an official bag as general trash; if unsure, call 1999.",
+    "zh": "官方清單沒有逐項列出；先當一般垃圾裝專用袋，不確定可撥 1999 問清潔隊。"
    },
    "steps": [
     {

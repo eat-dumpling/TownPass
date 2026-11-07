@@ -132,7 +132,7 @@
           TH.leave ? TH.leave.line(stop, { visit: { arriveMs: sel.arriveMs } }) : null,
           h("div", { class: "whn-actions" },
             btn("btn-primary", t("whnRemind"), () => go("remind/" + encodeURIComponent(stop.id))),
-            btn("btn-secondary", t("whnGo"), () => TH.openMap(stop))));
+            TH.needsNet(btn("btn-secondary", t("whnGo"), () => TH.openMap(stop)))));
       };
       fill(root,
         h("button", { class: "whn-stop", type: "button", onclick: pickStop },

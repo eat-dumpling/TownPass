@@ -18,7 +18,7 @@
     scanLoading: "準備辨識…", scanLoadingPct: "準備辨識… {p}%", scanModelError: "辨識模型無法載入，請改用相簿或手動選擇。",
     scanCamOff: "無法開啟相機。可以從相簿選照片，或手動選擇品項。", scanFound: "畫面上的東西",
     scanMaybe: "可能是", scanPrivacy: "畫面只在手機上辨識，不上傳、不存檔。",
-    scanNothing: "還沒認出東西。對準一件、靠近一點再試。", rvBasis: "這件依「回收小里長」品項表的臺北市分類顯示，請以清潔隊說明為準。",
+    scanNothing: "還沒認出東西。對準一件、靠近一點再試。", rvBasis: "官方清單沒有逐項列出；照這裡做，不確定可撥 1999 問清潔隊。",
     rvSource: "分類依據：{s}",
   });
   Object.assign(window.TH_STRINGS.en, {
@@ -26,7 +26,7 @@
     scanLoading: "Getting ready…", scanLoadingPct: "Getting ready… {p}%", scanModelError: "The recognition model couldn't load. Use a photo or pick the item.",
     scanCamOff: "The camera isn't available. Choose a photo or pick the item.", scanFound: "In view",
     scanMaybe: "Maybe", scanPrivacy: "Recognised on your phone. Nothing is uploaded or saved.",
-    scanNothing: "Nothing recognised yet. Aim at one item and move closer.", rvBasis: "Shown with the Taipei category from the 回收小里長 item list. Check with the cleaning squad.",
+    scanNothing: "Nothing recognised yet. Aim at one item and move closer.", rvBasis: "Not listed item by item by the city. Do as shown here; if unsure, call 1999.",
     rvSource: "Based on: {s}",
   });
 

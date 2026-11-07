@@ -178,7 +178,7 @@ rules = {
          'src': ['recycle'],
          'components': [
              C(T('Drink, ice and pearls', '飲料、冰塊、珍珠'), 'food', T('Pour the drink away. Pearls and other toppings are food.', '飲料倒掉；珍珠等配料屬食材。'), item='leftovers',
-               verify=T('Not listed item by item by the city.', '官方沒有逐項列出。')),
+               verify=T('Not listed item by item by the city. Do as shown here; if unsure, call 1999.', '官方清單沒有逐項列出；照這裡做，不確定可撥 1999 問清潔隊。')),
              C(T('Plastic cup', '塑膠杯身'), 'rigid', T('A container: 3-D recyclable.', '屬容器，立體類回收。'), src='recycle'),
              C(T('Sealing film and straw', '封膜、吸管'), 'general', item='straw',
                verify=T('The current official FAQ does not say where these go. Older leaflets say general trash; please confirm.', '現行官方 FAQ 未列出去向；較舊的宣導資料列為一般垃圾，請確認。'))],
@@ -274,14 +274,14 @@ rules = {
         {'id': 'snackbag', 'emoji': '🍟', 'group': 'general', 'name': T('Snack / chip bag', '零食包裝袋'), 'keywords': ['chips', 'cookie wrapper', '餅乾袋'], 'src': ['recycle'], 'steps': [], 'handover': GEN_HAND},
         {'id': 'dirtybag', 'emoji': '🛍️', 'group': 'general', 'name': T('Dirty / oily plastic bag', '髒污塑膠袋'), 'keywords': ['greasy bag', '油膩'], 'src': ['recycle'], 'steps': [], 'handover': GEN_HAND},
         {'id': 'straw', 'emoji': '🥤', 'group': 'general', 'name': T('Straws, cup sealing film', '吸管、封膜'), 'keywords': ['straw', 'film', '杯膜'], 'basis': 'legacy',
-         'verify': T('Not in the current official list; older city leaflets say general trash.', '現行官方清單沒有列出；較舊的宣導資料列為一般垃圾。'), 'steps': [], 'handover': GEN_HAND},
+         'verify': T('Not listed item by item by the city. Put it in an official bag as general trash; if unsure, call 1999.', '官方清單沒有逐項列出；先當一般垃圾裝專用袋，不確定可撥 1999 問清潔隊。'), 'steps': [], 'handover': GEN_HAND},
         {'id': 'woodbox', 'emoji': '🥡', 'group': 'general', 'name': T('Wooden lunch box', '木片餐盒'), 'keywords': ['wood', '木盒'], 'src': ['recycle'], 'steps': [], 'handover': GEN_HAND},
         {'id': 'shoes', 'emoji': '👟', 'group': 'general', 'name': T('Shoes', '鞋子'), 'keywords': ['sneakers', 'slippers', '拖鞋'], 'src': ['recycle'], 'steps': [], 'handover': GEN_HAND},
         {'id': 'toy', 'emoji': '🧸', 'group': 'general', 'name': T('Stuffed toy, balls', '布偶、球類'), 'keywords': ['plush', 'teddy', 'ball', '絨毛玩具'], 'src': ['recycle'], 'steps': [], 'handover': GEN_HAND},
         {'id': 'towel', 'emoji': '🧣', 'group': 'general', 'name': T('Towels, socks, bedding', '毛巾、襪子、棉被'), 'keywords': ['pillow', 'blanket', 'sheet', 'curtain', '枕頭', '床單'], 'src': ['recycle'], 'steps': [], 'handover': GEN_HAND},
         {'id': 'receipt', 'emoji': '🧾', 'group': 'general', 'name': T('Sticker backing, photo paper, glossy paper', '貼紙底紙、照片紙、上膜光面紙'), 'keywords': ['receipt', 'sticker', 'photo', '收據'], 'src': ['recycle'], 'steps': [], 'handover': GEN_HAND},
         {'id': 'butt', 'emoji': '🚬', 'group': 'general', 'name': T('Cigarette butts, dust', '菸蒂、灰塵'), 'keywords': ['cigarette', 'ash', '掃地'], 'basis': 'inferred',
-         'verify': T('Not named in the official list; shown as general trash.', '官方清單沒有列出，暫列一般垃圾。'), 'steps': [
+         'verify': T('Not listed item by item by the city. Put it in an official bag as general trash; if unsure, call 1999.', '官方清單沒有逐項列出；先當一般垃圾裝專用袋，不確定可撥 1999 問清潔隊。'), 'steps': [
             S('💧', T('Make sure it is out', '確認熄滅'), kind='tip')], 'handover': GEN_HAND},
         {'id': 'pills', 'emoji': '💊', 'group': 'general', 'name': T('Expired medicine (pills)', '過期藥品'), 'keywords': ['medicine', 'pills', 'drug', '藥', '藥丸', '過期藥'],
          'src': ['tfda'], 'steps': [

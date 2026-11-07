@@ -668,3 +668,7 @@ html[data-lang="ja"] body { font-family: -apple-system, "Hiragino Sans", "Hiragi
   .va-spot.glide .va-hole, .va-callout { transition: none; }
   .va-co-strip li, .va-co-strip li .va-cs-art svg { animation: none; }
 }
+/* Offline: one-line hint over the map (the stop list opens instead); Google Maps buttons wait for the network. */
+.map-offline { position: absolute; top: 50%; left: 16px; right: 16px; z-index: 4; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 14px; border-radius: 10px; background: var(--white, #fff); color: var(--g700); font-size: 15px; font-weight: 600; box-shadow: 0 2px 8px rgba(0, 0, 0, .12); transform: translateY(-50%); }
+.map-offline[hidden] { display: none; }
+[data-needs-net]:disabled { opacity: .45; cursor: not-allowed; }

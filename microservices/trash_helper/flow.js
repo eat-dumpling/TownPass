@@ -539,7 +539,7 @@
     // the next two plus a map link in the ▾ panel (`extra` is appended there).
     const placeLine = (pl, a) => h("div", { class: "np-row" },
       h("button", { class: "np-main", type: "button", onclick: e => { e.preventDefault(); TH.placeSheet(pl); } }, h("strong", { text: pl.name }), h("span", { class: "caption", text: TH.placeAway(a, pl) })),
-      lbtn("direction-sign", t("seeOnMapNav"), () => TH.openMap(pl), true));
+      TH.needsNet(lbtn("direction-sign", t("seeOnMapNav"), () => TH.openMap(pl), true)));
     const fillNearest = (layer, below, more, ...extra) => {
       const mapBtn = () => lbtn("map", t("s4AllOnMap"), () => go("map/" + layer));
       Promise.all([TH.loadStops(), TH.loadPlaces()]).then(() => {
@@ -616,7 +616,7 @@
                 h("div", { class: "go-when" }, h("b", { text: v ? `${whenWord(v)} ${hhmm(v.arriveMs)}` : "—" }), timeEl),
                 h("div", { class: "go-where" }, h("span", { text: shortAddr(s) })),
                 h("span", { class: "go-change" }, icon("calendar", 14), t("s3Change"))),
-              rbtn("direction-sign", t("seeOnMapNav"), () => TH.openMap(s), "primary")),
+              TH.needsNet(rbtn("direction-sign", t("seeOnMapNav"), () => TH.openMap(s), "primary"))),
             h("div", { class: "row-actions" }, bell, lbtn("message-circle", t("tcOpen"), () => go("talk/truck"))),
             drop ? h("button", { class: "link-btn small go-missed", type: "button", onclick: () => go("drop/" + drop.d.id),
               text: t("s3MissedLink", { name: drop.d.squad, hours: hrs }) }) : null);
