@@ -38,7 +38,6 @@
     truckToday: "{when} {time}", truckLeft: "還有 {h} 小時 {m} 分", truckLeftM: "還有 {m} 分鐘", truckNow: "車快到了！",
     truckNone: "還沒設定你的垃圾車", commBadge: "社區代收",
     pTitle: "我的丟垃圾清單", pEdit: "修改",
-    pDone: "{d} / {n} 完成",
     s1: "準備袋子", s1General: "一般垃圾 → 專用垃圾袋", s1GeneralSize: "少量用 3–5 公升，幾天份用 14–25 公升",
     s1Recycle: "回收物 → 任何袋子，紙和瓶罐分開", s1Food: "廚餘 → 有蓋容器，先瀝乾",
     s1Hazard: "電池、燈管 → 另裝一袋", s1Buy: "去哪買", s1Sizes: "容量價格",
@@ -55,8 +54,7 @@
     sClothes: "舊衣：週一、五交回收車，或投舊衣箱",
     sPills: "過期藥：拿到藥局或醫院回收", sSpray: "噴霧罐：先在戶外排空",
     sAsk: "{name}：先問清潔隊",
-    allDone: "都完成了，謝謝你！", backHomeBtn: "回首頁", clearPicks: "全部取消",
-    tipCheck: "做完就打勾",
+    clearPicks: "全部取消",
     stBags: "袋子", stPrep: "處理", stGo: "出門", stComm: "社區", stSpecial: "特別",
     bagGeneral: "專用垃圾袋", bagAny: "一般袋子", bagFood: "有蓋容器", bagApart: "另裝一袋",
     binRecycleTip: "紙、瓶分開", binFoodTip: "先瀝乾",
@@ -66,7 +64,7 @@
     spClothes: "舊衣回收箱", spPills: "藥局回收", spSpray: "戶外排空，再交回收車",
     stepDone: "做好了，下一步", allStepsDone: "全部完成", prevStep: "上一步",
     doneLead: "下次打開，勾選要丟的東西就好。", seeAgain: "再看一次步驟",
-    s3OtherDay: "換一天", s1For: "要裝：", s1BuyMap: "附近哪裡買", s1ShopList: "全部代售點", s1BagRule: "回收物、廚餘不用專用袋。新北市專用袋也能用。", moreSizes: "容量", moreDetails: "看詳情", fullGuide: "完整說明", moreParts: "拆成哪些", moreHow: "怎麼分", moreOptions: "其他方式", stepDoneTag: "完成",
+    s3OtherDay: "換一天", s1For: "要裝：", s1BuyMap: "附近哪裡買", s1ShopList: "全部代售點", s1BagRule: "回收物、廚餘不用專用袋。新北市專用袋也能用。", moreSizes: "容量", moreDetails: "看詳情", fullGuide: "完整說明", moreParts: "拆成哪些", moreHow: "怎麼分", moreOptions: "其他方式",
   });
   Object.assign(window.TH_STRINGS.en, {
     tonightWord: "Tonight", commGeneral: "General (official bag)", commFood: "Food waste", commFlat: "Flat recycling", commRigid: "3-D recycling", commBattery: "Batteries apart",
@@ -91,7 +89,6 @@
     truckToday: "{when} {time}", truckLeft: "in {h} h {m} min", truckLeftM: "in {m} min", truckNow: "The truck is almost here!",
     truckNone: "No truck stop chosen yet", commBadge: "Building collects",
     pTitle: "My trash plan", pEdit: "Edit",
-    pDone: "{d} / {n} done",
     s1: "Get your bags ready", s1General: "General trash → official bag", s1GeneralSize: "Small: 3–5 L · a few days: 14–25 L",
     s1Recycle: "Recycling → any bag, paper apart from bottles", s1Food: "Food waste → lidded box, drained",
     s1Hazard: "Batteries, bulbs → separate bag", s1Buy: "Where to buy", s1Sizes: "Sizes & prices",
@@ -108,8 +105,7 @@
     sClothes: "Clothes: recycling truck Mon / Fri, or a clothes bin",
     sPills: "Expired medicine: take it to a pharmacy or hospital", sSpray: "Spray cans: empty them outdoors first",
     sAsk: "{name}: ask the cleaning squad first",
-    allDone: "All done — thank you!", backHomeBtn: "Home", clearPicks: "Clear all",
-    tipCheck: "Tick it when it's done",
+    clearPicks: "Clear all",
     stBags: "Bags", stPrep: "Prep", stGo: "Go", stComm: "Building", stSpecial: "Special",
     bagGeneral: "Official bag", bagAny: "Any bag", bagFood: "Lidded box", bagApart: "Separate bag",
     binRecycleTip: "Paper apart", binFoodTip: "Drain it",
@@ -119,7 +115,7 @@
     spClothes: "Clothes bin", spPills: "Pharmacy take-back", spSpray: "Empty outdoors, then recycling",
     stepDone: "Done, next", allStepsDone: "All done", prevStep: "Back",
     doneLead: "Next time, just tick what you're throwing out.", seeAgain: "See the steps again",
-    s3OtherDay: "Other days", s1For: "For: ", s1BuyMap: "Where to buy nearby", s1ShopList: "All shops", s1BagRule: "Recycling and food waste need no official bag. New Taipei bags are accepted too.", moreSizes: "Sizes", moreDetails: "Details", fullGuide: "Full guide", moreParts: "Parts", moreHow: "How to sort", moreOptions: "Other options", stepDoneTag: "Done",
+    s3OtherDay: "Other days", s1For: "For: ", s1BuyMap: "Where to buy nearby", s1ShopList: "All shops", s1BagRule: "Recycling and food waste need no official bag. New Taipei bags are accepted too.", moreSizes: "Sizes", moreDetails: "Details", fullGuide: "Full guide", moreParts: "Parts", moreHow: "How to sort", moreOptions: "Other options",
   });
 
   // ------------------------------------------------------------ local state

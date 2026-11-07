@@ -104,43 +104,6 @@
   box-shadow: var(--shadow); color: var(--g800); font: inherit; font-size: 13px; font-weight: 600; text-align: center; cursor: pointer; }
 .tt-icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--p50); color: var(--p600); }
 
-/* plan: completion animations (flow.js viewPlan) — tick pop, step done, all done */
-.check-row { transition: background-color .25s, box-shadow .25s; }
-.check-row .dest > :last-child { transition: color .25s; }
-.check-row .cb { transition: background-color .15s, border-color .15s; }
-.check-row .cb svg path { stroke-dasharray: 22; stroke-dashoffset: 22; transition: stroke-dashoffset .25s ease-out .08s; }
-.check-row input:checked + .cb svg path { stroke-dashoffset: 0; }
-.check-row.ticked .cb { animation: th-cb-pop .38s cubic-bezier(.3, 1.6, .5, 1); }
-@keyframes th-cb-pop { 0% { transform: scale(.7); } 60% { transform: scale(1.18); } 100% { transform: scale(1); } }
-.check-row.ticked .cb::after { content: ""; position: absolute; inset: -2px; border-radius: 8px; border: 2px solid var(--p500); animation: th-cb-ring .5s ease-out forwards; pointer-events: none; }
-.check-row .cb { position: relative; }
-@keyframes th-cb-ring { from { transform: scale(1); opacity: .7; } to { transform: scale(1.9); opacity: 0; } }
-
-.pp-bar span { transition: width .45s cubic-bezier(.2, .8, .2, 1), background-color .3s; }
-.plan-progress.full .pp-bar span { background: var(--c-recycle, var(--p500)); }
-
-.plan-step.just-done .ps-done { animation: th-tag-in .45s cubic-bezier(.3, 1.6, .5, 1); }
-@keyframes th-tag-in { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
-.plan-step.just-done .ps-n { animation: th-n-pop .5s ease-out; }
-@keyframes th-n-pop { 0% { box-shadow: 0 0 0 0 rgba(90, 180, 197, .55); } 100% { box-shadow: 0 0 0 12px rgba(90, 180, 197, 0); } }
-.ps-n { transition: background-color .25s, color .25s; }
-
-.done-card.pop { animation: th-done-in .45s cubic-bezier(.2, .8, .2, 1); }
-@keyframes th-done-in { from { transform: translateY(16px) scale(.96); opacity: 0; } to { transform: none; opacity: 1; } }
-.done-card.pop .done-icon { position: relative; display: grid; place-items: center; animation: th-cb-pop .55s cubic-bezier(.3, 1.6, .5, 1) .15s both; }
-.done-card.pop .done-icon::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 3px solid var(--p500); animation: th-cb-ring .8s ease-out .3s both; }
-.done-card.pop .done-icon svg path:last-child { stroke-dasharray: 10; stroke-dashoffset: 10; animation: th-draw .35s ease-out .45s forwards; }
-@keyframes th-draw { to { stroke-dashoffset: 0; } }
-
-@media (prefers-reduced-motion: reduce) {
-  .check-row, .check-row .cb, .pp-bar span, .ps-n { transition: none; }
-  .check-row .cb svg path { stroke-dasharray: none; stroke-dashoffset: 0; transition: none; }
-  .check-row.ticked .cb, .check-row.ticked .cb::after, .plan-step.just-done .ps-done, .plan-step.just-done .ps-n,
-  .done-card.pop, .done-card.pop .done-icon, .done-card.pop .done-icon::after { animation: none; }
-  .check-row.ticked .cb::after, .done-card.pop .done-icon::after { display: none; }
-  .done-card.pop .done-icon svg path:last-child { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
-}
-
 /* map: 「今天收什麼」 under the chips (v3map.js) — replaces the 全部/一般/回收/廚餘 chips, which showed the same stops */
 .map-today { position: absolute; top: calc(54px + env(safe-area-inset-top)); left: 12px; right: 12px; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px;
   padding: 8px 12px; border-radius: 14px; background: rgba(255,255,255,.96); box-shadow: var(--shadow); font-size: 14px; color: var(--g900); }
