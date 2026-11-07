@@ -363,8 +363,7 @@
       planRow(),
       h("div", { class: "focus-alt" },
         h("button", { class: "focus-link", type: "button", onclick: () => go("sort") }, icon("search", 20), h("span", { text: t("hSearch") })),
-        h("button", { class: "focus-link", type: "button", onclick: () => TH.assistant && TH.assistant.open() }, icon("microphone", 20), h("span", { text: t("vaTitle") })),
-        h("button", { class: "focus-link", type: "button", onclick: () => go("bags") }, icon("shopping-bag", 20), h("span", { text: t("bagsTitle") }))),
+        h("button", { class: "focus-link", type: "button", onclick: () => TH.assistant && TH.assistant.open() }, icon("microphone", 20), h("span", { text: t("vaTitle") }))),
     ];
   }
   // The second main path: tick what you have and get one list of steps. With things already

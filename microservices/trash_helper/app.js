@@ -691,7 +691,7 @@
   };
 
   // ---------------------------------------------------------------- router
-  const TABBED = new Set(["", "list", "map", "nearby", "talk", "favorites"]); // top-level pages: the bottom bar
+  const TABBED = new Set(["", "list", "map", "nearby"]); // top-level pages: the bottom bar
   async function render() {
     navListeners.splice(0).forEach(fn => { try { fn(); } catch (_) { /* ignore */ } });
     document.documentElement.lang = lang === "zh" ? "zh-Hant-TW" : lang;
@@ -723,7 +723,7 @@
     document.body.classList.toggle("has-tabbar", tabbed);
     document.body.classList.toggle("dark", view === "scan");
     document.body.classList.toggle("full", view === "map" || view === "nearby" || view === "scan");
-    const TAB_OF = { "": "home", list: "home", map: "map", nearby: "map", talk: "talk", favorites: "fav" };
+    const TAB_OF = { "": "home", list: "home", map: "map", nearby: "map" };
     fill(app, content, tabbed ? V.tabBar(TAB_OF[view || ""]) : null);
     devLog("render", { view: view || "home", ms: Math.round(performance.now() - T0) });
     window.scrollTo(0, 0);

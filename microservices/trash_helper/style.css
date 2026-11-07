@@ -721,11 +721,6 @@ body.has-tabbar:has(.pick-bar:not([hidden])) main { padding-bottom: calc(86px + 
 .focus-snap { min-height: 38vh; }
 .focus-top { justify-content: flex-end; }
 
-/* Bottom bar with five places (home, nearby, camera, talk card, saved stops) on every top-level page. */
-.tabbar { grid-template-columns: 1fr 1fr 88px 1fr 1fr; }
-.tab { min-width: 0; padding: 10px 2px 12px; }
-.tab span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
-.focus-snap { min-height: 26vh; }
-.focus-alt { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-.focus-link { flex-direction: column; gap: 4px; min-height: 72px; font-size: 13px; line-height: 1.25; }
+/* Home with the bottom bar (home, camera, nearby): a slightly shorter camera button so it fits one screen. */
+.focus-snap { min-height: 30vh; }
 .focus-link span { text-wrap: balance; }
