@@ -636,7 +636,7 @@
       return "";
     }
     if (plan.kind === "truck") {
-      go("");
+      go("list"); // the truck card lives on the pick-list page since home became one screen
       const el = await waitFor(".truck-status");
       if (el) tour([{ el, title: t("vaTruckReply"), pair: TH.pairT("vaTruckReply"), body: [] }]);
       return "";

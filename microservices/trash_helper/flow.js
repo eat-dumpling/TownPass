@@ -195,7 +195,7 @@
           btn("btn-primary wide", t("wStart"), () => go("welcome/1")),
           h("div", { class: "w-row" },
             TH.views.langButton(),
-            h("button", { class: "link-btn small", type: "button", onclick: () => { profile.set({ setupDone: true }); go("", { replace: true }); }, text: t("wSkip") }))));
+            h("button", { class: "link-btn small", type: "button", onclick: () => { profile.set({ setupDone: true }); go(afterSetup(), { replace: true }); }, text: t("wSkip") }))));
     }
     if (step === 1) {
       const out = h("div", { "aria-live": "polite" });
@@ -265,7 +265,7 @@
     return wrap(h("div", { class: "w-hero done", "aria-hidden": "true" }, h("span", { class: "w-hero-main" }, icon("circle-check", 64))),
       h("h1", { class: "w-title", text: t("wDone"), "data-pair": TH.pairT("wDone") }), h("p", { class: "lead", text: t("wDoneLead"), "data-pair": TH.pairT("wDoneLead") }),
       remindBtn,
-      btn("btn-primary wide", t("wGo"), () => { profile.set({ setupDone: true }); go("", { replace: true }); }));
+      btn("btn-primary wide", t("wGo"), () => { profile.set({ setupDone: true }); go(afterSetup(), { replace: true }); }));
   }
 
   // ------------------------------------------------------------ home: pick what you're throwing out
@@ -340,16 +340,11 @@
         today.length ? chips(today) : h("span", { class: "tc-next" }, h("span", { text: t("tomorrowAt", { t: "" }).trim() }), chips(tmr))),
       icon("chev", 20));
   }
-  // A section that folds to one line; the open/closed state is remembered on this phone.
-  function foldBlock(key, title, sub, body) {
-    let open = !!LS.get(key, false);
-    const panel = h("div", { class: "fold-body", hidden: !open }, body);
-    const head = h("button", { class: "fold-head", type: "button", "aria-expanded": String(open) },
-      h("span", { class: "grow" }, h("strong", { text: title }), sub ? h("span", { class: "fold-sub caption dark", text: sub }) : null),
-      h("span", { class: "pg-chev" }, icon("chevron-down", 20)));
-    head.addEventListener("click", () => { open = !open; panel.hidden = !open; head.setAttribute("aria-expanded", String(open)); LS.set(key, open); });
-    return h("section", { class: "fold-block" }, head, panel);
-  }
+
+  // Where the truck setup returns: to the steps if things are picked (it is usually started from
+  // the plan's "pick my truck"), otherwise home.
+  const afterSetup = () => (picks.get().some(id => TH.itemById(id)) ? "plan" : "");
+
   // Home, after the TownPass winners' pattern (2024 即時雨晴, 2024 ParkFlow, 2025 RideFlow): the
   // first screen is the tool itself — one big camera button and one line about today. Typing,
   // voice and everything else are one tap further; the truck time and reminder come with the answer.
@@ -427,7 +422,7 @@
       fill(extra, q ? rules.items.filter(i => TH.matches(i, q)).slice(0, 12).map(chip) : [...sel].filter(id => !listed.has(id)).map(TH.itemById).filter(Boolean).map(chip));
     });
     search.dispatchEvent(new Event("input"));
-    TH.onScanPick = id => { sel.add(id); picks.set([...sel]); TH.onScanPick = null; go("", { replace: true }); };
+    TH.onScanPick = id => { sel.add(id); picks.set([...sel]); TH.onScanPick = null; go("list", { replace: true }); };
     const last = LS.get("th.lastPicks", []).filter(id => TH.itemById(id));
     drawBar();
     return [
@@ -438,8 +433,8 @@
       truckStatus(),
       last.length && !sel.size ? h("button", { class: "last-row", type: "button", onclick: () => { last.forEach(id => sel.add(id)); picks.set([...sel]); go("plan"); } },
         h("span", { class: "grow last-arts" }, h("span", { text: t("hLast") }), last.slice(0, 5).map(id => TH.art(TH.itemById(id), 24))), h("strong", { text: t("hAgain") + " ›" })) : null,
-      // Picking from the list is the second way in; it folds away under one heading.
-      foldBlock("th.homeList", t("taskSortTitle"), t("taskSortDesc"), [h("section", { class: "pick-group" },
+      // This page is the list itself: search and the groups are open, nothing to unfold first.
+      h("section", { class: "pick-group" },
         // Snapping a photo is the big camera button in the tab bar; here only the search.
         h("div", { class: "search-row" }, h("label", { class: "search v3 grow" }, icon("search", 18), search)),
         extra),
@@ -463,11 +458,8 @@
         heads.push(drawInfo); drawInfo();
         grid.append(...items.map(chip));
         return h("section", { class: "pick-group fold" }, head, grid);
-      })]),
-      // Other tools: one row of small tiles instead of three long rows.
-      foldBlock("th.homeMore", t("hMore"), "", [h("section", { class: "tool-tiles" },
-        [["message-circle", t("tcTitle"), () => go("talk/truck")], ["shopping-bag", t("bagsTitle"), TH.views.bagSheet], ["star", t("favTitle"), () => go("favorites")]]
-          .map(([ic, l2, fn]) => h("button", { class: "tool-tile", type: "button", onclick: fn }, h("span", { class: "tt-icon" }, icon(ic, 22)), h("span", { text: l2 }))))]),
+      }),
+      // The other tools (talk card, bags, saved stops) are in the home screen's "More" sheet.
       bar,
     ];
   }
@@ -601,7 +593,7 @@
     const dest = (artEl, text, strong, pair) => h("span", { class: "dest" }, artEl, h(strong ? "strong" : "span", { text, "data-pair": pair }));
     const out = [
       h("div", { class: "plan-items" }, items.map(i => h("span", { class: "plan-chip" }, TH.art(i, 24), label(i))),
-        h("button", { class: "link-btn small", type: "button", onclick: () => history.length > 1 ? history.back() : go(""), text: t("pEdit") })),
+        h("button", { class: "link-btn small", type: "button", onclick: () => go("list", { replace: true }), text: t("pEdit") })),
       progress,
     ];
 
