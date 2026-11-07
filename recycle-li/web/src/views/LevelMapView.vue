@@ -3,7 +3,7 @@
 // 地圖是 2.5D：小路有厚度、每一站是一塊立體地台，旁邊有房子和樹。
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
-import TopBar from '@/components/TopBar.vue'
+import KidHud from '@/components/KidHud.vue'
 import Mascot from '@/components/Mascot.vue'
 import AppIcon from '@/components/AppIcon.vue'
 import Zy from '@/components/Zy.vue'
@@ -40,7 +40,6 @@ const decos = [
   { id: 'house', color: '#C2332F' }, { id: 'tree' }, { id: 'house', color: '#356C77' }, { id: 'garden' },
   { id: 'tree' }, { id: 'library' }, { id: 'house', color: '#E6692C' }, { id: 'playground' },
 ]
-const total = computed(() => Object.values(game.levels).reduce((s, l) => s + l.stars, 0))
 function go(n: { lv: { id: number }; open: boolean }) {
   if (n.open) router.push(`/quiz/${n.lv.id}`)
 }
@@ -48,9 +47,7 @@ function go(n: { lv: { id: number }; open: boolean }) {
 
 <template>
   <main class="page stack">
-    <TopBar title="考考你" back="/">
-      <span class="total" :aria-label="`一共 ${total} 顆星`"><AppIcon name="Star" :size="22" /> {{ total }}</span>
-    </TopBar>
+    <KidHud title="考考你" />
     <Mascot :size="48" line="答對題目過關，拿星星蓋房子！" />
 
     <div class="map" :style="{ aspectRatio: `${W} / ${H}` }">
@@ -89,7 +86,6 @@ function go(n: { lv: { id: number }; open: boolean }) {
 </template>
 
 <style scoped>
-.total { display: inline-flex; align-items: center; gap: 4px; font-weight: 800; color: var(--secondary-700); font-size: var(--fs-title); }
 .map { position: relative; width: 100%; max-width: 420px; margin: 0 auto; }
 .bg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .deco { position: absolute; transform: translate(-50%, -60%); pointer-events: none; }
@@ -105,6 +101,7 @@ function go(n: { lv: { id: number }; open: boolean }) {
 .locked .disc { color: var(--gray-500); border-color: var(--gray-300); background: var(--gray-50); }
 .stars { display: flex; gap: 1px; color: var(--gray-200); }
 .stars .on { color: var(--secondary-500); }
+.node { width: max-content; }
 .nm { white-space: nowrap; background: rgba(255, 255, 255, .9); border-radius: 10px; padding: 2px 8px; font-weight: 800; color: var(--primary-900); font-size: var(--fs-body); }
 .locked .nm { color: var(--gray-500); }
 @keyframes bob { 50% { transform: translateY(-4px); } }

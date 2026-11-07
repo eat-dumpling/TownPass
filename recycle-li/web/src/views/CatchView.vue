@@ -1,8 +1,8 @@
 <script setup lang="ts">
 // 掃描結果＝清楚的處理指引：它是哪一類（回收標誌的顏色）→ 臺北怎麼收 → 處理步驟 → 交給誰 → 拖進桶 → 獎勵資源。
 // 一般品項：孩子親手把它拖進正確的桶，就拿到資源（拿去蓋自己的里）；不同天分對 3 次就學會了。
-// Boss 怪（要大人幫忙）：孩子的任務是「認出來、去叫大人」，家長按確認才收服。
-// 不要碰（針頭、藥品）：不出現遊戲畫面，直接顯示去處。官方說法衝突：顯示「請洽清潔隊」與 1999。
+// Boss 怪（要大人幫忙）：孩子的任務是「認出來、會去找大人」，按「我會找大人」就拿星星（孩子介面，沒有家長功能）。
+// 不要碰（針頭、藥品）：不出現遊戲畫面，直接顯示去處。官方說法衝突：告訴孩子「請大人問清潔隊」。
 import Zy from '@/components/Zy.vue'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -13,22 +13,20 @@ import StarIcon from '@/components/StarIcon.vue'
 import ItemArt from '@/components/ItemArt.vue'
 import StepStrip from '@/components/StepStrip.vue'
 import BinDrop from '@/components/BinDrop.vue'
-import ParentGate from '@/components/ParentGate.vue'
 import {
   binsFor, collectionOf, correctBin, factFor, isBoss, isNoTouch, itemById, kindMeta, safetyLabel, whereMeta, type BinId,
 } from '@/domain/catalog'
 import { LEARN_THRESHOLD, useGame } from '@/stores/game'
-import { sendApp } from '@/bridge/flutter'
 
 const route = useRoute()
 const game = useGame()
 const item = computed(() => itemById(route.params.id as string)!)
-const bins = computed(() => binsFor(game.settings.age))
+const bins = computed(() => binsFor(game.age))
 const kind = computed(() => kindMeta[item.value.kind])
 const coll = computed(() => collectionOf(item.value))
 const fact = computed(() => factFor(item.value.category))
 
-const phase = ref<'drop' | 'done' | 'gate' | 'bossDone'>('drop')
+const phase = ref<'drop' | 'done' | 'bossDone'>('drop')
 const wrongBin = ref<BinId | null>(null)
 const retried = ref(false)
 const result = ref<ReturnType<typeof game.catchItem> | null>(null)
@@ -42,16 +40,16 @@ const flow = computed(() => {
   const it = item.value
   if (it.status === 'conflict' || it.category === 'unknown') return 'ask'
   if (isNoTouch(it)) return 'notouch'
-  if (isBoss(it) || correctBin(it, game.settings.age) === null) return 'boss'
+  if (isBoss(it) || correctBin(it, game.age) === null) return 'boss'
   return 'normal'
 })
 const title = computed(() =>
   flow.value === 'ask' ? '問問清潔隊' : flow.value === 'notouch' ? '不要碰！' : flow.value === 'boss' ? '要大人幫忙' : phase.value === 'done' ? '做對了！' : '送它回家！',
 )
-const binLabel = computed(() => bins.value.find((b) => b.id === correctBin(item.value, game.settings.age))?.label ?? kind.value.label)
+const binLabel = computed(() => bins.value.find((b) => b.id === correctBin(item.value, game.age))?.label ?? kind.value.label)
 
 function drop(b: BinId) {
-  if (correctBin(item.value, game.settings.age) !== b) {
+  if (correctBin(item.value, game.age) !== b) {
     wrongBin.value = b
     retried.value = true
     game.markWrong(item.value)
@@ -65,7 +63,6 @@ function bossPass() {
   bossReward.value = game.bossConfirmed(item.value)
   phase.value = 'bossDone'
 }
-const call1999 = () => sendApp('phone_call', '1999')
 </script>
 
 <template>
@@ -97,8 +94,8 @@ const call1999 = () => sendApp('phone_call', '1999')
 
     <!-- 請洽清潔隊 -->
     <template v-if="flow === 'ask'">
-      <Mascot mood="think" :size="52" line="這個連大人也要問問看" />
-      <button class="btn primary block" @click="call1999"><AppIcon name="Phone" /> 打 1999</button>
+      <Mascot mood="think" :size="52" line="這個連大人也不確定，請大人問清潔隊" />
+      <router-link to="/scan" class="btn primary block"><AppIcon name="Camera" /> <Zy text="掃別的東西" /></router-link>
     </template>
 
     <!-- 不要碰 -->
@@ -110,10 +107,9 @@ const call1999 = () => sendApp('phone_call', '1999')
     <!-- Boss 怪 -->
     <template v-else-if="flow === 'boss'">
       <template v-if="phase === 'drop'">
-        <Mascot :size="52" line="你認出來了！去叫大人來" />
-        <button class="btn secondary block" @click="phase = 'gate'"><AppIcon name="UserShield" /> <Zy text="大人來了" /></button>
+        <Mascot :size="52" line="你認出來了！這個要找大人一起處理" />
+        <button class="btn secondary block" @click="bossPass"><AppIcon name="UserShield" /> <Zy text="我會找大人" /></button>
       </template>
-      <ParentGate v-else-if="phase === 'gate'" @pass="bossPass" />
       <template v-else>
         <Mascot mood="cheer" :size="56" line="你是安全小專家！" />
         <p v-if="bossReward" class="reward pop"><StarIcon :size="30" /> +{{ bossReward.stars }}</p>

@@ -5,15 +5,14 @@
 // 「工廠長建議」用 OR② 整數規劃（solvers/factory.ts）算出現有星星最好的蓋法，只是建議，不強迫。
 // 星星價格與綠意值是遊戲設定，不代表真實的回收比例。
 import { computed, ref } from 'vue'
-import TopBar from '@/components/TopBar.vue'
+import KidHud from '@/components/KidHud.vue'
 import IsoLi from '@/components/IsoLi.vue'
 import IsoThumb from '@/components/IsoThumb.vue'
 import Mascot from '@/components/Mascot.vue'
 import AppIcon from '@/components/AppIcon.vue'
 import StarIcon from '@/components/StarIcon.vue'
-import RankBar from '@/components/RankBar.vue'
 import Zy from '@/components/Zy.vue'
-import { buildings, lis, ranks } from '@/domain/catalog'
+import { buildings, lis } from '@/domain/catalog'
 import type { Building } from '@/domain/types'
 import { useGame } from '@/stores/game'
 import { solve } from '@/solvers/factory'
@@ -34,7 +33,6 @@ const unlocked = (b: Building) => b.unlock <= game.level
 const cost = (b: Building) => b.cost.star ?? 0
 const canBuild = (b: Building) => openSlots.value.length > 0 && unlocked(b) && game.stars >= cost(b)
 const sorted = computed(() => [...buildings].sort((a, b) => a.unlock - b.unlock || cost(a) - cost(b)))
-const rankTitle = (lv: number) => ranks.find((r) => r.lv === lv)?.title ?? ''
 
 // 工廠長建議：用手上的星星與這個里的空地，綠意最高的組合（多蓋不同種類加分）
 const advice = computed(() => {
@@ -96,93 +94,109 @@ const line = computed(() => {
 
 <template>
   <main class="page stack">
-    <TopBar title="蓋我的里" back="/" />
-    <RankBar compact />
+    <KidHud title="蓋我的里" />
 
-    <!-- 里的切換：沒解鎖的顯示要幾級 -->
-    <nav class="lis" aria-label="我的里">
-      <button
-        v-for="a in lis" :key="a.id" class="li-tab" :class="{ on: a.id === game.liId, locked: !game.liOpen(a.id) }"
-        :aria-pressed="a.id === game.liId" :aria-disabled="!game.liOpen(a.id)" @click="switchLi(a.id)"
-      >
-        <AppIcon v-if="game.liOpen(a.id)" :name="a.icon" :size="22" />
-        <AppIcon v-else name="Lock" :size="20" />
-        <span><Zy :text="a.id === 'sprout' && game.settings.li ? game.settings.li.name : a.name" /></span>
-        <small v-if="!game.liOpen(a.id)">Lv.{{ a.unlock }}</small>
-      </button>
-    </nav>
+    <section class="stage" :aria-label="area.name">
+      <!-- 里的切換：小圓片，沒解鎖的上鎖、寫要幾級 -->
+      <nav class="lis" aria-label="選一個里">
+        <button
+          v-for="a in lis" :key="a.id" class="chip" :class="{ on: a.id === game.liId, locked: !game.liOpen(a.id) }"
+          :aria-pressed="a.id === game.liId" :aria-disabled="!game.liOpen(a.id)" :aria-label="game.liOpen(a.id) ? a.name : `${a.name}，Lv.${a.unlock} 打開`" @click="switchLi(a.id)"
+        >
+          <AppIcon v-if="game.liOpen(a.id)" :name="a.icon" :size="20" />
+          <AppIcon v-else name="Lock" :size="18" />
+          <span v-if="a.id === game.liId"><Zy :text="a.name" /></span>
+          <small v-else-if="!game.liOpen(a.id)">{{ a.unlock }}</small>
+        </button>
+      </nav>
 
-    <section class="li card" :aria-label="area.name">
       <div class="mapwrap" :class="{ zoom }">
         <IsoLi :li="area" :slots="game.slots" :pop="justSlot" :placing="!!placingId || moving" :selected="selected" @cell="onCell" />
       </div>
-      <button class="btn ghost zoom-btn" :aria-label="zoom ? '縮小地圖' : '放大地圖'" @click="zoom = !zoom">
-        <AppIcon v-if="zoom" name="ZoomOut" :size="24" /><AppIcon v-else name="ZoomIn" :size="24" />
-      </button>
-      <p class="green"><AppIcon name="Leaf" :size="18" /> <Zy text="綠意" /> {{ game.green }} ・ <Zy text="空地" /> {{ openSlots.length }}</p>
+
+      <div class="tools">
+        <span class="green" :aria-label="`綠意 ${game.green}`"><AppIcon name="Leaf" :size="18" /> {{ game.green }}</span>
+        <button class="round" :aria-label="zoom ? '縮小地圖' : '放大地圖'" @click="zoom = !zoom">
+          <AppIcon v-if="zoom" name="ZoomOut" :size="24" /><AppIcon v-else name="ZoomIn" :size="24" />
+        </button>
+        <button class="round" :class="{ on: showTip }" aria-label="工廠長建議" @click="showTip = !showTip"><AppIcon name="Bulb" :size="24" /></button>
+      </div>
+
+      <!-- 浮在地圖上的動作列 -->
+      <div v-if="placingId || moving" class="float">
+        <span class="hint"><AppIcon name="HandFinger" :size="22" /> <Zy :text="moving ? '點空地搬過去' : '點空地蓋下去'" /></span>
+        <button class="round" aria-label="不蓋了" @click="cancel"><AppIcon name="X" :size="22" /></button>
+      </div>
+      <div v-else-if="selectedB" class="float">
+        <button class="pill" @click="moving = true"><AppIcon name="ArrowsMove" :size="20" /> <Zy text="搬家" /></button>
+        <button class="pill" @click="removeSel"><AppIcon name="Trash" :size="20" /> <Zy text="拆掉" /> <StarIcon :size="16" />+{{ cost(selectedB) }}</button>
+        <button class="round" aria-label="取消" @click="cancel"><AppIcon name="X" :size="22" /></button>
+      </div>
+      <div v-else-if="showTip" class="float tip">
+        <template v-if="advice.length">
+          <AppIcon name="Bulb" :size="20" />
+          <span v-for="a in advice" :key="a.b.id" class="mini"><IsoThumb :id="a.b.id" :size="34" :ground="false" />×{{ a.n }}</span>
+        </template>
+        <span v-else><Zy text="先去拿星星吧" /></span>
+      </div>
     </section>
 
-    <Mascot :mood="justBuilt ? 'cheer' : placingId || moving ? 'think' : 'happy'" :size="48" :line="line" />
+    <Mascot :mood="justBuilt ? 'cheer' : placingId || moving ? 'think' : 'happy'" :size="44" :line="line" />
 
-    <!-- 放置中、選了建築：動作列 -->
-    <div v-if="placingId || moving" class="actions card"><button class="btn block" @click="cancel"><AppIcon name="X" /> <Zy text="不蓋了" /></button></div>
-    <div v-else-if="selectedB" class="actions card grid3">
-      <button class="btn" @click="moving = true"><AppIcon name="ArrowsMove" /> <Zy text="搬家" /></button>
-      <button class="btn" @click="removeSel"><AppIcon name="Trash" /> <Zy text="拆掉" /> <span class="refund"><StarIcon :size="16" />+{{ cost(selectedB) }}</span></button>
-      <button class="btn ghost" @click="cancel"><AppIcon name="X" /> <Zy text="取消" /></button>
-    </div>
-
-    <div class="grid2">
-      <button v-for="b in sorted" :key="b.id" class="tile bcard" :class="{ off: !canBuild(b), locked: !unlocked(b), on: placingId === b.id }" :aria-disabled="!canBuild(b)" :aria-pressed="placingId === b.id" @click="pick(b)">
-        <IsoThumb :id="b.id" :size="84" />
-        <strong><Zy :text="b.name" /></strong>
-        <span v-if="unlocked(b)" class="cost" :class="{ short: game.stars < cost(b) }"><StarIcon :size="18" /> {{ cost(b) }}</span>
-        <span v-else class="lock"><AppIcon name="Lock" :size="16" /> Lv.{{ b.unlock }} <Zy :text="rankTitle(b.unlock)" /></span>
-        <span class="g"><AppIcon name="Leaf" :size="14" /> +{{ b.green }}</span>
+    <!-- 建築托盤：橫的捲動，像遊戲的建造列 -->
+    <div class="tray" role="list" aria-label="可以蓋的建築">
+      <button
+        v-for="b in sorted" :key="b.id" role="listitem" class="bcard" :class="{ off: !canBuild(b), locked: !unlocked(b), on: placingId === b.id }"
+        :aria-disabled="!canBuild(b)" :aria-pressed="placingId === b.id" :aria-label="unlocked(b) ? `${b.name}，${cost(b)} 顆星` : `${b.name}，Lv.${b.unlock} 才能蓋`" @click="pick(b)"
+      >
+        <IsoThumb :id="b.id" :size="72" :ground="false" />
+        <span class="nm"><Zy :text="b.name" /></span>
+        <span v-if="unlocked(b)" class="cost" :class="{ short: game.stars < cost(b) }"><StarIcon :size="16" />{{ cost(b) }}</span>
+        <span v-else class="lock"><AppIcon name="Lock" :size="14" />Lv.{{ b.unlock }}</span>
       </button>
     </div>
-
-    <button class="btn" @click="showTip = !showTip"><AppIcon name="Bulb" /> <Zy text="工廠長建議" /></button>
-    <div v-if="showTip" class="card tip">
-      <template v-if="advice.length">
-        <span><Zy text="用現在的星星，這樣蓋綠意最高：" /></span>
-        <span v-for="a in advice" :key="a.b.id" class="chip"><AppIcon :name="a.b.icon" :size="18" /> <Zy :text="a.b.name" /> ×{{ a.n }}</span>
-      </template>
-      <span v-else><Zy text="先去拿星星吧" /></span>
-    </div>
-    <div class="grid2">
-      <router-link to="/scan" class="btn primary"><AppIcon name="Camera" /> <Zy text="掃一掃" /></router-link>
-      <router-link to="/quiz" class="btn"><AppIcon name="Map" /> <Zy text="考考你" /></router-link>
-    </div>
-    <p class="caption center">星星價格與綠意值是遊戲設定</p>
   </main>
 </template>
 
 <style scoped>
-.lis { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 6px; scrollbar-width: none; }
-.li-tab {
-  flex: none; min-height: var(--tap); border: 0; border-radius: 14px; padding: 6px 12px; background: var(--white); box-shadow: var(--shadow);
-  display: flex; align-items: center; gap: 6px; font-weight: 800; color: var(--primary-800);
+.stage {
+  position: relative; border-radius: 28px; padding: 50px 4px 8px; overflow: hidden;
+  background: radial-gradient(120% 80% at 50% 0%, #F7FCFF 0%, #DDF1F8 55%, #CFEBD6 100%);
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .7), var(--shadow);
 }
-.li-tab.on { background: var(--primary-500); color: #fff; }
-.li-tab.locked { background: var(--gray-50); color: var(--gray-500); box-shadow: none; }
-.li-tab small { font-weight: 700; }
-.mapwrap { overflow: auto; -webkit-overflow-scrolling: touch; border-radius: 14px; }
-.mapwrap.zoom { max-height: 62vh; }
+.lis { position: absolute; top: 10px; left: 10px; right: 10px; z-index: 3; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.chip {
+  flex: none; min-height: 40px; min-width: 40px; border: 0; border-radius: 999px; padding: 4px 10px; display: inline-flex; align-items: center; gap: 4px;
+  background: rgba(255, 255, 255, .92); color: var(--primary-700); font-weight: 800; box-shadow: var(--shadow);
+}
+.chip.on { background: #4E9A57; color: #fff; }
+.chip.locked { color: var(--gray-500); background: rgba(255, 255, 255, .6); box-shadow: none; }
+.chip small { font-weight: 800; }
+.mapwrap { overflow: auto; -webkit-overflow-scrolling: touch; border-radius: 18px; }
+.mapwrap.zoom { max-height: 60vh; }
 .mapwrap.zoom :deep(.iso) { width: 200%; }
-.zoom-btn { position: absolute; top: 8px; right: 8px; width: var(--tap); padding: 0; background: rgba(255,255,255,.85); }
-.actions { padding: 10px; gap: 8px; }
-.refund { display: inline-flex; align-items: center; color: #AD7B2B; font-weight: 800; }
-.bcard.on { outline: 4px solid var(--secondary-500); outline-offset: -2px; }
-.li { position: relative; padding: 10px 6px 12px; background: radial-gradient(120% 90% at 50% 20%, #F4FBFD 0%, #E2F2F6 55%, #D3EBDA 100%); overflow: hidden; }
-.green { margin: 6px 0 0 8px; font-weight: 700; color: #2F6B3A; display: flex; align-items: center; gap: 4px; }
-.bcard { gap: 4px; min-height: 170px; color: var(--primary-900); }
+.tools { position: absolute; right: 10px; bottom: 10px; z-index: 3; display: flex; gap: 8px; align-items: center; }
+.green { display: inline-flex; align-items: center; gap: 4px; background: rgba(255, 255, 255, .92); color: #2F6B3A; border-radius: 999px; padding: 6px 12px; font-weight: 800; box-shadow: var(--shadow); }
+.round { width: var(--tap); height: var(--tap); border: 0; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, .95); color: var(--primary-700); box-shadow: var(--shadow); }
+.round.on { background: #F5BA4B; color: #3B2A06; }
+.float {
+  position: absolute; left: 10px; right: 10px; bottom: 66px; z-index: 4; display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap;
+  background: rgba(255, 255, 255, .96); border-radius: 22px; padding: 8px; box-shadow: 0 8px 24px rgba(17, 38, 41, .18);
+}
+.hint { display: inline-flex; align-items: center; gap: 6px; font-weight: 800; color: var(--primary-800); flex: 1; justify-content: center; }
+.pill { min-height: var(--tap); border: 0; border-radius: 999px; padding: 6px 14px; display: inline-flex; align-items: center; gap: 4px; background: var(--primary-50); font-weight: 800; color: var(--primary-800); }
+.tip { justify-content: flex-start; color: #AD7B2B; }
+.mini { display: inline-flex; align-items: center; font-weight: 800; color: var(--primary-800); }
+.tray { display: flex; gap: 10px; overflow-x: auto; padding: 4px 2px 10px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.bcard {
+  flex: none; width: 104px; scroll-snap-align: start; border: 0; border-radius: 22px; background: #fff; box-shadow: var(--shadow);
+  display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 6px 10px; color: var(--primary-900);
+}
+.bcard.on { outline: 4px solid #F5BA4B; outline-offset: -2px; transform: translateY(-4px); }
 .bcard.off { opacity: .55; }
-.bcard.locked :deep(svg) { filter: grayscale(1); }
-.cost { display: inline-flex; align-items: center; gap: 2px; font-weight: 800; font-size: var(--fs-title); color: #AD7B2B; }
+.bcard.locked :deep(img), .bcard.locked :deep(svg) { filter: grayscale(1) opacity(.5); }
+.nm { font-size: .85rem; font-weight: 800; text-align: center; line-height: 1.2; min-height: 2.4em; display: grid; place-items: center; }
+.cost { display: inline-flex; align-items: center; gap: 2px; font-weight: 800; color: #AD7B2B; }
 .cost.short { color: var(--red-500); }
-.lock { display: inline-flex; align-items: center; gap: 2px; font-size: var(--fs-body); font-weight: 700; color: var(--gray-600); }
-.g { color: #2F6B3A; font-size: var(--fs-caption); font-weight: 700; display: inline-flex; align-items: center; gap: 2px; }
-.tip { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.chip { background: var(--primary-50); border-radius: 999px; padding: 4px 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+.lock { display: inline-flex; align-items: center; gap: 2px; font-weight: 800; color: var(--gray-500); font-size: .85rem; }
 </style>

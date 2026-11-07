@@ -1,15 +1,18 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 // 任務與成就：只跟「掃描分對」和「蓋里」有關，全部自動判定、不需要家長確認。
 // 任務完成、成就升級（銅、銀、金）都給星星；星星累積決定等級。
 import Zy from '@/components/Zy.vue'
-import TopBar from '@/components/TopBar.vue'
+import KidHud from '@/components/KidHud.vue'
 import AppIcon from '@/components/AppIcon.vue'
-import RankBar from '@/components/RankBar.vue'
+import RankRoad from '@/components/RankRoad.vue'
 import { achievements, missions } from '@/domain/catalog'
 import type { Mission } from '@/domain/types'
 import { TIER_BONUS, useGame } from '@/stores/game'
 
 const game = useGame()
+// 打開任務頁＝看過了，獎盃上的小紅點消失
+onMounted(() => { game.daily.seen = missions.filter((m) => game.missionProgress(m.id).done).length })
 const daily = missions.filter((m) => m.type.startsWith('daily'))
 const weekly = missions.filter((m) => m.type.startsWith('weekly'))
 const tierColor = ['#CAD1D5', '#C98B54', '#ADB8BE', '#F5BA4B']
@@ -20,9 +23,9 @@ const titleOf = (title: string, tier: number) => title.split('／')[Math.max(0, 
 
 <template>
   <main class="page stack">
-    <TopBar title="任務與成就" back="/" />
+    <KidHud title="任務" />
 
-    <RankBar />
+    <RankRoad />
 
     <template v-for="[title, list] in ([['今天', daily], ['這週', weekly]] as const)" :key="title">
       <h2 class="h2"><AppIcon v-if="title === '今天'" name="Sun" :size="20" /><AppIcon v-else name="Calendar" :size="20" /> <Zy :text="title" /></h2>

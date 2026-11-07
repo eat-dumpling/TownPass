@@ -26,9 +26,9 @@ const parts = computed(() => [
 </template>
 
 <style scoped>
-.thumb { position: relative; display: inline-grid; place-items: end center; }
-.thumb img { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 4px 3px rgba(14, 42, 26, .2)); }
-.rotor { position: absolute; width: 62%; top: 0; left: 50%; transform: translateX(-52%); animation: spin 6s linear infinite; filter: none; }
+.thumb { position: relative; display: inline-flex; align-items: flex-end; justify-content: center; }
+.thumb img { max-width: 100%; max-height: 100%; width: auto; height: auto; filter: drop-shadow(0 4px 3px rgba(14, 42, 26, .2)); }
+.thumb img.rotor { position: absolute; max-width: none; max-height: none; width: 62%; top: 0; left: 50%; transform: translateX(-52%); animation: spin 6s linear infinite; filter: none; }
 @keyframes spin { to { transform: translateX(-52%) rotate(360deg) } }
 @media (prefers-reduced-motion: reduce) { .rotor { animation: none; } }
 </style>

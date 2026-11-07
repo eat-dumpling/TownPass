@@ -39,6 +39,8 @@ flutter run --dart-define=RECYCLE_LI_URL=http://<區網 IP>:5173/
 - **孩童版一條循環、一種獎勵（星星）**：掃描（或用選的）→ 怎麼丟＋拖進桶 → 星星；讀分辨卡（`views/CardView.vue`）、考考你破關（`views/LevelMapView.vue`、`QuizView.vue`，題目由 `solvers/quiz.ts` 從規則表產生）也拿星星 → 蓋我的里（`views/BuildView.vue`，大地圖隨處蓋，5 個里依等級解鎖）→ 任務與成就。星星累積決定等級（`data/ranks.json`），蓋建築不會降級；同一種東西有星星上限（`speciesCap`）。
 - 孩子看的文字用 `<Zy text="…">`（國字＋直排注音，全字庫正楷體）；新增中文字後跑 `web/scripts/gen-zhuyin.mjs` 和字型子集（見 README「字型與注音」），讀音有錯就改 `src/zhuyin/words.ts`。家長頁不標注音。
 - 里的插圖在 `web/src/assets/li/`（開發時用 Codex CLI 影像生成，`scripts/gen_sprites.sh`＋`key_sprites.py`）；App 執行時不能呼叫生成式 AI。新插圖要在 README「插圖來源」記錄。
+- **只給孩子用、沒有家長功能**：目標是讓孩子從「看不懂垃圾分類」到「懂」。沒有設定頁、家長關卡、撥電話；分幾個桶跟著等級長大（一開始 3 個、`NINE_BINS_LEVEL` 起 9 個），注音一律開著。要大人幫忙的東西，孩子按「我會找大人」就算認出來。
+- **介面**：主要畫面（家、考考你、蓋房子、圖鑑、任務）用底部選單 `KidDock`＋頂部狀態列 `KidHud`（路由 `meta.dock`）；每個功能一個顏色（家藍綠、考考你天藍、掃一掃黃、蓋房子綠、圖鑑紫）。首頁只有一句話、一個「現在做這個」按鈕。
 - **不做**：線索問答（OR① 題目）、倒垃圾相關（今晚任務、家長確認、本週報告、清運大作戰）。舊畫面在 `recycle-li/web/src/paused/`（不建置）。
 - 辨識（YOLO 風格多物件）：`detector.ts`（MediaPipe EfficientDet-Lite2 框物品）→ `tracker.ts`（追蹤、框平滑、標籤遲滯）→ `clip.worker.ts`（CLIP 在 Web Worker）＋`clip.ts`（評分、範例向量）＋`prior.ts`（偵測器類別先驗）→ `annotate.ts`（畫標註）。CLIP 固定 WASM 單執行緒（q8 在 WebGPU 會壞；Worker 內多執行緒會卡）。
 - 品項要涵蓋臺北市環保局 CSV 說明欄的每一項；新增品項用 `recycle-li/scripts/expand_items.py`，之後重跑 `npm run build:embeds`。

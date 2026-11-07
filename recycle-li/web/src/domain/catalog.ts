@@ -93,7 +93,7 @@ export function collectionOf(item: Item): { label: string; when: string; source?
   if (off && off.id !== 'non_recyclable') return { label: `${off.major}・${off.sub}`, when: off.when, source: off.source }
   if (item.category === 'general') return { label: '一般垃圾（不可回收）', when: '交垃圾車（週三、週日停收）', source: off?.source }
   if (item.category === 'special') return { label: '特殊處理', when: item.notes ?? '' }
-  if (item.category === 'unknown') return { label: '官方說法不一致', when: '請洽清潔隊或打 1999' }
+  if (item.category === 'unknown') return { label: '官方說法不一致', when: '請大人問清潔隊' }
   const c = categoryMeta[item.category]
   return { label: c.label, when: daysText(c.days) }
 }

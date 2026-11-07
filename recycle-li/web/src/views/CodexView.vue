@@ -3,7 +3,7 @@
 // 每種東西有星星上限（speciesCap），拿完了就要去找新的東西；一個分類全部找到多 5 顆星。
 import { computed } from 'vue'
 import Zy from '@/components/Zy.vue'
-import TopBar from '@/components/TopBar.vue'
+import KidHud from '@/components/KidHud.vue'
 import AppIcon from '@/components/AppIcon.vue'
 import StarIcon from '@/components/StarIcon.vue'
 import ItemArt from '@/components/ItemArt.vue'
@@ -28,7 +28,7 @@ const fruitOf = (i: Item) => game.codex[i.id]?.fruit ?? 0
 
 <template>
   <main class="page stack">
-    <TopBar title="圖鑑" back="/" />
+    <KidHud title="圖鑑" />
 
     <section class="card sum">
       <div><strong>{{ found }}</strong><span>/{{ items.length }}</span><small><AppIcon name="Search" :size="16" /> <Zy text="找到" /></small></div>

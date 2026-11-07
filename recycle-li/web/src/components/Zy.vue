@@ -1,13 +1,11 @@
 <script setup lang="ts">
-// 國字＋注音（直排在字的右邊，跟國小課本一樣）。設定裡可以關掉（大一點的孩子不需要）。
+// 國字＋注音（直排在字的右邊，跟國小課本一樣）。孩子介面一律標注音。
 // 注音只是視覺輔助：螢幕閱讀器只念國字（aria-hidden）。
 import { computed } from 'vue'
 import { annotate, splitZhuyin } from '@/zhuyin'
-import { useGame } from '@/stores/game'
 
 const props = defineProps<{ text: string | number }>()
-const game = useGame()
-const on = computed(() => game.settings.zhuyin)
+const on = computed(() => true) // 孩子介面一律國字＋注音
 // 斷行單位：一個國字＋後面的收尾標點（，。！」）；開頭標點（「（）跟著下一個字。標點不會跑到行首。
 const CLOSE = /[，。！？、：；」』）…—～]/
 const OPEN = /[「『（]/

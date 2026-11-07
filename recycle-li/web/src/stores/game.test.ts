@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { allItems, rankFor, ranks } from '@/domain/catalog'
-import { COLLECTION_BONUS, DAILY_CATCH_LIMIT, LEARN_THRESHOLD, LEARNED_BONUS, QUIZ_DAILY_REWARD, speciesCap, useGame } from './game'
+import { COLLECTION_BONUS, DAILY_CATCH_LIMIT, LEARN_THRESHOLD, LEARNED_BONUS, NINE_BINS_LEVEL, QUIZ_DAILY_REWARD, speciesCap, useGame } from './game'
 
 // game.say() 用 window.setTimeout；node 測試環境沒有 window
 ;(globalThis as unknown as { window: typeof globalThis }).window ??= globalThis
@@ -84,6 +84,13 @@ describe('levels and the 里', () => {
     g.stars = 0 // 全部花掉
     expect(g.level).toBe(3)
     expect(rankFor(ranks[2].need - 1).lv).toBe(2)
+  })
+
+  it('bins grow with the kid: 3 bins at first, the 9 recycling-sign bins from Lv.4 (no parent setting)', () => {
+    const g = useGame()
+    expect(g.age).toBe('young')
+    g.earn(ranks.find((r) => r.lv === NINE_BINS_LEVEL)!.need)
+    expect(g.age).toBe('older')
   })
 
   it('levelling up unlocks new 里 and new buildings', () => {

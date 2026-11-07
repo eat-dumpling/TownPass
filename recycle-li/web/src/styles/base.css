@@ -31,7 +31,10 @@
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; min-height: 100%; }
-body { background: var(--primary-50); -webkit-tap-highlight-color: transparent; }
+/* 天空到草地的淡淡漸層：孩子的畫面像在戶外 */
+body { background: linear-gradient(180deg, #E1F3FA 0%, #EEF8F6 45%, #F4FAF0 100%) fixed; -webkit-tap-highlight-color: transparent; }
+/* 有底部選單的頁面多留空間 */
+.has-dock .page { padding-bottom: calc(118px + env(safe-area-inset-bottom)); }
 button { font: inherit; color: inherit; cursor: pointer; }
 :focus-visible { outline: 3px solid var(--secondary-600); outline-offset: 2px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

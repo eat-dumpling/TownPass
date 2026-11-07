@@ -27,7 +27,7 @@ const earned = ref(0)
 const learned = ref<string[]>([])
 const result = ref<ReturnType<typeof game.levelFinished> | null>(null)
 function start() {
-  qs.value = makeRound(level.value, visibleItems(), game.codex, game.settings.age)
+  qs.value = makeRound(level.value, visibleItems(), game.codex, game.age)
   idx.value = 0; picked.value = null; marks.value = []; earned.value = 0; learned.value = []; result.value = null
 }
 start()
@@ -92,7 +92,7 @@ const endLine = computed(() => {
         <span v-else class="binchip adult"><AppIcon name="UserShield" :size="40" /> <Zy text="找大人" /></span>
       </section>
 
-      <Mascot :mood="picked ? (ok ? 'cheer' : 'oops') : 'think'" :size="48" :line="picked ? (ok ? '答對了！' : explain(q, item, game.settings.age)) : prompt" />
+      <Mascot :mood="picked ? (ok ? 'cheer' : 'oops') : 'think'" :size="48" :line="picked ? (ok ? '答對了！' : explain(q, item, game.age)) : prompt" />
 
       <div class="grid3 opts">
         <button

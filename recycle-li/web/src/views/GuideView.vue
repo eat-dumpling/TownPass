@@ -43,7 +43,7 @@ const tabColor = (t: Tab) => (t === 'general' ? categoryMeta.general.color : cat
 <template>
   <main class="page stack">
     <TopBar title="分類指南" back="/" />
-    <input v-if="game.settings.age === 'older'" v-model="q" class="search" type="search" placeholder="找品項" aria-label="搜尋品項" />
+    <input v-if="game.age === 'older'" v-model="q" class="search" type="search" placeholder="找品項" aria-label="搜尋品項" />
     <div class="tabs" role="tablist">
       <button v-for="t in tabs" :key="t.id" role="tab" :aria-selected="tab === t.id" class="tabbtn"
         :style="tab === t.id ? { background: tabColor(t.id), color: '#fff' } : {}" @click="tab = t.id; q = ''">

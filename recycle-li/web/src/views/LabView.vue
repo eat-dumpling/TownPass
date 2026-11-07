@@ -111,7 +111,7 @@ const copy = () => navigator.clipboard?.writeText(report.value)
 
 <template>
   <main class="page stack lab">
-    <TopBar title="辨識測試室" back="/settings" :zy="false" />
+    <TopBar title="辨識測試室" back="/" :zy="false" />
     <p v-if="status" class="card" role="status">{{ status }}</p>
     <p class="muted">用真實拍攝的照片；檔名開頭寫品項 id（例如 <code>pet_bottle_01.jpg</code>）才會計分。照片只在這台裝置上處理。</p>
     <label class="btn primary block"><AppIcon name="Photo" /> 選測試照片<input class="sr-only" type="file" accept="image/*" multiple :disabled="!!status || running" @change="onFiles" /></label>

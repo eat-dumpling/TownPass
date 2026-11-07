@@ -16,6 +16,8 @@ export const QUIZ_DAILY_REWARD = 10 // 考考你每天最多 10 題有星星（�
 export const LEARNED_BONUS = 2 // 學會一種東西多給的星星
 export const COLLECTION_BONUS = 5 // 圖鑑一個分類集滿
 export const TIER_BONUS = [0, 3, 5, 8] // 成就銅、銀、金
+/** 學習進階：一開始三個桶（一般垃圾、資源回收、廚餘），升到這一級打開回收標誌的九個桶 */
+export const NINE_BINS_LEVEL = 4
 /** 同一種東西最多拿幾顆星（掃描分對＋讀分辨卡加起來）：常見 5、少見 7、稀有 9。拿完了就去找別種東西 */
 export const speciesCap = (item: Item) => 3 + 2 * item.rarity
 
@@ -37,7 +39,7 @@ export interface CodexEntry {
   /** 讀過分辨卡 */
   read?: boolean
 }
-interface Counter { key: string; counts: Partial<Record<GameEvent, number>>; claimed: string[]; catches: number; quiz?: number }
+interface Counter { key: string; counts: Partial<Record<GameEvent, number>>; claimed: string[]; catches: number; quiz?: number; seen?: number }
 export interface Reward { stars: number }
 
 const emptyCounter = (key: string): Counter => ({ key, counts: {}, claimed: [], catches: 0 })
@@ -74,6 +76,8 @@ export const useGame = defineStore('game', {
   getters: {
     rank: (s) => rankFor(s.starsTotal),
     level(): number { return this.rank.lv },
+    /** 用幾個桶：跟著等級長大，不用家長設定 */
+    age(): AgeBand { return this.rank.lv >= NINE_BINS_LEVEL ? 'older' : 'young' },
     /** 現在這個里的空地 */
     slots: (s) => s.lis[s.liId] ?? [],
     li: (s) => lis.find((l) => l.id === s.liId)!,
@@ -130,7 +134,8 @@ export const useGame = defineStore('game', {
       this.starsTotal += n
       if (this.rank.lv > before) {
         for (const a of lis) if (a.unlock <= this.rank.lv && !this.lis[a.id]) this.lis[a.id] = emptyLi(a.id)
-        this.say(this.rank.icon, `升到 Lv.${this.rank.lv}：${this.rank.title}`)
+        if (before < NINE_BINS_LEVEL && this.rank.lv >= NINE_BINS_LEVEL) this.say('Recycle', '九個分類桶打開了！分得更細')
+        else this.say(this.rank.icon, `升到 Lv.${this.rank.lv}：${this.rank.title}`)
       }
       return { stars: n }
     },

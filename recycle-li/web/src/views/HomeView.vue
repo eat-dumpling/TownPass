@@ -1,75 +1,99 @@
 <script setup lang="ts">
-// 首頁：一條循環——掃一掃 → 拿到資源 → 蓋我的里 → 任務與成就。畫面上最大的是「掃一掃」。
-import Zy from '@/components/Zy.vue'
+// 首頁＝我的里的風景：上面是等級和星星，中間是會動的小島（點了去蓋房子），
+// 下面小里長只說一句話、只給一個「現在做這個」的大按鈕。其他功能在底部選單。
 import { computed } from 'vue'
+import Zy from '@/components/Zy.vue'
 import Mascot from '@/components/Mascot.vue'
 import IsoLi from '@/components/IsoLi.vue'
-import RankBar from '@/components/RankBar.vue'
+import KidHud from '@/components/KidHud.vue'
 import AppIcon from '@/components/AppIcon.vue'
-import StarIcon from '@/components/StarIcon.vue'
-import { missions } from '@/domain/catalog'
+import { buildings, missions } from '@/domain/catalog'
+import { LEVELS } from '@/solvers/quiz'
 import { useGame } from '@/stores/game'
 
 const game = useGame()
-// 下一個還沒完成的今日任務
-const nextMission = computed(() => {
-  const m = missions.filter((x) => x.type.startsWith('daily')).find((x) => !game.missionProgress(x.id).done)
-  return m ? { m, p: game.missionProgress(m.id) } : null
+const liName = computed(() => game.li.name)
+const freeCell = computed(() => game.slots.some((s, i) => !s && game.buildable(game.liId, i)))
+const canBuild = computed(() => freeCell.value && buildings.some((b) => b.unlock <= game.level && (b.cost.star ?? 0) <= game.stars))
+const nextLevel = computed(() => LEVELS.find((l) => game.levelOpen(l.id) && !(game.levels[l.id]?.stars ?? 0)))
+
+// 今天的任務：只用圖示和進度圈，不用讀字
+const today = computed(() => missions.filter((m) => m.type.startsWith('daily')).map((m) => ({ m, p: game.missionProgress(m.id) })))
+const R = 21
+const C = 2 * Math.PI * R
+
+// 現在最適合做的一件事
+const next = computed(() => {
+  if (canBuild.value) return { to: '/build', icon: 'Building', text: '去蓋房子', line: '星星夠了，蓋一個新東西吧！', c: 'build' }
+  if (!game.missionProgress('daily_scan3').done) return { to: '/scan', icon: 'Camera', text: '掃一掃', line: '找一個要丟的東西，掃掃看！', c: 'scan' }
+  if (nextLevel.value) return { to: `/quiz/${nextLevel.value.id}`, icon: 'Map', text: `第 ${nextLevel.value.id} 關`, line: '來考考你，答對拿星星！', c: 'quiz' }
+  return { to: '/codex', icon: 'Book', text: '看圖鑑', line: '還有好多東西沒找到喔', c: 'codex' }
 })
 </script>
 
 <template>
   <main class="page stack">
-    <header class="row top">
-      <h1 class="title"><Zy text="回收小里長" /></h1>
-      <router-link to="/settings" class="btn ghost" aria-label="設定（家長）"><AppIcon name="Settings" :size="26" /></router-link>
-    </header>
+    <h1 class="sr-only">回收小里長</h1>
+    <KidHud />
 
-    <router-link to="/build" class="li card" aria-label="我的里，去蓋房子">
-      <IsoLi :li="game.li" :slots="game.slots" class="mini" />
-      <p class="green"><AppIcon name="Leaf" :size="16" /> <Zy text="綠意" /> {{ game.green }}</p>
+    <router-link to="/build" class="scene" aria-label="我的里，點了去蓋房子">
+      <span class="name"><AppIcon :name="game.li.icon" :size="18" /> <Zy :text="liName" /></span>
+      <span class="green"><AppIcon name="Leaf" :size="16" /> {{ game.green }}</span>
+      <IsoLi :li="game.li" :slots="game.slots" label="我的里" />
     </router-link>
 
-    <RankBar compact />
+    <section class="talk">
+      <Mascot :size="60" :line="next.line" />
+      <router-link :to="next.to" class="go" :class="next.c">
+        <AppIcon :name="next.icon" :size="34" :stroke="2" />
+        <span><Zy :text="next.text" /></span>
+        <AppIcon name="ChevronRight" :size="28" :stroke="2.4" />
+      </router-link>
+    </section>
 
-    <Mascot line="掃一掃要丟的東西，拿星星蓋房子！" :size="64" />
-
-    <router-link to="/scan" class="hero btn secondary">
-      <AppIcon name="Camera" :size="72" :stroke="1.6" />
-      <span><Zy text="掃一掃" /></span>
+    <router-link to="/missions" class="today" aria-label="今天的任務">
+      <span class="lbl"><AppIcon name="Sun" :size="22" /> <Zy text="今天" /></span>
+      <span v-for="t in today" :key="t.m.id" class="ring" :class="{ done: t.p.done }" :aria-label="`${t.m.title} ${t.p.count}/${t.p.goal}`">
+        <svg viewBox="0 0 50 50" aria-hidden="true">
+          <circle cx="25" cy="25" :r="R" fill="none" stroke="#E3E7E9" stroke-width="5" />
+          <circle cx="25" cy="25" :r="R" fill="none" :stroke="t.p.done ? '#4E9A57' : '#F5BA4B'" stroke-width="5" stroke-linecap="round"
+            :stroke-dasharray="`${(C * t.p.count) / t.p.goal} ${C}`" transform="rotate(-90 25 25)" />
+        </svg>
+        <AppIcon v-if="t.p.done" name="Check" :size="22" :stroke="3" class="ico" />
+        <AppIcon v-else :name="t.m.icon" :size="22" :stroke="2" class="ico" />
+      </span>
     </router-link>
-    <div class="grid2">
-      <router-link to="/pick" class="btn"><AppIcon name="HandClick" /> <Zy text="用選的" /></router-link>
-      <router-link to="/quiz" class="btn primary"><AppIcon name="Map" /> <Zy text="考考你" /></router-link>
-    </div>
-
-    <router-link v-if="nextMission" to="/missions" class="card row mission">
-      <AppIcon :name="nextMission.m.icon" :size="30" />
-      <div style="flex: 1" class="stack tight">
-        <strong><Zy :text="nextMission.m.title" /></strong>
-        <div class="bar"><i :style="{ width: (nextMission.p.count / nextMission.p.goal) * 100 + '%' }"></i></div>
-      </div>
-      <span class="cnt">{{ nextMission.p.count }}/{{ nextMission.p.goal }}</span>
-    </router-link>
-
-    <nav class="grid3" aria-label="更多">
-      <router-link to="/build" class="tile"><AppIcon name="Building" :size="40" :stroke="1.6" /><Zy text="蓋房子" /></router-link>
-      <router-link to="/missions" class="tile"><AppIcon name="Trophy" :size="40" :stroke="1.6" /><Zy text="任務成就" /></router-link>
-      <router-link to="/codex" class="tile"><AppIcon name="Award" :size="40" :stroke="1.6" /><Zy text="圖鑑" /></router-link>
-    </nav>
   </main>
 </template>
 
 <style scoped>
-.top { justify-content: space-between; }
-.title { font-size: var(--fs-h2); margin: 0; color: var(--primary-900); }
-.li { padding: 14px 10px 10px; background: linear-gradient(180deg, #E7F6FA, #D5EEDB); text-decoration: none; display: block; }
-.mini { max-width: 260px; margin: 0 auto; }
-.green { margin: 6px 0 0; font-weight: 700; color: #2F6B3A; display: flex; align-items: center; gap: 4px; }
-.res { list-style: none; padding: 0; margin: 0; display: flex; justify-content: space-between; gap: 6px; }
-.res li { background: var(--white); border-radius: 999px; padding: 6px 10px; font-weight: 700; box-shadow: var(--shadow); display: flex; align-items: center; gap: 4px; }
-.hero { min-height: 160px; font-size: var(--fs-h1); flex-direction: column; border-radius: 28px; }
-.mission { text-decoration: none; color: var(--gray-900); }
-.tight { gap: 4px; }
-.cnt { font-weight: 800; color: var(--primary-700); }
+.scene {
+  position: relative; display: block; text-decoration: none; border-radius: 28px; padding: 26px 4px 6px;
+  background: radial-gradient(120% 80% at 50% 0%, #F7FCFF 0%, #DDF1F8 55%, #CFEBD6 100%);
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .7), var(--shadow);
+}
+.name, .green {
+  position: absolute; top: 10px; z-index: 2; display: inline-flex; align-items: center; gap: 4px;
+  background: rgba(255, 255, 255, .9); border-radius: 999px; padding: 4px 12px; font-weight: 800; box-shadow: var(--shadow);
+}
+.name { left: 12px; color: var(--primary-800); }
+.green { right: 12px; color: #2F6B3A; }
+.talk { display: flex; flex-direction: column; gap: 12px; }
+.go {
+  --c: #468D9B; display: flex; align-items: center; gap: 12px; min-height: 76px; padding: 12px 18px; border-radius: 24px;
+  text-decoration: none; color: #fff; font-size: var(--fs-h2); font-weight: 800; background: var(--c);
+  box-shadow: 0 6px 0 color-mix(in srgb, var(--c) 70%, black), 0 10px 20px color-mix(in srgb, var(--c) 30%, transparent);
+}
+.go span { flex: 1; }
+.go:active { transform: translateY(3px); box-shadow: 0 3px 0 color-mix(in srgb, var(--c) 70%, black); }
+.go.scan { --c: #E7A43C; color: #3B2A06; }
+.go.build { --c: #4E9A57; }
+.go.quiz { --c: #3D9DC0; }
+.go.codex { --c: #8A63C8; }
+.today { display: flex; align-items: center; gap: 10px; text-decoration: none; background: rgba(255, 255, 255, .75); border-radius: 22px; padding: 8px 14px; box-shadow: var(--shadow); }
+.lbl { display: inline-flex; align-items: center; gap: 4px; font-weight: 800; color: #AD7B2B; margin-right: auto; white-space: nowrap; flex: none; width: max-content; }
+.ring { position: relative; width: 50px; height: 50px; display: grid; place-items: center; color: var(--primary-700); }
+.ring svg { position: absolute; inset: 0; }
+.ring :deep(.ico) { position: absolute; inset: 0; margin: auto; }
+.ring.done { color: #2F7A3A; }
 </style>
