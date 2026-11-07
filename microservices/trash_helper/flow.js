@@ -30,6 +30,7 @@
     wNext: "下一步", wCommunity: "你住的地方有人代收垃圾嗎？", wCommunityLead: "例如大樓管理室或社區垃圾間。",
     wCommYes: "有，社區代收", wCommYesText: "照社區規定分類就好", wCommNo: "沒有，我自己追垃圾車", wCommNoText: "幫你算好時間地點",
     wDone: "設定好了！", wDoneLead: "之後打開，點「這些東西要怎麼丟」就好。", wRemind: "垃圾車來前 10 分鐘提醒我", wGo: "開始丟垃圾",
+    todayAtStop: "今天 {time} 收", todayDone: "今天的車已經走了",
     wChange: "更改", hello0: "早安", hello1: "午安", hello2: "晚安",
     hQuestion: "今天要丟什麼？", hLead: "點選手上的東西，我們幫你排好步驟。",
     gDaily: "每天都會有的", gSometimes: "偶爾才有的", gBig: "大型的",
@@ -83,6 +84,7 @@
     wNext: "Next", wCommunity: "Does someone collect trash where you live?", wCommunityLead: "For example a building manager or trash room.",
     wCommYes: "Yes, the building collects", wCommYesText: "Just sort it their way", wCommNo: "No, I take it to the truck", wCommNoText: "We work out time and place",
     wDone: "All set!", wDoneLead: "Next time, just tap “How do I throw these out?”", wRemind: "Remind me 10 min before my truck", wGo: "Start",
+    todayAtStop: "Truck today at {time}", todayDone: "Today's truck has gone",
     wChange: "Change", hello0: "Good morning", hello1: "Good afternoon", hello2: "Good evening",
     hQuestion: "What are you throwing out?", hLead: "Tap what you have. We'll put the steps in order.",
     gDaily: "Everyday", gSometimes: "Now and then", gBig: "Big items",
@@ -120,6 +122,16 @@
     s3OtherDay: "Other days", s1For: "For: ", s1BuyMap: "Where to buy nearby", s1ShopList: "All shops", s1BagRule: "Recycling and food waste need no official bag. New Taipei bags are accepted too.", moreSizes: "Sizes", moreDetails: "Details", fullGuide: "Full guide", moreParts: "Parts", moreHow: "How to sort", moreOptions: "Other options",
   });
 
+  // The home "today" card when it follows your truck stop.
+  for (const [code, atStop, done] of [
+    ["vi", "Hôm nay xe đến lúc {time}", "Xe hôm nay đã đi rồi"],
+    ["id", "Truk datang hari ini pukul {time}", "Truk hari ini sudah lewat"],
+    ["fil", "May trak ngayon nang {time}", "Nakaalis na ang trak ngayong araw"],
+    ["th", "วันนี้รถมา {time}", "รถวันนี้ไปแล้ว"],
+    ["ko", "오늘 {time}에 수거해요", "오늘 수거차는 이미 지나갔어요"],
+    ["ja", "今日 {time} に収集", "今日の収集車はもう行きました"],
+  ]) if (window.TH_STRINGS[code]) Object.assign(window.TH_STRINGS[code], { todayAtStop: atStop, todayDone: done });
+
   // The guiding labels in the other languages (the generated i18n/<code>.js files load first),
   // and the welcome / finish lines that point at the home row by its name.
   for (const [code, pickRow, seeHow, lead, doneLead] of [
@@ -148,7 +160,7 @@
   const whenWord = v => {
     const now = Date.now();
     if (SCH.comesToday(v, now)) return SCH.taipeiParts(v.arriveMs).minutes >= 17 * 60 ? t("tonightWord") : t("today");
-    if (SCH.comesToday(v, now - 86400000)) return t("tomorrow");
+    if (SCH.comesToday(v, now + 86400000)) return t("tomorrow");
     return t("dayShort", { d: t("days")[SCH.taipeiParts(v.arriveMs).day] });
   };
   const myStop = () => { const p = profile.get(); return p.stopId && TH.stopsData() ? TH.stopsData().byId.get(p.stopId) : null; };
@@ -313,10 +325,14 @@
     const s = labelIn(p, it);
     return s && s !== label(it) ? s : undefined;
   };
-  // My truck stop (time + address). Tapping it changes the stop; the day and time are picked from
-  // the "today" card above it.
+  // My truck stop (time + address). Tapping it changes the time: pick a day, then your stop or one
+  // nearby; the sheet's 「換別區的收運點」 changes the stop itself. Without a stop it sets one up.
   function truckStatus() {
-    const box = h("button", { class: "truck-status", type: "button", onclick: () => changeStop() });
+    const box = h("button", { class: "truck-status", type: "button", onclick: () => {
+      const pp = profile.get();
+      if (!pp.community && pp.stopId && TH.pickTimeSheet) TH.pickTimeSheet(() => go("", { replace: true }));
+      else changeStop();
+    } });
     const p = profile.get();
     const draw = () => {
       const s = myStop();
@@ -337,26 +353,45 @@
     TH.onNavigate(() => clearInterval(timer));
     return box;
   }
-  // What the trucks take today (city-wide days); on a day off, what tomorrow brings.
+  // What goes out today where you live. With a truck stop set, it follows that stop: its own days
+  // (some stops only come Mon/Thu), holiday stops, and whether today's truck has already gone;
+  // on a day off it shows the stop's next visit. Without a stop, the city-wide days.
+  // Tapping opens the collection-days page; the time is changed from the truck row below.
   function todayCard(now) {
     const g = TH.rules().groups;
     const LABEL = { general: "chipGeneral", food: "chipFood", flat: "chipFlat", rigid: "chipRigid" };
     const takes = day => Object.keys(LABEL).filter(id => g[id].days.includes(day));
-    const today = takes(now.day), tmr = takes((now.day + 1) % 7);
     const chips = ids => h("span", { class: "tc-chips" }, ids.map(id => h("span", { class: "tc-chip tc-" + id, text: t(LABEL[id]) })));
-    // With a truck stop set, tapping picks when to throw out (a day, then your stop or one nearby);
-    // without one, the page of collection days. Changing the stop itself is the row below.
-    const open = () => {
-      const p = profile.get();
-      if (!p.community && p.stopId && TH.pickTimeSheet) TH.pickTimeSheet(() => go("", { replace: true }));
-      else go("when/general");
+    const box = h("button", { class: "home-today", type: "button", onclick: () => go("when/general") });
+    const fillVars = (s, vars) => s && vars ? s.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m)) : s;
+    const show = (key, vars, todayIds, nextWord, nextIds) => {
+      box.classList.toggle("off", !todayIds);
+      fill(box, h("span", { class: "hs-icon", "aria-hidden": "true" }, icon("truck", 26)),
+        h("span", { class: "grow" },
+          h("strong", { text: t(key, vars), "data-pair": fillVars(TH.pairT(key), vars) }),
+          todayIds ? chips(todayIds) : h("span", { class: "tc-next" }, nextWord ? h("span", { text: nextWord }) : null, nextIds ? chips(nextIds) : null)),
+        icon("chev", 20));
     };
-    return h("button", { class: "home-today" + (today.length ? "" : " off"), type: "button", onclick: open },
-      h("span", { class: "hs-icon", "aria-hidden": "true" }, icon("truck", 26)),
-      h("span", { class: "grow" },
-        h("strong", { text: today.length ? t("todayOn") : t("todayOff"), "data-pair": TH.pairT(today.length ? "todayOn" : "todayOff") }),
-        today.length ? chips(today) : h("span", { class: "tc-next" }, h("span", { text: t("tomorrowAt", { t: "" }).trim() }), chips(tmr))),
-      icon("chev", 20));
+    const cityWide = () => {
+      const today = takes(now.day);
+      if (today.length) show("todayOn", null, today);
+      else show("todayOff", null, null, t("tomorrowAt", { t: "" }).trim(), takes((now.day + 1) % 7));
+    };
+    const draw = () => {
+      const p = profile.get();
+      const s = !p.community && p.stopId ? myStop() : null;
+      if (!s) { cityWide(); return; }
+      const next = TH.visitsOf(s)[0];
+      if (next && SCH.comesToday(next)) { show("todayAtStop", { time: hhmm(next.arriveMs) }, takes(next.day)); return; }
+      // Was there a visit today that has already left? (look from the start of today)
+      const fromMidnight = TH.visitsOf(s, { now: SCH.instant(SCH.taipeiParts(Date.now()), 0) })[0];
+      const gone = fromMidnight && SCH.comesToday(fromMidnight) && fromMidnight.leaveMs < Date.now();
+      const word = next ? whenWord(next) : null;
+      show(gone ? "todayDone" : "todayOff", null, null, word && word[0].toUpperCase() + word.slice(1), next ? takes(next.day) : null);
+    };
+    cityWide();
+    if (!profile.get().community && profile.get().stopId) TH.loadStops().then(draw).catch(() => {});
+    return box;
   }
 
   // Where the truck setup returns: the page that sent people there (changeStop, or the pick list
