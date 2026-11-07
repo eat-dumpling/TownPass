@@ -197,8 +197,9 @@
     TH.setHeader(" ");
     const steps = item.steps || [];
     const srcs = [...new Set([...(item.src || []), ...(g.src || []), ...steps.map(s => s.src).filter(Boolean)])].map(TH.sourceById);
-    // Language and kids mode right on the answer, so the same card can be read another way in one tap.
-    const out = [h("div", { class: "head-actions res-actions" }, kidsButton(), langButton()),
+    // Kids mode and language stay on the home page; the answer keeps only this row, where the voice
+    // button sits (assistant.js puts it in .head-actions) instead of floating over the card.
+    const out = [h("div", { class: "head-actions res-actions" }),
       h("div", { class: "res-hero" }, art(item, 88), h("h1", { class: "res-name", text: L(item.name), "data-pair": TH.pairOf(item.name) }))];
     const sub = { required: t("needBag"), exempt: t("noBag"), booking: "", unknown: "" }[item.bag] || "";
     out.push(h("div", { class: `verdict3 v-${cat}` }, h("span", { class: "v3-icon" }, icon(rules.categories[cat].icon, 24)),
