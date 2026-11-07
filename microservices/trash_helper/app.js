@@ -58,6 +58,16 @@
     return s;
   }
   // Rules content carries en + zh; other languages come from TH_CONTENT, keyed by the English text.
+  // Side-by-side language ("對照語言"): a second language shown in small type under key words,
+  // so a caregiver and a Taiwanese family member can read the same screen. Off by default.
+  const pairLang = () => { const p = store.get("th.pair"); return p && p !== lang && LANGS.some(l => l.code === p && l.ready) ? p : null; };
+  const tIn = (code, key) => (STR[code] && STR[code][key]) ?? STR.en[key] ?? key;
+  const LIn = (code, obj) => !obj ? "" : obj[code] ?? (window.TH_CONTENT[code] || {})[obj.en] ?? obj.en ?? "";
+  // Value for a data-pair attribute (undefined = nothing shown): the same text in the pair language.
+  const pairT = key => { const p = pairLang(); if (!p) return undefined; const s = tIn(p, key); return typeof s === "string" && s !== t(key) ? s : undefined; };
+  const pairOf = obj => { const p = pairLang(); if (!p || !obj) return undefined; const s = LIn(p, obj); return s && s !== L(obj) ? s : undefined; };
+  function setPair(code) { store.set("th.pair", code || ""); render(); }
+
   function L(obj) {
     if (!obj) return "";
     if (obj[lang] != null) return obj[lang];
@@ -650,6 +660,7 @@
   const TH = window.TH = {
     h, t, L, go, fill, btn, SCH, views: {},
     rules: () => rules, whenRulesReady: () => loadRules(), lang: () => lang, setLang, depth: () => depth,
+    pairLang, setPair, pairT, pairOf, tIn, LIn,
     loadStops, loadDrops, loadVendors, vendorsData: () => vendorsData, loadFavs, favOp, applyFavReply, favState: () => favState, isFav,
     stopsData: () => stopsData, dropData: () => dropData, visitsOf, haversine, itemById, sourceById,
     lastPosition: () => lastPosition, setLastPosition: p => { lastPosition = p; }, getLocation,

@@ -69,7 +69,16 @@
           class: "lang-row" + (l.code === TH.lang() ? " on" : ""), type: "button", role: "option", lang: l.code,
           "aria-selected": l.code === TH.lang() ? "true" : "false",
           onclick: () => { close(); TH.setLang(l.code); },
-        }, h("span", { class: "grow", text: l.label }), l.code === TH.lang() ? icon("check", 20) : null))));
+        }, h("span", { class: "grow", text: l.label }), l.code === TH.lang() ? icon("check", 20) : null))),
+      // Side-by-side: a second language in small type under key words (for a caregiver and the
+      // Taiwanese family, or a new resident learning the Chinese words).
+      h("h3", { class: "pair-title" }, icon("columns-2", 18), h("span", { text: t("pairTitle") })),
+      h("div", { class: "pair-chips", role: "radiogroup", "aria-label": t("pairTitle") },
+        [{ code: "", label: t("pairOff") }, ...window.TH_LANGS.filter(l => l.ready && l.code !== TH.lang())].map(l => {
+          const on = (TH.pairLang() || "") === l.code;
+          return h("button", { class: "va-lang" + (on ? " on" : ""), type: "button", role: "radio", "aria-checked": String(on), lang: l.code || null,
+            onclick: () => { close(); TH.setPair(l.code); } }, l.label);
+        })));
   }
   function langButton() {
     const cur = window.TH_LANGS.find(l => l.code === TH.lang()) || { short: "EN" };
@@ -123,7 +132,7 @@
     const pickIt = id => { if (TH.onScanPick) TH.onScanPick(id); else go("item/" + id); };
     const draw = () => {
       const list = rules.items.filter(i => TH.matches(i, pickQuery));
-      fill(grid, list.map(i => h("button", { class: "pick-chip", type: "button", onclick: () => pickIt(i.id) }, art(i, 44), h("span", { class: "pc-name", text: L(i.name) }))));
+      fill(grid, list.map(i => h("button", { class: "pick-chip", type: "button", onclick: () => pickIt(i.id) }, art(i, 44), h("span", { class: "pc-name", text: L(i.name), "data-pair": TH.pairOf(i.name) }))));
       empty.hidden = list.length > 0;
     };
     const input = h("input", { type: "search", value: pickQuery, placeholder: t("pickSearch"), "aria-label": t("pickSearch"), enterkeyhint: "search" });
@@ -160,10 +169,10 @@
     TH.setHeader(" ");
     const steps = item.steps || [];
     const srcs = [...new Set([...(item.src || []), ...(g.src || []), ...steps.map(s => s.src).filter(Boolean)])].map(TH.sourceById);
-    const out = [h("div", { class: "res-hero" }, art(item, 88), h("h1", { class: "res-name", text: L(item.name) }))];
+    const out = [h("div", { class: "res-hero" }, art(item, 88), h("h1", { class: "res-name", text: L(item.name), "data-pair": TH.pairOf(item.name) }))];
     const sub = { required: t("needBag"), exempt: t("noBag"), booking: "", unknown: "" }[item.bag] || "";
     out.push(h("div", { class: `verdict3 v-${cat}` }, h("span", { class: "v3-icon" }, icon(rules.categories[cat].icon, 24)),
-      h("div", { class: "grow" }, h("div", { class: "v3-top", text: [t("cat_" + cat), sub].filter(Boolean).join("・") }), h("div", { class: "v3-title", text: t(VERDICT[cat]) })),
+      h("div", { class: "grow" }, h("div", { class: "v3-top", text: [t("cat_" + cat), sub].filter(Boolean).join("・") }), h("div", { class: "v3-title", text: t(VERDICT[cat]), "data-pair": TH.pairT(VERDICT[cat]) })),
       item.bag === "required" ? h("button", { class: "v3-buy", type: "button", onclick: () => go("buy") }, icon("shopping-bag", 18), h("span", { text: t("howBuy") }), icon("chev", 16)) : null));
     if (cat === "bulky") {
       out.push(h("ol", { class: "num-steps" }, ["bulkyStep1", "bulkyStep2", "bulkyStep3"].map(k => h("li", { text: t(k) }))));
@@ -173,9 +182,9 @@
     } else {
       if (steps.length) {
         out.push(h("ol", { class: "step-tiles" }, steps.map((s, i) => h("li", { class: "step-tile" },
-          h("span", { class: "st-n", text: String(i + 1) }), h("span", { class: "st-art" }, icon(s.icon, 30)), h("span", { class: "st-title", text: L(s.title) })))));
+          h("span", { class: "st-n", text: String(i + 1) }), h("span", { class: "st-art" }, icon(s.icon, 30)), h("span", { class: "st-title", text: L(s.title), "data-pair": TH.pairOf(s.title) })))));
       }
-      if (item.warn) out.push(h("div", { class: "warn-pill" }, icon("alert-triangle", 16), h("span", { text: L(item.warn) })));
+      if (item.warn) out.push(h("div", { class: "warn-pill" }, icon("alert-triangle", 16), h("span", { text: L(item.warn), "data-pair": TH.pairOf(item.warn) })));
       if (item.verify) out.push(TH.verifyBox(L(item.verify)));
       if (item.components) out.push(h("section", { class: "card" }, h("h3", { class: "card-title", text: t("secParts") }), h("ul", { class: "parts" }, item.components.map(TH.componentCard))));
       if (cat === "verify") out.push(TH.bookingPanel());

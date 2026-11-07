@@ -580,7 +580,7 @@ html[data-lang="ja"] body { font-family: -apple-system, "Hiragino Sans", "Hiragi
 [lang="th"] { font-family: -apple-system, "Sukhumvit Set", "Thonburi", "Noto Sans Thai", sans-serif; }
 [lang="ko"] { font-family: -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
 [lang="ja"] { font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; }
-[lang="zh"], html[lang="zh-Hant-TW"] body { font-family: "PingFang TC", "Noto Sans TC", system-ui, sans-serif; }
+[lang="zh"], [lang="zh-Hant-TW"], html[lang="zh-Hant-TW"] body { font-family: "PingFang TC", "Noto Sans TC", system-ui, sans-serif; }
 /* bag shops layer (v3map.js LAYERS.bags) */
 :root { --c-bags: var(--g600); }
 .place-chip.on.place-bags, .place-pin.place-bags, .place-art.place-bags { background: var(--c-bags); }
@@ -596,3 +596,44 @@ html[data-lang="ja"] body { font-family: -apple-system, "Hiragino Sans", "Hiragi
 .va-options { display: flex; flex-wrap: wrap; gap: 8px; }
 .va-option { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 6px 14px 6px 8px; border: 1px solid var(--p200); border-radius: 12px; background: var(--white); font-size: 15px; color: var(--g800); cursor: pointer; }
 .va-option:active { background: var(--p50); }
+
+/* ---------- side-by-side language (對照語言) ---------- */
+/* Elements marked data-pair show the same words in the second language, in small type below. */
+[data-pair]::after { content: attr(data-pair); display: block; margin-top: 2px; font-size: .78em; font-weight: 400; line-height: 1.35; color: var(--g500); letter-spacing: 0; }
+.verdict3 [data-pair]::after { color: rgba(255, 255, 255, .85); }
+.pair-title { display: flex; align-items: center; gap: 8px; margin: 18px 0 8px; font-size: 15px; font-weight: 600; color: var(--g700); }
+.pair-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.pair-chips .va-lang { min-height: 44px; }
+
+/* ---------- talk card (現場溝通卡) ---------- */
+.tc-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 8px; }
+.tc-tab { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 64px; border: 1px solid var(--g100); border-radius: var(--radius); background: var(--white); font-size: 13px; color: var(--g600); cursor: pointer; }
+.tc-tab.on { border-color: var(--p500); background: var(--p500); color: var(--white); font-weight: 600; }
+.tc-list { border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow); overflow: hidden; }
+.tc-row { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 64px; padding: 12px 14px; border: 0; border-top: 1px solid var(--g100); background: var(--white); text-align: left; cursor: pointer; }
+.tc-row:first-child { border-top: 0; }
+.tc-row > svg:last-child { color: var(--g300); }
+.tc-row-zh { display: block; font-size: 18px; font-weight: 600; line-height: 1.4; color: var(--g900); }
+.tc-row-mine { display: block; margin-top: 2px; font-size: 14px; color: var(--g600); }
+.tc-script { padding: 16px; border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow); }
+.tc-script p { margin: 0 0 6px; }
+/* Full screen: big enough to read across a counter or at the truck. */
+.tc-full { position: fixed; inset: 0; z-index: 80; display: flex; flex-direction: column; padding: calc(12px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom)); background: var(--white); }
+.tc-top { display: flex; justify-content: flex-end; }
+.tc-big { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px; transition: transform .3s; }
+.tc-big.flipped { transform: rotate(180deg); }
+.tc-zh { margin: 0; font-size: clamp(30px, 9vw, 44px); font-weight: 700; line-height: 1.35; color: var(--g900); }
+.tc-mine { margin: 0; font-size: 18px; line-height: 1.45; color: var(--g600); }
+.tc-label { margin: 0; font-size: 15px; font-weight: 600; color: var(--p700); }
+.tc-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.tc-replies .tc-actions { grid-template-columns: repeat(2, 1fr); }
+.tc-act { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 72px; padding: 6px; border: 1px solid var(--p200); border-radius: var(--radius); background: var(--white); color: var(--p700); font-size: 13px; font-weight: 600; cursor: pointer; }
+.tc-act.primary { border-color: var(--p500); background: var(--p500); color: var(--white); }
+.tc-ask { margin: 8px 0 14px; font-size: 26px; font-weight: 700; color: var(--g900); }
+.tc-ask-mine { display: block; margin-top: 4px; font-family: -apple-system, "Roboto", sans-serif; font-size: 15px; font-weight: 400; color: var(--g600); }
+.tc-reply-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; overflow-y: auto; }
+.tc-reply { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; min-height: 88px; padding: 12px; border: 1.5px solid var(--g100); border-radius: var(--radius); background: var(--white); text-align: left; cursor: pointer; }
+.tc-reply:active { border-color: var(--p500); background: var(--p50); }
+.tc-reply-zh { font-size: 20px; font-weight: 600; line-height: 1.35; color: var(--g900); }
+.tc-reply-mine { font-size: 13px; line-height: 1.35; color: var(--g600); }
+@media (prefers-reduced-motion: reduce) { .tc-big { transition: none; } }

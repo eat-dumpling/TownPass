@@ -23,7 +23,7 @@ RULES = ROOT / 'microservices/trash_helper/data/rules.json'
 ICONS = '''direction-sign home camera map file-text shopping-bag help-circle star bell navigation x check chevron-right chevron-left
 chevron-down photo phone player-play truck recycle lock clock trash leaf alert-triangle alert-circle walk list search
 map-pin building-community building-store calendar-event info-circle external-link layout-grid user-check circle-check
-current-location route sparkles home-2 refresh plus music sofa language microphone microphone-off player-stop send volume message-circle pencil'''.split()
+current-location route sparkles home-2 refresh plus music sofa language microphone microphone-off player-stop send volume message-circle pencil columns-2 maximize'''.split()
 
 
 def fetch(path: str) -> bytes:

@@ -290,6 +290,15 @@
     if (it.id === "leftovers") return t("cat_food");
     return L(it.name);
   };
+  // The same short name in the side-by-side language (undefined when that is off).
+  const labelIn = (code, it) => SHORT[it.id] && (code === "zh" || code === "en") ? SHORT[it.id][code === "zh" ? 0 : 1]
+    : it.id === "tissue" ? TH.tIn(code, "cat_general") : it.id === "leftovers" ? TH.tIn(code, "cat_food") : TH.LIn(code, it.name);
+  TH.labelIn = labelIn;
+  const labelPair = it => {
+    const p = TH.pairLang(); if (!p) return undefined;
+    const s = labelIn(p, it);
+    return s && s !== label(it) ? s : undefined;
+  };
   function truckStatus() {
     const box = h("button", { class: "truck-status", type: "button", onclick: () => {
       const pp = profile.get();
@@ -330,7 +339,7 @@
       h("button", { class: "btn btn-primary", type: "button", disabled: !sel.size, onclick: () => { picks.set([...sel]); LS.set("th.lastPicks", [...sel]); go("plan"); } }, t("hMakePlan"), icon("chev", 18)));
     const chip = it => {
       const b = h("button", { class: "pick-chip" + (sel.has(it.id) ? " on" : ""), type: "button", "aria-pressed": String(sel.has(it.id)) },
-        TH.art(it, 44), h("span", { class: "pc-name", text: label(it) }), h("span", { class: "pc-check", "aria-hidden": "true" }, icon("check", 12)));
+        TH.art(it, 44), h("span", { class: "pc-name", text: label(it), "data-pair": labelPair(it) }), h("span", { class: "pc-check", "aria-hidden": "true" }, icon("check", 12)));
       b.addEventListener("click", () => {
         sel.has(it.id) ? sel.delete(it.id) : sel.add(it.id);
         b.classList.toggle("on", sel.has(it.id)); b.setAttribute("aria-pressed", String(sel.has(it.id)));
@@ -385,7 +394,7 @@
       }),
       // Other tools: one row of small tiles instead of three long rows.
       h("section", { class: "tool-tiles" },
-        [["shopping-bag", t("bagsTitle"), TH.views.bagSheet], ["star", t("favTitle"), () => go("favorites")], ["music", t("musicTitle"), TH.views.musicSheet]]
+        [["message-circle", t("tcTitle"), () => go("talk/truck")], ["shopping-bag", t("bagsTitle"), TH.views.bagSheet], ["star", t("favTitle"), () => go("favorites")], ["music", t("musicTitle"), TH.views.musicSheet]]
           .map(([ic, l2, fn]) => h("button", { class: "tool-tile", type: "button", onclick: fn }, h("span", { class: "tt-icon" }, icon(ic, 22)), h("span", { text: l2 })))),
       bar,
     ];
@@ -458,14 +467,14 @@
       const f = fold(details);
       return h("div", { class: "fold-row" }, h("span", { class: "fr-icon" }, icon(ic, 18)), h("span", { class: "grow", text }), f.b, f.panel);
     };
-    const step = (title, build) => {
+    const step = (title, build, pairKey) => {
       const st = { ids: [], open: null };
       curStep = st;
       const body = h("div", { class: "ps-body" }, build());
       curStep = null;
       const n = sections.length + 1;
       const tag = h("span", { class: "ps-done", hidden: true }, icon("check", 14), t("stepDoneTag"));
-      const head = h("button", { class: "ps-head", type: "button", "aria-expanded": "true" }, h("span", { class: "ps-n", text: String(n) }), h("h2", { text: title }), tag, h("span", { class: "ps-chev" }, icon("down", 18)));
+      const head = h("button", { class: "ps-head", type: "button", "aria-expanded": "true" }, h("span", { class: "ps-n", text: String(n) }), h("h2", { text: title, "data-pair": pairKey && TH.pairT(pairKey) }), tag, h("span", { class: "ps-chev" }, icon("down", 18)));
       const sec = h("section", { class: "plan-step" }, head, body);
       head.addEventListener("click", () => { st.open = sec.classList.contains("folded"); apply(true); });
       // Fold / unfold, sliding the body (skipped when the phone asks for less motion).
@@ -517,7 +526,7 @@
     };
     const doneCard = h("div", { class: "done-card", hidden: true }, h("span", { class: "done-icon" }, icon("circle-check", 44)), h("strong", { text: t("allDone") }),
       btn("btn-primary", t("backHomeBtn"), () => { picks.set([]); go("", { replace: true }); }));
-    const dest = (artEl, text, strong) => h("span", { class: "dest" }, artEl, h(strong ? "strong" : "span", { text }));
+    const dest = (artEl, text, strong, pair) => h("span", { class: "dest" }, artEl, h(strong ? "strong" : "span", { text, "data-pair": pair }));
     const out = [
       h("div", { class: "plan-items" }, items.map(i => h("span", { class: "plan-chip" }, TH.art(i, 24), label(i))),
         h("button", { class: "link-btn small", type: "button", onclick: () => history.length > 1 ? history.back() : go(""), text: t("pEdit") })),
@@ -547,31 +556,31 @@
       h("p", { class: "caption dark", text: t("s1BagRule") }),
       h("div", { class: "row-actions" }, lbtn("list", t("s1ShopList"), () => go("buy")), lbtn(null, t("s1Sizes"), () => go("bags"))));
     if (has("general") || has("recycle") || has("food") || has("special")) out.push(step(t("s1"), () => [
-      has("general") ? checkRow("bag-general", dest(TH.catArt("general", 28), t("s1General"), true), {
+      has("general") ? checkRow("bag-general", dest(TH.catArt("general", 28), t("s1General"), true, TH.pairT("s1General")), {
         sub: needsBag.length ? h("div", { class: "row-sub bag-for" }, h("span", { text: t("s1For") }), needsBag.slice(0, 6).map(i => TH.art(i, 20))) : null,
         buttons: [rbtn("shopping-bag", t("s1BuyMap"), () => go("map/bags"))],
         below: bagBelow, details: bagMore }) : null,
-      has("recycle") ? checkRow("bag-recycle", dest(TH.catArt("recycle", 28), t("s1Recycle"))) : null,
-      has("food") ? checkRow("bag-food", dest(TH.catArt("food", 28), t("s1Food"))) : null,
-      has("special") ? checkRow("bag-hazard", dest(TH.catArt("special", 28), t("s1Hazard"))) : null,
-    ]));
+      has("recycle") ? checkRow("bag-recycle", dest(TH.catArt("recycle", 28), t("s1Recycle"), false, TH.pairT("s1Recycle"))) : null,
+      has("food") ? checkRow("bag-food", dest(TH.catArt("food", 28), t("s1Food"), false, TH.pairT("s1Food"))) : null,
+      has("special") ? checkRow("bag-hazard", dest(TH.catArt("special", 28), t("s1Hazard"), false, TH.pairT("s1Hazard"))) : null,
+    ], "s1"));
 
     // 2. prepare each item: one line per item; the steps, the warning, parts and the full page are under ▾
     const prep = items.filter(i => i.id !== "tissue" && !isOut(i) && ((i.steps || []).length || i.components));
     if (prep.length) out.push(step(t("s2"), () => prep.map(i => checkRow("prep-" + i.id,
-      dest(TH.art(i, 28), label(i), true), {
-        details: [(i.steps || []).length ? h("ol", { class: "strip" }, i.steps.map((st, k) => h("li", {}, h("span", { class: "strip-n", text: String(k + 1) }), h("span", { class: "strip-art" }, icon(st.icon, 24)), h("span", { text: L(st.title) })))) : null,
-          i.warn ? h("div", { class: "warn-pill small" }, icon("alert", 14), h("span", { text: L(i.warn) })) : null,
+      dest(TH.art(i, 28), label(i), true, labelPair(i)), {
+        details: [(i.steps || []).length ? h("ol", { class: "strip" }, i.steps.map((st, k) => h("li", {}, h("span", { class: "strip-n", text: String(k + 1) }), h("span", { class: "strip-art" }, icon(st.icon, 24)), h("span", { text: L(st.title), "data-pair": TH.pairOf(st.title) })))) : null,
+          i.warn ? h("div", { class: "warn-pill small" }, icon("alert", 14), h("span", { text: L(i.warn), "data-pair": TH.pairOf(i.warn) })) : null,
           i.components ? h("div", { class: "parts-chips" }, i.components.map(c => { const cc = rules.groups[c.group].cat; return h("span", { class: `part-chip pc-${cc}` }, icon((rules.categories[cc] || {}).icon || "help-circle", 14), L(c.name), h("span", { class: "pc-to", text: "→ " + t("cat_" + cc) })); })) : null,
-          h("button", { class: "link-btn small", type: "button", onclick: e => { e.preventDefault(); go("item/" + i.id); }, text: t("fullGuide") + " ›" })] }))));
+          h("button", { class: "link-btn small", type: "button", onclick: e => { e.preventDefault(); go("item/" + i.id); }, text: t("fullGuide") + " ›" })] })), "s2"));
 
     // 3. take it out / hand it to the building
     if (truckItems.length) {
       if (p.community) {
         const COMM = [["general", "一般垃圾（專用袋）", "General (official bag)"], ["food", "廚餘", "Food waste"], ["recycle", "平面回收", "Flat recycling"],
           ["recycle", "立體回收", "3-D recycling"], ["special", "電池另裝", "Batteries apart"]];
-        out.push(step(t("s3Comm"), () => checkRow("drop-comm", dest(h("span", { class: "lr-icon" }, icon("building-community", 18)), t("s3CommText"), true), {
-          details: h("div", { class: "parts-chips" }, COMM.map(([c, zh, en]) => h("span", { class: `part-chip pc-${c}` }, icon((rules.categories[c] || {}).icon || "help-circle", 14), TH.lang() === "zh" ? zh : en))) })));
+        out.push(step(t("s3Comm"), () => checkRow("drop-comm", dest(h("span", { class: "lr-icon" }, icon("building-community", 18)), t("s3CommText"), true, TH.pairT("s3CommText")), {
+          details: h("div", { class: "parts-chips" }, COMM.map(([c, zh, en]) => h("span", { class: `part-chip pc-${c}` }, icon((rules.categories[c] || {}).icon || "help-circle", 14), TH.lang() === "zh" ? zh : en))) }), "s3Comm"));
       } else out.push(step(t("s3Truck"), () => {
         const slot = h("div");
         const dests = [];
@@ -580,8 +589,8 @@
         if (truckItems.some(i => ["recycle", "special"].includes(catOf(i)))) dests.push(["recycle", t("s3Recycle")]);
         // One row: tick it once everything is handed over; the three places are small labelled tiles.
         const SLOT = { general: ["slotTruck", "truck"], food: ["slotFood", "bucket"], recycle: ["slotRecycle", "recycle"] };
-        const rows = dests.length ? [checkRow("drop-0", h("span", { class: "dest" }, h("strong", { text: t("s3SlotsHint") })), {
-          below: h("div", { class: "go-slots" }, dests.map(([c]) => h("span", { class: `go-slot gs-${c}` }, TH.catArt(c, 32), h("span", { text: t(SLOT[c][0]) })))) })] : [];
+        const rows = dests.length ? [checkRow("drop-0", h("span", { class: "dest" }, h("strong", { text: t("s3SlotsHint"), "data-pair": TH.pairT("s3SlotsHint") })), {
+          below: h("div", { class: "go-slots" }, dests.map(([c]) => h("span", { class: `go-slot gs-${c}` }, TH.catArt(c, 32), h("span", { text: t(SLOT[c][0]), "data-pair": TH.pairT(SLOT[c][0]) })))) })] : [];
         const whenGroup = truckItems.some(i => catOf(i) === "general") ? "general" : truckItems.some(i => catOf(i) === "food") ? "food"
           : (truckItems.find(i => ["flat", "rigid"].includes(i.group)) || {}).group || "general";
         TH.loadStops().then(() => TH.loadDrops().catch(() => null)).then(() => {
@@ -607,12 +616,12 @@
                 h("div", { class: "go-where" }, h("span", { text: shortAddr(s) })),
                 h("span", { class: "go-change" }, icon("calendar", 14), t("s3Change"))),
               rbtn("direction-sign", t("seeOnMapNav"), () => TH.openMap(s), "primary")),
-            bell ? h("div", { class: "row-actions" }, bell) : null,
+            h("div", { class: "row-actions" }, bell, lbtn("message-circle", t("tcOpen"), () => go("talk/truck"))),
             drop ? h("button", { class: "link-btn small go-missed", type: "button", onclick: () => go("drop/" + drop.d.id),
               text: t("s3MissedLink", { name: drop.d.squad, hours: hrs }) }) : null);
         });
         return [slot, rows];
-      }));
+      }, "s3Truck"));
     }
 
     // 4. special items: one line + round call / map buttons; backups under ▾
@@ -621,26 +630,26 @@
       const placeRow = (i, txt, layer) => {
         const below = h("div");
         const more = h("div");
-        const row = checkRow("sp-" + i.id, dest(TH.art(i, 28), label(i), true), { sub: destLine(txt), below, details: more,
-          buttons: [rbtn("map", t("s4AllOnMap"), () => go("map/" + layer), "primary")] });
+        const row = checkRow("sp-" + i.id, dest(TH.art(i, 28), label(i), true, labelPair(i)), { sub: destLine(txt), below, details: more,
+          buttons: [layer === "battery" ? rbtn("message-circle", t("tcOpenStore"), () => go("talk/store")) : null, rbtn("map", t("s4AllOnMap"), () => go("map/" + layer), "primary")] });
         fillNearest(layer, below, more);
         return row;
       };
-      const destLine = txt => h("span", { class: "row-dest", text: txt });
+      const destLine = key => h("span", { class: "row-dest", text: t(key), "data-pair": TH.pairT(key) });
       out.push(step(t("s4"), () => special.map(i => {
         const c = catOf(i);
-        const title = () => dest(TH.art(i, 28), label(i), true);
-        if (c === "bulky") return checkRow("sp-" + i.id, title(), { sub: destLine(t("spBulky")),
-          buttons: [rbtn("phone", squad ? t("sBulkyCall", { district: p.district }) : "1999", () => TH.dial(squad || rules.contacts.hotline), "primary")],
+        const title = () => dest(TH.art(i, 28), label(i), true, labelPair(i));
+        if (c === "bulky") return checkRow("sp-" + i.id, title(), { sub: destLine("spBulky"),
+          buttons: [rbtn("message-circle", t("tcScript"), () => go("talk/phone")), rbtn("phone", squad ? t("sBulkyCall", { district: p.district }) : "1999", () => TH.dial(squad || rules.contacts.hotline), "primary")],
           details: [h("p", { class: "caption dark", text: t("sBulkyPut") }),
             h("div", { class: "row-actions" }, lbtn("phone", "1999", () => TH.dial(rules.contacts.hotline)), lbtn(null, t("bookOnline"), () => TH.openExternal(rules.contacts.online)))] });
-        if (c === "verify") return checkRow("sp-" + i.id, title(), { sub: destLine(t("spAsk")), buttons: [rbtn("phone", t("spCall"), () => TH.dial(squad || rules.contacts.hotline), "primary")] });
-        if (i.takeback) return placeRow(i, t("spTake"), "battery");
-        if (i.id === "clothes") return placeRow(i, t("spClothes"), "clothes");
-        if (i.id === "pills") return placeRow(i, t("spPills"), "pills");
-        if (i.id === "spray") return checkRow("sp-" + i.id, title(), { sub: destLine(t("spSpray")) });
+        if (c === "verify") return checkRow("sp-" + i.id, title(), { sub: destLine("spAsk"), buttons: [rbtn("phone", t("spCall"), () => TH.dial(squad || rules.contacts.hotline), "primary")] });
+        if (i.takeback) return placeRow(i, "spTake", "battery");
+        if (i.id === "clothes") return placeRow(i, "spClothes", "clothes");
+        if (i.id === "pills") return placeRow(i, "spPills", "pills");
+        if (i.id === "spray") return checkRow("sp-" + i.id, title(), { sub: destLine("spSpray") });
         return null;
-      }).filter(Boolean)));
+      }).filter(Boolean), "s4"));
     }
     out.push(doneCard);
     setTimeout(() => drawProgress(false), 0);

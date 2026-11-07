@@ -78,6 +78,10 @@
     buy_bags: ["專用垃圾袋", "垃圾袋", "專用袋", "買袋", "garbage bag", "trash bag", "official bag", "buy bags"],
     how: ["怎麼丟", "怎麼處理", "怎麼", "如何", "要丟哪", "丟哪", "how", "which bin", "how do i"],
     throw: ["想丟", "要丟", "丟掉", "丟", "回收", "throw", "throw away", "dispose", "get rid of", "recycle"],
+    // "How do I say it?" opens the talk card (talkcard.js), in all eight languages.
+    talk: ["怎麼說", "中文怎麼說", "跟隊員說", "跟清潔隊說", "跟店員說", "溝通卡", "翻譯", "how do i say", "how to say", "talk card",
+      "tell the crew", "in chinese", "translate", "nói thế nào", "nói sao", "dịch", "cara bilang", "bagaimana bilang", "terjemah",
+      "paano sabihin", "isalin", "พูดยังไง", "พูดว่าอะไร", "แปล", "어떻게 말해", "말하는 법", "번역", "どう言う", "何て言う", "翻訳"],
     // Pointing back at what was just asked about ("那它呢？"), in all eight languages.
     ref: ["它", "這個", "那個", "這些", "那些", "it", "that", "this", "them", "those", "nó", "cái này", "cái đó", "itu", "ini", "nya",
       "iyan", "ito", "yan", "yun", "มัน", "อันนี้", "อันนั้น", "그거", "이거", "그것", "이것", "それ", "これ", "あれ"],
@@ -231,6 +235,10 @@
     if (follow) {
       items = ctx.items.slice();
       if (has.truck_time) return { kind: "truck" };
+    }
+    if (has.talk && TH.talk) {
+      const bulky = items.some(id => { const it = TH.itemById(id); return it && TH.catOf(it) === "bulky"; });
+      return { kind: "talk", scene: has.convenience_store || items.includes("battery") ? "store" : bulky || has.bulky ? "phone" : has.where_dropoff ? "drop" : "truck" };
     }
     if (!items.length && q.amb && q.amb.length) return { kind: "choose", options: q.amb, has, ask: "vaWhich" };
     const placeQ = has.where || has.map || has.convenience_store || has.pharmacy;
@@ -440,6 +448,7 @@
   async function act(plan, dryRun) {
     if (plan.kind === "unknown") return t("vaUnknown");
     if (plan.kind === "choose") return t(plan.ask || "vaWhich");
+    if (plan.kind === "talk") { if (dryRun) return t("tcTitle"); TH.talk.open(plan.scene); return ""; }
     if (plan.kind === "plan") {
       if (dryRun) {
         if (plan.add) return t("vaAddReply", { items: joinNames(plan.items) });
