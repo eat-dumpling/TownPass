@@ -54,15 +54,43 @@
     cup: ["手搖杯", "手搖飲", "飲料杯", "珍奶", "奶茶杯", "bubble tea", "boba", "drink cup"],
     lunchbox: ["便當盒", "餐盒", "外帶盒", "lunch box", "takeout box"],
     pet: ["寶特瓶", "塑膠瓶", "水瓶", "plastic bottle", "water bottle"],
-    leftovers: ["剩菜", "剩飯", "廚餘", "食物", "leftovers", "food waste", "food scraps"],
+    leftovers: ["剩菜", "剩飯", "廚餘", "食物", "吃剩", "吃不完", "剩湯", "leftovers", "food waste", "food scraps"],
     paper: ["紙箱", "報紙", "紙類", "cardboard", "newspaper", "paper box"],
-    oil: ["廢油", "食用油", "炸油", "cooking oil", "used oil"],
+    oil: ["廢油", "食用油", "炸油", "炸過的油", "cooking oil", "used oil"],
     tissue: ["衛生紙", "尿布", "面紙", "tissue", "diaper", "toilet paper"],
-    brokenglass: ["碎玻璃", "破玻璃", "broken glass"],
+    brokenglass: ["碎玻璃", "破玻璃", "玻璃碎片", "broken glass"],
     ceramic: ["破碗", "碗盤", "陶瓷", "broken plate", "ceramic"],
     spray: ["噴霧罐", "瓦斯罐", "卡式瓦斯", "spray can", "aerosol", "gas can"],
     phone: ["手機", "舊手機", "小家電", "吹風機", "phone", "mobile phone", "hair dryer"],
+    can: ["鋁罐", "鐵罐", "飲料罐", "易開罐", "汽水罐", "啤酒罐", "罐頭", "aluminum can", "aluminium can", "soda can", "beer can", "tin can", "drink can"],
+    snackbag: ["零食袋", "零食包裝", "洋芋片", "餅乾袋", "糖果紙", "chip bag", "crisp packet", "snack wrapper"],
+    dirtybag: ["髒塑膠袋", "髒的塑膠袋", "油膩的塑膠袋", "dirty plastic bag"],
+    shoes: ["鞋", "舊鞋", "球鞋", "拖鞋", "涼鞋", "皮鞋", "shoe", "sneakers", "slippers"],
+    toy: ["娃娃", "玩偶", "絨毛玩具", "絨毛娃娃", "球", "籃球", "足球", "stuffed toy", "plush", "teddy bear", "ball"],
   };
+  // A broken thing is not the whole thing: "破掉的玻璃杯" is broken glass, "打破的碗" a broken dish.
+  const BROKEN = ["破", "碎", "裂", "broken", "cracked", "shattered"];
+  const BROKEN_TO = [[["玻璃", "glass"], "brokenglass"], [["碗", "盤", "盤子", "杯", "bowl", "plate", "dish", "mug"], "ceramic"]];
+  // Parts of item names that are only a material ("手搖飲杯（塑膠）", "Plastic / paper lunch box"):
+  // on their own they would pull every plastic or paper question to that one item.
+  const GENERIC = new Set(["塑膠", "紙", "玻璃", "金屬", "plastic", "paper", "glass", "metal", "nhựa", "giấy", "plastik", "kertas",
+    "papel", "พลาสติก", "กระดาษ", "플라스틱", "종이", "プラスチック", "紙製"]);
+  // Very common characters: sharing one of them says nothing about which item was meant.
+  const COMMON_CHARS = new Set([..."我你他她它的是有在要想會能可以嗎呢吧啊了什麼怎哪裡邊這那個些今天明後年月日點時候好多少幾來去說看用買垃圾回收丟倒處理請問一下就都也還很不沒和跟與或把被讓給到上下中大小新舊氣謝意思名字早安晚嗨哈"]);
+  // Asking whether it goes in a category ("可以丟一般垃圾嗎？"): answer yes or no first.
+  const CAT_WORDS = {
+    general: ["一般垃圾", "垃圾桶", "general trash", "regular trash", "normal trash", "rác thông thường", "rác thường", "sampah umum", "sampah biasa",
+      "ordinaryong basura", "basura", "ขยะทั่วไป", "일반 쓰레기", "일반쓰레기", "一般ごみ", "燃えるごみ"],
+    recycle: ["資源回收", "回收物", "回收嗎", "能回收", "可以回收", "可回收", "recycling", "recyclable", "recycle", "tái chế", "daur ulang",
+      "i-recycle", "รีไซเคิล", "재활용", "資源ごみ", "リサイクル"],
+    food: ["廚餘", "food waste", "compost", "rác thức ăn", "sisa makanan", "tirang pagkain", "เศษอาหาร", "음식물 쓰레기", "음식물", "生ごみ"],
+  };
+  const GARBAGE = ["垃圾", "回收", "丟", "倒", "廚餘", "trash", "garbage", "rubbish", "recycling"];
+  const KANA = /[\p{Script=Hiragana}\p{Script=Katakana}]/u;
+  const HAN_ONLY = /^[\p{Script=Han}]+$/u;
+  const YESNO = ["嗎", "可以", "可不可以", "能不能", "能否", "是不是", "算不算", "屬於", "算是", "can i", "can you", "can", "is", "are", "should i", "does it", "do i",
+    "không", "được không", "có phải", "apakah", "bisa", "boleh", "puwede", "pwede", "ba", "ไหม", "ได้ไหม", "หรือเปล่า", "돼요", "되나요", "인가요", "나요",
+    "ですか", "ますか", "いいですか", "か"];
   const INTENTS = {
     where: ["哪裡", "哪邊", "在哪", "去哪", "附近", "最近", "where", "nearest", "near me", "nearby", "closest"],
     map: ["地圖", "map", "show me"],
@@ -71,11 +99,15 @@
     where_pills: ["廢藥回收", "藥品回收", "回收藥", "medicine take back", "return medicine"],
     convenience_store: ["便利商店", "超商", "7-11", "711", "小七", "seven", "全家", "萊爾富", "ok超商", "全聯", "超市", "convenience store", "7-eleven", "familymart", "family mart", "hi-life", "supermarket"],
     pharmacy: ["藥局", "藥房", "醫院", "pharmacy", "drugstore", "drug store", "hospital", "chemist"],
-    truck_time: ["幾點", "什麼時候", "何時", "時間", "幾時", "what time", "when"],
-    truck: ["垃圾車", "回收車", "garbage truck", "trash truck", "truck"],
-    where_dropoff: ["錯過", "沒趕上", "來不及", "收受點", "missed", "drop-off", "drop off point"],
+    // On its own a time word is about the truck only next to a garbage word (see GARBAGE in decide):
+    // "我沒時間" is not a question about the truck.
+    truck_time: ["幾點", "什麼時候", "何時", "時間", "幾時", "星期幾", "禮拜幾", "週幾", "哪一天", "哪幾天", "今天", "今晚", "明天", "晚上", "早上",
+      "what time", "when", "what day", "which day", "today", "tonight", "tomorrow"],
+    truck: ["垃圾車", "回收車", "收垃圾", "倒垃圾", "清運", "garbage truck", "trash truck", "truck", "garbage collection", "trash pickup"],
+    where_dropoff: ["錯過", "沒趕上", "來不及", "趕不上", "追不上", "沒倒到", "沒丟到", "車走了", "車開走", "收受點", "missed", "too late", "drop-off", "drop off point"],
     bulky: ["大型垃圾", "大型廢棄物", "大件", "bulky", "big item", "large item"],
-    buy_bags: ["專用垃圾袋", "垃圾袋", "專用袋", "買袋", "garbage bag", "trash bag", "official bag", "buy bags"],
+    buy_bags: ["專用垃圾袋", "垃圾袋", "專用袋", "買袋", "什麼袋", "哪種袋", "用袋子", "要袋子", "garbage bag", "trash bag", "official bag", "buy bags", "what bag", "which bag"],
+    buy: ["買", "購買", "賣", "buy", "purchase", "sell"],
     how: ["怎麼丟", "怎麼處理", "怎麼", "如何", "要丟哪", "丟哪", "how", "which bin", "how do i"],
     throw: ["想丟", "要丟", "丟掉", "丟", "回收", "throw", "throw away", "dispose", "get rid of", "recycle"],
     // "How do I say it?" opens the talk card (talkcard.js), in all eight languages.
@@ -133,15 +165,28 @@
     const content = window.TH_CONTENT || {}, voice = window.TH_VOICE || {};
     const items = [];
     for (const it of rules.items) {
-      const words = new Set();
-      const add = w => { const n = norm(w); if (n && n.length >= 1) words.add(n); };
-      const addName = s => { if (!s) return; add(s); String(s).split(/[、，,／/（）()]/).forEach(p => { if (p.trim().length >= 2) add(p); }); };
+      // Japanese words written only in kanji (紙箱, 瓶, 肉) read differently in Chinese, so they
+      // are kept apart and used only for Japanese questions.
+      const words = new Set(), jaHan = new Set();
+      const add = (w, code) => {
+        const n = norm(w); if (!n || GENERIC.has(n)) return;
+        (code === "ja" && HAN_ONLY.test(n) ? jaHan : words).add(n);
+      };
+      // The whole name, the name without its "(plastic)" note, and each part of "電池、行動電源".
+      const addName = (s, code) => {
+        if (!s) return;
+        add(s, code);
+        const core = String(s).replace(/[（(][^）)]*[）)]/g, " ").trim();
+        if (core !== s) add(core, code);
+        core.split(/[、，,／/]/).forEach(p => { if (p.trim().length >= 2) add(p, code); });
+      };
       addName(it.name.en); addName(it.name.zh);
-      for (const code of Object.keys(content)) addName((content[code] || {})[it.name.en]);
-      (it.keywords || []).forEach(add);
-      (EXTRA[it.id] || []).forEach(add);
-      for (const code of Object.keys(voice)) ((voice[code].items || {})[it.id] || []).forEach(add);
-      items.push({ id: it.id, words: [...words].filter(w => !STOP.has(w) && !AMBIG_WORDS.has(w)) });
+      for (const code of Object.keys(content)) addName((content[code] || {})[it.name.en], code);
+      (it.keywords || []).forEach(w => add(w));
+      (EXTRA[it.id] || []).forEach(w => add(w));
+      for (const code of Object.keys(voice)) ((voice[code].items || {})[it.id] || []).forEach(w => add(w, code));
+      const keep = w => !STOP.has(w) && !AMBIG_WORDS.has(w);
+      items.push({ id: it.id, words: [...words].filter(keep), jaHan: [...jaHan].filter(w => keep(w) && !words.has(w)) });
     }
     const intents = {};
     for (const [k, list] of Object.entries(INTENTS)) intents[k] = new Set(list.map(norm));
@@ -157,18 +202,20 @@
     const plain = norm(raw);
     bare = strip(plain) === plain;
     const text = ` ${bare ? strip(plain) : plain} `;
+    const japanese = KANA.test(plain) || voiceLang() === "ja" || TH.lang() === "ja";
     // Items: longest matches first, no overlaps ("紙杯" beats "紙").
     const hits = [];
-    for (const it of index.items) for (const w of it.words) {
+    for (const it of index.items) for (const w of japanese ? [...it.words, ...it.jaHan] : it.words) {
       const at = found(text, w);
-      if (at >= 0) hits.push({ id: it.id, at, len: w.length });
+      if (at >= 0) hits.push({ id: it.id, at, len: w.length, w });
     }
     hits.sort((a, b) => b.len - a.len);
-    const taken = [], items = [];
+    const taken = [], items = [], byWord = {};
     for (const x of hits) {
       if (taken.some(([s, e]) => x.at < e && x.at + x.len > s)) continue;
       taken.push([x.at, x.at + x.len]);
       if (!items.includes(x.id)) items.push(x.id);
+      (byWord[x.id] = byWord[x.id] || []).push(x.w);
     }
     // Intents: whatever appears outside the item words.
     let rest = text;
@@ -176,16 +223,36 @@
     const has = {};
     // Only words outside the item names count, so "我想丟電池" is about batteries, not a battery drop-off.
     for (const [k, list] of Object.entries(index.intents)) has[k] = list.some(w => found(rest, w) >= 0);
+    // A shop is a place even when its name holds an item ("藥局" holds 藥): "藥局呢？" asks for the map.
+    for (const k of ["pharmacy", "convenience_store"]) has[k] = has[k] || index.intents[k].some(w => found(text, w) >= 0);
     // "Where do I buy garbage bags?" names a bag but asks about the official bags.
     if (index.intents.buy_bags.some(w => found(text, w) >= 0) && items.every(id => id === "bag")) { items.length = 0; has.buy_bags = true; }
+    // Broken glass or a broken dish is its own item, whatever whole thing it was.
+    if (BROKEN.some(w => found(text, w) >= 0)) {
+      const to = BROKEN_TO.find(([words]) => words.some(w => found(text, w) >= 0));
+      if (to) {
+        const drop = new Set(["glass", "cup", "papercup", "ceramic", "brokenglass"]);
+        const keep = items.filter(id => !drop.has(id));
+        items.length = 0; items.push(to[1], ...keep);
+      }
+    }
+    has.garbage = GARBAGE.some(w => found(text, w) >= 0);
+    // "電池可以丟一般垃圾嗎？" asks yes or no about a category.
+    has.yesno = YESNO.some(w => found(text, w) >= 0);
+    let askCat = Object.keys(CAT_WORDS).find(c => CAT_WORDS[c].some(w => found(text, w) >= 0));
+    // The thing must be named by more than the category itself: in "蛋殼是廚餘嗎" 廚餘 is the
+    // category asked about, not the leftovers item, so there is no yes or no to give.
+    const catWord = new Set(Object.values(CAT_WORDS).flat().map(norm));
+    const named = items.length === 1 && byWord[items[0]];
+    if (askCat && named && named.every(w => catWord.has(w))) askCat = null;
     // Nothing named exactly: a word that fits several items ("瓶子"), else the closest-sounding items.
     let amb = [], near = [];
     if (!items.length && !has.buy_bags) {
       const hit = AMBIG.find(([words]) => words.some(w => found(text, norm(w)) >= 0));
       if (hit) amb = hit[1].filter(id => TH.itemById(id));
-      else near = closest(plain);
+      else near = closest(plain, japanese);
     }
-    return { items, has, amb, near };
+    return { items, has, amb, near, askCat: has.yesno ? askCat : null, short: plain.replace(/\s/g, "").length <= 4 };
   }
 
   // Closest items for a sentence that matched nothing, so a misheard word ("店池") still offers
@@ -199,16 +266,19 @@
     }
     return d[b.length];
   }
-  function closest(plain) {
-    const chars = new Set([...plain].filter(c => CJK.test(c)));
+  function closest(plain, japanese) {
+    // Only the telling characters count: "今天天氣好嗎" shares 天 with nothing useful, and one
+    // shared character out of two ("店池" → 電池) is a guess only when little else was said.
+    const chars = new Set([...plain].filter(c => CJK.test(c) && !COMMON_CHARS.has(c)));
     const words = strip(plain).split(" ").filter(w => w.length >= 4);
     const scored = [];
     for (const it of index.items) {
       let best = 0;
-      for (const w of it.words) {
+      for (const w of japanese ? [...it.words, ...it.jaHan] : it.words) {
         if (CJK.test(w) && chars.size && w.length >= 2) {
           const ws = [...w].filter(c => CJK.test(c));
           const shared = ws.filter(c => chars.has(c)).length;
+          if (shared === 1 && (ws.length > 2 || chars.size > 3)) continue;
           if (shared) best = Math.max(best, shared / ws.length);
         } else if (LATIN.test(w) && w.length >= 4) {
           const sw = strip(w);
@@ -231,11 +301,21 @@
   function decide(q) {
     let { items, has } = q;
     const fresh = ctx.items.length && Date.now() - ctx.at < 15 * 60 * 1000;
-    const follow = !items.length && fresh && (has.ref || has.where || has.map || has.convenience_store || has.pharmacy || has.how || has.throw || has.truck_time);
+    // A question with a subject of its own (bags, the truck, a missed truck, bulky waste, a word
+    // like 瓶子) is not a follow-up, even soon after: "哪裡買垃圾袋？" is not about the last item.
+    const ownTopic = has.buy_bags || has.truck || has.where_dropoff || has.bulky || has.talk || (q.amb && q.amb.length) || (q.near && q.near.length);
+    // It follows up when it points back ("它", "這個") or asks where/how; a time word only with a
+    // garbage word or as a short question ("幾點？"), so "今天天氣好嗎" is not one; a shop only
+    // when the last thing has drop-off places (batteries, medicine, clothes).
+    const ctxLayer = ctx.items.some(id => LAYER_OF[id]);
+    const follow = !items.length && fresh && !ownTopic && (has.ref || has.where || has.map || has.how
+      || (has.truck_time && (has.garbage || q.short)) || ((has.convenience_store || has.pharmacy) && ctxLayer));
     if (follow) {
       items = ctx.items.slice();
       if (has.truck_time) return { kind: "truck" };
     }
+    // Buying something that is not a garbage bag is not a question for this app ("我想買手機").
+    if (has.buy && !has.buy_bags && !has.throw && !has.how && !follow && !items.includes("bag")) return { kind: "unknown" };
     if (has.talk && TH.talk) {
       const bulky = items.some(id => { const it = TH.itemById(id); return it && TH.catOf(it) === "bulky"; });
       return { kind: "talk", scene: has.convenience_store || items.includes("battery") ? "store" : bulky || has.bulky ? "phone" : has.where_dropoff ? "drop" : "truck" };
@@ -249,10 +329,10 @@
     if (!layer && !items.length && has.pharmacy) layer = "pills";
     if (layer) return { kind: "map", layer, items };
     if (!items.length && has.where_dropoff) return { kind: "dropoff" };
-    if (!items.length && (has.truck || has.truck_time) && !has.buy_bags) return { kind: "truck" };
+    if (!items.length && (has.truck || (has.truck_time && has.garbage)) && !has.buy_bags) return { kind: "truck" };
     if (!items.length && has.buy_bags) return { kind: "bags" };
     if (!items.length && has.bulky) return { kind: "plan", items: ["furniture"] };
-    if (items.length) return { kind: "plan", items: items.slice(0, 4), add: !!has.add && !follow };
+    if (items.length) return { kind: "plan", items: items.slice(0, 4), add: !!has.add && !follow, check: items.length === 1 ? q.askCat || null : null };
     if (has.map || has.where) return { kind: "map", layer: null, items };
     if (q.near && q.near.length) return { kind: "choose", options: q.near, has, ask: "vaMaybe" };
     return { kind: "unknown" };
@@ -430,6 +510,26 @@
     const what = steps.length ? steps.join(cjkLang() ? "、" : ", ") : (L(it.handover) || "").split(/[。.]/)[0];
     return `${L(it.name)}${t("colon")}${what}${endMark()}`;
   }
+  // "電池可以丟一般垃圾嗎？" → "不行，電池、行動電源是特殊回收物，不是一般垃圾。" before the steps.
+  // Kept here in all eight languages: the generated i18n files are built from translator files.
+  const VERDICT = {
+    zh: ["對，{name}是{cat}。", "不對，{name}是{cat}，不是{asked}。", "{name}是{cat}，要另外回收。"],
+    en: ["Yes, {name} is {cat}. ", "No, {name} is {cat}, not {asked}. ", "{name} is {cat}: it is collected separately. "],
+    vi: ["Có, {name} là {cat}. ", "Không, {name} là {cat}, không phải {asked}. ", "{name} là {cat}, thu gom riêng. "],
+    id: ["Ya, {name} termasuk {cat}. ", "Tidak, {name} termasuk {cat}, bukan {asked}. ", "{name} termasuk {cat}, dikumpulkan terpisah. "],
+    fil: ["Oo, ang {name} ay {cat}. ", "Hindi, ang {name} ay {cat}, hindi {asked}. ", "Ang {name} ay {cat}, hiwalay itong kinokolekta. "],
+    th: ["ได้ {name} เป็น{cat} ", "ไม่ได้ {name} เป็น{cat} ไม่ใช่{asked} ", "{name} เป็น{cat} ต้องแยกทิ้ง "],
+    ko: ["네, {name}은(는) {cat}입니다. ", "아니요, {name}은(는) {asked}이(가) 아니라 {cat}입니다. ", "{name}은(는) {cat}이라 따로 배출해요. "],
+    ja: ["はい、{name}は{cat}です。", "いいえ、{name}は{asked}ではなく{cat}です。", "{name}は{cat}なので、別に出します。"],
+  };
+  function verdict(it, asked) {
+    const cat = TH.catOf(it);
+    const which = cat === asked ? 0 : asked === "recycle" && cat === "special" ? 2 : 1;
+    const s = (VERDICT[TH.lang()] || VERDICT.en)[which];
+    // Names and categories are title-cased on their own; mid-sentence they start small ("is special recycling").
+    const mid = w => /^(en|vi|id|fil)$/.test(TH.lang()) && /^\p{Lu}\p{Ll}/u.test(w) ? w[0].toLowerCase() + w.slice(1) : w;
+    return s.replace("{name}", mid(L(it.name))).replace("{cat}", mid(t("cat_" + cat))).replace("{asked}", mid(t("cat_" + asked)));
+  }
   const currentPicks = () => { try { return JSON.parse(localStorage.getItem("th.picks") || "[]"); } catch (_) { return []; } };
   async function nearestFor(layer) {
     await TH.loadPlaces();
@@ -460,7 +560,7 @@
         case "talk": return t("tcTitle");
         case "plan":
           if (plan.add) return t("vaAddReply", { items: joinNames(plan.items) });
-          if (plan.items.length === 1) { const it = itemById(plan.items[0]); if (it) return `${itemLine(it)}${t("vaFramed")}`; }
+          if (plan.items.length === 1) { const it = itemById(plan.items[0]); if (it) return `${plan.check ? verdict(it, plan.check) : ""}${itemLine(it)}${t("vaFramed")}`; }
           return t("vaPlanReply", { items: joinNames(plan.items) });
         case "map":
           if (!plan.layer) return t("vaMapNoPos", { place: t("mapTitle") });

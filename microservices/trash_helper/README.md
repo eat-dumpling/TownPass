@@ -168,6 +168,8 @@ fvm flutter test test/trash_helper                    # 排程、提醒對帳（
   microservices/trash_helper/schedule.js tools/trash_helper_schedule_test.js
 ```
 
+語音助理的理解：`tools/trash_helper_voice_cases.js` 有 100 多句問法和預期結果（中、英、越、日、韓）。開著開發伺服器的頁面，把檔案內容貼到瀏覽器 console，再執行 `vaRun()`，會印出「N/N ok」和答錯的句子。改了 `assistant.js` 的關鍵字或判斷規則就跑一次。
+
 ## 資料來源
 
 | 資料 | 提供機關 | 連結 | 版本／更新 |
