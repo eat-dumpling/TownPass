@@ -385,13 +385,13 @@ class TrashReminderService {
         return snapshot();
       });
 
-  /// One notification about a stop one minute from now, to check delivery and tapping.
+  /// One notification about a stop 10 seconds from now, to check delivery and tapping (and to show it on stage).
   Future<Map<String, dynamic>> scheduleTest(Object? stopId, {String lang = 'zh'}) => _serial(() async {
         final data = await loadData();
         final stop = stopId is String ? data.stops[stopId] : null;
         if (stop == null) throw const TrashInputError('unknown-stop');
         if (!await notifier.permissionGranted(request: true)) return {'ok': false, 'permission': 'denied'};
-        final at = clock().add(const Duration(minutes: 1));
+        final at = clock().add(const Duration(seconds: 10));
         final text = _texts(stop, null, stop.arrive, lang, leadMinutes: 1, test: true);
         await notifier.cancel(testId);
         await notifier.schedule(id: testId, at: at, title: text.$1, body: text.$2, payload: jsonEncode({'src': trashPayloadSource, 'stopId': stop.id, 'test': true}));

@@ -756,3 +756,7 @@ body.has-tabbar .va-fab[data-view="map"], body.has-tabbar .va-fab[data-view="nea
 /* Bottom bar without the centre camera button (2026-11-08): home and nearby only;
    the camera is home's big 拍一件垃圾 button. */
 .tabbar { grid-template-columns: 1fr 1fr; align-items: center; }
+
+/* Voice answer "what do convenience stores take": the take-back items with their pictures. */
+.va-takes { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 8px; }
+.va-take { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 4px; border-radius: 12px; background: var(--g50, #F1F3F4); font-weight: 600; }

@@ -224,7 +224,7 @@
         const stop = myStop(TH.rules().groups[groupId].cat);
         if (!stop) { fill(msg, TH.notice(t("whnNoStop"), "notice-warn")); return; }
         const r = await TH.askApp("trash_reminder_test", { stopId: stop.id, lang: TH.lang() }, 30000);
-        fill(msg, r && r.ok ? TH.notice(t("remTestOk", { time: TH.fmtWhen(Date.parse(r.at)) }), "notice-ok")
+        fill(msg, r && r.ok ? TH.notice(t("remTestOk"), "notice-ok")
           : TH.notice(r && r.permission === "denied" ? t("remDenied") : t("remError"), "notice-warn"));
       } catch (_) { fill(msg, TH.notice(t("remError"), "notice-warn")); }
       finally { b.disabled = false; }

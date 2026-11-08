@@ -26,6 +26,9 @@
     vaNearest: "離你最近", vaReadAloud: "朗讀回覆", vaPrivacy: "語音由手機的語音辨識轉成文字，App 不保存。",
     vaFramed: "重點幫你框起來了。", vaAddReply: "加進清單了：{items}。", vaWhich: "你是說哪一個？", vaMaybe: "是不是這個？",
     vaNearestAt: "最近的{place}：{name}，{d}。", vaTruckNext: "下一班垃圾車：{when}，{place}。", vaEdit: "點一下可以修改",
+    vaTruckNoStop: "先選你的垃圾車停靠點，就知道幾點來。",
+    vaStoreTitle: "便利商店、超市可以回收", vaStoreReply: "便利商店、超市收電池和燈泡、燈管，不用消費。", vaStoreNear: "最近的是{name}，{d}。",
+    vaStoreAsk: "行動電源、燈管請先問店員。",
   });
   Object.assign(window.TH_STRINGS.en, {
     vaOpen: "Voice assistant", vaTitle: "Ask me how to throw it out", vaTap: "Tap the mic and ask your question", vaListening: "Listening…", vaThinking: "Looking it up…",
@@ -39,6 +42,9 @@
     vaNearest: "Nearest", vaReadAloud: "Read replies aloud", vaPrivacy: "Your phone's speech service turns your voice into text. The app does not keep it.",
     vaFramed: "I've framed the key parts.", vaAddReply: "Added to your list: {items}.", vaWhich: "Which one do you mean?", vaMaybe: "Did you mean one of these?",
     vaNearestAt: "Nearest {place}: {name}, {d}.", vaTruckNext: "Next garbage truck: {when}, {place}.", vaEdit: "Tap to edit",
+    vaTruckNoStop: "Choose your truck stop first, then you will see when it comes.",
+    vaStoreTitle: "Convenience stores and supermarkets take", vaStoreReply: "Convenience stores and supermarkets take batteries and light bulbs or tubes, no purchase needed.", vaStoreNear: "The nearest is {name}, {d}.",
+    vaStoreAsk: "For power banks and tubes, ask the staff first.",
   });
 
   // ------------------------------------------------------------ understanding
@@ -325,7 +331,8 @@
     const fromItem = items.map(id => LAYER_OF[id]).find(Boolean);
     let layer = has.where_clothes ? "clothes" : has.where_battery ? "battery" : has.where_pills ? "pills" : null;
     if (!layer && fromItem && placeQ) layer = fromItem;
-    if (!layer && !items.length && has.convenience_store) layer = "battery";
+    // "便利商店可以回收什麼？": what shops take back (rules.json takeback items), shown at the nearest shop.
+    if (!layer && !items.length && has.convenience_store) return { kind: "map", layer: "battery", items, store: true };
     if (!layer && !items.length && has.pharmacy) layer = "pills";
     if (layer) return { kind: "map", layer, items };
     if (!items.length && has.where_dropoff) return { kind: "dropoff" };
@@ -394,11 +401,14 @@
   function openPanel() {
     if (panel) return;
     buzz();
+    // Text around the mic (status, typing hint, privacy note) follows the language picked in the
+    // panel's own language row, like the example questions; replies keep the app language.
+    const vt = k => (window.TH_STRINGS[voiceLang()] || {})[k] || t(k);
     const log = h("div", { class: "va-log", "aria-live": "polite" });
-    const status = h("p", { class: "va-status", text: canListen() ? t("vaTap") : t("vaNoMic") });
+    const status = h("p", { class: "va-status", text: canListen() ? vt("vaTap") : vt("vaNoMic") });
     const live = h("p", { class: "va-live" });
     const mic = h("button", { class: "va-mic", type: "button", "aria-label": t("vaOpen") }, h("span", { class: "va-rings", "aria-hidden": "true" }), icon("microphone", 30));
-    const input = h("input", { class: "va-input", type: "text", enterkeyhint: "send", placeholder: t("vaTypeHint"), "aria-label": t("vaTypeHint") });
+    const input = h("input", { class: "va-input", type: "text", enterkeyhint: "send", placeholder: vt("vaTypeHint"), "aria-label": vt("vaTypeHint") });
     const speakToggle = h("button", { class: "va-speak" + (LS.get("th.vaSpeak", true) ? " on" : ""), type: "button", "aria-pressed": String(LS.get("th.vaSpeak", true)), "aria-label": t("vaReadAloud") }, icon("volume", 18));
     speakToggle.addEventListener("click", () => {
       const on = !LS.get("th.vaSpeak", true); LS.set("th.vaSpeak", on);
@@ -416,7 +426,7 @@
     async function ask(text) {
       text = (text || "").trim(); if (!text) return;
       bubble("me", text);
-      status.textContent = t("vaThinking");
+      status.textContent = vt("vaThinking");
       await TH.whenRulesReady();
       await respond(decide(understand(text)));
     }
@@ -432,7 +442,7 @@
       }
       bubble("bot", reply, extra, pair);
       say(reply);
-      status.textContent = canListen() ? t("vaTap") : t("vaNoMic");
+      status.textContent = canListen() ? vt("vaTap") : vt("vaNoMic");
       if (plan.kind !== "unknown" && plan.kind !== "choose") setTimeout(() => { closePanel(); act(plan, false); }, 1300);
     }
     mic.addEventListener("click", async () => {
@@ -441,7 +451,7 @@
       if (busy) return;
       busy = listening = true; buzz();
       if (window.speechSynthesis) window.speechSynthesis.cancel();
-      wrap.classList.add("listening"); status.textContent = t("vaListening"); live.textContent = "";
+      wrap.classList.add("listening"); status.textContent = vt("vaListening"); live.textContent = "";
       try {
         let text;
         try { text = await listen(p => { live.textContent = p; }); }
@@ -452,10 +462,10 @@
           text = await listen(p => { live.textContent = p; });
         }
         live.textContent = "";
-        if (text) await ask(text); else status.textContent = t("vaNoSpeech");
+        if (text) await ask(text); else status.textContent = vt("vaNoSpeech");
       } catch (e) {
         live.textContent = "";
-        status.textContent = e.message === "denied" ? t("vaDenied") : e.message === "no-speech" ? t("vaNoSpeech") : t("vaNoMic");
+        status.textContent = e.message === "denied" ? vt("vaDenied") : e.message === "no-speech" ? vt("vaNoSpeech") : vt("vaNoMic");
       } finally { busy = listening = false; wrap.classList.remove("listening"); }
     });
     const send = () => { const v = input.value; input.value = ""; ask(v); };
@@ -469,9 +479,16 @@
       window.TH_LANGS.filter(l => l.ready).map(l => h("button", {
         class: "va-lang" + (l.code === voiceLang() ? " on" : ""), type: "button", role: "radio", lang: l.code,
         "aria-checked": String(l.code === voiceLang()),
-        onclick: () => { LS.set("th.vaLang", l.code); drawLangs(); drawExamples(); },
+        onclick: () => { LS.set("th.vaLang", l.code); drawLangs(); drawExamples(); drawTexts(); },
       }, l.label)));
-    drawLangs(); drawExamples();
+    const privacy = h("p", { class: "caption va-privacy" });
+    const drawTexts = () => {
+      const code = voiceLang();
+      if (!busy) status.textContent = canListen() ? vt("vaTap") : vt("vaNoMic");
+      input.placeholder = vt("vaTypeHint"); input.setAttribute("aria-label", vt("vaTypeHint")); input.lang = code;
+      status.lang = code; privacy.lang = code; privacy.textContent = vt("vaPrivacy");
+    };
+    drawLangs(); drawExamples(); drawTexts();
     const wrap = h("div", { class: "va-wrap", role: "dialog", "aria-modal": "true", "aria-label": t("vaOpen") },
       h("div", { class: "va-backdrop", onclick: closePanel }),
       h("section", { class: "va-panel" },
@@ -482,7 +499,7 @@
         canListen() ? langs : null,
         examples,
         h("div", { class: "va-type" }, input, h("button", { class: "va-send", type: "button", "aria-label": t("vaSend"), onclick: send }, icon("send", 20))),
-        h("p", { class: "caption va-privacy", text: t("vaPrivacy") })));
+        privacy));
     panel = wrap;
     document.body.append(wrap);
     requestAnimationFrame(() => wrap.classList.add("open"));
@@ -564,9 +581,10 @@
           return t("vaPlanReply", { items: joinNames(plan.items) });
         case "map":
           if (!plan.layer) return t("vaMapNoPos", { place: t("mapTitle") });
+          if (plan.store) return t("vaStoreReply") + (near ? t("vaStoreNear", { name: near.best.name, d: TH.placeAway(near.a, near.best) }) : "");
           if (near) return t("vaNearestAt", { place: layerLabel(plan.layer), name: near.best.name, d: TH.placeAway(near.a, near.best) });
           return t("vaMapReply", { place: layerLabel(plan.layer) });
-        case "truck": return truck ? t("vaTruckNext", { when: TH.fmtWhen(truck.v.arriveMs), place: truck.place }) : t("vaTruckReply");
+        case "truck": return truck ? t("vaTruckNext", { when: TH.fmtWhen(truck.v.arriveMs), place: truck.place }) : t("vaTruckNoStop");
         case "bags": return t("vaBagsReply");
         case "dropoff": return t("vaDropReply");
         default: return "";
@@ -628,16 +646,24 @@
         body.push(h("p", { class: "caption dark", text: [t("vaNearest"), a ? TH.placeAway(a, best) : null].filter(Boolean).join("・") }));
       }
       const noteKey = { clothes: "placeClothesNote", battery: "placeBatteryNote", pills: "placePillsNote" }[layer];
-      body.push(h("p", { text: t(noteKey), "data-pair": TH.pairT(noteKey) }));
-      const titlePair = inPair(() => layerLabel(layer));
-      if (pin) steps.push({ el: pin, title: layerLabel(layer), pair: titlePair, body: body.slice(0, 2).length ? body.slice(0, 2) : body, round: true });
-      steps.push({ el: card, title: layerLabel(layer), pair: titlePair, body, action: navBtn });
-      tour(pin ? [steps[0], steps[1]] : steps);
+      if (plan.store) {
+        // What shops take back: the take-back items of the rule table, each with its picture.
+        const takes = TH.rules().items.filter(it => it.takeback);
+        body.unshift(h("div", { class: "va-takes" }, takes.map(it => h("span", { class: "va-take" }, TH.art(it, 28), h("span", { text: L(it.name), "data-pair": TH.pairOf(it.name) })))));
+        body.push(h("p", { text: t("vaStoreAsk"), "data-pair": TH.pairT("vaStoreAsk") }));
+      } else body.push(h("p", { text: t(noteKey), "data-pair": TH.pairT(noteKey) }));
+      const title = () => plan.store ? t("vaStoreTitle") : layerLabel(layer);
+      const titlePair = inPair(title);
+      if (pin && !plan.store) steps.push({ el: pin, title: title(), pair: titlePair, body: body.slice(0, 2).length ? body.slice(0, 2) : body, round: true });
+      steps.push({ el: card, title: title(), pair: titlePair, body, action: navBtn });
+      tour(steps);
       return "";
     }
     if (plan.kind === "truck") {
-      go("list"); // the truck card lives on the pick-list page since home became one screen
-      const el = await waitFor(".truck-status");
+      // The 什麼時候丟 page: your stop, the days the truck comes, the time, remind me / directions.
+      go("when/general");
+      // No stop chosen: the page itself asks for one (no time card to frame).
+      const el = await waitFor(".whn-card", 2500);
       if (el) tour([{ el, title: t("vaTruckReply"), pair: TH.pairT("vaTruckReply"), body: [] }]);
       return "";
     }
